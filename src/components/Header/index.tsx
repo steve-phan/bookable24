@@ -11,7 +11,6 @@ import { ThemeOptions } from "@material-ui/core"
 // import { Link } from "gatsby"
 import React from "react"
 import { routes } from "../../routes"
-import styles from "../../themes/components/headerStyle"
 import Logo from "../Logo"
 import { PageLinkSt, CTAButtons } from "./Header.css"
 import LangSelect from "./LangSelect"
@@ -24,7 +23,6 @@ const theme1 = {
 }
 
 const useStyles = makeStyles(() => ({
-  ...styles,
   container: {},
   sidebarWrapper: {},
   menuIcon: {

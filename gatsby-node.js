@@ -10,7 +10,7 @@ const path = require("path")
 const { ShopList } = require("./src/templates/ShopPage/data.ts")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const blogPost = path.resolve("./src/templates/blog-post.js")
+  const blogPost = path.resolve("./src/templates/blog-post.tsx")
   const shopPage = path.resolve("./src/templates/ShopPage/ShopPage.tsx")
 
   ShopList.forEach((shop, i) => {

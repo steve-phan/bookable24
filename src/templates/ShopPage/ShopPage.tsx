@@ -1,21 +1,14 @@
-import React, { useState, useEffect, useContext } from "react"
-import axios from "axios"
-import { PageProps, Link, graphql } from "gatsby"
 import { Container, Typography } from "@material-ui/core"
 import Button from "@material-ui/core/Button"
 import Step from "@material-ui/core/Step"
-import StepConnector from "@material-ui/core/StepConnector"
 import StepLabel from "@material-ui/core/StepLabel"
 import Stepper from "@material-ui/core/Stepper"
-import {
-  darken,
-  lighten,
-  makeStyles,
-  withStyles,
-} from "@material-ui/core/styles"
-import { AvTimer, ContactMail, EventAvailable } from "@material-ui/icons"
-import clsx from "clsx"
+import { makeStyles } from "@material-ui/core/styles"
+import axios from "axios"
+import { graphql } from "gatsby"
+import React, { useEffect, useState } from "react"
 import Layout from "../../components/Layout/Layout"
+import ColorlibStepIcon from "./ColorlibStepIcon"
 // import Loading from '../components/Loading';
 // import DatePicker from '../components/TerminSteps/DatePicker';
 // import InfoUser from '../components/TerminSteps/InfoUser';
@@ -57,12 +50,12 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     fontWeight: 600,
-    backgroundColor: theme.mainblue,
+    backgroundColor: "red",
     // marginRight: theme.spacing(1),
     width: "48%",
     height: 40,
     "&:hover": {
-      backgroundColor: lighten(theme.mainblue, 0.2),
+      backgroundColor: "pink",
     },
   },
   instructions: {
@@ -73,64 +66,12 @@ const useStyles = makeStyles(theme => ({
     padding: 16,
     background: "white",
     textAlign: "center",
-    borderBottom: `1px solid ${theme.palette.highlight}`,
+    borderBottom: `1px solid  yellow`,
   },
   shopName: {
     fontSize: 32,
   },
 }))
-
-const useColorlibStepIconStyles = makeStyles(theme => {
-  // console.log(theme);
-  return {
-    root: {
-      backgroundColor: "#ccc",
-      zIndex: 1,
-      color: "#fff",
-      width: 50,
-      height: 50,
-      display: "flex",
-      borderRadius: "50%",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-
-    active: {
-      // backgroundColor: theme.palette.primary.main,
-
-      // backgroundImage:
-      //   'linear-gradient( 136deg , rgb(242,113,33) 0%, rgb(249 190 84) 50%, rgb(138,35,135) 100%)',
-      boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
-    },
-    completed: {
-      backgroundColor: "rgb(23, 179, 85)",
-      // backgroundImage:
-      //   'linear-gradient( 136deg , rgb(242,113,33) 0%, rgb(249 190 84) 50%, rgb(138,35,135) 100%)',
-    },
-  }
-})
-
-function ColorlibStepIcon(props: any) {
-  const classes = useColorlibStepIconStyles()
-  const { active, completed } = props
-
-  const icons = {
-    1: <EventAvailable />,
-    2: <AvTimer />,
-    3: <ContactMail />,
-  }
-
-  return (
-    <div
-      className={clsx(classes.root, {
-        [classes.active]: active,
-        [classes.completed]: completed,
-      })}
-    >
-      {icons[String(props.icon)]}
-    </div>
-  )
-}
 
 function getSteps() {
   return [
@@ -139,8 +80,6 @@ function getSteps() {
     "Name und Kontaktdaten",
   ]
 }
-
-const classes = useStyles()
 
 // const [skipped, setSkipped] = React.useState(new Set());
 // const [{ selectedSlot, isFilled }, dispatch] = useContext(TerminContext);
@@ -186,9 +125,9 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
         // props.history.push("/pagenotfound")
       })
 
-    setTimeout(() => {
-      // setCheckShop(true)
-    }, 300)
+    // setTimeout(() => {
+    //   // setCheckShop(true)
+    // }, 300)
   }, [])
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
@@ -274,21 +213,21 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
                   color="primary"
                   onClick={handleNext}
                   className={classes.button}
-                  disabled={
-                    activeStep === 1 &&
-                    (selectedSlot === 0 ? false : !selectedSlot)
-                  }
+                  // disabled={
+                  //   activeStep === 1 &&
+                  //   (selectedSlot === 0 ? false : !selectedSlot)
+                  // }
                 >
                   Next
                 </Button>
               ) : (
                 <Button
                   className={classes.button}
-                  disabled={!isFilled}
+                  // disabled={!isFilled}
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    history.push(`/${shopName}/preview`)
+                    // history.push(`/${shopName}/preview`)
                   }}
                 >
                   Preview
