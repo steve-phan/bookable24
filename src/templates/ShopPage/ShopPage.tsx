@@ -7,8 +7,11 @@ import { makeStyles } from "@material-ui/core/styles"
 import axios from "axios"
 import { graphql } from "gatsby"
 import React, { useEffect, useState } from "react"
+
 import Layout from "../../components/Layout/Layout"
 import ColorlibStepIcon from "./ColorlibStepIcon"
+import { useAppSelector, useAppDispatch } from "../../store/hooks"
+import { getShopinfo } from "../../store/shop/shopSlice"
 // import Loading from '../components/Loading';
 // import DatePicker from '../components/TerminSteps/DatePicker';
 // import InfoUser from '../components/TerminSteps/InfoUser';
@@ -89,7 +92,9 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   const [shopInfo, setShopInfo] = useState(null)
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
-
+  const dispatch = useAppDispatch()
+  const x = useAppSelector(state => state)
+  console.log("get Store", x)
   const { shopName } = pageContext
   const steps = getSteps()
 
@@ -108,27 +113,27 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
         return "Unknown step"
     }
   }
-  useEffect(() => {
-    axios
-      .post("/.netlify/functions/check-shop-list", {
-        shopName,
-      })
-      .then(res => {
-        console.log("res", res)
-        // setShopInfo(res.data.shopInfo)
-        // dispatch({
-        //   type: terminTypes.SET_SHOP_INFO,
-        //   shopinfo: res.data.shopInfo,
-        // })
-      })
-      .catch(err => {
-        // props.history.push("/pagenotfound")
-      })
+  // useEffect(() => {
+  //   axios
+  //     .post("/.netlify/functions/check-shop-list", {
+  //       shopName,
+  //     })
+  //     .then(res => {
+  //       console.log("res", res)
+  //       // setShopInfo(res.data.shopInfo)
+  //       // dispatch({
+  //       //   type: terminTypes.SET_SHOP_INFO,
+  //       //   shopinfo: res.data.shopInfo,
+  //       // })
+  //     })
+  //     .catch(err => {
+  //       // props.history.push("/pagenotfound")
+  //     })
 
-    // setTimeout(() => {
-    //   // setCheckShop(true)
-    // }, 300)
-  }, [])
+  //   // setTimeout(() => {
+  //   //   // setCheckShop(true)
+  //   // }, 300)
+  // }, [])
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
   }
@@ -237,6 +242,15 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
           </div>
         )}
       </div>
+      <button
+        style={{
+          padding: 30,
+        }}
+        onClick={() => dispatch(getShopinfo(shopName))}
+      >
+        {" "}
+        Fetch Data{" "}
+      </button>
     </Layout>
   )
 }

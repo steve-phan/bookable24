@@ -15,10 +15,10 @@
     "lib": ["esnext", "dom"],
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true,
-    "paths": {
-      "src/*": ["src/*"]
-    }
+    "strictNullChecks": true
+    // "paths": {
+    //   "src/*": ["src/*"]
+    // }
   },
   "include": ["src", "themes.d.ts", "custom.d.ts"],
   "exclude": ["node_modules"]
