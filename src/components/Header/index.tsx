@@ -18,12 +18,10 @@ import MobileMenu from "./MobileMenu"
 
 // Styled-component Overidde
 
-const theme1 = {
-  color: "pink",
-}
-
 const useStyles = makeStyles(() => ({
-  container: {},
+  container: {
+    justifyContent: "space-between",
+  },
   sidebarWrapper: {},
   menuIcon: {
     marginLeft: "auto",
@@ -68,7 +66,7 @@ const HeaderComponent: React.FC = ({ location }: any) => {
         <Link to="/">
           <Logo />
         </Link>
-        <Hidden smDown>
+        <Hidden mdDown>
           <NavLink />
           <div
             style={{
@@ -81,7 +79,10 @@ const HeaderComponent: React.FC = ({ location }: any) => {
             <LangSelect />
           </div>
         </Hidden>
-
+        <MobileMenu
+          handleDrawerToggle={handleDrawerToggle}
+          mobileOpen={mobileOpen}
+        />
         <Hidden mdUp>
           <IconButton
             className={classes.menuIcon}
@@ -92,11 +93,6 @@ const HeaderComponent: React.FC = ({ location }: any) => {
             <Menu />
           </IconButton>
         </Hidden>
-
-        <MobileMenu
-          handleDrawerToggle={handleDrawerToggle}
-          mobileOpen={mobileOpen}
-        />
       </Toolbar>
     </AppBar>
   )

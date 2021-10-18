@@ -15,7 +15,7 @@ import deLocale from "date-fns/locale/de"
 import moment from "moment"
 import React, { useContext, useEffect, useState } from "react"
 import TextField from "@mui/material/TextField"
-
+import { alpha, styled } from "@mui/material/styles"
 // import { TerminContext } from "../../context/contextTermin"
 // import { terminTypes } from "../../context/contextTermin/terminTypes"
 
@@ -54,6 +54,7 @@ const SelectDatePicker = () => {
             labelId="demo-controlled-open-select-label"
             id="demo-controlled-open-select"
             value={num}
+            label="Personen"
             onChange={handleChange}
             // MenuProps={{
             //   anchorOrigin: {
@@ -120,9 +121,9 @@ const SelectDatePicker = () => {
   }
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Grid container justifyContent="space-around">
-        <PersonSelect />
+    <Grid container justifyContent="space-around">
+      <PersonSelect />
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           shouldDisableDate={checkDisableDate}
           label="Datum"
@@ -134,8 +135,8 @@ const SelectDatePicker = () => {
           }}
           renderInput={params => <TextField {...params} />}
         />
-      </Grid>
-    </LocalizationProvider>
+      </LocalizationProvider>
+    </Grid>
   )
 }
 
