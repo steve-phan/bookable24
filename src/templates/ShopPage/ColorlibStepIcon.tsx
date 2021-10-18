@@ -1,7 +1,7 @@
 import * as React from "react"
-import { makeStyles } from "@material-ui/core"
-import { StepIconProps } from "@material-ui/core/StepIcon"
-import { AvTimer, ContactMail, EventAvailable } from "@material-ui/icons"
+import { makeStyles } from "@mui/styles"
+import { StepIconProps } from "@mui/material/StepIcon"
+import { AvTimer, ContactMail, EventAvailable } from "@mui/icons-material"
 import clsx from "clsx"
 
 const useColorlibStepIconStyles = makeStyles(theme => {

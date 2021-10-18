@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { StaticImage } from "gatsby-plugin-image"
-import { makeStyles, DefaultTheme } from "@material-ui/styles"
+import { makeStyles, DefaultTheme } from "@mui/styles"
 
 import { styles } from "./logo.css"
 

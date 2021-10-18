@@ -35,7 +35,7 @@ export const LinkItemSt = styled(Link)`
 `
 
 export const LoginButton = styled(CTAButtons)`
-  padding: 14px 16px;
+  padding: 10px 16px;
   /* width: fit-content; */
   /* width: 120px; */
   margin: 0 auto;

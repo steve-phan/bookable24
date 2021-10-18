@@ -1,13 +1,10 @@
+import { makeStyles } from "@mui/styles"
+import { graphql, PageProps } from "gatsby"
+import { useTranslation } from "gatsby-plugin-react-i18next"
 import * as React from "react"
-import { StaticImage } from "gatsby-plugin-image"
-import { PageProps, graphql } from "gatsby"
-
-import { Link, Trans, useTranslation } from "gatsby-plugin-react-i18next"
-import { Button } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import Hero from "../components/Hero"
 import Layout from "../components/Layout/Layout"
 import SEO from "../components/seo"
-import Hero from "../components/Hero"
 import WhyUs from "../components/WhyUs"
 
 const useStyles = makeStyles(theme => ({

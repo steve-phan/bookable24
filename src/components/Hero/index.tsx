@@ -1,11 +1,6 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  makeStyles,
-  Typography,
-} from "@material-ui/core"
+import { Button, Card, CardContent, CardMedia, Typography } from "@mui/material"
+import { makeStyles } from "@mui/styles"
+import { Theme, ThemeOptions } from "@mui/material/styles"
 import { Link, useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
 import Carousel from "react-material-ui-carousel"
@@ -15,7 +10,7 @@ import proTermin from "../../images/pro.svg"
 import { RedShape } from "./Hero.css"
 import RedBackgroundSection from "../Shared/RedBackGround"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   wrapCarousel: {
     display: "grid",
     placeItems: "center",
@@ -140,24 +135,25 @@ const Hero = () => {
     //   <RedBackgroundSection />{" "}
     //  <RedShape />
     // </div>
-    <Carousel
-      className={classes.wrapCarousel}
-      animation="slide"
-      stopAutoPlayOnHover
-      // autoPlay
-      swipe
-      indicatorContainerProps={{
-        style: {
-          position: "absolute",
-          paddingTop: 20,
-          bottom: 0,
-        },
-      }}
-    >
-      {items.map((item, i) => (
-        <Item key={i} item={item} />
-      ))}
-    </Carousel>
+    <h1>Hello World</h1>
+    // <Carousel
+    //   className={classes.wrapCarousel}
+    //   animation="slide"
+    //   stopAutoPlayOnHover
+    //   // autoPlay
+    //   swipe
+    //   indicatorContainerProps={{
+    //     style: {
+    //       position: "absolute",
+    //       paddingTop: 20,
+    //       bottom: 0,
+    //     },
+    //   }}
+    // >
+    //   {items.map((item, i) => (
+    //     <Item key={i} item={item} />
+    //   ))}
+    // </Carousel>
   )
 }
 

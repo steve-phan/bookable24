@@ -1,6 +1,6 @@
 import React from "react"
-import { Container, Grid, ThemeOptions } from "@material-ui/core"
-import { makeStyles, useTheme } from "@material-ui/styles"
+import { Container, Grid, ThemeOptions } from "@mui/material"
+import { makeStyles, useTheme } from "@mui/styles"
 
 import {
   BrushOutlined,
@@ -9,7 +9,7 @@ import {
   HourglassEmpty,
   ThumbUpOutlined,
   TrendingUp,
-} from "@material-ui/icons"
+} from "@mui/icons-material"
 import { Link, useTranslation } from "gatsby-plugin-react-i18next"
 
 const getIcon = (

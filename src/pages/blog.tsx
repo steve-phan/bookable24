@@ -1,10 +1,10 @@
-import Card from "@material-ui/core/Card"
-import CardActionArea from "@material-ui/core/CardActionArea"
-import CardActions from "@material-ui/core/CardActions"
-import CardContent from "@material-ui/core/CardContent"
-import Grid from "@material-ui/core/Grid"
-import { makeStyles } from "@material-ui/core/styles"
-import Typography from "@material-ui/core/Typography"
+import Card from "@mui/material/Card"
+import CardActionArea from "@mui/material/CardActionArea"
+import CardActions from "@mui/material/CardActions"
+import CardContent from "@mui/material/CardContent"
+import Grid from "@mui/material/Grid"
+import { makeStyles } from "@mui/styles"
+import Typography from "@mui/material/Typography"
 import { graphql, PageProps } from "gatsby"
 import {
   GatsbyImage,

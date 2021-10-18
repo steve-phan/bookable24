@@ -1,6 +1,6 @@
-import { DefaultTheme } from "@material-ui/styles"
+import { ThemeOptions } from "@mui/material/styles"
 
-export const styles = (theme: DefaultTheme) => ({
+export const styles = (theme: ThemeOptions) => ({
   logo: {
     display: "inline-flex",
     alignItems: "center",

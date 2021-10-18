@@ -1,10 +1,7 @@
-import React from "react"
 import { graphql } from "gatsby"
-import { Link, Trans, useTranslation } from "gatsby-plugin-react-i18next"
-import { Button } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { useTranslation } from "gatsby-plugin-react-i18next"
+import React from "react"
 import Layout from "../components/Layout/Layout"
-import SEO from "../components/seo"
 const Menu = () => {
   const { t } = useTranslation()
 

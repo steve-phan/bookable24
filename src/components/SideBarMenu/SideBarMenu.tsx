@@ -1,7 +1,7 @@
 import React from "react"
 import { Link, useTranslation } from "gatsby-plugin-react-i18next"
-import { makeStyles, useTheme } from "@material-ui/styles"
-import { ThemeOptions } from "@material-ui/core"
+import { makeStyles, useTheme } from "@mui/styles"
+import { ThemeOptions } from "@mui/material"
 
 import { routes } from "../../routes"
 import { SideBarMenuSt, MenuSt, LinkSt } from "./SideBarMenu.css"

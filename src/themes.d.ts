@@ -1,6 +1,5 @@
-import "@material-ui/core/styles/createTheme"
-
-declare module "@material-ui/core/styles/createTheme" {
+import "@mui/material/styles"
+declare module "@mui/material/styles" {
   export interface ThemeOptions {
     color: {
       primary: string

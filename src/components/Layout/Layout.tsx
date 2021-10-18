@@ -1,20 +1,11 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
-
-// @material-ui
-import { Container, Hidden } from "@material-ui/core"
-import { createTheme, MuiThemeProvider } from "@material-ui/core/styles"
+import { Container } from "@mui/material"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { ThemeProvider as ThemeProviderSt } from "styled-components"
 import { graphql, useStaticQuery } from "gatsby"
 import * as React from "react"
-import { ThemeProvider } from "styled-components"
 import Footer from "../Footer/Footer"
 import Header from "../Header"
-import SideBarMenu from "../SideBarMenu/SideBarMenu"
-import { BodySt, MainSt } from "./Layout.css"
+import { BodySt } from "./Layout.css"
 import "./reset.css"
 
 const theme = createTheme({
@@ -44,8 +35,8 @@ const Layout = ({ children, location }: any) => {
   `)
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <ThemeProviderSt theme={theme}>
         <Container
           style={{
             padding: 0,
@@ -62,8 +53,8 @@ const Layout = ({ children, location }: any) => {
           </BodySt>
           <Footer />
         </Container>
-      </ThemeProvider>
-    </MuiThemeProvider>
+      </ThemeProviderSt>
+    </ThemeProvider>
   )
 }
 

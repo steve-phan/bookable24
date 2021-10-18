@@ -1,7 +1,7 @@
-import HomeWorkTwoToneIcon from "@material-ui/icons/HomeWorkTwoTone"
-import AboutIcon from "@material-ui/icons/PeopleOutline"
-import MenuIcon from "@material-ui/icons/MenuBook"
-import ContactIcon from "@material-ui/icons/ContactPhone"
+import HomeWorkTwoToneIcon from "@mui/icons-material/HomeWorkTwoTone"
+import AboutIcon from "@mui/icons-material/PeopleOutline"
+import MenuIcon from "@mui/icons-material/MenuBook"
+import ContactIcon from "@mui/icons-material/ContactPhone"
 
 const routes = [
   {

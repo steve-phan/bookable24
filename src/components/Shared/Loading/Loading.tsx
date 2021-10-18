@@ -1,4 +1,5 @@
-import { CircularProgress, makeStyles } from "@material-ui/core"
+import { CircularProgress } from "@mui/material"
+import { makeStyles } from "@mui/styles"
 import React from "react"
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +33,8 @@ const useStyles = makeStyles(theme => ({
     transform: "translate(-50%, -50%)",
   },
   icon: {
-    color: theme.palette.primary.main,
+    color: "red",
+    //  theme.palette.primary.main,
   },
   logo: {
     color: "#e84b63",

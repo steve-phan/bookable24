@@ -1,17 +1,16 @@
-import { Container, Typography } from "@material-ui/core"
-import Button from "@material-ui/core/Button"
-import Step from "@material-ui/core/Step"
-import StepLabel from "@material-ui/core/StepLabel"
-import Stepper from "@material-ui/core/Stepper"
-import { makeStyles } from "@material-ui/core/styles"
-import axios from "axios"
+import { Container, Typography } from "@mui/material"
+import Button from "@mui/material/Button"
+import Step from "@mui/material/Step"
+import StepLabel from "@mui/material/StepLabel"
+import Stepper from "@mui/material/Stepper"
+import { makeStyles } from "@mui/styles"
 import { graphql } from "gatsby"
-import React, { useEffect, useState } from "react"
-
+import React, { useState } from "react"
 import Layout from "../../components/Layout/Layout"
-import ColorlibStepIcon from "./ColorlibStepIcon"
-import { useAppSelector, useAppDispatch } from "../../store/hooks"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { getShopinfo } from "../../store/shop/shopSlice"
+import ColorlibStepIcon from "./ColorlibStepIcon"
+
 // import Loading from '../components/Loading';
 // import DatePicker from '../components/TerminSteps/DatePicker';
 // import InfoUser from '../components/TerminSteps/InfoUser';
@@ -62,8 +61,8 @@ const useStyles = makeStyles(theme => ({
     },
   },
   instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    // marginTop: theme.spacing(1),
+    // marginBottom: theme.spacing(1),
   },
   shopInfo: {
     padding: 16,
@@ -113,27 +112,7 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
         return "Unknown step"
     }
   }
-  // useEffect(() => {
-  //   axios
-  //     .post("/.netlify/functions/check-shop-list", {
-  //       shopName,
-  //     })
-  //     .then(res => {
-  //       console.log("res", res)
-  //       // setShopInfo(res.data.shopInfo)
-  //       // dispatch({
-  //       //   type: terminTypes.SET_SHOP_INFO,
-  //       //   shopinfo: res.data.shopInfo,
-  //       // })
-  //     })
-  //     .catch(err => {
-  //       // props.history.push("/pagenotfound")
-  //     })
 
-  //   // setTimeout(() => {
-  //   //   // setCheckShop(true)
-  //   // }, 300)
-  // }, [])
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
   }
