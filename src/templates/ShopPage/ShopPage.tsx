@@ -10,7 +10,7 @@ import Layout from "../../components/Layout/Layout"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { getShopinfo } from "../../store/shop/shopSlice"
 import ColorlibStepIcon from "./ColorlibStepIcon"
-
+import DatePicker from "./StepComponents/DatePicker"
 // import Loading from '../components/Loading';
 // import DatePicker from '../components/TerminSteps/DatePicker';
 // import InfoUser from '../components/TerminSteps/InfoUser';
@@ -100,8 +100,8 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   function getStepContent(step: number) {
     switch (step) {
       case 0:
-        return <h1>Date Picker</h1>
-      // return <DatePicker />;
+        // return <h1>Date Picker</h1>
+        return <DatePicker />
       case 1:
         return <h1>SlotPicker Picker</h1>
       // return <SlotPicker />;
