@@ -2,22 +2,28 @@ import { Container, Typography } from "@mui/material"
 import Button from "@mui/material/Button"
 import Step from "@mui/material/Step"
 import StepLabel from "@mui/material/StepLabel"
-import Stepper from "@mui/material/Stepper"
 import { makeStyles } from "@mui/styles"
 import { graphql } from "gatsby"
 import React, { useState } from "react"
+
 import Layout from "../../components/Layout/Layout"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { getShopinfo } from "../../store/shop/shopSlice"
 import ColorlibStepIcon from "./ColorlibStepIcon"
-import DatePicker from "./StepComponents/DatePicker"
 // import Loading from '../components/Loading';
 // import DatePicker from '../components/TerminSteps/DatePicker';
 // import InfoUser from '../components/TerminSteps/InfoUser';
 // import SlotPicker from '../components/TerminSteps/SlotPicker';
 // import { TerminContext } from '../context/contextTermin';
 // import { terminTypes } from '../context/contextTermin/terminTypes';
-
+import {
+  WrapTerminSt,
+  StepperSt,
+  StepLabelSt,
+  WrapRowSt,
+  ButtonSt,
+} from "./ShopPage.css"
+import { getStepContent } from "./utils"
 interface IShopPageProps {
   pageContext: {
     shopName: string
@@ -26,21 +32,6 @@ interface IShopPageProps {
 }
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-  },
-  wrap: {
-    transform: "translateY(100px)",
-    maxWidth: "580px",
-    margin: "0 auto",
-    padding: "20px 8px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-  wrapSteps: {
-    padding: "20px 10px 10px",
-  },
   stepLabel: {
     flexDirection: "column",
     textAlign: "center",
@@ -48,18 +39,10 @@ const useStyles = makeStyles(theme => ({
     "& span": {
       paddingTop: 2,
       paddingRight: 0,
+      fontSize: 12,
     },
   },
-  button: {
-    fontWeight: 600,
-    backgroundColor: "red",
-    // marginRight: theme.spacing(1),
-    width: "48%",
-    height: 40,
-    "&:hover": {
-      backgroundColor: "pink",
-    },
-  },
+
   instructions: {
     // marginTop: theme.spacing(1),
     // marginBottom: theme.spacing(1),
@@ -97,22 +80,6 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   const { shopName } = pageContext
   const steps = getSteps()
 
-  function getStepContent(step: number) {
-    switch (step) {
-      case 0:
-        // return <h1>Date Picker</h1>
-        return <DatePicker />
-      case 1:
-        return <h1>SlotPicker Picker</h1>
-      // return <SlotPicker />;
-      case 2:
-        return <h1>SlotPicker Picker</h1>
-      // return <SlotPicker />;
-      default:
-        return "Unknown step"
-    }
-  }
-
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
   }
@@ -126,101 +93,95 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   }
 
   return (
-    <Layout className={classes.wrap} shopInfo={shopInfo}>
+    <Layout
+      //  className={classes.wrap}
+      shopInfo={shopInfo}
+    >
       {/* {!checkShop && <Loading shopname={shopName} />} */}
       {/* <Loading shopname={shopName} /> */}
-      <Container className={classes.shopInfo}>
-        <Typography className={classes.shopName}>
-          {/* {getLogo(shopName)} */}
-        </Typography>
-        {/* <Typography className={classes.shopAddress}>
+      <WrapTerminSt>
+        <Container className={classes.shopInfo}>
+          <Typography className={classes.shopName}>
+            {/* {getLogo(shopName)} */}
+          </Typography>
+          {/* <Typography className={classes.shopAddress}>
           {shopInfo?.street} <br />
           {shopInfo?.cityCode + ' ' + shopInfo?.city}
         </Typography> */}
-      </Container>
-      <Stepper className={classes.wrapSteps} activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {}
-          const labelProps = {}
+        </Container>
+        <StepperSt activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps = {}
+            const labelProps = {}
 
-          return (
-            <Step
-              style={{ padding: 0, width: "33.3333%" }}
-              key={label}
-              {...stepProps}
-            >
-              <StepLabel
-                className={classes.stepLabel}
-                StepIconComponent={ColorlibStepIcon}
-                {...labelProps}
+            return (
+              <Step
+                style={{ padding: 0, width: "33.3333%" }}
+                key={label}
+                {...stepProps}
               >
-                {label}
-              </StepLabel>
-            </Step>
-          )
-        })}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </div>
-        ) : (
-          <div>
-            {getStepContent(activeStep)}
-            <Typography className={classes.instructions}></Typography>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "10px 0",
-                margin: "20px auto",
-              }}
-            >
-              <Button
-                disabled={activeStep === 0}
-                variant="contained"
-                color="primary"
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
-              </Button>
-              {activeStep !== 2 ? (
-                <Button
+                <StepLabelSt
+                  // className={classes.stepLabel}
+                  StepIconComponent={ColorlibStepIcon}
+                  {...labelProps}
+                >
+                  {label}
+                </StepLabelSt>
+              </Step>
+            )
+          })}
+        </StepperSt>
+        <>
+          {activeStep === steps.length ? (
+            <>
+              <Typography className={classes.instructions}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <Button onClick={handleReset}>Reset</Button>
+            </>
+          ) : (
+            <>
+              {getStepContent(activeStep)}
+              <WrapRowSt>
+                <ButtonSt
+                  disabled={activeStep === 0}
                   variant="contained"
                   color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                  // disabled={
-                  //   activeStep === 1 &&
-                  //   (selectedSlot === 0 ? false : !selectedSlot)
-                  // }
+                  onClick={handleBack}
                 >
-                  Next
-                </Button>
-              ) : (
-                <Button
-                  className={classes.button}
-                  // disabled={!isFilled}
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    // history.push(`/${shopName}/preview`)
-                  }}
-                >
-                  Preview
-                </Button>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
+                  Back
+                </ButtonSt>
+                {activeStep !== 2 ? (
+                  <ButtonSt
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+
+                    // disabled={
+                    //   activeStep === 1 &&
+                    //   (selectedSlot === 0 ? false : !selectedSlot)
+                    // }
+                  >
+                    Next
+                  </ButtonSt>
+                ) : (
+                  <ButtonSt
+                    // disabled={!isFilled}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      // history.push(`/${shopName}/preview`)
+                    }}
+                  >
+                    Preview
+                  </ButtonSt>
+                )}
+              </WrapRowSt>
+            </>
+          )}
+        </>
+      </WrapTerminSt>
+
       <button
         style={{
           padding: 30,

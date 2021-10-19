@@ -19,13 +19,14 @@ import { alpha, styled } from "@mui/material/styles"
 // import { TerminContext } from "../../context/contextTermin"
 // import { terminTypes } from "../../context/contextTermin/terminTypes"
 
+import { WrapRowSt } from "../ShopPage.css"
 // Array 15 slots
 
 const SelectDatePicker = () => {
   // const [{ selectedDate }, dispatch] = useContext(TerminContext)
   const [currentDate, setCurrentDate] = useState<Date | null>(new Date())
 
-  const [num, setNum] = React.useState("")
+  const [num, setNum] = React.useState("1")
   const [open, setOpen] = React.useState(false)
 
   // useEffect(() => {
@@ -44,8 +45,8 @@ const SelectDatePicker = () => {
   }
   const PersonSelect = () => {
     return (
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
+      <Box>
+        <FormControl variant="standard" sx={{ minWidth: 120 }} fullWidth>
           <InputLabel id="demo-controlled-open-select-label">
             Personen
           </InputLabel>
@@ -56,16 +57,6 @@ const SelectDatePicker = () => {
             value={num}
             label="Personen"
             onChange={handleChange}
-            // MenuProps={{
-            //   anchorOrigin: {
-            //     vertical: "bottom",
-            //     horizontal: "left",
-            //   },
-            //   transformOrigin: {
-            //     vertical: "top",
-            //     horizontal: "left",
-            //   },
-            // }}
           >
             <MenuItem value={1}>1</MenuItem>
             <MenuItem value={2}>2</MenuItem>
@@ -121,7 +112,7 @@ const SelectDatePicker = () => {
   }
 
   return (
-    <Grid container justifyContent="space-around">
+    <WrapRowSt>
       <PersonSelect />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
@@ -133,10 +124,10 @@ const SelectDatePicker = () => {
             console.log(newValue)
             setSelectedDate(newValue)
           }}
-          renderInput={params => <TextField {...params} />}
+          renderInput={params => <TextField variant="standard" {...params} />}
         />
       </LocalizationProvider>
-    </Grid>
+    </WrapRowSt>
   )
 }
 
