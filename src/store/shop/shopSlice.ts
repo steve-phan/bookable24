@@ -1,7 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-
-import { RootState, AppThunk } from "../store"
 
 export interface IshopInfo {
   city: string
@@ -20,7 +18,7 @@ export interface IshopState {
   shopInfo: IshopInfo | unknown
   status: "idle" | "loading" | "failed"
 }
-const initialState: IshopState = {
+const intinitialShopState: IshopState = {
   shopInfo: {
     city: "",
     cityCode: "",
@@ -48,11 +46,11 @@ export const getShopinfo = createAsyncThunk(
 
 export const shopSlice = createSlice({
   name: "shop",
-  initialState,
+  initialState: intinitialShopState,
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(getShopinfo.pending, state => {
+      .addCase(getShopinfo.pending, (state: IshopState) => {
         state.status = "loading"
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
