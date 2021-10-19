@@ -8,9 +8,10 @@ import { makeStyles } from "@mui/styles"
 // import { TerminContext } from "../../context/contextTermin"
 // import { terminTypes } from "../../context/contextTermin/terminTypes"
 import Loading from "../../../components/Shared/Loading/Loading"
+
 import { morningSlots, afternoonSlots } from "../utils"
 
-const morningLength = morningSlots.length
+let morningLength = morningSlots?.length
 
 const useStyles = makeStyles(theme => ({
   wrap: {
@@ -132,7 +133,7 @@ const SlotPicker = () => {
               //   selectedSlot === index ? classes.active : null
               // )}
               // disabled={slots_booked.includes(slot)}
-              key={index}
+              key={index + slot}
               onClick={() => {
                 // setActive(index);
                 // dispatch({
@@ -183,7 +184,7 @@ const SlotPicker = () => {
               //   [13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
               //   terminsBooked[String(newIndex)] >= 2
               // }
-              key={newIndex}
+              key={newIndex + slot}
               onClick={() => {
                 // setActive(newIndex);
                 // dispatch({

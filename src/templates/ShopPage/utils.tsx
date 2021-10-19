@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react"
 import DatePicker from "./StepComponents/DatePicker"
 import SlotPicker from "./StepComponents/SlotPicker"
+import InfoUser from "./StepComponents/InfoUser"
 
 export const getStepContent = (step: number): ReactElement => {
   switch (step) {
@@ -9,8 +10,7 @@ export const getStepContent = (step: number): ReactElement => {
     case 1:
       return <SlotPicker />
     case 2:
-      return <h1>User Info </h1>
-
+      return <InfoUser />
     default:
       return <h1>User Info </h1>
   }
@@ -43,3 +43,13 @@ export const afternoonSlots = [
   "21:30",
   "22:00",
 ]
+
+export const validateEmail = (email: string) => {
+  const regex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return regex.test(email)
+}
+export const validatePhone = (phoneNumber: string) => {
+  const regex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
+  return regex.test(phoneNumber)
+}

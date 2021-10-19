@@ -1,8 +1,11 @@
-import { makeStyles, TextField, Typography } from "@material-ui/core"
+import { TextField, Typography } from "@mui/material"
 import React, { useContext, useEffect, useState } from "react"
-import { TerminContext } from "../../context/contextTermin"
-import { terminTypes } from "../../context/contextTermin/terminTypes"
-import { validateEmail, validatePhone } from "../../utils"
+// import { TerminContext } from "../../context/contextTermin"
+// import { terminTypes } from "../../context/contextTermin/terminTypes"
+import { makeStyles } from "@mui/styles"
+
+import { validateEmail, validatePhone } from "../utils"
+
 const useStyles = makeStyles(theme => ({
   userInput: {
     width: "100%",
@@ -19,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 14.5,
     paddingLeft: 10,
     color: "#333",
-    borderLeft: `2px solid ${theme.palette.highlight}`,
+    borderLeft: `2px solid red`,
   },
 }))
 // .MuiFormLabel-Root.Mui-focused
@@ -31,7 +34,7 @@ const InfoUser = () => {
   const [phone, setPhone] = useState(null)
   const [require, setRequire] = useState(null)
   const classes = useStyles()
-  const [{}, dispatch] = useContext(TerminContext)
+  // const [{}, dispatch] = useContext(TerminContext)
   useEffect(() => {
     if (
       firstName &&
@@ -41,22 +44,22 @@ const InfoUser = () => {
       validateEmail(email) &&
       validatePhone(phone)
     ) {
-      dispatch({
-        type: terminTypes.SET_FILLED,
-        userinfo: {
-          firstName,
-          lastName,
-          phone,
-          email,
-        },
-      })
+      // dispatch({
+      //   type: terminTypes.SET_FILLED,
+      //   userinfo: {
+      //     firstName,
+      //     lastName,
+      //     phone,
+      //     email,
+      //   },
+      // })
     }
 
     return () => {
-      dispatch({
-        type: terminTypes.SET_OPTIONAL,
-        require: require,
-      })
+      // dispatch({
+      //   type: terminTypes.SET_OPTIONAL,
+      //   require: require,
+      // })
     }
   }, [require, phone])
   // console.log(require);
@@ -73,7 +76,7 @@ const InfoUser = () => {
         name="first_name"
         placeholder="Vorname"
         label="Vorname*"
-        onChange={e => setFirstName(e.target.value)}
+        // onChange={e => setFirstName(e.target.value)}
       />
       <TextField
         className={classes.userInput}
@@ -81,7 +84,7 @@ const InfoUser = () => {
         name="last_name"
         placeholder="Nachname"
         label="Nachname*"
-        onChange={e => setLastName(e.target.value)}
+        // onChange={e => setLastName(e.target.value)}
       />
       <TextField
         className={classes.userInput}
@@ -95,7 +98,7 @@ const InfoUser = () => {
           !validateEmail(email) &&
           "Bitte geben Sie eine gültige E-Mail-Adresse ein."
         }
-        onChange={e => setEmail(e.target.value)}
+        // onChange={e => setEmail(e.target.value)}
       />
       <TextField
         className={classes.userInput}
@@ -109,7 +112,7 @@ const InfoUser = () => {
           !validatePhone(phone) &&
           "Bitte geben Sie eine gültige Telefonnummer ein."
         }
-        onChange={e => setPhone(e.target.value)}
+        // onChange={e => setPhone(e.target.value)}
       />
       <TextField
         className={classes.userInput}
@@ -121,7 +124,7 @@ const InfoUser = () => {
         placeholder="Sonderwünsche eingeben (ohne Gewähr)"
         variant="outlined"
         onChange={e => {
-          setRequire(e.target.value)
+          // setRequire(e.target.value)
         }}
       />
       <Typography className={classes.require}>
