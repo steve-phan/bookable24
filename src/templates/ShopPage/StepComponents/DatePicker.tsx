@@ -16,17 +16,19 @@ import moment from "moment"
 import React, { useContext, useEffect, useState } from "react"
 import TextField from "@mui/material/TextField"
 import { alpha, styled } from "@mui/material/styles"
-// import { TerminContext } from "../../context/contextTermin"
-// import { terminTypes } from "../../context/contextTermin/terminTypes"
 
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { setNumberOfGuest } from "../../../store/shop/bookingSlice"
 import { WrapRowSt } from "../ShopPage.css"
 // Array 15 slots
 
 const SelectDatePicker = () => {
   // const [{ selectedDate }, dispatch] = useContext(TerminContext)
   const [currentDate, setCurrentDate] = useState<Date | null>(new Date())
+  const dispatch = useAppDispatch()
+  const { numberOfGuest } = useAppSelector(state => state.booking)
 
-  const [num, setNum] = React.useState("1")
+  // const [num, setNum] = React.useState<string | undefined>(1)
   const [open, setOpen] = React.useState(false)
 
   // useEffect(() => {
@@ -36,14 +38,21 @@ const SelectDatePicker = () => {
   //   })
   // }, [])
   const handleChange = (event: SelectChangeEvent) => {
-    setNum(event.target.value as string)
+    // setNum(event.target.value as string)
+    console.log(
+      "bookingNumberOfGuest",
+      setNumberOfGuest(Number(event.target.value as string))
+    )
+
+    dispatch(setNumberOfGuest(Number(event.target.value as string)))
     // console.log(event.target.value);
     // dispatch({
     //   type: terminTypes.SET_PERSON,
     //   person: event.target.value,
     // })
   }
-  const PersonSelect = () => {
+  console.log("number of guest selected", numberOfGuest)
+  const PersonSelect = ({ numberOfGuest }: { numberOfGuest: number }) => {
     return (
       <Box>
         <FormControl variant="standard" sx={{ minWidth: 120 }} fullWidth>
@@ -54,7 +63,7 @@ const SelectDatePicker = () => {
             style={{ paddingLeft: 16 }}
             labelId="demo-controlled-open-select-label"
             id="demo-controlled-open-select"
-            value={num}
+            value={`${numberOfGuest}`}
             label="Personen"
             onChange={handleChange}
           >
@@ -113,7 +122,7 @@ const SelectDatePicker = () => {
 
   return (
     <WrapRowSt>
-      <PersonSelect />
+      <PersonSelect numberOfGuest={numberOfGuest} />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           shouldDisableDate={checkDisableDate}

@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
 
 import shopReducer from "./shop/shopSlice"
+import bookingReducer from "./shop/bookingSlice"
 
 // const shopReducer = (state: any, action: any) => {
 //   switch (action.type) {
@@ -18,6 +19,7 @@ import shopReducer from "./shop/shopSlice"
 export const store = configureStore({
   reducer: {
     shop: shopReducer,
+    booking: bookingReducer,
   },
 })
 
