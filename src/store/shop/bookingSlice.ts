@@ -17,26 +17,26 @@ const initialBookingState: IbookingState = {
   selectedDate: new Date(),
   slot: 1,
 }
-export const setNumberOfGuest = createAction<number>("booking/number-of-guest")
-
-const bookingReducers = createReducer(initialBookingState, builder => {
-  builder.addCase(setNumberOfGuest, (state: IbookingState, action) => {
-    console.log("dispatch", action.payload)
-    state.numberOfGuest = action.payload
-  })
-})
+// export const setNumberOfGuest = createAction<number>("booking/number-of-guest")
+// const bookingReducers = createReducer(initialBookingState, builder => {
+//   builder.addCase(setNumberOfGuest, (state: IbookingState, action) => {
+//     console.log("dispatch", action.payload)
+//     state.numberOfGuest = action.payload
+//   })
+// })
 
 const bookingSlice = createSlice({
   name: "booking",
   initialState: initialBookingState,
-  reducers: { ...bookingReducers },
-  //    {
-  //     bookingReducers,
-  //     setNumberOfGuest: (state, action: PayloadAction<number>) => {
-  //       state.numberOfGuest = action.payload
-  //     },
-  //   },
+  reducers: {
+    setNumberOfGuest: (state, action: PayloadAction<number>) => {
+      state.numberOfGuest = action.payload
+    },
+    setDate: (state, action) => {
+      state.selectedDate = action.payload
+    },
+  },
 })
-// export const { bookingReducers } = bookingSlice.actions
+export const { setNumberOfGuest, setDate } = bookingSlice.actions
 
-export default bookingReducers
+export default bookingSlice.reducer
