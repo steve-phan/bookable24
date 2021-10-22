@@ -9,13 +9,13 @@ import {
 interface IbookingState {
   numberOfGuest: number
   selectedDate: Date
-  slot: number
+  selectedSlot: number
 }
 
 const initialBookingState: IbookingState = {
   numberOfGuest: 1,
   selectedDate: new Date(),
-  slot: 1,
+  selectedSlot: 6,
 }
 // export const setNumberOfGuest = createAction<number>("booking/number-of-guest")
 // const bookingReducers = createReducer(initialBookingState, builder => {
@@ -32,11 +32,16 @@ const bookingSlice = createSlice({
     setNumberOfGuest: (state, action: PayloadAction<number>) => {
       state.numberOfGuest = action.payload
     },
-    setDate: (state, action) => {
+    setSelectedSlot: (state, action: PayloadAction<number>) => {
+      console.log("action", action)
+      state.selectedSlot = action.payload
+    },
+    setSelectedDate: (state, action) => {
       state.selectedDate = action.payload
     },
   },
 })
-export const { setNumberOfGuest, setDate } = bookingSlice.actions
+export const { setNumberOfGuest, setSelectedDate, setSelectedSlot } =
+  bookingSlice.actions
 
 export default bookingSlice.reducer

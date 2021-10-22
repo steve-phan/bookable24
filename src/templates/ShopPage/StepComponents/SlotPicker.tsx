@@ -4,55 +4,73 @@ import clsx from "clsx"
 import moment from "moment"
 import axios from "axios"
 import { makeStyles } from "@mui/styles"
+import { ThemeOptions, createTheme, ThemeProvider } from "@mui/material/styles"
 
 // import { TerminContext } from "../../context/contextTermin"
 // import { terminTypes } from "../../context/contextTermin/terminTypes"
 import Loading from "../../../components/Shared/Loading/Loading"
 
 import { morningSlots, afternoonSlots } from "../utils"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { setSelectedSlot } from "../../../store/shop/bookingSlice"
+import { ButtonSlotSt } from "./StepComponents.css"
 
-let morningLength = morningSlots?.length
-
-const useStyles = makeStyles(theme => ({
-  wrap: {
-    width: "100%",
-    gap: "6px",
-    flexWrap: "wrap",
-  },
-  basicBtn: {
-    flexBasis: "calc(33.3% - 4px)",
-    border: "1px solid transparent !important",
-    borderRadius: "4px !important",
-    fontWeight: "bold",
-    color: "#2b4660 ",
-    backgroundColor: "#d4f4fe",
-    "&:hover": {
-      // backgroundColor: 'unset !important',
+const useStyles = makeStyles(theme => {
+  console.log("theme", theme)
+  return {
+    wrap: {
+      width: "100%",
+      gap: "6px",
+      flexWrap: "wrap",
     },
-  },
-  warning: {
-    width: "60px",
-    height: "26px",
-    display: "inline-block",
-    background: "#ffda44",
-    transform: "translateY(7px)",
-  },
-  warningSlot: {
-    background: "#ffda44",
-  },
+    basicBtn: {
+      flexBasis: "calc(33.3% - 4px)",
+      border: "1px solid pink !important",
+      borderRadius: "4px !important",
+      fontWeight: "bold",
+      color: "#2b4660 ",
+      // backgroundColor: "#d4f4fe",
+      backgroundColor: "red",
+      "&:hover": {
+        // backgroundColor: 'unset !important',
+      },
+    },
+    warning: {
+      width: "60px",
+      height: "26px",
+      display: "inline-block",
+      background: "#ffda44",
+      transform: "translateY(7px)",
+    },
+    warningSlot: {
+      background: "#ffda44",
+    },
 
-  title: {
-    padding: "16px 0 10px",
-  },
-  active: {
-    backgroundColor: "#17b355",
-    // color: 'white',
-    "&:hover": {
-      backgroundColor: "#17b355",
+    title: {
+      padding: "16px 0 10px",
+      color: "red",
+    },
+    active: {
+      backgroundColor: `blue`,
       // color: 'white',
+      "&:hover": {
+        backgroundColor: "#17b355",
+        // color: 'white',
+      },
     },
-  },
-}))
+  }
+})
+// const theme = createTheme({
+//   components: {
+//     // Name of the component ⚛️
+//     MuiButtonBase: {
+//       defaultProps: {
+//         // The default props to change
+//         disableRipple: true, // No more ripple, on the whole application 💣!
+//       },
+//     },
+//   },
+// })
 
 const Warning = () => {
   return (
@@ -61,27 +79,16 @@ const Warning = () => {
     </div>
   )
 }
-// const reduceTermins = (arr = []) =>
-//   arr.reduce((acc, cur) => {
-//     if (acc.hasOwnProperty(cur.selectedSlot)) {
-//       return {
-//         ...acc,
-//         [cur.selectedSlot]: acc[cur.selectedSlot] + 1,
-//       }
-//     } else {
-//       return {
-//         ...acc,
-//         [cur.selectedSlot]: 1,
-//       }
-//     }
-//   }, {})
 
-const isWeekend = (str: string) =>
-  moment(str).day() === 6 || moment(str).day() === 7
+const isWeekend = (date: Date) =>
+  moment(date).day() === 6 || moment(date).day() === 7
+
 const SlotPicker = () => {
   const [loading, setLoading] = useState(true)
   const [terminsBooked, setTerminsBooked] = useState([])
   const classes = useStyles()
+  const dispatch = useAppDispatch()
+  const { selectedSlot, selectedDate } = useAppSelector(state => state.booking)
   // const [{ selectedSlot, selectedDate }, dispatch] = useContext(TerminContext)
   // console.log(selectedDate);
   // useEffect(() => {
@@ -107,7 +114,8 @@ const SlotPicker = () => {
   //     setLoading(false)
   //   }
   // }, [])
-
+  // console.log("selectedSlot", selectedSlot)
+  // console.log("classes", classes)
   return (
     <div
       className="slotpicker"
@@ -126,15 +134,17 @@ const SlotPicker = () => {
       >
         {morningSlots.map((slot, index) => {
           return (
-            <Button
+            <ButtonSlotSt
               //   style={{ color: 'red' }}
-              // className={clsx(
-              //   classes.basicBtn,
-              //   selectedSlot === index ? classes.active : null
-              // )}
+              slotActive={selectedSlot === index}
+              className={clsx(
+                classes.basicBtn,
+                selectedSlot === index ? classes.active : null
+              )}
               // disabled={slots_booked.includes(slot)}
               key={index + slot}
               onClick={() => {
+                dispatch(setSelectedSlot(index))
                 // setActive(index);
                 // dispatch({
                 //   type: terminTypes.SET_SLOT,
@@ -144,7 +154,7 @@ const SlotPicker = () => {
             >
               {" "}
               {slot}{" "}
-            </Button>
+            </ButtonSlotSt>
           )
         })}
       </ButtonGroup>
@@ -166,26 +176,28 @@ const SlotPicker = () => {
         color="primary"
         aria-label="outlined primary button group"
       >
-        {afternoonSlots.map((slot, index) => {
-          const newIndex = index + morningLength
+        {afternoonSlots.map((slot, index: number) => {
+          const newIndex = morningSlots?.length + index
           return (
             <Button
               //   style={{ color: 'red' }}
-              // className={clsx(
-              //   selectedSlot === newIndex ? classes.active : null,
-              //   classes.basicBtn,
-              //   selectedDate &&
-              //     isWeekend(selectedDate) &&
-              //     [13, 14, 15, 16, 17, 18, 19].includes(newIndex)
-              //     ? classes.warningSlot
-              //     : null
-              // )}
+              className={clsx(
+                selectedSlot === newIndex ? classes.active : null,
+                classes.basicBtn,
+                selectedDate &&
+                  isWeekend(selectedDate) &&
+                  [13, 14, 15, 16, 17, 18, 19].includes(newIndex)
+                  ? classes.warningSlot
+                  : null
+              )}
               // disabled={
               //   [13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
               //   terminsBooked[String(newIndex)] >= 2
               // }
               key={newIndex + slot}
               onClick={() => {
+                dispatch(setSelectedSlot(newIndex))
+
                 // setActive(newIndex);
                 // dispatch({
                 //   type: terminTypes.SET_SLOT,

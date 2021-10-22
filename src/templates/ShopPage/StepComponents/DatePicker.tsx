@@ -10,9 +10,12 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import TextField from "@mui/material/TextField"
 
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { setDate, setNumberOfGuest } from "../../../store/shop/bookingSlice"
+import {
+  setSelectedDate,
+  setNumberOfGuest,
+} from "../../../store/shop/bookingSlice"
 import { WrapRowSt } from "../ShopPage.css"
-import { checkDisableDate } from "./utils"
+import { checkDisableDate } from "../utils"
 
 const SelectDatePicker = () => {
   const dispatch = useAppDispatch()
@@ -51,7 +54,7 @@ const SelectDatePicker = () => {
           inputFormat="MMM-dd-yyyy"
           value={selectedDate}
           onChange={newValue => {
-            dispatch(setDate(newValue))
+            dispatch(setSelectedDate(newValue))
           }}
           renderInput={params => <TextField variant="standard" {...params} />}
         />

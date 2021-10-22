@@ -2,6 +2,14 @@ import React, { ReactElement } from "react"
 import DatePicker from "./StepComponents/DatePicker"
 import SlotPicker from "./StepComponents/SlotPicker"
 import InfoUser from "./StepComponents/InfoUser"
+import moment from "moment"
+
+export const checkDisableDate = (day: Date) => {
+  return (
+    // schedule === 0 ||
+    moment(day).startOf("day").diff(moment().startOf("day")) < 0
+  )
+}
 
 export const getStepContent = (step: number): ReactElement => {
   switch (step) {
