@@ -37,5 +37,12 @@
     "item4": "Erfahrung nutzen Profitieren Sie von unserer mehr als 10-jährigen Erfahrung in der Online-Terminbuchung",
     "item5": "Layout anpassen Passen Sie das Layout Ihre Online-Terminbuchung an Ihr Corporate Design an.",
     "item6": "Kostenlos starten Starten Sie jetzt risikolos mit BookAble24 Free, BookAble24 Easy oder BookAble24 Profi"
+  },
+  "booking": {
+    "slot": {
+      "lunch": "Mittagessen",
+      "dinner": "Abendessen",
+      "warning": "Diese Slots können sich in kurzer Zeit verzögern."
+    }
   }
 }

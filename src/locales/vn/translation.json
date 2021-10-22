@@ -37,5 +37,12 @@
     "item4": "Kinh nghiệm sử dụng Hưởng lợi từ hơn 10 năm kinh nghiệm đặt lịch hẹn trực tuyến của chúng tôi",
     "item5": "Điều chỉnh bố cục Điều chỉnh bố cục đặt lịch hẹn trực tuyến phù hợp với thiết kế của công ty bạn.",
     "item6": "Bắt đầu miễn phí Bắt đầu ngay bây giờ không rủi ro với Bookable24 Miễn phí, Bookable24 Dễ dàng hoặc Bookable24 Profi"
+  },
+  "booking": {
+    "slot": {
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "warning": "Các vị trí này có thể bị trì hoãn trong một thời gian ngắn."
+    }
   }
 }

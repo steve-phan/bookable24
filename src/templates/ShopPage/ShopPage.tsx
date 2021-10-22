@@ -154,7 +154,7 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
                 {activeStep !== 2 ? (
                   <ButtonSt
                     variant="contained"
-                    color="primary"
+                    // color="primary"
                     onClick={handleNext}
 
                     // disabled={

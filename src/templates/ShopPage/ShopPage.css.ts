@@ -10,7 +10,7 @@ export const WrapTerminSt = styled.div`
 
 export const StepperSt = styled(Stepper)`
   margin-bottom: 10px;
-  padding: 20px 6px 30px;
+  padding: 20px 6px 20px;
 `
 
 export const StepLabelSt = styled(StepLabel)`
@@ -32,4 +32,5 @@ export const WrapRowSt = styled.div`
 export const ButtonSt = styled(Button)`
   width: 48%;
   height: 40px;
+  background: ${({ theme }) => theme.color.secondary};
 `

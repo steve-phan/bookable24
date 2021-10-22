@@ -1,8 +1,10 @@
 import "@mui/material/styles"
 declare module "@mui/material/styles" {
   export interface Theme {
-    color?: {
+    color: {
       primary: string
+      secondary: string
+      warning: string
       white: string
       gray: string
       text: string
@@ -16,8 +18,10 @@ declare module "@mui/material/styles" {
   }
   // allow configuration using `createTheme`
   export interface ThemeOptions {
-    color?: {
+    color: {
       primary: string
+      secondary: string
+      warning: string
       white: string
       gray: string
       text: string

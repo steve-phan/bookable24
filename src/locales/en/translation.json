@@ -38,5 +38,12 @@
     "item4": "Use experience Benefit from our more than 10 years of experience in online appointment booking",
     "item5": "Adapt layout Adapt the layout of your online appointment booking to your corporate design.",
     "item6": "Start for free Start now risk-free with Bookable24 Free, Bookable24 Easy or Bookable24 Profi"
+  },
+  "booking": {
+    "slot": {
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "warning": "These slots might be delayed in a short time."
+    }
   }
 }

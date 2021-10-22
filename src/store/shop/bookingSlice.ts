@@ -15,7 +15,7 @@ interface IbookingState {
 const initialBookingState: IbookingState = {
   numberOfGuest: 1,
   selectedDate: new Date(),
-  selectedSlot: 6,
+  selectedSlot: 18,
 }
 // export const setNumberOfGuest = createAction<number>("booking/number-of-guest")
 // const bookingReducers = createReducer(initialBookingState, builder => {
