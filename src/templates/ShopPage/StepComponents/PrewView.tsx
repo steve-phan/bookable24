@@ -9,6 +9,8 @@ import moment from "moment"
 import React, { useContext, useState } from "react"
 // import Loading from "../components/Loading"
 import { afternoonSlots, morningSlots } from "../utils"
+import { WrapRowSt } from "../ShopPage.css"
+
 // import { TerminContext } from "../context/contextTermin"
 
 const useStyles = makeStyles({

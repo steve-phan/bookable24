@@ -1,94 +1,65 @@
-import { TextField, Typography } from "@mui/material"
-import React, { useContext, useEffect, useState } from "react"
-// import { TerminContext } from "../../context/contextTermin"
-// import { terminTypes } from "../../context/contextTermin/terminTypes"
-import { makeStyles } from "@mui/styles"
+import React, { useRef } from "react"
 
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { setGuestInfo } from "../../../store/shop/bookingSlice"
 import { validateEmail, validatePhone } from "../utils"
-
-const useStyles = makeStyles(theme => ({
-  userInput: {
-    width: "100%",
-    maxWidth: "560px",
-    marginBottom: "20px",
-    "& label.Mui-focused": {
-      color: "#999",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#999",
-    },
-  },
-  require: {
-    fontSize: 14.5,
-    paddingLeft: 10,
-    color: "#333",
-    borderLeft: `2px solid red`,
-  },
-}))
-// .MuiFormLabel-Root.Mui-focused
+import { TextFieldSt, TypographySt } from "./StepComponents.css"
+import { WrapRowSt } from "../ShopPage.css"
 
 const InfoUser = () => {
-  const [firstName, setFirstName] = useState(null)
-  const [lastName, setLastName] = useState(null)
-  const [email, setEmail] = useState(null)
-  const [phone, setPhone] = useState(null)
-  const [require, setRequire] = useState(null)
-  const classes = useStyles()
-  // const [{}, dispatch] = useContext(TerminContext)
-  useEffect(() => {
-    if (
-      firstName &&
-      lastName &&
-      phone &&
-      email &&
-      validateEmail(email) &&
-      validatePhone(phone)
-    ) {
-      // dispatch({
-      //   type: terminTypes.SET_FILLED,
-      //   userinfo: {
-      //     firstName,
-      //     lastName,
-      //     phone,
-      //     email,
-      //   },
-      // })
-    }
+  const nRef = useRef<ReturnType<typeof setTimeout>>()
+  const dispatch = useAppDispatch()
+  const {
+    guestInfo: { firstName, lastName, email, phone, require },
+  } = useAppSelector(state => state.booking)
 
-    return () => {
-      // dispatch({
-      //   type: terminTypes.SET_OPTIONAL,
-      //   require: require,
-      // })
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    switch (event.target.name) {
+      case "firstName":
+      case "lastName":
+      case "phone":
+      case "email":
+      case "require":
+        /**
+         * @note : Can not pass event.target.name direct to setTimeout function ,
+         * that is diffirent lexical scope.
+         */
+        const key = event.target.name
+        if (nRef.current) {
+          clearTimeout(nRef.current)
+        }
+        nRef.current = setTimeout(() => {
+          dispatch(setGuestInfo([key, event.target.value]))
+          nRef.current = undefined
+        }, 300)
+
+      default:
+        break
     }
-  }, [require, phone])
-  // console.log(require);
+  }
   return (
-    <section
-      style={{
-        background: "white",
-        padding: "16px",
-      }}
-    >
-      <TextField
-        className={classes.userInput}
-        variant="outlined"
-        name="first_name"
+    <WrapRowSt>
+      <TextFieldSt
+        defaultValue={firstName}
+        variant="filled"
+        name="firstName"
         placeholder="Vorname"
         label="Vorname*"
-        // onChange={e => setFirstName(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          handleChangeInput(e)
+        }}
       />
-      <TextField
-        className={classes.userInput}
-        variant="outlined"
-        name="last_name"
+      <TextFieldSt
+        defaultValue={lastName}
+        variant="filled"
+        name="lastName"
         placeholder="Nachname"
         label="Nachname*"
-        // onChange={e => setLastName(e.target.value)}
+        onChange={handleChangeInput}
       />
-      <TextField
-        className={classes.userInput}
-        variant="outlined"
+      <TextFieldSt
+        defaultValue={email}
+        variant="filled"
         name="email"
         placeholder="johndoe@mail.com"
         label="E-Mail*"
@@ -98,11 +69,11 @@ const InfoUser = () => {
           !validateEmail(email) &&
           "Bitte geben Sie eine gültige E-Mail-Adresse ein."
         }
-        // onChange={e => setEmail(e.target.value)}
+        onChange={handleChangeInput}
       />
-      <TextField
-        className={classes.userInput}
-        variant="outlined"
+      <TextFieldSt
+        defaultValue={phone}
+        variant="filled"
         name="phone"
         placeholder="+491723567890"
         label="Telefonnummer*"
@@ -112,26 +83,24 @@ const InfoUser = () => {
           !validatePhone(phone) &&
           "Bitte geben Sie eine gültige Telefonnummer ein."
         }
-        // onChange={e => setPhone(e.target.value)}
+        onChange={handleChangeInput}
       />
-      <TextField
-        className={classes.userInput}
+      <TextFieldSt
+        defaultValue={require}
         id="outlined-multiline-static"
         label="Besondere Wünsche hinzufügen"
         multiline
         rows={4}
-        // defaultValue='Default Value'
+        name="require"
         placeholder="Sonderwünsche eingeben (ohne Gewähr)"
-        variant="outlined"
-        onChange={e => {
-          // setRequire(e.target.value)
-        }}
+        variant="filled"
+        onChange={handleChangeInput}
       />
-      <Typography className={classes.require}>
+      <TypographySt>
         Alle Felder, die mit einem Sternchen (*) gekennzeichnet sind, müssen bei
         der Anmeldung ausgefüllt werden.
-      </Typography>
-    </section>
+      </TypographySt>
+    </WrapRowSt>
   )
 }
 

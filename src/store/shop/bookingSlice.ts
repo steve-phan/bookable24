@@ -10,12 +10,26 @@ interface IbookingState {
   numberOfGuest: number
   selectedDate: Date
   selectedSlot: number
+  guestInfo: {
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    require: string
+  }
 }
 
 const initialBookingState: IbookingState = {
   numberOfGuest: 1,
   selectedDate: new Date(),
   selectedSlot: 18,
+  guestInfo: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    require: "",
+  },
 }
 // export const setNumberOfGuest = createAction<number>("booking/number-of-guest")
 // const bookingReducers = createReducer(initialBookingState, builder => {
@@ -24,6 +38,7 @@ const initialBookingState: IbookingState = {
 //     state.numberOfGuest = action.payload
 //   })
 // })
+type TGuestInfo = "firstName" | "lastName" | "email" | "phone" | "require"
 
 const bookingSlice = createSlice({
   name: "booking",
@@ -39,9 +54,16 @@ const bookingSlice = createSlice({
     setSelectedDate: (state, action) => {
       state.selectedDate = action.payload
     },
+    setGuestInfo: (state, action: PayloadAction<[TGuestInfo, string]>) => {
+      state.guestInfo[action.payload[0]] = action.payload[1]
+    },
   },
 })
-export const { setNumberOfGuest, setSelectedDate, setSelectedSlot } =
-  bookingSlice.actions
+export const {
+  setNumberOfGuest,
+  setSelectedDate,
+  setSelectedSlot,
+  setGuestInfo,
+} = bookingSlice.actions
 
 export default bookingSlice.reducer

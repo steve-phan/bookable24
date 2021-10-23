@@ -12,7 +12,7 @@ const theme = createTheme({
   color: {
     primary: "#f05123",
     secondary: "#1473e6",
-    warning: "#ffda44",
+    warning: "#d1cec3",
     white: "#ffffff",
     gray: "#666",
     text: "#202124",

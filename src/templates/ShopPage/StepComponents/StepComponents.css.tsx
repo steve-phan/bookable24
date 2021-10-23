@@ -1,12 +1,18 @@
 import * as React from "react"
 import Button, { ButtonProps } from "@mui/material/Button"
+import { TextField, Typography } from "@mui/material"
 import { alpha, styled, ThemeOptions } from "@mui/material/styles"
 
 type TButtonOptions = {
   slotActive: boolean
   slotWarning?: boolean
 }
+
 type TButton = ButtonProps & TButtonOptions
+
+/**
+ * @description : Style for SlotPicker Component
+ */
 
 export const ButtonGroupSt = styled("div")(({ theme }) => ({
   display: "flex",
@@ -59,4 +65,29 @@ export const TitleBannerSt = styled("div")(({ theme }) => ({
     background: theme.color.warning,
     transform: "translateY(7px)",
   },
+}))
+
+/**
+ * @description Style for InfoUser Component
+ */
+
+export const TextFieldSt = styled(TextField)(({ theme }) => ({
+  marginBottom: 16,
+  width: "100%",
+  maxWidth: "560px",
+  backgroundColor: theme.color.background,
+
+  "& label.Mui-focused": {
+    color: theme.color.primary,
+  },
+  "& >:after": {
+    borderBottom: `1px solid ${theme.color.primary} !important`,
+  },
+}))
+
+export const TypographySt = styled(Typography)(({ theme }) => ({
+  fontSize: 14.5,
+  paddingLeft: 10,
+  color: "#333",
+  borderLeft: `2px solid red`,
 }))
