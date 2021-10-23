@@ -23,7 +23,11 @@ const SelectDatePicker = () => {
 
   const PersonSelect = ({ numberOfGuest }: { numberOfGuest: number }) => {
     const menuItems = () =>
-      [...Array(10)].map((_, i) => <MenuItem value={i + 1}>{i + 1} </MenuItem>)
+      [...Array(10)].map((_, i) => (
+        <MenuItem key={Math.random() + i + Math.random()} value={i + 1}>
+          {i + 1}{" "}
+        </MenuItem>
+      ))
     return (
       <Box>
         <FormControl variant="standard" sx={{ minWidth: 120 }} fullWidth>

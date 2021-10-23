@@ -1,7 +1,10 @@
-import React, { useRef } from "react"
+import React, { useRef, useEffect } from "react"
 
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { setGuestInfo } from "../../../store/shop/bookingSlice"
+import {
+  setGuestInfo,
+  setGuestValidInfo,
+} from "../../../store/shop/bookingSlice"
 import { validateEmail, validatePhone } from "../utils"
 import { TextFieldSt, TypographySt } from "./StepComponents.css"
 import { WrapColSt } from "../ShopPage.css"
@@ -12,6 +15,13 @@ const InfoUser = () => {
   const {
     guestInfo: { firstName, lastName, email, phone, require },
   } = useAppSelector(state => state.booking)
+
+  useEffect(() => {
+    if (firstName && lastName && validateEmail(email) && validatePhone(phone)) {
+      dispatch(setGuestValidInfo(true))
+      console.log("everything is done")
+    }
+  }, [email, phone, firstName, lastName])
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {

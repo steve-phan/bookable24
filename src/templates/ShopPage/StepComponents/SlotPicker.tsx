@@ -12,7 +12,7 @@ import {
 } from "./StepComponents.css"
 import { WrapColSt } from "../ShopPage.css"
 
-const isWeekend = (date: Date) =>
+const isWeekend = (date: Date | null) =>
   moment(date).day() === 6 || moment(date).day() === 0
 
 const SlotPicker = () => {
@@ -58,7 +58,7 @@ const SlotPicker = () => {
         {morningSlots.map((slot, index) => {
           return (
             <ButtonSlotSt
-              slotActive={selectedSlot === index}
+              slotactive={selectedSlot === index ? true : undefined}
               key={index + slot}
               onClick={() => {
                 dispatch(setSelectedSlot(index))
@@ -83,12 +83,12 @@ const SlotPicker = () => {
           const newIndex = morningSlots?.length + index
           return (
             <ButtonSlotSt
-              slotActive={selectedSlot === newIndex}
+              slotactive={selectedSlot === newIndex ? true : undefined}
               // disabled={
               //   [13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
               //   terminsBooked[String(newIndex)] >= 2
               // }
-              slotWarning={
+              slotwarning={
                 [13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
                 isWeekend(selectedDate)
               }

@@ -6,8 +6,8 @@ import { TextField, Typography } from "@mui/material"
 import { alpha, styled, ThemeOptions } from "@mui/material/styles"
 
 type TButtonOptions = {
-  slotActive: boolean
-  slotWarning?: boolean
+  slotactive: boolean | undefined
+  slotwarning?: boolean | undefined
 }
 
 type TButton = ButtonProps & TButtonOptions
@@ -24,21 +24,21 @@ export const ButtonGroupSt = styled("div")(({ theme }) => ({
 }))
 
 export const ButtonSlotSt = styled(Button)<TButton>(
-  ({ theme, slotActive, slotWarning }) => ({
+  ({ theme, slotactive, slotwarning }) => ({
     flexBasis: "calc(33.3% - 4px)",
     border: `1px solid ${alpha(theme.color.primary, 0.3)} !important`,
     borderRadius: "4px !important",
     fontWeight: "bold",
 
-    color: slotActive ? "white" : theme.color.text,
-    background: slotActive
+    color: slotactive ? "white" : theme.color.text,
+    background: slotactive
       ? theme?.color?.primary
-      : slotWarning
+      : slotwarning
       ? theme.color.warning
       : "inherit",
 
     "&:hover": {
-      background: slotActive ? alpha(theme?.color?.primary, 0.8) : "inherit",
+      background: slotactive ? alpha(theme?.color?.primary, 0.8) : "inherit",
     },
   })
 )

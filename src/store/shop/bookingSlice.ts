@@ -8,7 +8,7 @@ import {
 
 interface IbookingState {
   numberOfGuest: number
-  selectedDate: Date
+  selectedDate: Date | null
   selectedSlot: number
   guestInfo: {
     firstName: string
@@ -17,6 +17,7 @@ interface IbookingState {
     phone: string
     require: string
   }
+  isValidInfo: boolean
 }
 
 const initialBookingState: IbookingState = {
@@ -30,6 +31,7 @@ const initialBookingState: IbookingState = {
     phone: "",
     require: "",
   },
+  isValidInfo: false,
 }
 // export const setNumberOfGuest = createAction<number>("booking/number-of-guest")
 // const bookingReducers = createReducer(initialBookingState, builder => {
@@ -51,11 +53,15 @@ const bookingSlice = createSlice({
       console.log("action", action)
       state.selectedSlot = action.payload
     },
-    setSelectedDate: (state, action) => {
+    setSelectedDate: (state, action: PayloadAction<Date | null>) => {
       state.selectedDate = action.payload
     },
     setGuestInfo: (state, action: PayloadAction<[TGuestInfo, string]>) => {
       state.guestInfo[action.payload[0]] = action.payload[1]
+    },
+    setGuestValidInfo: (state, action: PayloadAction<boolean>) => {
+      console.log("action  =>>>>", action)
+      state.isValidInfo = action.payload
     },
   },
 })
@@ -64,6 +70,7 @@ export const {
   setSelectedDate,
   setSelectedSlot,
   setGuestInfo,
+  setGuestValidInfo,
 } = bookingSlice.actions
 
 export default bookingSlice.reducer

@@ -71,10 +71,20 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
   const dispatch = useAppDispatch()
-  const { booking, shop } = useAppSelector(state => state)
+  const {
+    booking: {
+      selectedDate,
+      selectedSlot,
+      guestInfo,
+      numberOfGuest,
+      isValidInfo,
+    },
+    shop: { shopInfo },
+  } = useAppSelector(state => state)
 
-  const { selectedDate, selectedSlot, guestInfo, numberOfGuest } = booking
-  const { shopInfo } = shop
+  // const { selectedDate, selectedSlot, guestInfo, numberOfGuest, isValidInfo } =
+  //   booking
+  // const { shopInfo } = shop
 
   const { shopName } = pageContext
   const steps = getSteps()
@@ -113,6 +123,7 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
       .catch(err => console.log(err))
   }
 
+  console.log("isValidInfo", isValidInfo)
   return (
     <Layout shopInfo={shopInfo}>
       {/* {!checkShop && <Loading shopname={shopName} />} */}
@@ -161,7 +172,7 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
               Back
             </ButtonSt>
             <ButtonSt
-              // disabled={!isFilled}
+              disabled={activeStep === 2 && !isValidInfo}
               variant="contained"
               color="primary"
               onClick={() => {

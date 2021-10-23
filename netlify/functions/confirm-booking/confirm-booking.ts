@@ -12,7 +12,7 @@ const { google } = require("googleapis")
 const { Token, Appointment, Slot, tokenSchema } = require("../utils/config")
 
 // const createMailTemplate = require('./modules/create-mail-template');
-const { timeSlots } = require("./models/timeslot")
+const { timeSlots } = require("../utils/models/timeslot")
 const configTransporter = require("./transporter")
 const moment = require("moment")
 
@@ -37,7 +37,7 @@ export const handler: Handler = async function (event, context) {
   })
 
   const appointment = JSON.parse(event.body)
-  // console.log(appointment)
+  console.log(appointment)
   const {
     userinfo: { firstName, lastName, email, phone },
     selectedDate,
@@ -111,7 +111,7 @@ export const handler: Handler = async function (event, context) {
       terminId: newslot._id,
     })
 
-    await newslot.save((err, saved) => {
+    newslot.save((err, saved) => {
       Slot.find({ _id: saved._id })
         .populate("slots")
         .exec((err, slot) => {
@@ -139,25 +139,20 @@ export const handler: Handler = async function (event, context) {
           }
         })
     })
-    console.log("MONGDO DB CONNECT")
-    new Promise((resolve, reject) => {
-      transporter.sendMail(mailOptions, (error, info) => {
-        // oAuth2Client.off();
-        if (error) {
-          reject({
-            statusCode: 500,
-            body: JSON.stringify(error),
-          })
-        } else {
-          mongoose.connection.close()
-
-          resolve({
-            statusCode: 200,
-            body: "EMAIL_SENT",
-          })
-        }
-      })
+    // console.log("MONGDO DB CONNECT", transporter)
+    await transporter.sendMail(mailOptions, (error, info) => {
+      // oAuth2Client.off();
+      if (error) {
+        console.log("error ===>", error)
+      } else {
+        mongoose.connection.close()
+        console.log("success ===>")
+      }
     })
+    return {
+      statusCode: 200,
+      body: "EMAIL_SENT",
+    }
   } catch (error) {
     mongoose.connection.close()
 

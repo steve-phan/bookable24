@@ -3,6 +3,7 @@ import { Provider } from "react-redux"
 
 import { store } from "./src/store/store"
 
+window.store = store
 // eslint-disable-next-line react/display-name,react/prop-types
 export default ({ element }) => {
   // Instantiating store in `wrapRootElement` handler ensures:

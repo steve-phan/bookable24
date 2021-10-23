@@ -37,10 +37,13 @@ const intinitialShopState: IshopState = {
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
   async (shopName: string) => {
-    const response = await axios.post("/.netlify/functions/check-shop-list", {
-      shopName,
-    })
-    return response.data
+    const response: any = await axios.post(
+      "/.netlify/functions/check-shop-list",
+      {
+        shopName,
+      }
+    )
+    return response.data.shopInfo
   }
 )
 
@@ -54,6 +57,7 @@ export const shopSlice = createSlice({
         state.status = "loading"
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
+        console.log(action)
         state.status = "idle"
         state.shopInfo = action.payload
       })

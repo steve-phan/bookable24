@@ -1,4 +1,9 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit"
 
 import shopReducer from "./shop/shopSlice"
 import bookingReducer from "./shop/bookingSlice"
@@ -21,6 +26,8 @@ export const store = configureStore({
     shop: shopReducer,
     booking: bookingReducer,
   },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({ serializableCheck: false }),
 })
 
 export type RootState = ReturnType<typeof store.getState>
