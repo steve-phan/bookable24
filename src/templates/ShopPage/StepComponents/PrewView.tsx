@@ -1,5 +1,4 @@
 import Button from "@mui/material/Button"
-import Card from "@mui/material/Card"
 import CardActions from "@mui/material/CardActions"
 import CardContent from "@mui/material/CardContent"
 import { makeStyles } from "@mui/styles"
@@ -9,44 +8,20 @@ import moment from "moment"
 import React, { useContext, useState } from "react"
 // import Loading from "../components/Loading"
 import { afternoonSlots, morningSlots } from "../utils"
-import { WrapRowSt } from "../ShopPage.css"
+import { WrapColSt } from "../ShopPage.css"
+import { CardSt } from "./StepComponents.css"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 
 // import { TerminContext } from "../context/contextTermin"
 
-const useStyles = makeStyles({
-  root: {
-    // position: 'relative',
-    margin: "100px auto 0 auto",
-    width: "100%",
-    maxWidth: 600,
-    minWidth: 275,
-    // top: '50%',
-    // left: '50%',
-    // transform: 'translate(-50% ,50%)',
-    paddingBottom: 16,
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  wrapCard: {
-    padding: "10px 6px",
-    marginTop: 16,
-  },
-})
-
 const PrewView = () => {
   // console.log(props);
+
+  const dispatch = useAppDispatch()
+  const { selectedDate, selectedSlot, guestInfo, numberOfGuest } =
+    useAppSelector(state => state.booking)
   const [loading, setLoading] = useState(false)
 
-  const classes = useStyles()
   //   const [
   //     { selectedDate, selectedSlot, userinfo, person, require, shopinfo },
   //     dispatch,
@@ -64,133 +39,83 @@ const PrewView = () => {
   // }, []);
   // console.log(selectedDate);
 
-  const handleSubmit = () => {
-    const data = {
-      selectedDate = "",
-      selectedSlot = "",
-      userinfo,
-      person,
-      require,
-      shopinfo,
-    }
-    setLoading(true)
-    // const sendmailURL = '/api/sendmail';
-    axios
-      .post("/.netlify/functions/sendmail", JSON.stringify(data))
-      .then(res => {
-        if (res.data === "EMAIL_SENT") {
-          setLoading(false)
-          localStorage.setItem("termin", JSON.stringify(data))
-          alert("Successfully! Thanks")
-          //   history.push("/thanks", { customer: data })
-        }
-      })
-      .catch(err => console.log(err))
+  // const handleSubmit = () => {
+  //   const data = {
+  //     selectedDate = "",
+  //     selectedSlot = "",
+  //     userinfo,
+  //     person,
+  //     require,
+  //     shopinfo,
+  //   }
+  //   setLoading(true)
+  //   // const sendmailURL = '/api/sendmail';
+  //   axios
+  //     .post("/.netlify/functions/sendmail", JSON.stringify(data))
+  //     .then(res => {
+  //       if (res.data === "EMAIL_SENT") {
+  //         setLoading(false)
+  //         localStorage.setItem("termin", JSON.stringify(data))
+  //         alert("Successfully! Thanks")
+  //         //   history.push("/thanks", { customer: data })
+  //       }
+  //     })
+  //     .catch(err => console.log(err))
 
-    setTimeout(() => {
-      if (loading) {
-        setLoading(true)
-      }
-    }, 1500)
-  }
+  //   setTimeout(() => {
+  //     if (loading) {
+  //       setLoading(true)
+  //     }
+  //   }, 1500)
+  // }
 
   return (
-    <>
-      <Card className={classes.root} variant="outlined">
-        {(!selectedSlot.toString() || loading) && (
+    <WrapColSt>
+      {/* {(!selectedSlot.toString() || loading) && (
           <Loading shopname={shopinfo.shopname} />
-        )}
-        <CardContent>
-          <Card
-            style={{ textAlign: "center", border: "none", boxShadow: "none" }}
-            className={classes.wrapCard}
-          >
-            <Typography
-              style={{ textTransform: "uppercase", letterSpacing: 0.4 }}
-              variant="h5"
-              component="h4"
-            >
-              Your appointment
-            </Typography>
+        )} */}
 
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {shopinfo.company}
-            </Typography>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {shopinfo.street + " " + shopinfo.city + " " + shopinfo.cityCode}
-            </Typography>
-          </Card>
-          <Card className={classes.wrapCard}>
-            <Typography variant="h6" component="h5">
-              Details Info
-            </Typography>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {[...morningSlots, ...afternoonSlots][selectedSlot] +
-                " " +
-                selectedDate}
-            </Typography>
+      <CardSt style={{ border: "none", boxShadow: "none" }}>
+        <Typography
+          style={{ textTransform: "uppercase", letterSpacing: 0.4 }}
+          variant="h5"
+          component="h4"
+        >
+          Your appointment
+        </Typography>
 
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              Persons : {person}
-            </Typography>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {require}
-            </Typography>
-          </Card>
+        <Typography>{/* {shopinfo.company} */}</Typography>
+        <Typography>
+          {/* {shopinfo.street + " " + shopinfo.city + " " + shopinfo.cityCode} */}
+        </Typography>
+      </CardSt>
+      <CardSt>
+        <Typography variant="h6" component="h5">
+          Details Info
+        </Typography>
+        <Typography>
+          Time:{" "}
+          {[...morningSlots, ...afternoonSlots][selectedSlot] +
+            " " +
+            moment(selectedDate).format("dddd, DD. MMMM")}
+        </Typography>
 
-          <Card className={classes.wrapCard}>
-            <Typography variant="h6" component="h5">
-              Contact Info
-            </Typography>
+        <Typography>Persons: {numberOfGuest}</Typography>
+        <Typography>Require: {guestInfo.require}</Typography>
+      </CardSt>
 
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {userinfo.lastName + " " + userinfo.firstName}
-            </Typography>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {userinfo.email + " " + userinfo.phone}
-            </Typography>
-          </Card>
-        </CardContent>
-        <CardActions style={{ padding: 16 }}>
-          <Button
-            style={{ width: "100%" }}
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-          >
-            Book
-          </Button>
-        </CardActions>
-      </Card>
-    </>
+      <CardSt>
+        <Typography variant="h6" component="h5">
+          Contact Info
+        </Typography>
+
+        <Typography>
+          Name: {guestInfo.lastName + " " + guestInfo.firstName}
+        </Typography>
+        <Typography>Email: {guestInfo.email}</Typography>
+        <Typography>Phone: {guestInfo.phone}</Typography>
+      </CardSt>
+    </WrapColSt>
   )
 }
 

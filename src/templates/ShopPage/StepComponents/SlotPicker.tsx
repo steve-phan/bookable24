@@ -10,7 +10,7 @@ import {
   ButtonSlotSt,
   TitleBannerSt,
 } from "./StepComponents.css"
-import { WrapRowSt } from "../ShopPage.css"
+import { WrapColSt } from "../ShopPage.css"
 
 const isWeekend = (date: Date) =>
   moment(date).day() === 6 || moment(date).day() === 0
@@ -21,6 +21,8 @@ const SlotPicker = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { selectedSlot, selectedDate } = useAppSelector(state => state.booking)
+  // const [{ selectedSlot, selectedDate }, dispatch] = useContext(TerminContext)
+  // console.log(selectedDate);
   // useEffect(() => {
   //   if (isWeekend(selectedDate)) {
   //     const formatDate = moment(
@@ -44,9 +46,10 @@ const SlotPicker = () => {
   //     setLoading(false)
   //   }
   // }, [])
-
+  // console.log("selectedSlot", selectedSlot)
+  console.log("classes", moment(selectedDate).day())
   return (
-    <WrapRowSt>
+    <WrapColSt>
       {/* {loading && <Loading />} */}
       <TitleBannerSt>
         <h5>{t("booking.slot.lunch")}</h5>
@@ -104,7 +107,7 @@ const SlotPicker = () => {
           )
         })}
       </ButtonGroupSt>
-    </WrapRowSt>
+    </WrapColSt>
   )
 }
 

@@ -1,5 +1,7 @@
 import * as React from "react"
 import Button, { ButtonProps } from "@mui/material/Button"
+import Card from "@mui/material/Card"
+
 import { TextField, Typography } from "@mui/material"
 import { alpha, styled, ThemeOptions } from "@mui/material/styles"
 
@@ -91,3 +93,28 @@ export const TypographySt = styled(Typography)(({ theme }) => ({
   color: "#333",
   borderLeft: `2px solid red`,
 }))
+
+/**
+ * @description Preview
+ *
+ */
+
+export const CardSt = styled(Card)(({ theme }) => ({
+  padding: "16px 8px",
+  marginBottom: 16,
+  "& h5": {
+    width: "fit-content",
+    fontSize: 20,
+    lineHeight: "21px",
+    borderBottom: `2px solid ${theme.color.warning}`,
+    marginBottom: 6,
+  },
+  "& p": {
+    fontSize: 16,
+  },
+}))
+
+// `
+//   padding: 16px 8px;
+//   margin-bottom: 16px;
+// `

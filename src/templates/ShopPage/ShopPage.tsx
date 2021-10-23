@@ -4,7 +4,8 @@ import Step from "@mui/material/Step"
 import StepLabel from "@mui/material/StepLabel"
 import { makeStyles } from "@mui/styles"
 import { graphql } from "gatsby"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import axios from "axios"
 
 import Layout from "../../components/Layout/Layout"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
@@ -66,19 +67,21 @@ function getSteps() {
   ]
 }
 
-// const [skipped, setSkipped] = React.useState(new Set());
-// const [{ selectedSlot, isFilled }, dispatch] = useContext(TerminContext);
-// console.log(selectedDate);
-
 const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
-  const [shopInfo, setShopInfo] = useState(null)
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
   const dispatch = useAppDispatch()
-  const x = useAppSelector(state => state)
-  console.log("get Store", x)
+  const { booking, shop } = useAppSelector(state => state)
+
+  const { selectedDate, selectedSlot, guestInfo, numberOfGuest } = booking
+  const { shopInfo } = shop
+
   const { shopName } = pageContext
   const steps = getSteps()
+
+  useEffect(() => {
+    dispatch(getShopinfo(shopName))
+  }, [])
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
@@ -88,15 +91,30 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
     setActiveStep(prevActiveStep => prevActiveStep - 1)
   }
 
-  const handleReset = () => {
-    setActiveStep(0)
+  const handleConfirmSubmit = () => {
+    const dataBooking = {
+      selectedDate,
+      selectedSlot,
+      userinfo: { ...guestInfo },
+      person: numberOfGuest,
+      require: guestInfo.require,
+      shopinfo: shopInfo,
+    }
+    axios
+      .post("/.netlify/functions/confirm-booking", JSON.stringify(dataBooking))
+      .then(res => {
+        if (res.data === "EMAIL_SENT") {
+          // setLoading(false)
+          localStorage.setItem("termin", JSON.stringify(data))
+          alert("Successfully! Thanks")
+          // history.push("/thanks", { customer: data })
+        }
+      })
+      .catch(err => console.log(err))
   }
 
   return (
-    <Layout
-      //  className={classes.wrap}
-      shopInfo={shopInfo}
-    >
+    <Layout shopInfo={shopInfo}>
       {/* {!checkShop && <Loading shopname={shopName} />} */}
       {/* <Loading shopname={shopName} /> */}
       <WrapTerminSt>
@@ -132,65 +150,33 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
           })}
         </StepperSt>
         <>
-          {activeStep === steps.length ? (
-            <>
-              <Typography className={classes.instructions}>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Button onClick={handleReset}>Reset</Button>
-            </>
-          ) : (
-            <>
-              {getStepContent(activeStep)}
-              <WrapRowSt>
-                <ButtonSt
-                  disabled={activeStep === 0}
-                  variant="contained"
-                  color="primary"
-                  onClick={handleBack}
-                >
-                  Back
-                </ButtonSt>
-                {activeStep !== 2 ? (
-                  <ButtonSt
-                    variant="contained"
-                    // color="primary"
-                    onClick={handleNext}
-
-                    // disabled={
-                    //   activeStep === 1 &&
-                    //   (selectedSlot === 0 ? false : !selectedSlot)
-                    // }
-                  >
-                    Next
-                  </ButtonSt>
-                ) : (
-                  <ButtonSt
-                    // disabled={!isFilled}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      // history.push(`/${shopName}/preview`)
-                    }}
-                  >
-                    Preview
-                  </ButtonSt>
-                )}
-              </WrapRowSt>
-            </>
-          )}
+          {getStepContent(activeStep)}
+          <WrapRowSt>
+            <ButtonSt
+              disabled={activeStep === 0}
+              variant="contained"
+              color="primary"
+              onClick={handleBack}
+            >
+              Back
+            </ButtonSt>
+            <ButtonSt
+              // disabled={!isFilled}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                if (activeStep < 3) {
+                  handleNext()
+                } else {
+                  handleConfirmSubmit()
+                }
+              }}
+            >
+              {activeStep < 2 ? "Next" : activeStep === 2 ? "Preview" : "Book"}
+            </ButtonSt>
+          </WrapRowSt>
         </>
       </WrapTerminSt>
-
-      <button
-        style={{
-          padding: 30,
-        }}
-        onClick={() => dispatch(getShopinfo(shopName))}
-      >
-        {" "}
-        Fetch Data{" "}
-      </button>
     </Layout>
   )
 }

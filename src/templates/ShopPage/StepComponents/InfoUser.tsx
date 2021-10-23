@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { setGuestInfo } from "../../../store/shop/bookingSlice"
 import { validateEmail, validatePhone } from "../utils"
 import { TextFieldSt, TypographySt } from "./StepComponents.css"
-import { WrapRowSt } from "../ShopPage.css"
+import { WrapColSt } from "../ShopPage.css"
 
 const InfoUser = () => {
   const nRef = useRef<ReturnType<typeof setTimeout>>()
@@ -38,7 +38,7 @@ const InfoUser = () => {
     }
   }
   return (
-    <WrapRowSt>
+    <WrapColSt>
       <TextFieldSt
         defaultValue={firstName}
         variant="filled"
@@ -100,7 +100,7 @@ const InfoUser = () => {
         Alle Felder, die mit einem Sternchen (*) gekennzeichnet sind, müssen bei
         der Anmeldung ausgefüllt werden.
       </TypographySt>
-    </WrapRowSt>
+    </WrapColSt>
   )
 }
 

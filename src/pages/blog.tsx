@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     height: "100%",
   },
   title: {
-    height: 60,
+    height: 63,
     overflow: "hidden",
   },
   description: {

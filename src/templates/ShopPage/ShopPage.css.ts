@@ -29,6 +29,9 @@ export const WrapRowSt = styled("div")`
   padding: 10px 8px;
   margin: 20px auto;
 `
+export const WrapColSt = styled("div")`
+  padding: 16px 8px;
+`
 
 export const ButtonSt = styled(Button)`
   width: 48%;
