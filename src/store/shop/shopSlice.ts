@@ -57,7 +57,6 @@ export const shopSlice = createSlice({
         state.status = "loading"
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
-        console.log(action)
         state.status = "idle"
         state.shopInfo = action.payload
       })

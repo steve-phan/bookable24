@@ -114,7 +114,12 @@ export const CardSt = styled(Card)(({ theme }) => ({
   },
 }))
 
-// `
-//   padding: 16px 8px;
-//   margin-bottom: 16px;
-// `
+/**
+ * @description Thankyou Component
+ */
+
+export const ThankYouSt = styled("div")(({ theme }) => ({
+  paddingTop: 100,
+  textAlign: "center",
+  lineHeight: "26px",
+}))

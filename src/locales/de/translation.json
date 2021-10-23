@@ -9,7 +9,7 @@
   "menu": {
     "Home": "StartSeite",
     "Services": "Services",
-    "Contact": "Kontackt",
+    "Contact": "Kontakt",
     "Blog": "Blog",
     "About": "Über uns"
   },
@@ -44,5 +44,9 @@
       "dinner": "Abendessen",
       "warning": "Diese Slots können sich in kurzer Zeit verzögern."
     }
+  },
+  "thankyou": {
+    "thank": "Vielen Dank,",
+    "text": "Wir haben eine Confirm-EMail gesendet an: "
   }
 }

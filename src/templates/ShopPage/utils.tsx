@@ -4,6 +4,7 @@ import SlotPicker from "./StepComponents/SlotPicker"
 import InfoUser from "./StepComponents/InfoUser"
 import moment from "moment"
 import PrewView from "./StepComponents/PrewView"
+import ThankYou from "./StepComponents/ThankYou"
 
 export const checkDisableDate = (day: Date) => {
   return (
@@ -22,6 +23,8 @@ export const getStepContent = (step: number): ReactElement => {
       return <InfoUser />
     case 3:
       return <PrewView />
+    case 4:
+      return <ThankYou />
     default:
       return <h1>User Info </h1>
   }

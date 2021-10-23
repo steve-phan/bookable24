@@ -76,13 +76,13 @@ const PrewView = () => {
         )} */}
 
       <CardSt style={{ border: "none", boxShadow: "none" }}>
-        <Typography
+        {/* <Typography
           style={{ textTransform: "uppercase", letterSpacing: 0.4 }}
           variant="h5"
           component="h4"
         >
           Your appointment
-        </Typography>
+        </Typography> */}
 
         <Typography>{/* {shopinfo.company} */}</Typography>
         <Typography>

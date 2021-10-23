@@ -47,7 +47,6 @@ const SlotPicker = () => {
   //   }
   // }, [])
   // console.log("selectedSlot", selectedSlot)
-  console.log("classes", moment(selectedDate).day())
   return (
     <WrapColSt>
       {/* {loading && <Loading />} */}
@@ -74,7 +73,7 @@ const SlotPicker = () => {
         <h5>{t("booking.slot.dinner")}</h5>
         {selectedDate && isWeekend(selectedDate) ? (
           <span>
-            <strong></strong> {t("booking.slot.warning")}
+            {t("booking.slot.warning")} <strong></strong>
           </span>
         ) : null}
       </TitleBannerSt>

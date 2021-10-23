@@ -50,7 +50,6 @@ const bookingSlice = createSlice({
       state.numberOfGuest = action.payload
     },
     setSelectedSlot: (state, action: PayloadAction<number>) => {
-      console.log("action", action)
       state.selectedSlot = action.payload
     },
     setSelectedDate: (state, action: PayloadAction<Date | null>) => {
@@ -60,7 +59,6 @@ const bookingSlice = createSlice({
       state.guestInfo[action.payload[0]] = action.payload[1]
     },
     setGuestValidInfo: (state, action: PayloadAction<boolean>) => {
-      console.log("action  =>>>>", action)
       state.isValidInfo = action.payload
     },
   },

@@ -44,5 +44,9 @@
       "dinner": "Dinner",
       "warning": "Các vị trí này có thể bị trì hoãn trong một thời gian ngắn."
     }
+  },
+  "thankyou": {
+    "thank": "Cảm ơn,",
+    "text": "Chúng tôi đã gửi một Confirm-EMail đến: "
   }
 }

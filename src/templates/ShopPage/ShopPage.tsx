@@ -6,6 +6,8 @@ import { makeStyles } from "@mui/styles"
 import { graphql } from "gatsby"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image"
+import Loading from "../../components/Loading/Loading"
 
 import Layout from "../../components/Layout/Layout"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
@@ -25,6 +27,7 @@ import {
   ButtonSt,
 } from "./ShopPage.css"
 import { getStepContent } from "./utils"
+import ShopLogo from "./ShopLogo/ShopLogo"
 interface IShopPageProps {
   pageContext: {
     shopName: string
@@ -48,12 +51,7 @@ const useStyles = makeStyles(theme => ({
     // marginTop: theme.spacing(1),
     // marginBottom: theme.spacing(1),
   },
-  shopInfo: {
-    padding: 16,
-    background: "white",
-    textAlign: "center",
-    borderBottom: `1px solid  yellow`,
-  },
+
   shopName: {
     fontSize: 32,
   },
@@ -81,6 +79,7 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
     },
     shop: { shopInfo },
   } = useAppSelector(state => state)
+  // const image = getImage(data.contentfulShopInfo.logo) as IGatsbyImageData
 
   // const { selectedDate, selectedSlot, guestInfo, numberOfGuest, isValidInfo } =
   //   booking
@@ -100,6 +99,9 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1)
   }
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  useEffect(() => {}, [isLoading])
 
   const handleConfirmSubmit = () => {
     const dataBooking = {
@@ -110,82 +112,86 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
       require: guestInfo.require,
       shopinfo: shopInfo,
     }
+    setIsLoading(true)
     axios
       .post("/.netlify/functions/confirm-booking", JSON.stringify(dataBooking))
       .then(res => {
         if (res.data === "EMAIL_SENT") {
           // setLoading(false)
-          localStorage.setItem("termin", JSON.stringify(data))
-          alert("Successfully! Thanks")
+          // localStorage.setItem("termin", JSON.stringify(data))
+          // alert("Successfully! Thanks")
           // history.push("/thanks", { customer: data })
+          setIsLoading(false)
+          handleNext()
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err)
+        setIsLoading(false)
+      })
   }
-
-  console.log("isValidInfo", isValidInfo)
   return (
-    <Layout shopInfo={shopInfo}>
+    <Layout>
       {/* {!checkShop && <Loading shopname={shopName} />} */}
-      {/* <Loading shopname={shopName} /> */}
+      {isLoading && <Loading />}
       <WrapTerminSt>
-        <Container className={classes.shopInfo}>
-          <Typography className={classes.shopName}>
-            {/* {getLogo(shopName)} */}
-          </Typography>
-          {/* <Typography className={classes.shopAddress}>
-          {shopInfo?.street} <br />
-          {shopInfo?.cityCode + ' ' + shopInfo?.city}
-        </Typography> */}
-        </Container>
-        <StepperSt activeStep={activeStep}>
-          {steps.map((label, index) => {
-            const stepProps = {}
-            const labelProps = {}
+        <ShopLogo shopinfo={data.contentfulShopInfo} />
+        {activeStep !== 4 && (
+          <StepperSt activeStep={activeStep}>
+            {steps.map((label, index) => {
+              const stepProps = {}
+              const labelProps = {}
 
-            return (
-              <Step
-                style={{ padding: 0, width: "33.3333%" }}
-                key={label}
-                {...stepProps}
-              >
-                <StepLabelSt
-                  // className={classes.stepLabel}
-                  StepIconComponent={ColorlibStepIcon}
-                  {...labelProps}
+              return (
+                <Step
+                  style={{ padding: 0, width: "33.3333%" }}
+                  key={label}
+                  {...stepProps}
                 >
-                  {label}
-                </StepLabelSt>
-              </Step>
-            )
-          })}
-        </StepperSt>
+                  <StepLabelSt
+                    // className={classes.stepLabel}
+                    StepIconComponent={ColorlibStepIcon}
+                    {...labelProps}
+                  >
+                    {label}
+                  </StepLabelSt>
+                </Step>
+              )
+            })}
+          </StepperSt>
+        )}
         <>
           {getStepContent(activeStep)}
-          <WrapRowSt>
-            <ButtonSt
-              disabled={activeStep === 0}
-              variant="contained"
-              color="primary"
-              onClick={handleBack}
-            >
-              Back
-            </ButtonSt>
-            <ButtonSt
-              disabled={activeStep === 2 && !isValidInfo}
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                if (activeStep < 3) {
-                  handleNext()
-                } else {
-                  handleConfirmSubmit()
-                }
-              }}
-            >
-              {activeStep < 2 ? "Next" : activeStep === 2 ? "Preview" : "Book"}
-            </ButtonSt>
-          </WrapRowSt>
+          {activeStep !== 4 && (
+            <WrapRowSt>
+              <ButtonSt
+                disabled={activeStep === 0}
+                variant="contained"
+                color="primary"
+                onClick={handleBack}
+              >
+                Back
+              </ButtonSt>
+              <ButtonSt
+                disabled={activeStep === 2 && !isValidInfo}
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  if (activeStep < 3) {
+                    handleNext()
+                  } else {
+                    handleConfirmSubmit()
+                  }
+                }}
+              >
+                {activeStep < 2
+                  ? "Next"
+                  : activeStep === 2
+                  ? "Preview"
+                  : "Book"}
+              </ButtonSt>
+            </WrapRowSt>
+          )}
         </>
       </WrapTerminSt>
     </Layout>
@@ -195,7 +201,7 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
 export default ShopPage
 
 export const query = graphql`
-  query ($language: String!) {
+  query ($language: String!, $shopName: String!) {
     locales: allLocale(filter: { language: { eq: $language } }) {
       edges {
         node {
@@ -203,6 +209,16 @@ export const query = graphql`
           data
           language
         }
+      }
+    }
+    contentfulShopInfo(shopId: { eq: $shopName }) {
+      email
+      shopName
+      shopId
+      phone
+      address
+      logo {
+        gatsbyImageData(width: 100, cornerRadius: 3)
       }
     }
   }
