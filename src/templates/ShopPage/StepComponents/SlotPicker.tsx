@@ -21,8 +21,6 @@ const SlotPicker = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { selectedSlot, selectedDate } = useAppSelector(state => state.booking)
-  // const [{ selectedSlot, selectedDate }, dispatch] = useContext(TerminContext)
-  // console.log(selectedDate);
   // useEffect(() => {
   //   if (isWeekend(selectedDate)) {
   //     const formatDate = moment(

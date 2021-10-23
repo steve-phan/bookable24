@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import styled from "styled-components"
+import { styled } from "@mui/material/styles"
 
 import BackgroundImage from "gatsby-background-image"
 

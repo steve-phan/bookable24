@@ -18,6 +18,12 @@ export interface IshopState {
   shopInfo: IshopInfo | unknown
   status: "idle" | "loading" | "failed"
 }
+
+export interface Iaccount {
+  email: string
+  password: string
+}
+
 const intinitialShopState: IshopState = {
   shopInfo: {
     city: "",

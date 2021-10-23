@@ -46,7 +46,7 @@
     }
   },
   "thankyou": {
-    "thank": "Vielen Dank,",
+    "thank": "Vielen Dank, ",
     "text": "Wir haben eine Confirm-EMail gesendet an: "
   }
 }

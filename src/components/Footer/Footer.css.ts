@@ -1,6 +1,6 @@
-import styled from "styled-components"
+import { styled } from "@mui/material/styles"
 
-export const FooterSt = styled.div`
+export const FooterSt = styled("div")`
   width: 100%;
   float: left;
   text-align: center;

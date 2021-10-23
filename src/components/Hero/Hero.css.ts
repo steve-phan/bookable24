@@ -1,6 +1,6 @@
-import styled from "styled-components"
+import { styled } from "@mui/material/styles"
 
-export const RedShape = styled.div`
+export const RedShape = styled("div")`
   width: 200px;
   height: 200px;
   background-image: url("/static/de.png");

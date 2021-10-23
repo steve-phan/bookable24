@@ -1,22 +1,26 @@
 import { graphql } from "gatsby"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
+import { PageProps } from "gatsby"
+
 import Layout from "../components/Layout/Layout"
+import SignIn from "../components/Account/SignIn/SignIn"
 import SEO from "../components/seo"
 
-const Contact = () => {
+const Login: React.FC<PageProps> = ({ location, data }) => {
   const { t } = useTranslation()
 
   return (
-    <Layout>
-      <SEO title="Contact" />
+    <Layout location={location}>
+      <SEO title="Login BookAble24" />
 
-      <h1>vietappeu@gmail.com </h1>
+      <SignIn />
     </Layout>
   )
 }
 
-export default Contact
+export default Login
+
 export const query = graphql`
   query ($language: String!) {
     locales: allLocale(filter: { language: { eq: $language } }) {

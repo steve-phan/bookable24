@@ -1,5 +1,5 @@
 import { Link } from "gatsby-plugin-react-i18next"
-import styled from "styled-components"
+import { styled } from "@mui/material/styles"
 
 export const PageLinkSt = styled(Link)`
   color: inherit;
@@ -41,7 +41,7 @@ export const LoginButton = styled(CTAButtons)`
   margin: 0 auto;
 `
 
-export const WrapLoginSt = styled.div`
+export const WrapLoginSt = styled("div")`
   display: flex;
   place-items: center;
   padding: 10px 28px;

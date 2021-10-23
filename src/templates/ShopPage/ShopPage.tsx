@@ -13,6 +13,7 @@ import Layout from "../../components/Layout/Layout"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { getShopinfo } from "../../store/shop/shopSlice"
 import ColorlibStepIcon from "./ColorlibStepIcon"
+import SEO from "../../components/seo"
 // import Loading from '../components/Loading';
 // import DatePicker from '../components/TerminSteps/DatePicker';
 // import InfoUser from '../components/TerminSteps/InfoUser';
@@ -132,6 +133,7 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   }
   return (
     <Layout>
+      <SEO title="Booking Online System" />
       {/* {!checkShop && <Loading shopname={shopName} />} */}
       {isLoading && <Loading />}
       <WrapTerminSt>

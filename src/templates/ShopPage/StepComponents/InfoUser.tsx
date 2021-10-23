@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import {
   setGuestInfo,
   setGuestValidInfo,
+  TGuestInfo,
 } from "../../../store/shop/bookingSlice"
 import { validateEmail, validatePhone } from "../utils"
 import { TextFieldSt, TypographySt } from "./StepComponents.css"
@@ -23,30 +24,16 @@ const InfoUser = () => {
     }
   }, [email, phone, firstName, lastName])
 
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    switch (event.target.name) {
-      case "firstName":
-      case "lastName":
-      case "phone":
-      case "email":
-      case "require":
-        /**
-         * @note : Can not pass event.target.name direct to setTimeout function ,
-         * that is diffirent lexical scope.
-         */
-        const key = event.target.name
-        if (nRef.current) {
-          clearTimeout(nRef.current)
-        }
-        nRef.current = setTimeout(() => {
-          dispatch(setGuestInfo([key, event.target.value]))
-          nRef.current = undefined
-        }, 300)
-
-      default:
-        break
+  const handleChangeInput =
+    (key: TGuestInfo) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (nRef.current) {
+        clearTimeout(nRef.current)
+      }
+      nRef.current = setTimeout(() => {
+        dispatch(setGuestInfo([key, event.target.value]))
+        nRef.current = undefined
+      }, 300)
     }
-  }
   return (
     <WrapColSt>
       <TextFieldSt
@@ -55,9 +42,7 @@ const InfoUser = () => {
         name="firstName"
         placeholder="Vorname"
         label="Vorname*"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          handleChangeInput(e)
-        }}
+        onChange={handleChangeInput("firstName")}
       />
       <TextFieldSt
         defaultValue={lastName}
@@ -65,7 +50,7 @@ const InfoUser = () => {
         name="lastName"
         placeholder="Nachname"
         label="Nachname*"
-        onChange={handleChangeInput}
+        onChange={handleChangeInput("lastName")}
       />
       <TextFieldSt
         defaultValue={email}
@@ -79,7 +64,7 @@ const InfoUser = () => {
           !validateEmail(email) &&
           "Bitte geben Sie eine gültige E-Mail-Adresse ein."
         }
-        onChange={handleChangeInput}
+        onChange={handleChangeInput("email")}
       />
       <TextFieldSt
         defaultValue={phone}
@@ -93,7 +78,7 @@ const InfoUser = () => {
           !validatePhone(phone) &&
           "Bitte geben Sie eine gültige Telefonnummer ein."
         }
-        onChange={handleChangeInput}
+        onChange={handleChangeInput("phone")}
       />
       <TextFieldSt
         defaultValue={require}
@@ -104,7 +89,7 @@ const InfoUser = () => {
         name="require"
         placeholder="Sonderwünsche eingeben (ohne Gewähr)"
         variant="filled"
-        onChange={handleChangeInput}
+        onChange={handleChangeInput("require")}
       />
       <TypographySt>
         Alle Felder, die mit einem Sternchen (*) gekennzeichnet sind, müssen bei

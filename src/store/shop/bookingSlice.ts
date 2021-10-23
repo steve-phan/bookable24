@@ -40,7 +40,12 @@ const initialBookingState: IbookingState = {
 //     state.numberOfGuest = action.payload
 //   })
 // })
-type TGuestInfo = "firstName" | "lastName" | "email" | "phone" | "require"
+export type TGuestInfo =
+  | "firstName"
+  | "lastName"
+  | "email"
+  | "phone"
+  | "require"
 
 const bookingSlice = createSlice({
   name: "booking",

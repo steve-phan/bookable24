@@ -42,6 +42,9 @@ const Layout = ({ children, location }: any) => {
         <Container
           style={{
             padding: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
           disableGutters
           maxWidth={false}

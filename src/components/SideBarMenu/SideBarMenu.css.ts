@@ -1,7 +1,7 @@
 import { Link } from "gatsby-plugin-react-i18next"
-import styled from "styled-components"
+import { styled } from "@mui/material/styles"
 
-export const SideBarMenuSt = styled.div`
+export const SideBarMenuSt = styled("div")`
   position: relative;
   width: 210px;
   height: auto;
@@ -10,7 +10,7 @@ export const SideBarMenuSt = styled.div`
   min-height: 800px;
 `
 
-export const MenuSt = styled.div`
+export const MenuSt = styled("div")`
   overflow: visible;
   white-space: nowrap;
   width: 100%;

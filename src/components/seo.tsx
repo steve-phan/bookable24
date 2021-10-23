@@ -6,11 +6,18 @@
  */
 
 import * as React from "react"
-import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, PageProps } from "gatsby"
 
-function Seo({ description, lang, meta, title }: any) {
+function Seo({
+  description = "Online Booking System for Restaurant, Nail, Doctor",
+  lang,
+  meta = {
+    name: `Website:https://vietapp.eu`,
+    content: "BookAble24 Termin Online System",
+  },
+  title,
+}: any) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -31,7 +38,7 @@ function Seo({ description, lang, meta, title }: any) {
   return (
     <Helmet
       htmlAttributes={{
-        lang,
+        lang: "en",
       }}
       title={title}
       titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
@@ -58,7 +65,7 @@ function Seo({ description, lang, meta, title }: any) {
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata?.author || ``,
+          content: site.siteMetadata?.author || `Steve Phan`,
         },
         {
           name: `twitter:title`,
@@ -71,19 +78,6 @@ function Seo({ description, lang, meta, title }: any) {
       ].concat(meta)}
     />
   )
-}
-
-Seo.defaultProps = {
-  lang: `en`,
-  meta: [],
-  description: ``,
-}
-
-Seo.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string.isRequired,
 }
 
 export default Seo
