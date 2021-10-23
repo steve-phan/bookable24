@@ -8,7 +8,6 @@ const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mo
 
 const handler: Handler = async event => {
   const { shopName } = event.body && JSON.parse(event.body)
-  console.log(JSON.parse(event.body))
 
   try {
     await mongoose.connect(url, {

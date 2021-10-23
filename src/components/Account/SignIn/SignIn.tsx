@@ -1,34 +1,25 @@
-import { Button, Container, Typography } from "@mui/material"
-import { makeStyles } from "@mui/styles"
-import axios from "axios"
-import React, { useContext, useState } from "react"
-import { Link, useTranslation } from "gatsby-plugin-react-i18next"
-import Box from "@mui/material/Box"
-import IconButton from "@mui/material/IconButton"
-import Input from "@mui/material/Input"
-import FilledInput from "@mui/material/FilledInput"
-import OutlinedInput from "@mui/material/OutlinedInput"
-import InputLabel from "@mui/material/InputLabel"
-import InputAdornment from "@mui/material/InputAdornment"
-import FormHelperText from "@mui/material/FormHelperText"
-import FormControl from "@mui/material/FormControl"
-import TextField from "@mui/material/TextField"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { WrapColSt } from "./SignIn.css"
-import {
-  TextFieldSt,
-  FormControlSt,
-  TypographySt,
-  ButtonSt,
-} from "../Account.css"
+import { Typography } from "@mui/material"
+import FilledInput from "@mui/material/FilledInput"
+import IconButton from "@mui/material/IconButton"
+import InputAdornment from "@mui/material/InputAdornment"
+import InputLabel from "@mui/material/InputLabel"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import { Link } from "gatsby-plugin-react-i18next"
+import React from "react"
+import axios from "axios"
 
 import { auth } from "../../../firebase"
-// import { ShopInfo } from "../../store/"
-// import { auth } from "../../firebase"
-// import { sortedTermin, validateEmail } from "../../utils"
-// import Loading from "../Loading"
+import {
+  ButtonSt,
+  FormControlSt,
+  TextFieldSt,
+  TypographySt,
+} from "../Account.css"
+import { WrapColSt } from "./SignIn.css"
+
+import { useShopname } from "../accountHook"
 
 interface IloginStates {
   email: string
@@ -37,76 +28,14 @@ interface IloginStates {
   loading: boolean
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-  },
-  wrapComponent: {
-    background: "white",
-    paddingTop: 26,
-    paddingBottom: 32,
-    borderRadius: 4,
-  },
-  userInput: {
-    width: "100%",
-    maxWidth: "560px",
-    marginBottom: "22px",
-    marginTop: 26,
-    fontSize: 14,
-    // [theme.breakpoints.down('sm')]: {
-    //   fontSize: 16,
-    // },
-    "& label.Mui-focused": {
-      color: "#999",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#999",
-    },
-  },
-  require: {
-    fontSize: 14.5,
-    paddingLeft: 10,
-    color: "#333",
-    // borderLeft: `2px solid ${theme.palette.highlight}`,
-  },
-  helperInput: {
-    marginTop: -10,
-    color: "#f44336",
-  },
-  btnSignup: {
-    marginTop: 36,
-    width: "100%",
-    // [theme.breakpoints.down("sm")]: {
-    //   width: "100%",
-    // },
-  },
-}))
-
 const SignIn = () => {
-  const classes = useStyles()
-  //   const [{ password, email, isValid, isShopLogged }, dispatch] =
-  //     useContext(ShopContext)
-  const initialState = {
-    email: "",
-    password: "",
-    showPassword: false,
-    loading: false,
-  }
-  const [inputState, setInputState] = useState(initialState)
-  const handleInput = (e: any) => {
-    setInputState(preState => {
-      return {
-        ...preState,
-        [e.target.name]: e.target.value,
-      }
-    })
-  }
   const [values, setValues] = React.useState<IloginStates>({
     email: "",
     password: "",
     showPassword: false,
     loading: false,
   })
+  const shopList = useShopname()
 
   const handleChange =
     (prop: keyof IloginStates) =>
@@ -133,11 +62,34 @@ const SignIn = () => {
   //   isShopLogged && history.push('/dashboard');
   // }, [isShopLogged]);
 
-  const handleShopLogin = () => {
-    setInputState({
-      ...inputState,
+  const handleShopLogin = async () => {
+    setValues({
+      ...values,
       loading: true,
     })
+    try {
+      const userRef = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      )
+      const shopname =
+        Boolean(userRef) &&
+        shopList?.find(
+          (shop: { email: string; shopId: string }) =>
+            shop.email === values.email
+        )?.shopId
+      console.log("email", values.email)
+      const res = await axios.get("/.netlify/functions/get-shop-termins", {
+        headers: {
+          shopemail: values.email,
+          shopname: shopname,
+        },
+      })
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
     // auth
     //   .signInWithEmailAndPassword(inputState.email, inputState.password)
     //   .then(async user => {
@@ -182,7 +134,7 @@ const SignIn = () => {
       </TypographySt>
       <TextFieldSt
         fullWidth
-        value={inputState.email}
+        value={values.email}
         variant="filled"
         name="email"
         placeholder="johndoe@mail.com"
@@ -193,7 +145,7 @@ const SignIn = () => {
         //     !validateEmail(inputState.email) &&
         //     "Enter a valid email address"
         //   }
-        onChange={handleInput}
+        onChange={handleChange("email")}
       />
       <FormControlSt fullWidth variant="filled">
         <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>

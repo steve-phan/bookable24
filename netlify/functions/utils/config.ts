@@ -69,4 +69,5 @@ module.exports = {
   RequestInfo,
   appointmentSchema,
   tokenSchema,
+  shopinfoSchema,
 }
