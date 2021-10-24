@@ -1,20 +1,18 @@
 require("dotenv").config()
 import { Handler } from "@netlify/functions"
 
-import nodemailer from "nodemailer"
-import path from "path"
 // const nodemailer = require('nodemailer')
 // const path = require("path")
 // const hbs = require("nodemailer-express-handlebars")
-const mongoose = require("mongoose")
-const { google } = require("googleapis")
+import mongoose, { Document } from "mongoose"
+import { google } from "googleapis"
 // const { Appointment, Slot } = require('./models/schema');
-const { Token, Appointment, Slot, tokenSchema } = require("../utils/config")
+import { Token, Appointment, Slot, tokenSchema } from "../utils/config"
 
 // const createMailTemplate = require('./modules/create-mail-template');
-const { timeSlots } = require("../utils/models/timeslot")
-const configTransporter = require("./transporter")
-const moment = require("moment")
+import { timeSlots } from "../utils/models/timeslot"
+import configTransporter from "./transporter"
+import moment from "moment"
 
 export const handler: Handler = async function (event, context) {
   if (event.httpMethod === "GET") {
@@ -37,7 +35,6 @@ export const handler: Handler = async function (event, context) {
   })
 
   const appointment = JSON.parse(event.body)
-  console.log(appointment)
   const {
     userinfo: { firstName, lastName, email, phone },
     selectedDate,
@@ -49,19 +46,23 @@ export const handler: Handler = async function (event, context) {
 
   try {
     const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${shopname}?retryWrites=true&w=majority`
-    await mongoose.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      // useFindAndModify: false,
-      // useCreateIndex: true,
-    })
+    await mongoose.connect(url)
+
+    interface IToken {
+      _id?: unknown
+      expiry?: string
+      token?: string
+    }
+    type TTokenData = Document<any, any, unknown> & IToken
 
     let validToken = null
     const tokenDB = mongoose.connection.useDb("token")
-    const tokenData = await tokenDB.model("token", tokenSchema).find({})
+    const tokenData: TTokenData[] = await tokenDB
+      .model("token", tokenSchema)
+      .find({})
 
     if (Number(tokenData[0].expiry) - Date.now() < 3 * 60 * 1000) {
-      console.log("tokenData ==>>", 1)
+      // console.log("tokenData ==>>", 1)
       const {
         token,
         res: {
@@ -86,7 +87,7 @@ export const handler: Handler = async function (event, context) {
 
       validToken = tokenData[0].token
     }
-
+    console.log("tokenData ==>>", tokenData)
     const newslot = new Slot({
       slot_time: timeSlots[selectedSlot],
       slot_date: selectedDate,
@@ -111,7 +112,7 @@ export const handler: Handler = async function (event, context) {
       terminId: newslot._id,
     })
 
-    newslot.save((err, saved) => {
+    await newslot.save((err, saved) => {
       Slot.find({ _id: saved._id })
         .populate("slots")
         .exec((err, slot) => {
@@ -155,7 +156,7 @@ export const handler: Handler = async function (event, context) {
     }
   } catch (error) {
     mongoose.connection.close()
-
+    console.log(error)
     return {
       statusCode: 500,
       body: JSON.stringify(error),

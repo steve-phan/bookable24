@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 require("dotenv").config()
 
 const Schema = mongoose.Schema
@@ -61,7 +61,7 @@ const Appointment = mongoose.model("Appointment", appointmentSchema)
 const ShopInfo = mongoose.model("Shopinfo", shopinfoSchema)
 const RequestInfo = mongoose.model("RequestInfo", requestSchema)
 
-module.exports = {
+export {
   Token,
   Appointment,
   Slot,

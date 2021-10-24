@@ -1,10 +1,10 @@
 require("dotenv").config()
-const nodemailer = require("nodemailer")
-const hbs = require("nodemailer-express-handlebars")
-const path = require("path")
-const { timeSlots } = require("../utils/models/timeslot")
+import nodemailer from "nodemailer"
+import hbs from "nodemailer-express-handlebars"
+import path from "path"
+import { timeSlots } from "../utils/models/timeslot"
 const user = process.env.MAIL_USER
-const baseUrl = process.env.BASE_URL || "http://localhost:8888"
+const baseUrl = process.env.BASE_URL || "https://bookable24.de"
 
 const configTransporter = ({
   shopname,
@@ -33,12 +33,14 @@ const configTransporter = ({
     hbs({
       viewEngine: {
         extname: ".hbs",
-        partialsDir: path.resolve("./netlify/functions/utils/views"),
+        partialsDir: path.resolve("./netlify/functions/utils/booking/views"),
         // path.join(__dirname, "utils", "views"),
-        layoutsDir: path.resolve("./netlify/functions/utils/views/layouts"),
+        layoutsDir: path.resolve(
+          "./netlify/functions/utils/booking/views/layouts"
+        ),
         // path.join(__dirname, "utils", "views", "layouts"),
       },
-      viewPath: path.resolve("./netlify/functions/utils/views"),
+      viewPath: path.resolve("./netlify/functions/utils/booking/views"),
       // path.join(__dirname, "utils", "views"),
       extName: ".hbs",
     })
@@ -70,4 +72,5 @@ const configTransporter = ({
     mailOptions,
   }
 }
-module.exports = configTransporter
+
+export default configTransporter

@@ -93,20 +93,30 @@ const SignIn = () => {
         values.email,
         values.password
       )
-      const shopname =
-        Boolean(userRef) &&
-        shopList?.find(
-          (shop: { email: string; shopId: string }) =>
-            shop.email === values.email
-        )?.shopId
-      console.log("email", values.email)
-      const res = await axios.get("/.netlify/functions/get-shop-termins", {
-        headers: {
-          shopemail: values.email,
-          shopname: shopname,
+      const {
+        company,
+        email,
+        phoneNumber,
+        city,
+        cityCode,
+        street,
+        firstName,
+        lastName,
+      } = values
+      const response = await axios.post("/.netlify/functions/shop-sign-up", {
+        userinfo: {
+          company,
+          email,
+          phoneNumber,
+          city,
+          cityCode,
+          street,
+          firstName,
+          lastName,
+          uid: userRef.user.uid,
         },
       })
-      console.log(res)
+      console.log(response)
     } catch (error) {
       console.log(error)
     }
@@ -271,8 +281,8 @@ const SignIn = () => {
         disabled={
           values.email.length === 0 ||
           !validateEmail(values.email) ||
-          values.password.length < 8 ||
-          values.password === values.confirmPassword ||
+          values.password.length < 5 ||
+          values.password !== values.confirmPassword ||
           values.company.length === 0 ||
           values.email.length === 0 ||
           values.phoneNumber.length === 0 ||
