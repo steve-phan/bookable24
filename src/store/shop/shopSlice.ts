@@ -11,12 +11,14 @@ export interface IshopInfo {
   phoneNumber: string
   shopName: string
   street: string
-  uid: string
+  uid?: string
 }
 
 export interface IshopState {
   shopInfo: IshopInfo | unknown
   status: "idle" | "loading" | "failed"
+  isShopLogin: boolean
+  allTermins: any[]
 }
 
 export interface Iaccount {
@@ -37,26 +39,56 @@ const intinitialShopState: IshopState = {
     street: "",
     uid: "",
   },
+  isShopLogin: false,
   status: "idle",
+  allTermins: [],
+}
+
+// export const getShopinfo = createAsyncThunk(
+//   "shop/getShopInfo",
+//   async (shopName: string) => {
+//     const response: any = await axios.post(
+//       "/.netlify/functions/check-shop-list",
+//       {
+//         shopName,
+//       }
+//     )
+//     return response.data.shopInfo
+//   }
+// )
+
+interface IshopQuery {
+  shopemail: string
+  shopname: string
 }
 
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
-  async (shopName: string) => {
-    const response: any = await axios.post(
-      "/.netlify/functions/check-shop-list",
+  async ({ shopemail, shopname }: IshopQuery) => {
+    const response: any = await axios.get(
+      "/.netlify/functions/get-shop-termins",
       {
-        shopName,
+        headers: {
+          shopemail,
+          shopname,
+        },
       }
     )
-    return response.data.shopInfo
+    console.log("data received", response)
+    const { allTermins, shopInfo } = response.data
+    return { allTermins, shopInfo }
   }
 )
 
 export const shopSlice = createSlice({
   name: "shop",
   initialState: intinitialShopState,
-  reducers: {},
+  reducers: {
+    setShopInfo: (state, action) => {
+      state.shopInfo = true
+      state.shopInfo = action.payload
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getShopinfo.pending, (state: IshopState) => {
@@ -64,9 +96,13 @@ export const shopSlice = createSlice({
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
         state.status = "idle"
-        state.shopInfo = action.payload
+        state.isShopLogin = true
+        state.shopInfo = action.payload.shopInfo
+        state.allTermins = action.payload.allTermins
       })
   },
 })
+
+export const { setShopInfo } = shopSlice.actions
 
 export default shopSlice.reducer

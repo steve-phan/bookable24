@@ -7,9 +7,10 @@ import InputAdornment from "@mui/material/InputAdornment"
 import InputLabel from "@mui/material/InputLabel"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
-import React from "react"
-import axios from "axios"
+import React, { useEffect } from "react"
+import { navigate } from "gatsby"
 
+import Loading from "../../../components/Loading/Loading"
 import { auth } from "../../../firebase"
 import {
   ButtonSt,
@@ -20,6 +21,8 @@ import {
 } from "../Account.css"
 import { useShopname } from "../accountHook"
 import { validateEmail } from "../../../utils"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { getShopinfo, setShopInfo } from "../../../store/shop/shopSlice"
 
 interface IloginStates {
   email: string
@@ -35,7 +38,19 @@ const SignIn = () => {
     showPassword: false,
     loading: false,
   })
+  const dispatch = useAppDispatch()
+  const { isShopLogin } = useAppSelector(state => state.shop)
   const shopList = useShopname()
+
+  useEffect(() => {
+    if (isShopLogin) {
+      setValues({
+        ...values,
+        loading: false,
+      })
+      navigate("/dashboard")
+    }
+  }, [isShopLogin])
 
   const handleChange =
     (prop: keyof IloginStates) =>
@@ -49,18 +64,12 @@ const SignIn = () => {
       showPassword: !values.showPassword,
     })
   }
-  // const handleClickShowPassword = () => {
-  //   setInputState({ ...inputState, showPassword: !inputState.showPassword })
-  // }
+
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault()
   }
-
-  // React.useEffect(() => {
-  //   isShopLogged && history.push('/dashboard');
-  // }, [isShopLogged]);
 
   const handleShopLogin = async () => {
     setValues({
@@ -79,21 +88,19 @@ const SignIn = () => {
           (shop: { email: string; shopId: string }) =>
             shop.email === values.email
         )?.shopId
-      console.log("email", values.email)
-      const res = await axios.get("/.netlify/functions/get-shop-termins", {
-        headers: {
+      dispatch(
+        getShopinfo({
           shopemail: values.email,
           shopname: shopname,
-        },
-      })
-      console.log(res)
+        })
+      )
     } catch (error) {
       console.log(error)
     }
   }
   return (
     <WrapColSt>
-      {/* {inputState.loading && <Loading />} */}
+      {values.loading && <Loading />}
       <h1>Bereits Kunde?</h1>
       <TypographySt>
         Loggen Sie sich jetzt ein, um alle Vorteile des Kundenkontos
@@ -107,12 +114,12 @@ const SignIn = () => {
         name="email"
         placeholder="johndoe@mail.com"
         label="Email*"
-        //   error={!!inputState.email && !validateEmail(inputState.email)}
-        //   helperText={
-        //     inputState.email &&
-        //     !validateEmail(inputState.email) &&
-        //     "Enter a valid email address"
-        //   }
+        error={values.email.length === 0 || !validateEmail(values.email)}
+        helperText={
+          values.email.length === 0 ||
+          (!validateEmail(values.email) &&
+            "Geben sie eine gültige E-Mail-Adresse an")
+        }
         onChange={handleChange("email")}
       />
       <FormControlSt fullWidth variant="filled">

@@ -10,13 +10,13 @@ export const handler: Handler = async (event, context) => {
 
   try {
     await mongoose.connect(url)
+    let allTermins = await Appointment.find({})
     const shopDb = mongoose.connection.useDb("shopnames")
-    console.log("shopname", shopDb)
     const shopInfo = await shopDb.model("shopinfo", shopinfoSchema).findOne({
       email: shopemail,
     })
 
-    let allTermins = await Appointment.find({})
+    // console.log("alltermin", allTermins)
     mongoose.connection.close()
     return {
       statusCode: 200,
