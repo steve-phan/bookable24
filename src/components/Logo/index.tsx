@@ -1,26 +1,21 @@
 import React, { useMemo } from "react"
 import { StaticImage } from "gatsby-plugin-image"
-import { makeStyles, DefaultTheme } from "@mui/styles"
 
-import { styles } from "./logo.css"
-
-const useStyles = makeStyles(styles)
+import { WrapLogoSt } from "./logo.css"
 
 const Logo = () => {
-  const classes = useStyles()
-
   return (
-    <div className={classes.logo}>
+    <WrapLogoSt>
       <StaticImage
         src="../../images/bookable24.png"
-        alt="A dinosaur"
+        alt="BookAble Online Booking System"
         placeholder="blurred"
         layout="fixed"
         width={40}
         height={40}
       />
       <span>ookable24</span>
-    </div>
+    </WrapLogoSt>
   )
 }
 

@@ -1,13 +1,11 @@
-import { ThemeOptions } from "@mui/material/styles"
+import { styled } from "@mui/material/styles"
 
-export const styles = (theme: ThemeOptions) => ({
-  logo: {
-    display: "inline-flex",
-    alignItems: "center",
+export const WrapLogoSt = styled("div")(({ theme }) => ({
+  display: "inline-flex",
+  alignItems: "center",
 
-    "& span": {
-      color: theme.color.primary,
-      fontWeight: 600,
-    },
+  "& span": {
+    color: theme.color.primary,
+    fontWeight: 600,
   },
-})
+}))
