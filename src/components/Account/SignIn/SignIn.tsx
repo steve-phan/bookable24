@@ -16,10 +16,10 @@ import {
   FormControlSt,
   TextFieldSt,
   TypographySt,
+  WrapColSt,
 } from "../Account.css"
-import { WrapColSt } from "./SignIn.css"
-
 import { useShopname } from "../accountHook"
+import { validateEmail } from "../../../utils"
 
 interface IloginStates {
   email: string
@@ -90,38 +90,6 @@ const SignIn = () => {
     } catch (error) {
       console.log(error)
     }
-    // auth
-    //   .signInWithEmailAndPassword(inputState.email, inputState.password)
-    //   .then(async user => {
-    //     const res = await axios.get("/.netlify/functions/get-shop-termins", {
-    //       headers: {
-    //         shopEmail: inputState.email,
-    //         shopname: ShopInfo[inputState.email],
-    //       },
-    //     })
-    //     console.log(res)
-    //     // dispatch({
-    //     //   type: shopTypes.SHOP_LOGIN,
-    //     //   email: inputState.email,
-    //     //   // allTermins: sortedTermin(res.data.allTermins),
-    //     //   allTermins: res.data.allTermins,
-
-    //     //   shopInfo: res.data.shopInfo,
-    //     // })
-    //     setInputState({
-    //       ...inputState,
-    //       loading: false,
-    //     })
-
-    //     // history.push("/dashboard")
-    //   })
-    //   .catch((err: any) => {
-    //     alert("Check Again Password and Email")
-    //     setInputState({
-    //       ...inputState,
-    //       loading: false,
-    //     })
-    //   })
   }
   return (
     <WrapColSt>
@@ -130,7 +98,7 @@ const SignIn = () => {
       <TypographySt>
         Loggen Sie sich jetzt ein, um alle Vorteile des Kundenkontos
         wahrzunehmen. Neuer Kunde?
-        <Link to="/request"> Anfrage-Demo</Link>
+        <Link to="/request-account"> Anfrage-Demo</Link>
       </TypographySt>
       <TextFieldSt
         fullWidth
@@ -169,7 +137,7 @@ const SignIn = () => {
         />
       </FormControlSt>
       <Typography>
-        <Link to="/account/passrecover" className="siteLink">
+        <Link to="/recover" className="siteLink">
           Passwort vergessen?
         </Link>
       </Typography>
@@ -178,6 +146,11 @@ const SignIn = () => {
         variant="contained"
         onClick={handleShopLogin}
         type="submit"
+        disabled={
+          values.email.length === 0 ||
+          !validateEmail(values.email) ||
+          values.password.length < 8
+        }
       >
         Anmelden
       </ButtonSt>

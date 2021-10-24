@@ -1,5 +1,25 @@
-import { TextField, Typography, FormControl, Button } from "@mui/material"
+import {
+  TextField,
+  Typography,
+  FormControl,
+  Button,
+  Modal,
+} from "@mui/material"
 import { alpha, styled, ThemeOptions } from "@mui/material/styles"
+
+export const WrapColSt = styled("div")`
+  padding: 16px 8px;
+  flex-direction: column;
+  position: relative;
+  min-width: 0;
+  padding: 8px;
+  margin: 0 auto;
+  border: 0;
+  vertical-align: top;
+  margin-bottom: 16px;
+  width: 100%;
+  max-width: 560px;
+`
 
 export const TextFieldSt = styled(TextField)(({ theme }) => ({
   marginBottom: 24,
@@ -39,8 +59,22 @@ export const ButtonSt = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   width: "100%",
   marginTop: 24,
+  marginBottom: 16,
 
   "&:hover": {
     background: alpha(theme.color.primary, 0.6),
+  },
+}))
+
+export const WrapModalSt = styled(Modal)(({ theme }) => ({
+  "& .MuiBox-root": {
+    borderRadius: 4,
+    padding: 16,
+    border: `1px solid ${theme.color.primary}`,
+    maxWidth: "96%",
+
+    "& p": {
+      marginBottom: 0,
+    },
   },
 }))

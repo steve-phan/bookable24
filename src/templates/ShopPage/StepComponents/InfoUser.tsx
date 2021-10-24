@@ -6,7 +6,7 @@ import {
   setGuestValidInfo,
   TGuestInfo,
 } from "../../../store/shop/bookingSlice"
-import { validateEmail, validatePhone } from "../utils"
+import { validateEmail, validatePhone } from "../../../utils"
 import { TextFieldSt, TypographySt } from "./StepComponents.css"
 import { WrapColSt } from "../ShopPage.css"
 
