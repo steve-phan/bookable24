@@ -10,6 +10,7 @@ import { Link } from "gatsby-plugin-react-i18next"
 import React from "react"
 import axios from "axios"
 
+import Loading from "../../Loading/Loading"
 import { auth } from "../../../firebase"
 import {
   ButtonSt,
@@ -18,6 +19,7 @@ import {
   TypographySt,
   WrapColSt,
 } from "../Account.css"
+import AccountModal from "../AccountModal/AccountModal"
 import { useShopname } from "../accountHook"
 import { validateEmail, validatePhone } from "../../../utils"
 
@@ -38,6 +40,8 @@ interface IRegistrationStates extends IshopInfo {
   confirmPassword: string
   showPassword: boolean
   loading: boolean
+  open: boolean
+  modalText: string
 }
 
 const SignIn = () => {
@@ -54,6 +58,8 @@ const SignIn = () => {
     confirmPassword: "",
     showPassword: false,
     loading: false,
+    open: false,
+    modalText: "",
   })
   const shopList = useShopname()
 
@@ -69,9 +75,7 @@ const SignIn = () => {
       showPassword: !values.showPassword,
     })
   }
-  // const handleClickShowPassword = () => {
-  //   setInputState({ ...values, showPassword: !values.showPassword })
-  // }
+
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -116,14 +120,43 @@ const SignIn = () => {
           uid: userRef.user.uid,
         },
       })
+
+      if (response.data === "EMAIL_SENT") {
+        setValues({
+          ...values,
+          loading: false,
+          open: true,
+          modalText: ` Wir haben eine E-Mail an ${values.email} gesendet. Bitte kontaktieren Sie uns, um Ihr Konto zu aktivieren  `,
+        })
+      } else {
+        setValues({
+          ...values,
+          loading: false,
+          open: true,
+          modalText: `Mit dieser E-Mail ${values.email} stimmt etwas nicht, bitte versuche es später noch einmal`,
+        })
+      }
+
       console.log(response)
     } catch (error) {
+      setValues({
+        ...values,
+        loading: false,
+        open: true,
+        modalText: `Mit dieser E-Mail ${values.email} stimmt etwas nicht, bitte versuche es später noch einmal`,
+      })
       console.log(error)
     }
   }
   return (
     <WrapColSt>
-      {/* {values.loading && <Loading />} */}
+      <AccountModal
+        open={values.open}
+        modalText={values.modalText}
+        handleClose={() => setValues({ ...values, open: false })}
+        handleOpen={() => setValues({ ...values, open: true })}
+      />
+      {values.loading && <Loading />}
       <h1>Neuer Kunde?</h1>
       <TypographySt>
         Erstellen Sie sich jetzt ein Kundenkonto für ein persönlicheres und
@@ -271,7 +304,8 @@ const SignIn = () => {
         }}
       >
         {" "}
-        Diese Felder mit (*) Symbolen sind erforderlich
+        Diese Felder mit (*) Symbolen sind erforderlich <br />
+        Passwort (mind. 6 Zeichen)
       </span>
       <ButtonSt
         size="large"

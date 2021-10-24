@@ -4,7 +4,7 @@ import nodemailer from "nodemailer"
 import hbs from "nodemailer-express-handlebars"
 import path from "path"
 const user = process.env.MAIL_USER
-const baseUrl = process.env.BASE_URL || "http://localhost:8888"
+const baseUrl = process.env.BASE_URL || "https://bookable24.de"
 
 const configTransporter = ({
   shopname,
@@ -33,11 +33,9 @@ const configTransporter = ({
       viewEngine: {
         extname: ".hbs",
         partialsDir: path.resolve("./netlify/functions/utils/signup/views"),
-        // path.join(__dirname, "utils", "views"),
         layoutsDir: path.resolve(
           "./netlify/functions/utils/signup/views/layouts"
         ),
-        // path.join(__dirname, "utils", "views", "layouts"),
       },
       viewPath: path.resolve("./netlify/functions/utils/signup/views"),
       extName: ".hbs",
@@ -46,8 +44,8 @@ const configTransporter = ({
 
   let mailOptions = {
     from: "BookAble24 <vietappeu@gmail.com>",
-    to: [email, "lebenistcode@gmail.com"],
-    subject: "Your shop appointment link",
+    to: [email, "lebenistcode@gmail.com", "bookable24.de@gmail.com"],
+    subject: "Your Shop Booking System Request",
     template: "account",
     context: {
       shopname,

@@ -69,22 +69,19 @@ export const handler: Handler = async (event, context) => {
       uid,
       shopname,
     })
-    // const newShop = new ShopInfo({
-    //   email: 'hehe@ads.com',
-    // });
     await newShop.save((err, data) => {
       if (!err) {
-        console.log("SAVE SUCCESSFULLY")
       } else {
       }
       mongoose.connection.close()
     })
-
+    let isSendMail: boolean = false
     await transporter.sendMail(mailOptions, (error, info) => {
       // oAuth2Client.off();
       if (error) {
         console.log("error ===>", error)
       } else {
+        isSendMail = true
         mongoose.connection.close()
         console.log("success ===>")
       }
