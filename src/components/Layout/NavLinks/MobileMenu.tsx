@@ -49,10 +49,7 @@ const MobileMenu = ({
                     await signOut(auth)
 
                     dispatch(setShopLogout())
-                    console.log("signout success")
-                  } catch (error) {
-                    console.log("signout failed")
-                  }
+                  } catch (error) {}
                 }}
                 to="/login"
               >
@@ -64,11 +61,8 @@ const MobileMenu = ({
                   try {
                     await signOut(auth)
 
-                    console.log("signout success")
                     dispatch(setShopLogout())
-                  } catch (error) {
-                    console.log("signout failed")
-                  }
+                  } catch (error) {}
                 }}
                 to="/login"
               >

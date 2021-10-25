@@ -18,6 +18,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       allContentfulShopInfo {
         nodes {
           shopId
+          email
         }
       }
     }
@@ -31,6 +32,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: shopPage,
       context: {
         shopName: shop.shopId,
+        shopEmail: shop.email,
       },
     })
   })
@@ -73,7 +75,23 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 }
 
-exports.onCreateWebpackConfig = ({ actions }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+  if (stage === "build-html" || stage === "develop-html") {
+    actions.setWebpackConfig({
+      externals: getConfig().externals.concat(function (
+        { context, request },
+        callback
+      ) {
+        const regex = /^@?firebase(\/(.+))?/
+        // exclude firebase products from being bundled, so they will be loaded using require() at runtime.
+        if (regex.test(request)) {
+          return callback(null, "commonjs " + request) // <- use commonjs!
+        }
+
+        callback()
+      }),
+    })
+  }
   actions.setWebpackConfig({
     resolve: {
       alias: {

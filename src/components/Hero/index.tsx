@@ -135,7 +135,18 @@ const Hero = () => {
     //   <RedBackgroundSection />{" "}
     //  <RedShape />
     // </div>
-    <h1>Hello World</h1>
+    <Link
+      style={{
+        textAlign: "center",
+        width: "100%",
+        display: "block",
+        fontSize: 36,
+        textDecoration: "underline",
+      }}
+      to="/shop-test1234561"
+    >
+      Demo Booking Page
+    </Link>
     // <Carousel
     //   className={classes.wrapCarousel}
     //   animation="slide"

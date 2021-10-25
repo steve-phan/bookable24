@@ -32,6 +32,7 @@ import ShopLogo from "./ShopLogo/ShopLogo"
 interface IShopPageProps {
   pageContext: {
     shopName: string
+    shopEmail: string
   }
   data: any // Do it later
 }
@@ -86,11 +87,11 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   //   booking
   // const { shopInfo } = shop
 
-  const { shopName } = pageContext
+  const { shopName, shopEmail } = pageContext
   const steps = getSteps()
 
   useEffect(() => {
-    dispatch(getShopinfo(shopName))
+    dispatch(getShopinfo({ shopname: shopName, shopemail: shopEmail }))
   }, [])
 
   const handleNext = () => {
@@ -127,7 +128,6 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
         }
       })
       .catch(err => {
-        console.log(err)
         setIsLoading(false)
       })
   }

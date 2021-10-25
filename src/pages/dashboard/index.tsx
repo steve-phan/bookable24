@@ -5,7 +5,7 @@ import DashBoardLayout from "src/components/Layout/DasBoadLayout"
 const DashBoardHome = ({ children }: { children: JSX.Element }) => {
   return (
     <DashBoardLayout>
-      <h1>Home DashBoard</h1>
+      <h1>Wow...</h1>
     </DashBoardLayout>
   )
 }

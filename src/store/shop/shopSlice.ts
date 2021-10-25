@@ -11,21 +11,23 @@ import { IshopState } from "./shop.types"
 export const checkUserAuth =
   (shopList: any[]): AppThunk =>
   (dispatch, getState) => {
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const shopname = getShopName(user?.email, shopList)
-        dispatch(
-          getShopinfo({
-            shopemail: user?.email || "",
-            shopname,
-          })
-        )
-      } else {
-        dispatch(setShopLogout())
-      }
-    })
+    if (typeof window !== undefined) {
+      onAuthStateChanged(auth, user => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          const shopname = getShopName(user?.email, shopList)
+          dispatch(
+            getShopinfo({
+              shopemail: user?.email || "",
+              shopname,
+            })
+          )
+        } else {
+          dispatch(setShopLogout())
+        }
+      })
+    }
   }
 
 const intinitialShopState: IshopState = {
@@ -76,7 +78,6 @@ export const getShopinfo = createAsyncThunk(
         },
       }
     )
-    console.log("data received", response)
     const { allTermins, shopInfo } = response.data
     return { allTermins, shopInfo }
   }
