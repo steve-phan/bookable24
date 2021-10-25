@@ -10,8 +10,8 @@ import { Link } from "gatsby-plugin-react-i18next"
 import React, { useEffect } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
-import Loading from "../../../components/Loading/Loading"
-import { auth } from "../../../firebase"
+import Loading from "src/components/Loading/Loading"
+import { auth } from "src/firebase"
 import {
   ButtonSt,
   FormControlSt,
@@ -20,9 +20,10 @@ import {
   WrapColSt,
 } from "../Account.css"
 import { useShopname } from "../accountHook"
-import { validateEmail } from "../../../utils"
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { getShopinfo, setShopInfo } from "../../../store/shop/shopSlice"
+import { theme, getShopName, validateEmail } from "src/utils"
+
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { getShopinfo, setShopInfo } from "src/store/shop/shopSlice"
 
 interface IloginStates {
   email: string
@@ -40,10 +41,11 @@ const SignIn = () => {
     loading: false,
   })
   const dispatch = useAppDispatch()
-  const { isShopLogin } = useAppSelector(state => state.shop)
+  const { isShopLogin, status } = useAppSelector(state => state.shop)
   const shopList = useShopname()
 
   useEffect(() => {
+    console.log("isShopLogin", isShopLogin)
     if (isShopLogin) {
       setValues({
         ...values,
@@ -78,21 +80,11 @@ const SignIn = () => {
       loading: true,
     })
     try {
-      const userRef = await signInWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password
-      )
-      const shopname =
-        Boolean(userRef) &&
-        shopList?.find(
-          (shop: { email: string; shopId: string }) =>
-            shop.email === values.email
-        )?.shopId
+      await signInWithEmailAndPassword(auth, values.email, values.password)
       dispatch(
         getShopinfo({
           shopemail: values.email,
-          shopname: shopname,
+          shopname: getShopName(values.email, shopList),
         })
       )
     } catch (error) {
@@ -101,7 +93,7 @@ const SignIn = () => {
   }
   return (
     <WrapColSt>
-      {values.loading && <Loading />}
+      {status === "loading" && <Loading />}
       <h1>Bereits Kunde?</h1>
       <TypographySt>
         Loggen Sie sich jetzt ein, um alle Vorteile des Kundenkontos
@@ -117,9 +109,9 @@ const SignIn = () => {
         label="Email*"
         error={values.email.length === 0 || !validateEmail(values.email)}
         helperText={
-          values.email.length === 0 ||
-          (!validateEmail(values.email) &&
-            "Geben sie eine gültige E-Mail-Adresse an")
+          values.email.length !== 0 && !validateEmail(values.email) ? (
+            <> Geben sie eine gültige E-Mail-Adresse an</>
+          ) : null
         }
         onChange={handleChange("email")}
       />

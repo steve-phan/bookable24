@@ -1,42 +1,29 @@
-import { Container } from "@mui/material"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { ThemeProvider as ThemeProviderSt } from "styled-components"
-import { graphql, useStaticQuery } from "gatsby"
-import * as React from "react"
+import { Container } from "@mui/material"
+import { ThemeProvider } from "@mui/material/styles"
+import React, { useEffect } from "react"
+
+import { useShopname } from "src/components/Account/accountHook"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { checkUserAuth } from "src/store/shop/shopSlice"
+import { theme } from "src/utils"
 
 import Footer from "./Footer/Footer"
 import Header from "./Header"
 import { BodySt } from "./Layout.css"
 import "./reset.css"
-import { theme } from "../../utils"
-
-// export const theme = createTheme({
-//   color: {
-//     primary: "#f05123",
-//     secondary: "#1473e6",
-//     warning: "#d1cec3",
-//     white: "#ffffff",
-//     gray: "#666",
-//     text: "#202124",
-//     invalid: "#f33a58",
-//     background: "#f3f3f3ee",
-//     black: "#000000",
-//     activeBackground: "#fff1f9",
-//     activeColor: "deeppink",
-//     iconColor: "#e84b63",
-//   },
-// })
 
 const Layout = ({ children, location }: any) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
+  const dispatch = useAppDispatch()
+  const { isShopLogin } = useAppSelector(state => state.shop)
+
+  const shopList = useShopname()
+
+  useEffect(() => {
+    if (!isShopLogin) {
+      dispatch(checkUserAuth(shopList))
     }
-  `)
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>

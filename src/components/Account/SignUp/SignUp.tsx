@@ -175,9 +175,9 @@ const SignIn = () => {
         label="Email*"
         error={values.email.length !== 0 && !validateEmail(values.email)}
         helperText={
-          values.email.length === 0 ||
-          (!validateEmail(values.email) &&
-            "Geben sie eine gültige E-Mail-Adresse an")
+          values.email.length !== 0 && !validateEmail(values.email) ? (
+            <>Geben sie eine gültige E-Mail-Adresse an </>
+          ) : null
         }
         onChange={handleChange("email")}
       />
@@ -291,9 +291,9 @@ const SignIn = () => {
             !validatePhone(values.phoneNumber)
           }
           helperText={
-            values.phoneNumber &&
-            !validatePhone(values.phoneNumber) &&
-            "Geben Sie eine gültige Telefonnummer ein"
+            values.phoneNumber && !validatePhone(values.phoneNumber) ? (
+              <>Geben Sie eine gültige Telefonnummer ein</>
+            ) : null
           }
         />
       </>

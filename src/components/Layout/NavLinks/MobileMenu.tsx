@@ -2,9 +2,11 @@ import React from "react"
 import Drawer from "@mui/material/Drawer"
 import Hidden from "@mui/material/Hidden"
 import { useTranslation } from "gatsby-plugin-react-i18next"
+import { signOut } from "firebase/auth"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setShopLogout } from "src/store/shop/shopSlice"
+import { auth } from "src/firebase"
 
 import LangSelect from "../LangSelect"
 import { LoginButton } from "../Header/Header.css"
@@ -42,13 +44,34 @@ const MobileMenu = ({
           <WrapLoginMobileSt>
             {isShopLogin ? (
               <LoginButton
-                onClick={() => dispatch(setShopLogout())}
+                onClick={async () => {
+                  try {
+                    await signOut(auth)
+
+                    dispatch(setShopLogout())
+                    console.log("signout success")
+                  } catch (error) {
+                    console.log("signout failed")
+                  }
+                }}
                 to="/login"
               >
                 {t("account.logout", "Logout")}{" "}
               </LoginButton>
             ) : (
-              <LoginButton to="/login">
+              <LoginButton
+                onClick={async () => {
+                  try {
+                    await signOut(auth)
+
+                    console.log("signout success")
+                    dispatch(setShopLogout())
+                  } catch (error) {
+                    console.log("signout failed")
+                  }
+                }}
+                to="/login"
+              >
                 {t("account.login", "Login")}{" "}
               </LoginButton>
             )}

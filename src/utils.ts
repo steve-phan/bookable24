@@ -26,3 +26,8 @@ export const theme = createTheme({
     iconColor: "#e84b63",
   },
 })
+
+export const getShopName = (email: string | null, shopList: any[]) =>
+  shopList?.find(
+    (shop: { email: string; shopId: string }) => shop.email === email
+  )?.shopId

@@ -13,5 +13,6 @@ export const useShopname = () => {
       }
     `
   )
+
   return data?.allContentfulShopInfo?.nodes
 }

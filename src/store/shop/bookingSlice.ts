@@ -6,19 +6,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit"
 
-interface IbookingState {
-  numberOfGuest: number
-  selectedDate: Date | null
-  selectedSlot: number
-  guestInfo: {
-    firstName: string
-    lastName: string
-    email: string
-    phone: string
-    require: string
-  }
-  isValidInfo: boolean
-}
+import { IbookingState } from "./shop.types"
 
 const initialBookingState: IbookingState = {
   numberOfGuest: 1,
