@@ -8,10 +8,16 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 import Icon from "@mui/material/Icon"
-// core components
-import Logo from "../../Logo"
+import Logo from "src/components/Logo"
 
-const SideBar = () => {
+import { routes } from "./routes"
+import { NavLinks } from "../NavLinks/Navlinks"
+
+import { IMobileToggle } from "./"
+import MobileMenu from "../Header/MobileMenu"
+// core components
+
+const SideBar = ({ mobileOpen, handleDrawerToggle }: IMobileToggle) => {
   // verifies if routeName is the one active (in browser input)
   // function activeRoute(routeName) {
   //   return location.pathname === routeName
@@ -80,31 +86,13 @@ const SideBar = () => {
 
   return (
     <div>
-      <Hidden mdUp implementation="css">
-        <Drawer
-          variant="temporary"
-          anchor="right"
-          // open={props.open}
-          // classes={{
-          //   paper: classNames(classes.drawerPaper, {
-          //     [classes.drawerPaperRTL]: props.rtlActive,
-          //   }),
-          // }}
-          // onClose={props.handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-        >
-          {/* <h1>Hello Sidebar</h1> */}
-          {/* {brand} */}
-          <Logo />
-          <div>{/* <Links isMobile />{" "} */}</div>
-          {/* {image !== undefined ? (
-            <div style={{ backgroundImage: "url(" + image + ")" }} />
-          ) : null} */}
-        </Drawer>
-      </Hidden>
-      <Hidden smDown implementation="css">
+      <MobileMenu
+        handleDrawerToggle={handleDrawerToggle}
+        mobileOpen={mobileOpen}
+        routes={routes}
+      />
+
+      <Hidden mdDown implementation="css">
         <Drawer
           anchor="left"
           variant="permanent"

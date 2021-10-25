@@ -38,9 +38,9 @@ const LangSelect: React.FC = () => {
             return (
               <MenuItem key={lng} value={lng}>
                 <StaticImage
-                  src={`../../images/vn.png`}
+                  src={`./flag/vn.png`}
                   width={23}
-                  alt="Flag"
+                  alt={`Flag of ${lng}`}
                 />
               </MenuItem>
             )
@@ -48,9 +48,9 @@ const LangSelect: React.FC = () => {
             return (
               <MenuItem key={lng} value={lng}>
                 <StaticImage
-                  src={`../../images/en.png`}
+                  src={`./flag/en.png`}
                   width={23}
-                  alt="Flag"
+                  alt={`Flag of ${lng}`}
                 />
               </MenuItem>
             )
@@ -58,9 +58,9 @@ const LangSelect: React.FC = () => {
             return (
               <MenuItem key={lng} value={lng}>
                 <StaticImage
-                  src={`../../images/de.png`}
+                  src={`./flag/de.png`}
                   width={23}
-                  alt="Flag"
+                  alt={`Flag of ${lng}`}
                 />
               </MenuItem>
             )

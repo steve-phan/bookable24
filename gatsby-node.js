@@ -22,7 +22,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   `)
-  console.log(shopData)
+
   const shopList = shopData.data.allContentfulShopInfo.nodes
 
   shopList.forEach((shop, i) => {

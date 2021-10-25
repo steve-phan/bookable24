@@ -1,29 +1,16 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { ThemeProvider } from "@mui/material/styles"
+import DashBoardLayout from "src/components/Layout/DasBoadLayout"
 
-import SideBar from "src/components/DashBoard/DashBoardLayout/SideBar"
-import Header from "src/components/DashBoard/DashBoardLayout/Header/Header"
-import { theme } from "src/utils"
-
-import { WrapDashBoardSt, DashBoardContentSt } from "./dashboard.css"
-
-const DashBoard = (x: any) => {
-  console.log(x)
+const DashBoardHome = ({ children }: { children: JSX.Element }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <WrapDashBoardSt>
-        <SideBar />
-        <DashBoardContentSt>
-          <Header />
-          <h1>Hello from DashBoard</h1>
-        </DashBoardContentSt>
-      </WrapDashBoardSt>
-    </ThemeProvider>
+    <DashBoardLayout>
+      <h1>Home DashBoard</h1>
+    </DashBoardLayout>
   )
 }
 
-export default DashBoard
+export default DashBoardHome
 
 export const query = graphql`
   query ($language: String!) {

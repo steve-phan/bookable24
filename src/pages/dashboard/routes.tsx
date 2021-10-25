@@ -1,3 +1,5 @@
+import { Router, Link, useLocation, Redirect } from "@reach/router"
+import * as React from "react"
 // import HomeIcon from "@mui/icons-material/HomeOutlined"
 // import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
 // import MenuBookIcon from "@mui/icons-material/MenuBook"
@@ -66,3 +68,33 @@
 // ]
 
 // export default dashboardRoutes
+
+export const switchRoutes = () => {
+  return (
+    <Router>
+      {/* {routes.map((prop, key) => {
+        if (prop.layout === "/dashboard") {
+          return (
+            <Route
+              exact
+              path={prop.layout + prop.path}
+              component={prop.component}
+              key={key}
+            />
+          )
+        }
+        return null
+      })} */}
+      <Page path="/1" page="1" />
+      <Page path="/2" page="2" />
+    </Router>
+  )
+}
+const Page = (props: any) => (
+  <div
+    className="page"
+    style={{ background: `hsl(${props.page * 75}, 60%, 60%)` }}
+  >
+    {props.page}
+  </div>
+)

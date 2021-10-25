@@ -12,6 +12,9 @@ import { Button } from "@mui/material"
 
 import { AppBarSt } from "./Header.css"
 import Logo from "src/components/Logo"
+import LangSelect from "../../LangSelect"
+
+import { IMobileToggle } from "../"
 
 //hooks
 // import { useRouteName } from 'hooks';
@@ -23,45 +26,55 @@ import Logo from "src/components/Logo"
 
 // const useStyles = makeStyles(styles)
 
-export default function Header() {
+export default function Header({
+  mobileOpen,
+  handleDrawerToggle,
+}: IMobileToggle) {
   // const classes = useStyles()
   // const routeName = useRouteName()
   // const { color } = props;
-  const color = "info"
   // const appBarClasses = classNames({
   //   [" " + classes[color]]: color,
   // })
   // const [{ isShopLogged, email, allTermins, terminIsLoaded }, dispatch] =
   //   React.useContext(ShopContext);
+
   return (
-    <AppBarSt>
-      <Toolbar>
-        <Hidden smUp implementation="css">
+    <AppBarSt color="default">
+      <Toolbar
+        style={{
+          justifyContent: "space-between",
+        }}
+      >
+        <Hidden mdUp implementation="css">
           <Logo />
         </Hidden>
 
-        {
-          <div>
-            {/* Here we create navbar brand, based on route name */}
-            <Button href="#">
-              {/* {routeName} */}
-              Online Booking System
-              {/* BookAble24 */}
-            </Button>
-          </div>
-        }
+        <div>
+          {/* Here we create navbar brand, based on route name */}
+          <Button href="#">
+            {/* {routeName} */}
+            Online Booking System
+            {/* BookAble24 */}
+          </Button>
+        </div>
+
         <Hidden smDown implementation="css">
           {/* <NavBarLinks /> */}
           <h1>NavbarLinks</h1>
         </Hidden>
+
         <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            // onClick={props.handleDrawerToggle}
+            onClick={handleDrawerToggle}
           >
             <Menu />
           </IconButton>
+        </Hidden>
+        <Hidden mdDown>
+          <LangSelect />
         </Hidden>
       </Toolbar>
     </AppBarSt>

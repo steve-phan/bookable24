@@ -1,6 +1,7 @@
 import { styled } from "@mui/material/styles"
+import { style } from "@mui/system"
 
-import { drawerWidth } from "src/components/DashBoard/DashBoardLayout/config"
+import { drawerWidth } from "src/components/Layout/DasBoadLayout/config"
 
 export const WrapDashBoardSt = styled("div")(({ theme }) => ({
   position: "relative",
@@ -17,4 +18,8 @@ export const DashBoardContentSt = styled("main")(({ theme }) => ({
   float: "right",
   maxHeight: "100%",
   width: "100%",
+}))
+
+export const WrapContentSt = styled("div")(({ theme }) => ({
+  paddingTop: 64,
 }))

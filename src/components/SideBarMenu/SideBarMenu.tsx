@@ -2,7 +2,7 @@ import { ThemeOptions } from "@mui/material"
 import { useTheme } from "@mui/styles"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
-import { routes } from "../../routes"
+import { routes } from "../Layout/routes"
 import { LinkSt, MenuSt, SideBarMenuSt } from "./SideBarMenu.css"
 
 const SideBarMenu = () => {
