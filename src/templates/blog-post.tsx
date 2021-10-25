@@ -6,8 +6,8 @@ import { documentToHtmlString } from "@contentful/rich-text-html-renderer"
 import Layout from "../components/Layout/Layout"
 import { CtaPagesSt, GatsbyImageSt } from "./blog-post.css"
 import SEO from "../components/seo"
-const BlogPost = ({ data, pageContext, navigate }) => {
-  const image = getImage(data.contentfulMyBlog.thumbPicture)
+const BlogPost: React.FC = ({ data, pageContext, navigate }: any) => {
+  const image = getImage(data.contentfulMyBlog.thumbPicture) as IGatsbyImageData
   return (
     <Layout>
       <SEO title="Blog BooKAble24" />
