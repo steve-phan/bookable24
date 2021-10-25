@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material/styles"
 import SideBar from "src/components/Layout/DasBoadLayout/SideBar"
 import Header from "src/components/Layout/DasBoadLayout/Header/Header"
 import { theme } from "src/utils"
-import { Link } from "gatsby-plugin-react-i18next"
+
 import {
   WrapDashBoardSt,
   DashBoardContentSt,

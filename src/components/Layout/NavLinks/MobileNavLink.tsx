@@ -20,7 +20,7 @@ export const MobileNavLinks = ({ routes }: any) => {
           }}
           to={route.path}
         >
-          <route.icon /> {t(`menu.${route.name}`)}
+          <route.icon /> {t(`menu.${route.name}`, route.name)}
         </LinkItemSt>
       ))}
     </div>

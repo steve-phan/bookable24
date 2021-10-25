@@ -4,8 +4,12 @@ import Hidden from "@mui/material/Hidden"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
 import LangSelect from "../LangSelect"
-import { WrapLoginMobileSt, LoginButton, BackgroundSt } from "./Header.css"
-import { MobileNavLinks } from "../NavLinks/MobileNavLink"
+import {
+  WrapLoginMobileSt,
+  LoginButton,
+  BackgroundSt,
+} from "../Header/Header.css"
+import { MobileNavLinks } from "./MobileNavLink"
 
 const MobileMenu = ({ mobileOpen, handleDrawerToggle, routes }: any) => {
   const { t } = useTranslation()
@@ -22,7 +26,7 @@ const MobileMenu = ({ mobileOpen, handleDrawerToggle, routes }: any) => {
       >
         <BackgroundSt />
         <WrapLoginMobileSt>
-          <LoginButton to="/login">{t("account.login")} </LoginButton>
+          <LoginButton to="/login">{t("account.login", "Login")} </LoginButton>
           <LangSelect />
         </WrapLoginMobileSt>
         <MobileNavLinks routes={routes} />

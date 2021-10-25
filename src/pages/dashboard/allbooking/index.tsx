@@ -3,17 +3,17 @@ import { graphql } from "gatsby"
 
 import DashBoardLayout from "src/components/Layout/DasBoadLayout"
 
-const TomorrowBooking = () => {
+const AllBookings = () => {
   return (
     <DashBoardLayout>
       <div>
-        <h1>Hello TomorrowBooking</h1>
+        <h1>Hello Setting</h1>
       </div>
     </DashBoardLayout>
   )
 }
 
-export default TomorrowBooking
+export default AllBookings
 
 export const query = graphql`
   query ($language: String!) {

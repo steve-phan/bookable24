@@ -1,36 +1,37 @@
-import HomeWorkTwoToneIcon from "@mui/icons-material/HomeWorkTwoTone"
-import AboutIcon from "@mui/icons-material/PeopleOutline"
-import MenuIcon from "@mui/icons-material/MenuBook"
-import ContactIcon from "@mui/icons-material/ContactPhone"
+import DashboardIcon from "@mui/icons-material/Dashboard"
+import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
+import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined"
+import ManageSearchOutlinedIcon from "@mui/icons-material/ManageSearchOutlined"
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    icon: HomeWorkTwoToneIcon,
-  },
-  {
-    path: "/services",
-    name: "Services",
-    icon: MenuIcon,
+    path: "/dashboard/",
+    name: "DashBoard",
+    icon: DashboardIcon,
   },
 
   {
-    path: "/about",
-    name: "About",
-    icon: AboutIcon,
+    path: "/dashboard/todaybooking",
+    name: "TodayBooking",
+    icon: TodayOutlinedIcon,
   },
 
   {
-    path: "/contact",
-    name: "Contact",
-    icon: ContactIcon,
+    path: "/dashboard/tomorrowbooking",
+    name: "TomorrowBooking",
+    icon: UpdateOutlinedIcon,
+  },
+  {
+    path: "/dashboard/allbooking",
+    name: "AllBooking",
+    icon: ManageSearchOutlinedIcon,
   },
 
   {
-    path: "/blog",
-    name: "Blog",
-    icon: AboutIcon,
+    path: "/dashboard/settings",
+    name: "Settings",
+    icon: SettingsOutlinedIcon,
   },
 ]
 

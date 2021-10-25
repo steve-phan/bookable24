@@ -14,7 +14,7 @@ import { routes } from "./routes"
 import { NavLinks } from "../NavLinks/Navlinks"
 
 import { IMobileToggle } from "./"
-import MobileMenu from "../Header/MobileMenu"
+import MobileMenu from "../NavLinks/MobileMenu"
 // core components
 
 const SideBar = ({ mobileOpen, handleDrawerToggle }: IMobileToggle) => {

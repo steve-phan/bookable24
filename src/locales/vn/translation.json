@@ -11,7 +11,12 @@
     "Services": "Dịch vụ",
     "Contact": "Liên hệ",
     "Blog": "Blog",
-    "About": "Về chúng tôi"
+    "About": "Về chúng tôi",
+    "DashBoard": "DashBoard",
+    "TodayBooking": "Lịch hẹn hôm nay",
+    "TomorrowBooking": "Lịch hẹn ngày mai",
+    "AllBooking": "Tất cả lich hẹn",
+    "Settings": "Cài đặt"
   },
   "account": {
     "login": "Đăng nhập",

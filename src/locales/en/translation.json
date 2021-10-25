@@ -12,7 +12,12 @@
     "Services": "Services",
     "Contact": "Contact",
     "Blog": "Blog",
-    "About": "About us"
+    "About": "About us",
+    "DashBoard": "DashBoard",
+    "TodayBooking": "TodayBooking",
+    "TomorrowBooking": "TomorrowBooking",
+    "AllBooking": "AllBooking",
+    "Settings": "Settings"
   },
   "account": {
     "login": "Login",

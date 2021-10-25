@@ -11,7 +11,12 @@
     "Services": "Services",
     "Contact": "Kontakt",
     "Blog": "Blog",
-    "About": "Über uns"
+    "About": "Über uns",
+    "DashBoard": "DashBoard",
+    "TodayBooking": "HeuteReservieren",
+    "TomorrowBooking": "MorgenReservieren",
+    "AllBooking": "AlleReservieren",
+    "Settings": "Einstellungen"
   },
   "account": {
     "login": "Anmelden",

@@ -12,7 +12,7 @@ import { routes } from "../routes"
 import Logo from "../../Logo"
 import { CTAButtons, WrapLoginSt } from "./Header.css"
 import LangSelect from "../LangSelect"
-import MobileMenu from "./MobileMenu"
+import MobileMenu from "../NavLinks/MobileMenu"
 import { NavLinks } from "../NavLinks/Navlinks"
 
 // Styled-component Overidde
