@@ -29,13 +29,13 @@ import {
 } from "./ShopPage.css"
 import { getStepContent } from "./utils"
 import ShopLogo from "./ShopLogo/ShopLogo"
-interface IShopPageProps {
-  pageContext: {
-    shopName: string
-    shopEmail: string
-  }
-  data: any // Do it later
-}
+// interface IShopPageProps {
+//   pageContext: {
+//     shopName: string
+//     shopEmail: string
+//   }
+//   data: any // Do it later
+// }
 
 const useStyles = makeStyles(theme => ({
   stepLabel: {
@@ -67,7 +67,7 @@ function getSteps() {
   ]
 }
 
-const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
+const ShopPage = ({ pageContext, data }) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
   const dispatch = useAppDispatch()
@@ -101,7 +101,7 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1)
   }
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState < boolean > false
 
   useEffect(() => {}, [isLoading])
 

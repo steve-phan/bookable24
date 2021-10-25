@@ -10,8 +10,8 @@ const { slugify } = require("./utils")
 const path = require("path")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-  const blogPost = path.resolve("./src/templates/blog-post.tsx")
-  const shopPage = path.resolve("./src/templates/ShopPage/ShopPage.tsx")
+  const blogPost = path.resolve("./src/templates/blog-post.js")
+  const shopPage = path.resolve("./src/templates/ShopPage/ShopPage.js")
 
   const shopData = await graphql(`
     {
