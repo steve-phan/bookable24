@@ -5,20 +5,32 @@
  */
 
 // You can delete this file if you're not using it
+
 const { slugify } = require("./utils")
 const path = require("path")
-const { ShopList } = require("./src/templates/ShopPage/data.ts")
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const blogPost = path.resolve("./src/templates/blog-post.tsx")
   const shopPage = path.resolve("./src/templates/ShopPage/ShopPage.tsx")
 
-  ShopList.forEach((shop, i) => {
+  const shopData = await graphql(`
+    {
+      allContentfulShopInfo {
+        nodes {
+          shopId
+        }
+      }
+    }
+  `)
+  console.log(shopData)
+  const shopList = shopData.data.allContentfulShopInfo.nodes
+
+  shopList.forEach((shop, i) => {
     actions.createPage({
-      path: `/${shop}/`,
+      path: `/${shop.shopId}/`,
       component: shopPage,
       context: {
-        shopName: shop,
+        shopName: shop.shopId,
       },
     })
   })
@@ -59,4 +71,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       })
     })
   }
+}
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        src: path.resolve(__dirname, "src"),
+        // templates: path.resolve(__dirname, 'src/templates'),
+        // scss: path.resolve(__dirname, 'src/scss'),
+      },
+    },
+  })
 }

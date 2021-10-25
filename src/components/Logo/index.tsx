@@ -5,7 +5,7 @@ import { WrapLogoSt } from "./logo.css"
 
 const Logo = () => {
   return (
-    <WrapLogoSt>
+    <WrapLogoSt to="/">
       <StaticImage
         src="../../images/bookable24.png"
         alt="BookAble Online Booking System"

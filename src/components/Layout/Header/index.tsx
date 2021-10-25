@@ -10,8 +10,8 @@ import { Link, useTranslation } from "gatsby-plugin-react-i18next"
 import { ThemeOptions } from "@mui/material"
 // import { Link } from "gatsby"
 import React from "react"
-import { routes } from "../../routes"
-import Logo from "../Logo"
+import { routes } from "../../../routes"
+import Logo from "../../Logo"
 import { PageLinkSt, CTAButtons } from "./Header.css"
 import LangSelect from "./LangSelect"
 import MobileMenu from "./MobileMenu"
@@ -63,9 +63,8 @@ const HeaderComponent: React.FC = ({ location }: any) => {
   return (
     <AppBar position="fixed" color="default">
       <Toolbar className={classes.container}>
-        <Link to="/">
-          <Logo />
-        </Link>
+        <Logo />
+
         <Hidden mdDown>
           <NavLink />
           <div
