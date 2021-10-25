@@ -17,7 +17,7 @@ import { NavLinks } from "../NavLinks/Navlinks"
 
 // Styled-component Overidde
 
-const HeaderComponent: React.FC = ({ location }: any) => {
+const HeaderComponent: React.FC = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const { t } = useTranslation()
   const handleDrawerToggle = () => {

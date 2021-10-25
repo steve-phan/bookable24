@@ -21,8 +21,8 @@ export const LinkItemSt = styled(Link)`
   color: white;
 
   svg {
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 16px;
+    margin-left: 16px;
     font-size: 18px;
   }
 `

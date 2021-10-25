@@ -8,7 +8,7 @@ import InputLabel from "@mui/material/InputLabel"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
 import React, { useEffect } from "react"
-import { navigate } from "gatsby"
+import { useI18next } from "gatsby-plugin-react-i18next"
 
 import Loading from "../../../components/Loading/Loading"
 import { auth } from "../../../firebase"
@@ -32,6 +32,7 @@ interface IloginStates {
 }
 
 const SignIn = () => {
+  const { navigate } = useI18next()
   const [values, setValues] = React.useState<IloginStates>({
     email: "",
     password: "",

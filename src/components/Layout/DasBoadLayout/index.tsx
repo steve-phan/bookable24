@@ -13,8 +13,8 @@ import {
 } from "./dashboard.css"
 
 export interface IMobileToggle {
-  mobileOpen: boolean
-  handleDrawerToggle: () => void
+  mobileOpen?: boolean
+  handleDrawerToggle?: () => void
 }
 
 const DashBoardLayout = ({ children }: { children: JSX.Element }) => {

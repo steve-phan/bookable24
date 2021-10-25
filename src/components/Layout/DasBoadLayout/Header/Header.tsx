@@ -40,29 +40,20 @@ export default function Header({
   //   React.useContext(ShopContext);
 
   return (
-    <AppBarSt color="default">
+    <AppBarSt position="fixed" color="default">
       <Toolbar
         style={{
           justifyContent: "space-between",
         }}
       >
-        <Hidden mdUp implementation="css">
-          <Logo />
-        </Hidden>
+        <Logo />
 
-        <div>
-          {/* Here we create navbar brand, based on route name */}
-          <Button href="#">
-            {/* {routeName} */}
-            Online Booking System
-            {/* BookAble24 */}
-          </Button>
-        </div>
-
-        <Hidden smDown implementation="css">
-          {/* <NavBarLinks /> */}
-          <h1>NavbarLinks</h1>
-        </Hidden>
+        {/* Here we create navbar brand, based on route name */}
+        <Button href="#">
+          {/* {routeName} */}
+          Online Booking System
+          {/* BookAble24 */}
+        </Button>
 
         <Hidden mdUp implementation="css">
           <IconButton

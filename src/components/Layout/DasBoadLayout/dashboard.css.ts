@@ -23,3 +23,12 @@ export const DashBoardContentSt = styled("main")(({ theme }) => ({
 export const WrapContentSt = styled("div")(({ theme }) => ({
   paddingTop: 64,
 }))
+
+export const WrapSideBarSt = styled("div")(({ theme }) => ({
+  "& .MuiPaper-root": {
+    paddingTop: 64,
+    width: `${drawerWidth}px`,
+    borderRight: "unset",
+    justifyContent: "space-evenly",
+  },
+}))

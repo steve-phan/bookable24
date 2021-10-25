@@ -11,10 +11,12 @@ import Icon from "@mui/material/Icon"
 import Logo from "src/components/Logo"
 
 import { routes } from "./routes"
+import { WrapSideBarSt } from "./dashboard.css"
 import { NavLinks } from "../NavLinks/Navlinks"
 
 import { IMobileToggle } from "./"
 import MobileMenu from "../NavLinks/MobileMenu"
+import { BackgroundSt } from "../NavLinks/NavLinks.css"
 // core components
 
 const SideBar = ({ mobileOpen, handleDrawerToggle }: IMobileToggle) => {
@@ -85,7 +87,7 @@ const SideBar = ({ mobileOpen, handleDrawerToggle }: IMobileToggle) => {
   // )
 
   return (
-    <div>
+    <WrapSideBarSt>
       <MobileMenu
         handleDrawerToggle={handleDrawerToggle}
         mobileOpen={mobileOpen}
@@ -93,27 +95,16 @@ const SideBar = ({ mobileOpen, handleDrawerToggle }: IMobileToggle) => {
       />
 
       <Hidden mdDown implementation="css">
-        <Drawer
-          anchor="left"
-          variant="permanent"
-          open
-          // classes={{
-          //   paper: classNames(classes.drawerPaper, {
-          //     [classes.drawerPaperRTL]: props.rtlActive,
-          //   }),
-          // }}
-        >
-          <Logo />
-          <div> {/* <Links /> */}</div>
-          {/* {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null} */}
+        <Drawer anchor="left" variant="permanent" open>
+          <MobileMenu
+            // handleDrawerToggle={handleDrawerToggle}
+            // mobileOpen={mobileOpen}
+            isDesktop
+            routes={routes}
+          />
         </Drawer>
       </Hidden>
-    </div>
+    </WrapSideBarSt>
   )
 }
 
