@@ -88,6 +88,11 @@ export const shopSlice = createSlice({
       state.shopInfo = true
       state.shopInfo = action.payload
     },
+
+    setShopLogout: state => {
+      state.isShopLogin = true
+      state.shopInfo = intinitialShopState.shopInfo
+    },
   },
   extraReducers: builder => {
     builder
@@ -103,6 +108,6 @@ export const shopSlice = createSlice({
   },
 })
 
-export const { setShopInfo } = shopSlice.actions
+export const { setShopInfo, setShopLogout } = shopSlice.actions
 
 export default shopSlice.reducer

@@ -21,6 +21,7 @@
   },
   "account": {
     "login": "Login",
+    "logout": "Logout",
     "registration": "Registration",
     "forgot": "Forgot password"
   },

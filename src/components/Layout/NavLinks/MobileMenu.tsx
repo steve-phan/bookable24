@@ -3,19 +3,21 @@ import Drawer from "@mui/material/Drawer"
 import Hidden from "@mui/material/Hidden"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { setShopLogout } from "src/store/shop/shopSlice"
+
 import LangSelect from "../LangSelect"
-import {
-  WrapLoginMobileSt,
-  LoginButton,
-  BackgroundSt,
-} from "../Header/Header.css"
+import { LoginButton } from "../Header/Header.css"
+import { WrapLoginMobileSt, BackgroundSt, DrawerSt } from "./NavLinks.css"
 import { MobileNavLinks } from "./MobileNavLink"
 
 const MobileMenu = ({ mobileOpen, handleDrawerToggle, routes }: any) => {
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  const { isShopLogin } = useAppSelector(state => state.shop)
   return (
     <Hidden mdUp implementation="css">
-      <Drawer
+      <DrawerSt
         variant="temporary"
         anchor="right"
         open={mobileOpen}
@@ -26,11 +28,19 @@ const MobileMenu = ({ mobileOpen, handleDrawerToggle, routes }: any) => {
       >
         <BackgroundSt />
         <WrapLoginMobileSt>
-          <LoginButton to="/login">{t("account.login", "Login")} </LoginButton>
+          {isShopLogin ? (
+            <LoginButton onClick={() => dispatch(setShopLogout())} to="/login">
+              {t("account.logout", "Logout")}{" "}
+            </LoginButton>
+          ) : (
+            <LoginButton to="/login">
+              {t("account.login", "Login")}{" "}
+            </LoginButton>
+          )}
           <LangSelect />
         </WrapLoginMobileSt>
         <MobileNavLinks routes={routes} />
-      </Drawer>
+      </DrawerSt>
     </Hidden>
   )
 }

@@ -20,6 +20,7 @@
   },
   "account": {
     "login": "Đăng nhập",
+    "logout": "Đăng xuất",
     "registration": "Đăng ký",
     "forgot": "Quên tài khoản"
   },
