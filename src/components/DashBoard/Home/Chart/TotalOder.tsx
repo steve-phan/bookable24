@@ -1,6 +1,11 @@
 import React from "react"
 import { Bar } from "react-chartjs-2"
-import { Typography } from "@mui/material"
+
+import { useTheme } from "@mui/material/styles"
+import { useTranslation } from "gatsby-plugin-react-i18next"
+
+import { BarSt, NumberSt, TypoTitleSt } from "./Chart.css"
+
 const months = [
   "Jan",
   "Feb",
@@ -15,11 +20,11 @@ const months = [
   "Nov",
   "Dec",
 ]
-const getData = (data: any) => ({
+const getData = (data: any, mess: string) => ({
   labels: months,
   datasets: [
     {
-      label: " Số termin",
+      label: mess,
       data,
       backgroundColor: [
         "rgba(255, 99, 132, 0.2)",
@@ -55,7 +60,7 @@ const getData = (data: any) => ({
 })
 
 const options = {
-  indexAxis: "x",
+  // indexAxis: "x",
   // Elements options apply to all of the options unless overridden in a dataset
   // In this case, we are setting the border of each horizontal bar to be 2px wide
   elements: {
@@ -64,19 +69,43 @@ const options = {
     },
   },
   responsive: true,
+
   plugins: {
+    legend: {
+      display: false,
+    },
     // legend: {
     //   position: 'right',
     // },
     // title: {
-    //   display: true,
-    //   text: 'Chart.js Horizontal Bar Chart',
+    //   display: false,
+    //   text: "Chart.js Horizontal Bar Chart",
     // },
   },
 }
 
 const TotalOders = ({ allTermins }: { allTermins: any[] }) => {
-  return <h1>Total Oder</h1>
+  const { t } = useTranslation()
+  let newData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  allTermins.forEach(termin => {
+    const { created_at } = termin
+    const m = created_at.split("-")[1]
+    newData[m - 1] += 1
+  })
+
+  return (
+    <>
+      <TypoTitleSt variant="h5">
+        {t("dashboard.dashboard.totalbookings", "ToTal Bookings")}
+      </TypoTitleSt>
+      <BarSt>
+        <Bar
+          data={getData(newData, t("dashboard.dashboard.bookings", "Bookings"))}
+          options={options}
+        />
+      </BarSt>
+    </>
+  )
 }
 
 export default TotalOders

@@ -55,5 +55,15 @@
   "thankyou": {
     "thank": "Thanks, ",
     "text": "We sent an Confirm-EMail to: "
+  },
+  "dashboard": {
+    "dashboard": {
+      "bookings": "Bookings",
+      "totalbookings": "Total Bookings",
+      "totalcustomers": "Total Customers"
+    },
+    "allbookings": "",
+    "todaybookings": "",
+    "tomorrowbookings": ""
   }
 }

@@ -2,8 +2,8 @@ import moment from "moment"
 import { Link, useTranslation } from "gatsby-plugin-react-i18next"
 
 import React, { useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { setSelectedSlot } from "../../../store/shop/bookingSlice"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { setSelectedSlot } from "src/store/shop/bookingSlice"
 import { afternoonSlots, morningSlots } from "../utils"
 import {
   ButtonGroupSt,

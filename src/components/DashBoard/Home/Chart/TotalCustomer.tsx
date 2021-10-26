@@ -1,10 +1,11 @@
-import React, { useRef, useState, useEffect } from "react"
+import React from "react"
 import * as Chartjs from "chart.js"
 import { Doughnut, Pie } from "react-chartjs-2"
-import { Typography } from "@mui/material"
-import { useTheme } from "@mui/material/styles"
 
-import { CircleSt, NumberSt } from "./Chart.css"
+import { useTheme } from "@mui/material/styles"
+import { useTranslation } from "gatsby-plugin-react-i18next"
+
+import { CircleSt, NumberSt, TypoTitleSt } from "./Chart.css"
 
 const showData = (num: number, color: string) => ({
   //   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -21,6 +22,8 @@ const showData = (num: number, color: string) => ({
 
 const TotalCustomer = ({ allTermins }: { allTermins: any[] }) => {
   const theme = useTheme()
+  const { t } = useTranslation()
+
   //   const chartContainer = useRef(null);
   //   const [chartInstance, setChartInstance] = useState(null);
 
@@ -31,15 +34,16 @@ const TotalCustomer = ({ allTermins }: { allTermins: any[] }) => {
   //     }
   //   }, [chartContainer]);
   const totalCustomers = allTermins.reduce((acc, cur) => acc + cur.person, 0)
-  console.log("totalcutomer  ", allTermins)
   return (
-    <div>
-      <Typography variant="h5">Tổng số khách hàng của quán:</Typography>
+    <>
+      <TypoTitleSt variant="h5">
+        {t("dashboard.dashboard.totalcustomers", "ToTal Customers")}
+      </TypoTitleSt>
       <CircleSt>
         <NumberSt>{totalCustomers}</NumberSt>
         <Pie data={showData(totalCustomers, theme.color.primary)} />
       </CircleSt>
-    </div>
+    </>
   )
 }
 

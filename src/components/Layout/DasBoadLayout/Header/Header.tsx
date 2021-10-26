@@ -28,7 +28,7 @@ export default function Header({
         }}
       >
         <Logo />
-        <Button href="#">Online Booking System</Button>
+        {/* <Button href="#">Online Booking System</Button> */}
         <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"

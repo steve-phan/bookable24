@@ -54,5 +54,15 @@
   "thankyou": {
     "thank": "Cảm ơn, ",
     "text": "Chúng tôi đã gửi một Confirm-EMail đến: "
+  },
+  "dashboard": {
+    "dashboard": {
+      "bookings": "Đặt chỗ",
+      "totalbookings": "Tổng số đặt trước",
+      "totalcustomers": "Tổng số khách hàng"
+    },
+    "allbookings": "",
+    "todaybookings": "",
+    "tomorrowbookings": ""
   }
 }
