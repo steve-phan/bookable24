@@ -1,7 +1,7 @@
-import React from "react"
+import React, { useMemo } from "react"
 import Drawer from "@mui/material/Drawer"
 import Hidden from "@mui/material/Hidden"
-import { useTranslation } from "gatsby-plugin-react-i18next"
+import { useTranslation, useI18next } from "gatsby-plugin-react-i18next"
 import { signOut } from "firebase/auth"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
@@ -10,7 +10,12 @@ import { auth } from "src/firebase"
 
 import LangSelect from "../LangSelect"
 import { LoginButton } from "../Header/Header.css"
-import { WrapLoginMobileSt, BackgroundSt, DrawerSt } from "./NavLinks.css"
+import {
+  WrapLoginMobileSt,
+  BackgroundSt,
+  DrawerSt,
+  CTAButtonAccountSt,
+} from "./NavLinks.css"
 import { MobileNavLinks } from "./MobileNavLink"
 import { IMobileToggle } from "src/components/Layout/DasBoadLayout"
 
@@ -26,8 +31,10 @@ const MobileMenu = ({
   routes,
 }: IMobileMenu) => {
   const { t } = useTranslation()
+  const { navigate } = useI18next()
   const dispatch = useAppDispatch()
   const { isShopLogin } = useAppSelector(state => state.shop)
+  const MemoBackground = useMemo(() => <BackgroundSt />, [])
   return (
     <>
       <Hidden mdUp implementation="css">
@@ -42,33 +49,23 @@ const MobileMenu = ({
         >
           <BackgroundSt />
           <WrapLoginMobileSt>
-            {isShopLogin ? (
-              <LoginButton
-                onClick={async () => {
-                  try {
+            <CTAButtonAccountSt
+              onClick={async () => {
+                try {
+                  if (isShopLogin) {
                     await signOut(auth)
-
                     dispatch(setShopLogout())
-                  } catch (error) {}
-                }}
-                to="/login"
-              >
-                {t("account.logout", "Logout")}{" "}
-              </LoginButton>
-            ) : (
-              <LoginButton
-                onClick={async () => {
-                  try {
-                    await signOut(auth)
-
-                    dispatch(setShopLogout())
-                  } catch (error) {}
-                }}
-                to="/login"
-              >
-                {t("account.login", "Login")}{" "}
-              </LoginButton>
-            )}
+                    navigate("/login")
+                  }
+                } catch (error) {
+                  alert("Try Again")
+                }
+              }}
+            >
+              {isShopLogin
+                ? t("account.logout", "Logout")
+                : t("account.login", "Login")}
+            </CTAButtonAccountSt>
             <LangSelect />
           </WrapLoginMobileSt>
           <MobileNavLinks routes={routes} />
@@ -76,20 +73,26 @@ const MobileMenu = ({
       </Hidden>
       {isDesktop && (
         <>
-          <BackgroundSt />
+          {MemoBackground}
+          {/* <BackgroundSt /> */}
           <WrapLoginMobileSt>
-            {isShopLogin ? (
-              <LoginButton
-                onClick={() => dispatch(setShopLogout())}
-                to="/login"
-              >
-                {t("account.logout", "Logout")}{" "}
-              </LoginButton>
-            ) : (
-              <LoginButton to="/login">
-                {t("account.login", "Login")}{" "}
-              </LoginButton>
-            )}
+            <CTAButtonAccountSt
+              onClick={async () => {
+                try {
+                  if (isShopLogin) {
+                    await signOut(auth)
+                    dispatch(setShopLogout())
+                    navigate("/login")
+                  }
+                } catch (error) {
+                  alert("Try Again")
+                }
+              }}
+            >
+              {isShopLogin
+                ? t("account.logout", "Logout")
+                : t("account.login", "Login")}
+            </CTAButtonAccountSt>
             <LangSelect />
           </WrapLoginMobileSt>
           <MobileNavLinks routes={routes} />

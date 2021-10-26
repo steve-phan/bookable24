@@ -12,10 +12,11 @@ import Footer from "./Footer/Footer"
 import Header from "./Header"
 import { BodySt } from "./Layout.css"
 import "./reset.css"
+import Loading from "../Loading/Loading"
 
 const Layout = ({ children, location }: any) => {
   const dispatch = useAppDispatch()
-  const { isShopLogin } = useAppSelector(state => state.shop)
+  const { isShopLogin, status } = useAppSelector(state => state.shop)
 
   const shopList = useShopname()
 
@@ -38,9 +39,11 @@ const Layout = ({ children, location }: any) => {
           disableGutters
           maxWidth={false}
         >
+          {status === "loading" && <Loading />}
           <Header
-          // siteTitle={data.site.siteMetadata?.title || `Title`}
-          // location={location}
+            // siteTitle={data.site.siteMetadata?.title || `Title`}
+            // location={location}
+            isShopLogin={isShopLogin}
           />
           <BodySt>
             <Container disableGutters>{children}</Container>

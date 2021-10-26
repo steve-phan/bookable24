@@ -10,35 +10,16 @@ import Hidden from "@mui/material/Hidden"
 import Menu from "@mui/icons-material/Menu"
 import { Button } from "@mui/material"
 
-import { AppBarSt } from "./Header.css"
 import Logo from "src/components/Logo"
+
+import { AppBarSt } from "./Header.css"
 import LangSelect from "../../LangSelect"
-
 import { IMobileToggle } from "../"
-
-//hooks
-// import { useRouteName } from 'hooks';
-
-// import styles from "../../themes/components/headerStyle"
-// import NavBarLinks from "./NavBarLinks"
-// import { useRouteName } from "../hooks"
-// import { ShopContext } from '../../context/contextShop';
-
-// const useStyles = makeStyles(styles)
 
 export default function Header({
   mobileOpen,
   handleDrawerToggle,
 }: IMobileToggle) {
-  // const classes = useStyles()
-  // const routeName = useRouteName()
-  // const { color } = props;
-  // const appBarClasses = classNames({
-  //   [" " + classes[color]]: color,
-  // })
-  // const [{ isShopLogged, email, allTermins, terminIsLoaded }, dispatch] =
-  //   React.useContext(ShopContext);
-
   return (
     <AppBarSt position="fixed" color="default">
       <Toolbar
@@ -47,14 +28,7 @@ export default function Header({
         }}
       >
         <Logo />
-
-        {/* Here we create navbar brand, based on route name */}
-        <Button href="#">
-          {/* {routeName} */}
-          Online Booking System
-          {/* BookAble24 */}
-        </Button>
-
+        <Button href="#">Online Booking System</Button>
         <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"

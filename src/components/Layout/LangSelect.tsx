@@ -5,10 +5,14 @@ import { useI18next } from "gatsby-plugin-react-i18next"
 import * as React from "react"
 import styled from "styled-components"
 
+import de from "./flag/de.png"
+import en from "./flag/en.png"
+import vn from "./flag/vn.png"
+
 const StyledSelect = styled(Select)`
   margin-left: 16px;
   .MuiSelect-select {
-    width: 40px;
+    width: 32px;
     display: flex;
     justify-content: center;
     border-radius: 50% !important;
@@ -16,6 +20,9 @@ const StyledSelect = styled(Select)`
   }
   svg {
     visibility: hidden;
+  }
+  img {
+    margin-bottom: 0;
   }
 `
 
@@ -37,34 +44,21 @@ const LangSelect: React.FC = () => {
           case "vn":
             return (
               <MenuItem key={lng} value={lng}>
-                <StaticImage
-                  src={`./flag/vn.png`}
-                  width={23}
-                  alt={`Flag of ${lng}`}
-                />
+                <img src={vn} alt="VN" width={23} height={23} />
               </MenuItem>
             )
           case "en":
             return (
               <MenuItem key={lng} value={lng}>
-                <StaticImage
-                  src={`./flag/en.png`}
-                  width={23}
-                  alt={`Flag of ${lng}`}
-                />
+                <img src={en} alt="EN" width={23} height={23} />
               </MenuItem>
             )
           case "de":
             return (
               <MenuItem key={lng} value={lng}>
-                <StaticImage
-                  src={`./flag/de.png`}
-                  width={23}
-                  alt={`Flag of ${lng}`}
-                />
+                <img src={de} alt="DE" width={23} height={23} />
               </MenuItem>
             )
-
           default:
             break
         }

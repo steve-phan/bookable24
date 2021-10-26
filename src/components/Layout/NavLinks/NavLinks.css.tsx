@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby-plugin-react-i18next"
-import { styled } from "@mui/material/styles"
+import { styled, alpha } from "@mui/material/styles"
 import { StaticImage } from "gatsby-plugin-image"
 import Drawer from "@mui/material/Drawer"
 
@@ -26,6 +26,7 @@ export const LinkItemSt = styled(Link)`
     font-size: 18px;
   }
 `
+
 export const WrapLoginMobileSt = styled("div")`
   order: 1;
   display: flex;
@@ -40,11 +41,30 @@ export const DrawerSt = styled(Drawer)(({ theme }) => ({
   },
 }))
 
+export const CTAButtonAccountSt = styled("button")(({ theme }) => ({
+  background: theme.color.primary,
+  color: theme.color.white,
+  border: `1px solid ${theme.color.primary}`,
+  borderRadius: 20,
+  fontSize: 14,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  padding: "10px 16px",
+  cursor: "pointer",
+
+  "&:hover": {
+    background: alpha(theme.color.primary, 0.6),
+  },
+}))
+
 export const BackgroundSt = () => {
   return (
     <StaticImage
+      layout="fixed"
       src="./background.jpg"
       alt="Bookable24 Background"
+      width={240}
+      height={900}
       style={{
         position: "absolute",
         inset: 0,

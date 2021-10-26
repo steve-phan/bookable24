@@ -1,5 +1,5 @@
 import { Link } from "gatsby-plugin-react-i18next"
-import { styled } from "@mui/material/styles"
+import { styled, alpha } from "@mui/material/styles"
 
 export const CTAButtons = styled(Link)`
   font-size: 14px;
@@ -14,11 +14,14 @@ export const CTAButtons = styled(Link)`
 
 export const LoginButton = styled(CTAButtons)`
   padding: 10px 16px;
-  /* width: fit-content; */
-  /* width: 120px; */
   margin: 0 auto;
 `
 export const WrapLoginSt = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+}))
+
+export const DashBoardButtonSt = styled(CTAButtons)(({ theme }) => ({
+  background: theme.color.black,
+  color: alpha(theme.color.primary, 0.86),
 }))

@@ -10,14 +10,17 @@ import { Link, useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
 import { routes } from "../routes"
 import Logo from "../../Logo"
-import { CTAButtons, WrapLoginSt } from "./Header.css"
+import { CTAButtons, WrapLoginSt, DashBoardButtonSt } from "./Header.css"
 import LangSelect from "../LangSelect"
 import MobileMenu from "../NavLinks/MobileMenu"
 import { NavLinks } from "../NavLinks/Navlinks"
 
 // Styled-component Overidde
+interface IHeaderProps {
+  isShopLogin: boolean | undefined
+}
 
-const HeaderComponent: React.FC = () => {
+const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const { t } = useTranslation()
   const handleDrawerToggle = () => {
@@ -34,7 +37,14 @@ const HeaderComponent: React.FC = () => {
         <Hidden mdDown>
           <NavLinks routes={routes} />
           <WrapLoginSt>
-            <CTAButtons to="/login">{t("account.login")} </CTAButtons>
+            {isShopLogin ? (
+              <DashBoardButtonSt to="/dashboard">
+                {t("menu.DashBoard", "DashBoard")}{" "}
+              </DashBoardButtonSt>
+            ) : (
+              <CTAButtons to="/login">{t("account.login", "Login")}</CTAButtons>
+            )}
+
             <LangSelect />
           </WrapLoginSt>
         </Hidden>
