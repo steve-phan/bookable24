@@ -1,8 +1,9 @@
 import * as React from "react"
-import { LinkItemSt } from "./NavLinks.css"
-import { makeStyles, useTheme } from "@mui/material/styles"
+import { useTheme } from "@mui/material/styles"
 import { ThemeOptions } from "@mui/material"
-import { Link, useTranslation } from "gatsby-plugin-react-i18next"
+import { useTranslation } from "gatsby-plugin-react-i18next"
+
+import { LinkItemSt } from "./NavLinks.css"
 
 export const MobileNavLinks = ({ routes }: any) => {
   const theme = useTheme<ThemeOptions>()

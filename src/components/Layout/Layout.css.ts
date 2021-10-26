@@ -14,6 +14,3 @@ export const MainSt = styled("main")`
   padding: 0;
   width: 100%;
 `
-/* @media (min-width: 960px) {
-    max-width: calc(100% - 210px);
-  } */

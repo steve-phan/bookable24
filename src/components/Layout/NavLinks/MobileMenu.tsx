@@ -1,5 +1,4 @@
-import React, { useMemo } from "react"
-import Drawer from "@mui/material/Drawer"
+import React from "react"
 import Hidden from "@mui/material/Hidden"
 import { useTranslation, useI18next } from "gatsby-plugin-react-i18next"
 import { signOut } from "firebase/auth"
@@ -7,17 +6,17 @@ import { signOut } from "firebase/auth"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setShopLogout } from "src/store/shop/shopSlice"
 import { auth } from "src/firebase"
+import { IMobileToggle } from "src/components/Layout/DasBoadLayout"
 
 import LangSelect from "../LangSelect"
-import { LoginButton } from "../Header/Header.css"
 import {
   WrapLoginMobileSt,
-  BackgroundSt,
   DrawerSt,
   CTAButtonAccountSt,
+  BackgroundImgSt,
 } from "./NavLinks.css"
 import { MobileNavLinks } from "./MobileNavLink"
-import { IMobileToggle } from "src/components/Layout/DasBoadLayout"
+import background from "./background.jpg"
 
 export interface IMobileMenu extends IMobileToggle {
   isDesktop?: boolean
@@ -34,7 +33,7 @@ const MobileMenu = ({
   const { navigate } = useI18next()
   const dispatch = useAppDispatch()
   const { isShopLogin } = useAppSelector(state => state.shop)
-  const MemoBackground = useMemo(() => <BackgroundSt />, [])
+
   return (
     <>
       <Hidden mdUp implementation="css">
@@ -47,7 +46,8 @@ const MobileMenu = ({
             keepMounted: true, // Better open performance on mobile.
           }}
         >
-          <BackgroundSt />
+          <BackgroundImgSt src={background} alt="Bookable24" />
+          {/* <BackgroundSt /> */}
           <WrapLoginMobileSt>
             <CTAButtonAccountSt
               onClick={async () => {
@@ -73,7 +73,8 @@ const MobileMenu = ({
       </Hidden>
       {isDesktop && (
         <>
-          {MemoBackground}
+          <BackgroundImgSt src={background} alt="Bookable24" />
+
           {/* <BackgroundSt /> */}
           <WrapLoginMobileSt>
             <CTAButtonAccountSt

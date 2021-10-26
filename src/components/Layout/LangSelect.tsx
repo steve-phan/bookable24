@@ -1,6 +1,5 @@
 import MenuItem from "@mui/material/MenuItem"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
-import { StaticImage } from "gatsby-plugin-image"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import * as React from "react"
 import styled from "styled-components"

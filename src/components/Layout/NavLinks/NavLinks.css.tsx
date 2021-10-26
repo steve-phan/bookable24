@@ -1,7 +1,5 @@
-import * as React from "react"
 import { Link } from "gatsby-plugin-react-i18next"
 import { styled, alpha } from "@mui/material/styles"
-import { StaticImage } from "gatsby-plugin-image"
 import Drawer from "@mui/material/Drawer"
 
 export const PageLinkSt = styled(Link)`
@@ -57,20 +55,10 @@ export const CTAButtonAccountSt = styled("button")(({ theme }) => ({
   },
 }))
 
-export const BackgroundSt = () => {
-  return (
-    <StaticImage
-      layout="fixed"
-      src="./background.jpg"
-      alt="Bookable24 Background"
-      width={240}
-      height={900}
-      style={{
-        position: "absolute",
-        inset: 0,
-        zIndex: -1,
-        opacity: 0.6,
-      }}
-    />
-  )
-}
+export const BackgroundImgSt = styled("img")(({ theme }) => ({
+  position: "absolute",
+  inset: 0,
+  zIndex: -1,
+  opacity: 0.6,
+  height: "100vh",
+}))
