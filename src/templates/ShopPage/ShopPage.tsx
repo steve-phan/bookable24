@@ -1,25 +1,18 @@
-import { Container, Typography } from "@mui/material"
-import Button from "@mui/material/Button"
 import Step from "@mui/material/Step"
-import StepLabel from "@mui/material/StepLabel"
 import { makeStyles } from "@mui/styles"
 import { graphql } from "gatsby"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image"
+
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { getShopinfo } from "src/store/shop/shopSlice"
+
 import Loading from "../../components/Loading/Loading"
 
 import Layout from "../../components/Layout/Layout"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { getShopinfo } from "../../store/shop/shopSlice"
 import ColorlibStepIcon from "./ColorlibStepIcon"
 import SEO from "../../components/seo"
-// import Loading from '../components/Loading';
-// import DatePicker from '../components/TerminSteps/DatePicker';
-// import InfoUser from '../components/TerminSteps/InfoUser';
-// import SlotPicker from '../components/TerminSteps/SlotPicker';
-// import { TerminContext } from '../context/contextTermin';
-// import { terminTypes } from '../context/contextTermin/terminTypes';
+
 import {
   WrapTerminSt,
   StepperSt,

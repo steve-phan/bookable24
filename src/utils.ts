@@ -31,3 +31,42 @@ export const getShopName = (email: string | null, shopList: any[]) =>
   shopList?.find(
     (shop: { email: string; shopId: string }) => shop.email === email
   )?.shopId
+
+export const timeAgo = (dateParam: Date) => {
+  if (!dateParam) {
+    return null
+  }
+
+  const date =
+    typeof dateParam === "object"
+      ? dateParam.getTime()
+      : new Date(dateParam).getTime()
+
+  const DAY_IN_MS = 86400000
+  const today: number = new Date().getTime()
+  const yesterday = new Date(today - DAY_IN_MS)
+  const seconds = Math.round((today - date) / 1000)
+  const minutes = Math.round(seconds / 60)
+  // const isToday = today.toDateString() === date.toDateString()
+  // const isYesterday = yesterday.toDateString() === date.toDateString()
+  // const isThisYear = today.getFullYear() === date.getFullYear()
+
+  switch (true) {
+    case seconds < 60:
+      return `${seconds}  giây trước`
+    case seconds < 90:
+      return "khoảng một phút trước"
+    case minutes < 30:
+      return "khoảng nửa tiếng trước"
+    case minutes < 60:
+      return "khoảng một tiếng trước"
+    case minutes / 60 < 24:
+      return `khoảng ${Math.round(minutes / 60)} tiếng trước`
+    case minutes / 60 / 24 < 7:
+      return `khoảng ${Math.round(minutes / 60 / 24)} ngày trước`
+    case minutes / 60 / 24 / 7 < 1:
+      return `khoảng ${Math.round(minutes / 60 / 24 / 7)} tuần trước`
+    default:
+      return "Một tháng trước"
+  }
+}

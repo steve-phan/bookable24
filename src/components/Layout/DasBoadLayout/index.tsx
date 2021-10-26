@@ -1,7 +1,7 @@
 import { graphql } from "gatsby"
 import { ThemeProvider } from "@mui/material/styles"
 import { ThemeProvider as ThemeProviderSt } from "styled-components"
-import React, { useEffect } from "react"
+import React, { ReactNode, useEffect } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { useShopname } from "src/components/Account/accountHook"
@@ -23,7 +23,7 @@ export interface IMobileToggle {
   handleDrawerToggle?: () => void
 }
 
-const DashBoardLayout = ({ children }: { children: JSX.Element }) => {
+const DashBoardLayout = ({ children }: { children: ReactNode }) => {
   const { navigate } = useI18next()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {

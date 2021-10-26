@@ -1,11 +1,14 @@
 import React from "react"
 import { graphql } from "gatsby"
-import DashBoardLayout from "src/components/Layout/DasBoadLayout"
 
-const DashBoardHome = ({ children }: { children: JSX.Element }) => {
+import DashBoardLayout from "src/components/Layout/DasBoadLayout"
+import HomeDashBoard from "src/components/DashBoard/Home/Home"
+
+const DashBoardHome = () => {
   return (
     <DashBoardLayout>
-      <h1>Wow...</h1>
+      <h1>Home</h1>
+      <HomeDashBoard />
     </DashBoardLayout>
   )
 }

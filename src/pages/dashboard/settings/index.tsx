@@ -2,13 +2,13 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import DashBoardLayout from "src/components/Layout/DasBoadLayout"
+import SettingsDashBoard from "src/components/DashBoard/Settings/Settings"
 
 const Settings = () => {
   return (
     <DashBoardLayout>
-      <div>
-        <h1>Hello Setting</h1>
-      </div>
+      <h1>Hello Setting</h1>
+      <SettingsDashBoard />
     </DashBoardLayout>
   )
 }

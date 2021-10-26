@@ -2,18 +2,18 @@ import React from "react"
 import { graphql } from "gatsby"
 
 import DashBoardLayout from "src/components/Layout/DasBoadLayout"
+import TodayDashBoard from "src/components/DashBoard/TodayBookings/TodayBookings"
 
-const AllBookings = () => {
+const TodayBooking = () => {
   return (
     <DashBoardLayout>
-      <div>
-        <h1>Hello Setting</h1>
-      </div>
+      <h1>Hello TodayBooking</h1>
+      <TodayDashBoard />
     </DashBoardLayout>
   )
 }
 
-export default AllBookings
+export default TodayBooking
 
 export const query = graphql`
   query ($language: String!) {
