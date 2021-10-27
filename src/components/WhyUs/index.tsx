@@ -1,6 +1,8 @@
 import React from "react"
-import { Container, Grid, ThemeOptions } from "@mui/material"
-import { makeStyles, useTheme } from "@mui/styles"
+import { Container, Grid } from "@mui/material"
+import { useTheme, ThemeOptions } from "@mui/material/styles"
+import { makeStyles } from "@mui/styles"
+import { GridSt, BoxCenter, BoxContent } from "./WhyUs.css"
 
 import {
   BrushOutlined,
@@ -36,49 +38,20 @@ const getIcon = (
   }
 }
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    // border: "1px solid red",
-
-    boxShadow: "0 0.125rem 1.25rem 0 rgb(86 93 100 / 10%)",
-
-    "&:hover": {
-      //   backgroundColor: "red",
-      transform: "scale(1.01)",
-    },
-  },
-  center: {
-    display: "flex",
-    justifyContent: "center",
-
-    paddingTop: 16,
-    // background: "radial-gradient(#d6e1ff, transparent)",
-  },
-  howContent: {
-    padding: 15,
-    color: "#615e5e",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-}))
-
 const WhyUs = () => {
   const { t } = useTranslation()
   const theme = useTheme<ThemeOptions>()
 
-  const classes = useStyles()
   const data = [...Array(6)].map((_, i) => t(`whyus.item${i + 1}`))
   return (
     <Container style={{ marginTop: 40, marginBottom: 20, padding: 8 }}>
       <Grid container style={{ marginTop: 20 }}>
         {data.map((item: string, i: number) => (
-          <Grid className={classes.card} item xs={12} sm={6} key={i}>
-            <Container className={classes.center}>
-              {getIcon(i + 1, theme.color.iconColor)}
-            </Container>
+          <GridSt item xs={12} sm={6} key={i + item}>
+            <BoxCenter>{getIcon(i + 1, theme.color.iconColor)}</BoxCenter>
 
-            <Container className={classes.howContent}>{item}</Container>
-          </Grid>
+            <BoxContent>{item}</BoxContent>
+          </GridSt>
         ))}
       </Grid>
     </Container>

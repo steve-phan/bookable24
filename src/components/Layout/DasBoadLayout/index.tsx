@@ -3,13 +3,14 @@ import { ThemeProvider } from "@mui/material/styles"
 import { ThemeProvider as ThemeProviderSt } from "styled-components"
 import React, { ReactNode, useEffect } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
+import CssBaseline from "@mui/material/CssBaseline"
 
 import { useShopname } from "src/components/Account/accountHook"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { checkUserAuth } from "src/store/shop/shopSlice"
 import SideBar from "src/components/Layout/DasBoadLayout/SideBar"
 import Header from "src/components/Layout/DasBoadLayout/Header/Header"
-import { theme } from "src/utils"
+import { theme } from "src/theme"
 import Loading from "src/components/Loading/Loading"
 
 import {
@@ -50,6 +51,7 @@ const DashBoardLayout = ({ children }: { children: ReactNode }) => {
   return (
     <ThemeProvider theme={theme}>
       <ThemeProviderSt theme={theme}>
+        <CssBaseline />
         {status === "loading" && <Loading />}
         <WrapDashBoardSt>
           <SideBar

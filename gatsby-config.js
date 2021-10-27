@@ -64,14 +64,21 @@ module.exports = {
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-styled-components`,
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        pathToEmotionCacheProps: `src/emotion-cache-props`,
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-boilerplate-vietappeu`,
-        short_name: `vietappeu`,
+        name: `BookAble24 Booking System`,
+        short_name: `bookable24.de`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#f05123`,
+        theme_color: `#f05123`,
         display: `minimal-ui`,
         icon: `src/images/bookable24.png`, // This path is relative to the root of the site.
       },
