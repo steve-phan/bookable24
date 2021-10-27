@@ -2,17 +2,21 @@ import { ThemeProvider as ThemeProviderSt } from "styled-components"
 import { Container } from "@mui/material"
 import { ThemeProvider } from "@mui/material/styles"
 import React, { useEffect } from "react"
+import CssBaseline from "@mui/material/CssBaseline"
+import GlobalStyles from "@mui/material/GlobalStyles"
 
 import { useShopname } from "src/components/Account/accountHook"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { checkUserAuth } from "src/store/shop/shopSlice"
-import { theme } from "src/utils"
+import { theme, globalStyles } from "src/theme"
 
 import Footer from "./Footer/Footer"
 import Header from "./Header"
 import { BodySt } from "./Layout.css"
-import "./reset.css"
+// import "./reset.css"
 import Loading from "../Loading/Loading"
+
+const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
 const Layout = ({ children, location }: any) => {
   const dispatch = useAppDispatch()
@@ -29,6 +33,8 @@ const Layout = ({ children, location }: any) => {
   return (
     <ThemeProvider theme={theme}>
       <ThemeProviderSt theme={theme}>
+        <CssBaseline />
+        {inputGlobalStyles}
         <Container
           style={{
             padding: 0,
