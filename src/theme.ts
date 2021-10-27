@@ -20,6 +20,5 @@ export const theme = createTheme({
 export const globalStyles = {
   a: {
     textDecoration: "none",
-    backgroundColor: "red",
   },
 }

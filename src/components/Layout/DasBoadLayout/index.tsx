@@ -13,6 +13,7 @@ import Header from "src/components/Layout/DasBoadLayout/Header/Header"
 import { theme } from "src/theme"
 import Loading from "src/components/Loading/Loading"
 
+import { inputGlobalStyles } from "../Layout"
 import {
   WrapDashBoardSt,
   DashBoardContentSt,
@@ -52,6 +53,7 @@ const DashBoardLayout = ({ children }: { children: ReactNode }) => {
     <ThemeProvider theme={theme}>
       <ThemeProviderSt theme={theme}>
         <CssBaseline />
+        {inputGlobalStyles}
         {status === "loading" && <Loading />}
         <WrapDashBoardSt>
           <SideBar
