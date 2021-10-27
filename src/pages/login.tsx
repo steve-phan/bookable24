@@ -1,6 +1,6 @@
 import { graphql } from "gatsby"
 import { useTranslation } from "gatsby-plugin-react-i18next"
-import React from "react"
+import React, { useEffect } from "react"
 import { PageProps } from "gatsby"
 
 import Layout from "../components/Layout/Layout"
@@ -14,7 +14,7 @@ const Login: React.FC<PageProps> = ({ location, data }) => {
     <Layout location={location}>
       <SEO title="Login BookAble24" />
 
-      <SignIn />
+      <SignIn location={location} />
     </Layout>
   )
 }
