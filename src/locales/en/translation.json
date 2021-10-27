@@ -60,7 +60,16 @@
     "dashboard": {
       "bookings": "Bookings",
       "totalbookings": "Total Bookings",
-      "totalcustomers": "Total Customers"
+      "totalcustomers": "Total Customers",
+      "hasbooked": "has a reservation, please check the details",
+      "details": {
+        "title": "Customer Infomation",
+        "name": "Name",
+        "phone": "Phone",
+        "time": "Time",
+        "number": "Number",
+        "require": "Require"
+      }
     },
     "allbookings": "",
     "todaybookings": "",

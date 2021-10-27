@@ -9,17 +9,7 @@ export const GridItem = ({
   children: JSX.Element
   md: number
 }) => {
-  return (
-    <Grid
-      style={{
-        width: "100%",
-      }}
-      item
-      sm={12}
-    >
-      {children}
-    </Grid>
-  )
+  return <Grid sm={12}>{children}</Grid>
 }
 
 export const MenuItemSt = styled(MenuItem)(({ theme }) => ({

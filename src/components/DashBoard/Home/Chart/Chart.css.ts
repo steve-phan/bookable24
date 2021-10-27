@@ -1,6 +1,13 @@
 import { styled, alpha } from "@mui/material/styles"
 import { Typography } from "@mui/material"
 
+export const WrapChartSt = styled("div")(({ theme }) => ({
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+}))
+
 export const CircleSt = styled("div")(({ theme }) => ({
   width: "100%",
   maxWidth: 280,
@@ -23,6 +30,7 @@ export const NumberSt = styled("div")(({ theme }) => ({
 
 export const TypoTitleSt = styled(Typography)(({ theme }) => ({
   textAlign: "center",
+  width: "100%",
 }))
 
 export const BarSt = styled(CircleSt)(({ theme }) => ({

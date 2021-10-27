@@ -8,7 +8,7 @@ import {
   Modal,
 } from "@mui/material"
 import Snack from "@mui/material/SnackbarContent"
-
+import { useTranslation } from "gatsby-plugin-react-i18next"
 import CheckCircleOutlineOutlined from "@mui/icons-material/CheckCircleOutlineOutlined"
 import Close from "@mui/icons-material/Close"
 
@@ -30,6 +30,7 @@ import {
 } from "./Home.css"
 
 const HomeDashBoard = () => {
+  const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { shopInfo, allTermins } = useAppSelector(state => state.shop)
 
@@ -39,18 +40,24 @@ const HomeDashBoard = () => {
   return (
     <div>
       <Grid container>
-        <GridItem md={4}>
+        <Grid item flexGrow={1} sm={12} md={4}>
           <TotalCustomer allTermins={allTermins} />
-        </GridItem>
-        <GridItem md={8}>
+        </Grid>
+        <Grid item flexGrow={1} sm={12} md={8}>
           <TotalOders allTermins={allTermins} />
-        </GridItem>
+        </Grid>
       </Grid>
       <MenuList>
         {newestTermins?.reverse().map(termin => (
           <MenuItemSt key={termin._id}>
             <SnackbarContent
-              message={`${termin.first_name} ${termin.last_name} đã đặt bàn mới. Vui lòng kiểm tra cụ thể!`}
+              message={
+                termin.first_name +
+                " " +
+                termin.last_name +
+                " " +
+                t("dashboard.dashboard.hasbooked")
+              }
               timeAgo={timeAgo(termin.created_at)}
               icon={CheckCircleOutlineOutlined}
               termin={termin}
@@ -65,6 +72,7 @@ const HomeDashBoard = () => {
 export default HomeDashBoard
 
 export const SnackbarContent = (props: any) => {
+  const { t } = useTranslation()
   const {
     message,
     color,
@@ -102,7 +110,6 @@ export const SnackbarContent = (props: any) => {
       </IconButton>,
     ]
   }
-  console.log("termin", selectedDate)
   return (
     <>
       <Snack
@@ -123,30 +130,30 @@ export const SnackbarContent = (props: any) => {
         aria-describedby="simple-modal-description"
       >
         <WrapMessageSt>
-          <h5>Thông tin khách đặt</h5>
+          <h5>{t("dashboard.dashboard.title")} </h5>
           <Typography>
-            Khách hàng :
+            {t("dashboard.dashboard.name")} :
             <span>
               {first_name} {last_name}
             </span>
           </Typography>
           <Typography>
-            Số điện thoại : <span>{phone} </span>
+            {t("dashboard.dashboard.phone")} : <span>{phone} </span>
           </Typography>
           <Typography>
             {" "}
-            Thời gian :{" "}
+            {t("dashboard.dashboard.time")} :{" "}
             <span>
               {timeSlots[selectedSlot]} {selectedDate}
             </span>
           </Typography>
           <Typography>
             {" "}
-            Số lượng : <span>{person}</span>
+            {t("dashboard.dashboard.number")} : <span>{person}</span>
           </Typography>
           <Typography>
             {" "}
-            Yêu cầu : <span>{require}</span>
+            {t("dashboard.dashboard.require")} : <span>{require}</span>
           </Typography>
         </WrapMessageSt>
       </Modal>

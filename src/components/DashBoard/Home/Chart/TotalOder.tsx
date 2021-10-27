@@ -4,7 +4,7 @@ import { Bar } from "react-chartjs-2"
 import { useTheme } from "@mui/material/styles"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
-import { BarSt, NumberSt, TypoTitleSt } from "./Chart.css"
+import { WrapChartSt, BarSt, NumberSt, TypoTitleSt } from "./Chart.css"
 
 const months = [
   "Jan",
@@ -94,7 +94,7 @@ const TotalOders = ({ allTermins }: { allTermins: any[] }) => {
   })
 
   return (
-    <>
+    <WrapChartSt>
       <TypoTitleSt variant="h5">
         {t("dashboard.dashboard.totalbookings", "ToTal Bookings")}
       </TypoTitleSt>
@@ -104,7 +104,7 @@ const TotalOders = ({ allTermins }: { allTermins: any[] }) => {
           options={options}
         />
       </BarSt>
-    </>
+    </WrapChartSt>
   )
 }
 
