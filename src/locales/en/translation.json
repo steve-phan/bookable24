@@ -69,6 +69,16 @@
         "time": "Time",
         "number": "Number",
         "require": "Require"
+      },
+      "timeago": {
+        "second": "seconds before",
+        "minute": "about 1 minute before",
+        "halfhour": "about half hour before",
+        "hour": "about 1 hour before",
+        "hours": "hours before",
+        "day": "days before",
+        "week": "weeks before",
+        "month": "month before"
       }
     },
     "allbookings": "",

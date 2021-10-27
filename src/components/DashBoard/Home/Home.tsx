@@ -12,7 +12,7 @@ import { useTranslation } from "gatsby-plugin-react-i18next"
 import CheckCircleOutlineOutlined from "@mui/icons-material/CheckCircleOutlineOutlined"
 import Close from "@mui/icons-material/Close"
 
-import { timeAgo } from "src/utils"
+import { timeAgo, ItimeAgoMess } from "src/utils"
 import moment from "moment"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
@@ -27,6 +27,7 @@ import {
   TimeAgoSpanSt,
   MessageSpanSt,
   WrapMessageSt,
+  InfoSt,
 } from "./Home.css"
 
 const HomeDashBoard = () => {
@@ -36,7 +37,17 @@ const HomeDashBoard = () => {
 
   const newestTermins = allTermins.slice(allTermins.length - 10)
 
-  console.log("newestTermins", newestTermins)
+  const showMess: ItimeAgoMess = {
+    second: t("dashboard.dashboard.timeago.second"),
+    minute: t("dashboard.dashboard.timeago.minute"),
+    halfhour: t("dashboard.dashboard.timeago.halfhour"),
+    hour: t("dashboard.dashboard.timeago.hour"),
+    hours: t("dashboard.dashboard.timeago.hours"),
+    day: t("dashboard.dashboard.timeago.day"),
+    week: t("dashboard.dashboard.timeago.week"),
+    month: t("dashboard.dashboard.timeago.month"),
+  }
+
   return (
     <div>
       <Grid container>
@@ -58,7 +69,7 @@ const HomeDashBoard = () => {
                 " " +
                 t("dashboard.dashboard.hasbooked")
               }
-              timeAgo={timeAgo(termin.created_at)}
+              timeAgo={timeAgo(termin.created_at, showMess)}
               icon={CheckCircleOutlineOutlined}
               termin={termin}
             />
@@ -130,30 +141,30 @@ export const SnackbarContent = (props: any) => {
         aria-describedby="simple-modal-description"
       >
         <WrapMessageSt>
-          <h5>{t("dashboard.dashboard.title")} </h5>
+          <InfoSt>{t("dashboard.dashboard.details.title")} </InfoSt>
           <Typography>
-            {t("dashboard.dashboard.name")} :
+            {t("dashboard.dashboard.details.name")} :
             <span>
               {first_name} {last_name}
             </span>
           </Typography>
           <Typography>
-            {t("dashboard.dashboard.phone")} : <span>{phone} </span>
+            {t("dashboard.dashboard.details.phone")} : <span>{phone} </span>
           </Typography>
           <Typography>
             {" "}
-            {t("dashboard.dashboard.time")} :{" "}
+            {t("dashboard.dashboard.details.time")} :{" "}
             <span>
               {timeSlots[selectedSlot]} {selectedDate}
             </span>
           </Typography>
           <Typography>
             {" "}
-            {t("dashboard.dashboard.number")} : <span>{person}</span>
+            {t("dashboard.dashboard.details.number")} : <span>{person}</span>
           </Typography>
           <Typography>
             {" "}
-            {t("dashboard.dashboard.require")} : <span>{require}</span>
+            {t("dashboard.dashboard.details.require")} : <span>{require}</span>
           </Typography>
         </WrapMessageSt>
       </Modal>
