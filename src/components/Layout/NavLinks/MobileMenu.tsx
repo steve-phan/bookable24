@@ -47,7 +47,6 @@ const MobileMenu = ({
           }}
         >
           <BackgroundImgSt src={background} alt="Bookable24" />
-          {/* <BackgroundSt /> */}
           <WrapLoginMobileSt>
             <CTAButtonAccountSt
               onClick={async () => {
@@ -55,8 +54,8 @@ const MobileMenu = ({
                   if (isShopLogin) {
                     await signOut(auth)
                     dispatch(setShopLogout())
-                    navigate("/login")
                   }
+                  navigate("/login")
                 } catch (error) {
                   alert("Try Again")
                 }
@@ -83,8 +82,8 @@ const MobileMenu = ({
                   if (isShopLogin) {
                     await signOut(auth)
                     dispatch(setShopLogout())
-                    navigate("/login")
                   }
+                  navigate("/login")
                 } catch (error) {
                   alert("Try Again")
                 }

@@ -34,6 +34,13 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin }) => {
         }}
       >
         <Logo />
+        {/* <Hidden mdUp>
+          {isShopLogin && (
+            <DashBoardButtonSt to="/dashboard">
+              {t("menu.DashBoard", "DashBoard")}{" "}
+            </DashBoardButtonSt>
+          )}
+        </Hidden> */}
         <Hidden mdDown>
           <NavLinks routes={routes} />
           <WrapLoginSt>
@@ -53,10 +60,18 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin }) => {
           mobileOpen={mobileOpen}
           routes={routes}
         />
+
         <Hidden mdUp>
-          <IconButton color="inherit" edge="end" onClick={handleDrawerToggle}>
-            <Menu />
-          </IconButton>
+          <div>
+            {isShopLogin && (
+              <DashBoardButtonSt to="/dashboard">
+                {t("menu.DashBoard", "DashBoard")}{" "}
+              </DashBoardButtonSt>
+            )}
+            <IconButton color="inherit" edge="end" onClick={handleDrawerToggle}>
+              <Menu />
+            </IconButton>
+          </div>
         </Hidden>
       </Toolbar>
     </AppBar>

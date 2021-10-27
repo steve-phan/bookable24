@@ -27,6 +27,15 @@ export const theme = createTheme({
   },
 })
 
+export const getRandomColor = () => {
+  var letters = "0123456789ABCDEF"
+  var color = "#"
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
 export const getShopName = (email: string | null, shopList: any[]) =>
   shopList?.find(
     (shop: { email: string; shopId: string }) => shop.email === email

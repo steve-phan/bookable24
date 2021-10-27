@@ -2,28 +2,32 @@ import { Link } from "gatsby-plugin-react-i18next"
 import { styled, alpha } from "@mui/material/styles"
 import Drawer from "@mui/material/Drawer"
 
-export const PageLinkSt = styled(Link)`
-  color: inherit;
-  margin: 0 8px;
-  padding-top: 10px;
-  padding-bottom: 4px;
-`
+import { getRandomColor } from "src/utils"
 
-export const LinkItemSt = styled(Link)`
-  font-size: 16px;
-  font-weight: 500;
-  padding: 12px 8px;
-  margin-top: 6px;
-  display: flex;
-  align-items: center;
-  color: white;
+export const PageLinkSt = styled(Link)(({ theme }) => ({
+  color: alpha(theme.color.text, 0.8),
+  fontWeight: "bold",
+  margin: "0 8px",
+  paddingTop: 10,
+  paddingBottom: 4,
+}))
 
-  svg {
-    margin-right: 16px;
-    margin-left: 16px;
-    font-size: 18px;
-  }
-`
+export const LinkItemSt = styled(Link)(({ theme }) => ({
+  fontSize: 16,
+  fontWeight: 500,
+  padding: "12px 8px",
+  marginTop: 6,
+  display: "flex",
+  alignItems: "center",
+  color: theme.color.white,
+
+  "& svg": {
+    marginRight: 16,
+    marginLeft: 16,
+    fontSize: 18,
+    color: theme.color.primary,
+  },
+}))
 
 export const WrapLoginMobileSt = styled("div")`
   order: 1;
