@@ -16,7 +16,7 @@ import { BodySt } from "./Layout.css"
 // import "./reset.css"
 import Loading from "../Loading/Loading"
 
-const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
+export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
 const Layout = ({ children, location }: any) => {
   const dispatch = useAppDispatch()
