@@ -20,7 +20,7 @@ import {
   WrapColSt,
 } from "../Account.css"
 import { useShopname } from "../accountHook"
-import { theme, getShopName, validateEmail } from "src/utils"
+import { getShopName, validateEmail } from "src/utils"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { getShopinfo, setShopInfo } from "src/store/shop/shopSlice"
@@ -32,7 +32,7 @@ interface IloginStates {
   loading: boolean
 }
 
-const SignIn = () => {
+const SignIn = ({ location }: { location: any }) => {
   const { navigate } = useI18next()
   const [values, setValues] = React.useState<IloginStates>({
     email: "",
@@ -44,8 +44,14 @@ const SignIn = () => {
   const { isShopLogin, status } = useAppSelector(state => state.shop)
   const shopList = useShopname()
 
+  const pathname =
+    location &&
+    location.pathname
+      .split("/")
+      .filter((val: any) => val && val)
+      .pop()
+
   useEffect(() => {
-    console.log("isShopLogin", isShopLogin)
     if (isShopLogin) {
       setValues({
         ...values,
@@ -85,6 +91,7 @@ const SignIn = () => {
         getShopinfo({
           shopemail: values.email,
           shopname: getShopName(values.email, shopList),
+          pathname,
         })
       )
     } catch (error) {

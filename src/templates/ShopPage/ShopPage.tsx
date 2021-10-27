@@ -28,6 +28,7 @@ interface IShopPageProps {
     shopEmail: string
   }
   data: any // Do it later
+  location?: any
 }
 
 const useStyles = makeStyles(theme => ({
