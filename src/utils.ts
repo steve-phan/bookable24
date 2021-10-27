@@ -32,7 +32,18 @@ export const getShopName = (email: string | null, shopList: any[]) =>
     (shop: { email: string; shopId: string }) => shop.email === email
   )?.shopId
 
-export const timeAgo = (dateParam: Date) => {
+export interface ItimeAgoMess {
+  second: string
+  minute: string
+  halfhour: string
+  hour: string
+  hours: string
+  day: string
+  week: string
+  month: string
+}
+
+export const timeAgo = (dateParam: Date, t: ItimeAgoMess) => {
   if (!dateParam) {
     return null
   }
@@ -53,20 +64,20 @@ export const timeAgo = (dateParam: Date) => {
 
   switch (true) {
     case seconds < 60:
-      return `${seconds}  giây trước`
+      return `${seconds}  ${t.second}`
     case seconds < 90:
-      return "khoảng một phút trước"
+      return t.minute
     case minutes < 30:
-      return "khoảng nửa tiếng trước"
+      return t.halfhour
     case minutes < 60:
-      return "khoảng một tiếng trước"
+      return t.hour
     case minutes / 60 < 24:
-      return `khoảng ${Math.round(minutes / 60)} tiếng trước`
+      return `${Math.round(minutes / 60)} ${t.hours}`
     case minutes / 60 / 24 < 7:
-      return `khoảng ${Math.round(minutes / 60 / 24)} ngày trước`
+      return ` ${Math.round(minutes / 60 / 24)} ${t.day}`
     case minutes / 60 / 24 / 7 < 1:
-      return `khoảng ${Math.round(minutes / 60 / 24 / 7)} tuần trước`
+      return `${Math.round(minutes / 60 / 24 / 7)} ${t.week}`
     default:
-      return "Một tháng trước"
+      return t.month
   }
 }

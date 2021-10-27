@@ -68,6 +68,16 @@
         "time": "Thời gian",
         "number": "Số lượng",
         "require": "Yêu cầu thêm"
+      },
+      "timeago": {
+        "second": "giây trước",
+        "minute": "khoảng một phút trước",
+        "halfhour": "khoảng nửa tiếng trước",
+        "hour": "khoảng một tiếng trước",
+        "hours": "tiếng trước",
+        "day": "ngày trước",
+        "week": "tuần trước",
+        "month": "Một tháng trước"
       }
     },
     "allbookings": "",

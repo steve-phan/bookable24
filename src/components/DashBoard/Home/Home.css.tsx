@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react"
 import { styled, alpha } from "@mui/material/styles"
-import { Grid, MenuItem } from "@mui/material"
+import { Grid, MenuItem, Typography } from "@mui/material"
 
 export const GridItem = ({
   children,
@@ -79,3 +79,10 @@ export const WrapMessageSt = styled("div")(({ theme }) => ({
 
 //   boxShadow: theme.shadows[5],
 // padding: theme.spacing(2, 4, 3),
+
+export const InfoSt = styled(Typography)(({ theme }) => ({
+  fontSize: 20,
+  paddingBottom: 4,
+  marginBottom: 8,
+  borderBottom: `2px solid ${theme.color.primary}`,
+}))
