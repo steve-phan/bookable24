@@ -1,4 +1,11 @@
-import { Button, Card, CardContent, CardMedia, Typography } from "@mui/material"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grid,
+} from "@mui/material"
 import { makeStyles } from "@mui/styles"
 import { Theme, ThemeOptions } from "@mui/material/styles"
 import { Link, useTranslation } from "gatsby-plugin-react-i18next"
@@ -135,18 +142,39 @@ const Hero = () => {
     //   <RedBackgroundSection />{" "}
     //  <RedShape />
     // </div>
-    <Link
-      style={{
-        textAlign: "center",
-        width: "100%",
-        display: "block",
-        fontSize: 36,
-        textDecoration: "underline",
-      }}
-      to="/shop-test1234561"
-    >
-      Demo Booking Page
-    </Link>
+    <Grid container>
+      <Grid item md={6} xs={12}>
+        <Link
+          style={{
+            textAlign: "center",
+            textDecoration: "underline",
+          }}
+          to="/shop-test1234561"
+        >
+          <h2>Demo Booking Page</h2>
+        </Link>
+      </Grid>
+      <Grid item md={6} xs={12}>
+        <Link
+          style={{
+            textAlign: "center",
+            textDecoration: "underline",
+          }}
+          to="/login"
+        >
+          <h2>Login Admin Page</h2>
+        </Link>
+        <div
+          style={{
+            textAlign: "center",
+          }}
+        >
+          <Typography>Email: bookable24.de@gmail.com</Typography> <br />
+          <Typography>Pass: 12345678</Typography>
+        </div>
+      </Grid>
+    </Grid>
+
     // <Carousel
     //   className={classes.wrapCarousel}
     //   animation="slide"
