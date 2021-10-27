@@ -59,7 +59,16 @@
     "dashboard": {
       "bookings": "Đặt chỗ",
       "totalbookings": "Tổng số đặt trước",
-      "totalcustomers": "Tổng số khách hàng"
+      "totalcustomers": "Tổng số khách hàng",
+      "hasbooked": "đã đặt chỗ, vui lòng kiểm tra cụ thể",
+      "details": {
+        "title": "Thông tin khách hàng",
+        "name": "Khách hàng",
+        "phone": "Điện thoại",
+        "time": "Thời gian",
+        "number": "Số lượng",
+        "require": "Yêu cầu thêm"
+      }
     },
     "allbookings": "",
     "todaybookings": "",

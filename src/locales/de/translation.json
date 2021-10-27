@@ -59,7 +59,16 @@
     "dashboard": {
       "bookings": "Buchungen",
       "totalbookings": "Gesamtbuchungen",
-      "totalcustomers": "Gesamtkunden"
+      "totalcustomers": "Gesamtkunden",
+      "hasbooked": "hat eine Reservierung, bitte überprüfen Sie die Details",
+      "details": {
+        "title": "Kundeninformation",
+        "name": "Name",
+        "phone": "Phone",
+        "time": "Zeit",
+        "number": "Nummer",
+        "require": "Benötigen"
+      }
     },
     "allbookings": "",
     "todaybookings": "",

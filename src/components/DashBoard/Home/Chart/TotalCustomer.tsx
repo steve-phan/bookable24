@@ -5,7 +5,7 @@ import { Doughnut, Pie } from "react-chartjs-2"
 import { useTheme } from "@mui/material/styles"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
-import { CircleSt, NumberSt, TypoTitleSt } from "./Chart.css"
+import { WrapChartSt, CircleSt, NumberSt, TypoTitleSt } from "./Chart.css"
 
 const showData = (num: number, color: string) => ({
   //   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -35,7 +35,7 @@ const TotalCustomer = ({ allTermins }: { allTermins: any[] }) => {
   //   }, [chartContainer]);
   const totalCustomers = allTermins.reduce((acc, cur) => acc + cur.person, 0)
   return (
-    <>
+    <WrapChartSt>
       <TypoTitleSt variant="h5">
         {t("dashboard.dashboard.totalcustomers", "ToTal Customers")}
       </TypoTitleSt>
@@ -43,7 +43,7 @@ const TotalCustomer = ({ allTermins }: { allTermins: any[] }) => {
         <NumberSt>{totalCustomers}</NumberSt>
         <Pie data={showData(totalCustomers, theme.color.primary)} />
       </CircleSt>
-    </>
+    </WrapChartSt>
   )
 }
 
