@@ -1,22 +1,19 @@
 import React from "react"
-import {
-  MenuList,
-  MenuItem,
-  Grid,
-  Typography,
-  IconButton,
-  Modal,
-} from "@mui/material"
+import { MenuList, MenuItem, Grid, IconButton, Modal } from "@mui/material"
 import Snack from "@mui/material/SnackbarContent"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 import CheckCircleOutlineOutlined from "@mui/icons-material/CheckCircleOutlineOutlined"
 import Close from "@mui/icons-material/Close"
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline"
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone"
+import ScheduleIcon from "@mui/icons-material/Schedule"
+import GroupIcon from "@mui/icons-material/Group"
+import InfoIcon from "@mui/icons-material/Info"
 
-import { timeAgo, ItimeAgoMess } from "src/utils"
+import { timeAgo, ItimeAgoMess, getRandomColor } from "src/utils"
 import moment from "moment"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { getShopinfo } from "src/store/shop/shopSlice"
 import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
 
 import TotalCustomer from "./Chart/TotalCustomer"
@@ -28,6 +25,7 @@ import {
   MessageSpanSt,
   WrapMessageSt,
   InfoSt,
+  DetailsInfoSt,
 } from "./Home.css"
 
 const HomeDashBoard = () => {
@@ -142,30 +140,33 @@ export const SnackbarContent = (props: any) => {
       >
         <WrapMessageSt>
           <InfoSt>{t("dashboard.dashboard.details.title")} </InfoSt>
-          <Typography>
-            {t("dashboard.dashboard.details.name")} :
+          <DetailsInfoSt>
+            <PersonOutlineIcon /> {t("dashboard.dashboard.details.name")} :
             <span>
               {first_name} {last_name}
             </span>
-          </Typography>
-          <Typography>
-            {t("dashboard.dashboard.details.phone")} : <span>{phone} </span>
-          </Typography>
-          <Typography>
+          </DetailsInfoSt>
+          <DetailsInfoSt>
+            <PhoneIphoneIcon /> {t("dashboard.dashboard.details.phone")} :{" "}
+            <span>{phone} </span>
+          </DetailsInfoSt>
+          <DetailsInfoSt>
             {" "}
-            {t("dashboard.dashboard.details.time")} :{" "}
+            <ScheduleIcon /> {t("dashboard.dashboard.details.time")} :{" "}
             <span>
               {timeSlots[selectedSlot]} {selectedDate}
             </span>
-          </Typography>
-          <Typography>
+          </DetailsInfoSt>
+          <DetailsInfoSt>
             {" "}
-            {t("dashboard.dashboard.details.number")} : <span>{person}</span>
-          </Typography>
-          <Typography>
+            <GroupIcon /> {t("dashboard.dashboard.details.number")} :{" "}
+            <span>{person}</span>
+          </DetailsInfoSt>
+          <DetailsInfoSt>
             {" "}
-            {t("dashboard.dashboard.details.require")} : <span>{require}</span>
-          </Typography>
+            <InfoIcon /> {t("dashboard.dashboard.details.require")} :{" "}
+            <span>{require}</span>
+          </DetailsInfoSt>
         </WrapMessageSt>
       </Modal>
     </>

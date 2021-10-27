@@ -2,6 +2,8 @@ import React, { ReactNode } from "react"
 import { styled, alpha } from "@mui/material/styles"
 import { Grid, MenuItem, Typography } from "@mui/material"
 
+import { getRandomColor } from "src/utils"
+
 export const GridItem = ({
   children,
   md,
@@ -36,7 +38,7 @@ export const MenuItemSt = styled(MenuItem)(({ theme }) => ({
     // backgroundColor: '#cecece',
 
     "& svg": {
-      color: theme.color.activeColor,
+      color: getRandomColor(),
       position: "absolute",
       transform: "translateY(-50%)",
       top: "50%",
@@ -64,11 +66,14 @@ export const TimeAgoSpanSt = styled("span")(({ theme }) => ({
 
 export const WrapMessageSt = styled("div")(({ theme }) => ({
   position: "absolute",
-  width: "88%",
-  maxWidth: 600,
+  width: "94%",
+  maxWidth: 450,
   backgroundColor: theme.color.background,
   border: "1px solid #fff",
-  padding: "30px 12px",
+  padding: "30px 20px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "30px 10px",
+  },
 
   borderRadius: "6px",
   top: `50%`,
@@ -82,7 +87,25 @@ export const WrapMessageSt = styled("div")(({ theme }) => ({
 
 export const InfoSt = styled(Typography)(({ theme }) => ({
   fontSize: 20,
-  paddingBottom: 4,
-  marginBottom: 8,
-  borderBottom: `2px solid ${theme.color.primary}`,
+  textAlign: "center",
+  paddingBottom: 8,
+  marginBottom: 16,
+  borderBottom: `1px solid ${theme.color.primary}`,
+}))
+
+export const DetailsInfoSt = styled(Typography)(({ theme }) => ({
+  padding: 8,
+  paddingLeft: 20,
+  marginBottom: 2,
+  // borderBottom: "1px solid #cecece",
+  boxShadow: `2px 5px 6px 1px ${alpha(theme.color.text, 0.05)}`,
+
+  "& svg": {
+    position: "absolute",
+    left: 10,
+    width: 20,
+    height: 20,
+    marginTop: 1,
+    color: getRandomColor(),
+  },
 }))

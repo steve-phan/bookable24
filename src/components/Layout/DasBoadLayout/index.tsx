@@ -10,13 +10,13 @@ import { checkUserAuth } from "src/store/shop/shopSlice"
 import SideBar from "src/components/Layout/DasBoadLayout/SideBar"
 import Header from "src/components/Layout/DasBoadLayout/Header/Header"
 import { theme } from "src/utils"
+import Loading from "src/components/Loading/Loading"
 
 import {
   WrapDashBoardSt,
   DashBoardContentSt,
   WrapContentSt,
 } from "./dashboard.css"
-import Loading from "src/components/Loading/Loading"
 
 export interface IMobileToggle {
   mobileOpen?: boolean

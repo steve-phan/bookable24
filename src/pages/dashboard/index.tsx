@@ -7,7 +7,6 @@ import HomeDashBoard from "src/components/DashBoard/Home/Home"
 const DashBoardHome = () => {
   return (
     <DashBoardLayout>
-      <h1>Home</h1>
       <HomeDashBoard />
     </DashBoardLayout>
   )
