@@ -21,7 +21,7 @@ export const DashBoardContentSt = styled("main")(({ theme }) => ({
 }))
 
 export const WrapContentSt = styled("div")(({ theme }) => ({
-  paddingTop: 64,
+  paddingTop: 100,
 }))
 
 export const WrapSideBarSt = styled("div")(({ theme }) => ({

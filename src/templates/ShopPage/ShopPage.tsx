@@ -85,7 +85,13 @@ const ShopPage: React.FC<IShopPageProps> = ({ pageContext, data }) => {
   const steps = getSteps()
 
   useEffect(() => {
-    dispatch(getShopinfo({ shopname: shopName, shopemail: shopEmail }))
+    dispatch(
+      getShopinfo({
+        shopname: shopName,
+        shopemail: shopEmail,
+        isShopLogin: false,
+      })
+    )
   }, [])
 
   const handleNext = () => {

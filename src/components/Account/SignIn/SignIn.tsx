@@ -44,12 +44,12 @@ const SignIn = ({ location }: { location: any }) => {
   const { isShopLogin, status } = useAppSelector(state => state.shop)
   const shopList = useShopname()
 
-  const pathname =
-    location &&
-    location.pathname
-      .split("/")
-      .filter((val: any) => val && val)
-      .pop()
+  // const pathname =
+  //   location &&
+  //   location.pathname
+  //     .split("/")
+  //     .filter((val: any) => val && val)
+  //     .pop() === "login"
 
   useEffect(() => {
     if (isShopLogin) {
@@ -91,7 +91,7 @@ const SignIn = ({ location }: { location: any }) => {
         getShopinfo({
           shopemail: values.email,
           shopname: getShopName(values.email, shopList),
-          pathname,
+          isShopLogin,
         })
       )
     } catch (error) {
