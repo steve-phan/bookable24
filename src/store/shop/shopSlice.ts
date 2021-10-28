@@ -21,6 +21,7 @@ export const checkUserAuth =
             getShopinfo({
               shopemail: user?.email || "",
               shopname,
+              isShopLogin: true,
             })
           )
         } else {
@@ -64,13 +65,12 @@ const intinitialShopState: IshopState = {
 interface IshopQuery {
   shopemail: string
   shopname: string
-  pathname?: string
+  isShopLogin: boolean
 }
 
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
-  async ({ shopemail, shopname, pathname }: IshopQuery) => {
-    const isShopLogin = pathname && pathname === "login"
+  async ({ shopemail, shopname, isShopLogin }: IshopQuery) => {
     const response: any = await axios.get(
       "/.netlify/functions/get-shop-termins",
       {
@@ -107,8 +107,10 @@ export const shopSlice = createSlice({
         state.status = "loading"
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
-        state.status = action.payload.isShopLogin ? "login" : "logout"
-        state.isShopLogin = action.payload.isShopLogin ? true : false
+        state.status = action.payload.isShopLogin ? "login" : state.status
+        state.isShopLogin = action.payload.isShopLogin
+          ? true
+          : state.isShopLogin
         state.shopInfo = action.payload.shopInfo
         state.allTermins = action.payload.allTermins
       })
