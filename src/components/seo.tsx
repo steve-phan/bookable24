@@ -10,11 +10,11 @@ import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql, PageProps } from "gatsby"
 
 function Seo({
-  description = "Online Booking System for Restaurant, Nail, Doctor",
+  description = "Booking Online System for Restaurant, Nail, Doctor",
   lang,
   meta = {
     name: `Website:https://vietapp.eu`,
-    content: "BookAble24 Termin Online System",
+    content: "BookAble24 Booking Online System",
   },
   title,
 }: any) {
@@ -40,8 +40,8 @@ function Seo({
       htmlAttributes={{
         lang: "en",
       }}
-      title={title}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      title={`${title} Bookable24.de Booking Online System`}
+      // titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
       meta={[
         {
           name: `description`,
