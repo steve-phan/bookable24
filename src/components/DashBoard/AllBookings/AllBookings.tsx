@@ -30,7 +30,13 @@ const AllBookingsDashBoard = () => {
           />
         </LocalizationProvider>
       </FlexRowSt>
-      <ShowInfo todayTermins={getDateBookings(allTermins, value)} />
+      <ShowInfo
+        todayTermins={
+          shopInfo.email !== "bookable24.de"
+            ? getDateBookings(allTermins, value)
+            : allTermins
+        }
+      />
     </div>
   )
 }
