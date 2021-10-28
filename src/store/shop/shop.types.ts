@@ -12,7 +12,7 @@ export interface IshopInfo {
 }
 
 export interface IshopState {
-  shopInfo: IshopInfo | unknown
+  shopInfo: IshopInfo
   status: "login" | "loading" | "logout"
   isShopLogin: boolean
   allTermins: any[]
