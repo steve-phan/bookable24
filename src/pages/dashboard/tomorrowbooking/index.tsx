@@ -7,7 +7,6 @@ import TomorrowDashBoard from "src/components/DashBoard/TomorrowBookings/Tomorro
 const TomorrowBooking = () => {
   return (
     <DashBoardLayout>
-      <h1>Hello TomorrowBooking</h1>
       <TomorrowDashBoard />
     </DashBoardLayout>
   )
