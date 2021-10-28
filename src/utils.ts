@@ -97,3 +97,16 @@ export const getTomorrowBookings = (allTermins: ITermin[]) => {
   const tomorrow = moment(nextDay).format("MMM DD")
   return filterBookings(allTermins, tomorrow)
 }
+
+/**
+ *
+ * @param allTermins : allTermins pass in
+ * @param date : the termins of this date
+ * @returns : the termins
+ */
+
+export const getDateBookings = (allTermins: ITermin[], date: Date | null) => {
+  let pickedDay = date && new Date(date)
+  const day = moment(pickedDay).format("MMM DD")
+  return filterBookings(allTermins, day)
+}
