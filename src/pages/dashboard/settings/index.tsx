@@ -7,7 +7,6 @@ import SettingsDashBoard from "src/components/DashBoard/Settings/Settings"
 const Settings = () => {
   return (
     <DashBoardLayout>
-      <h1>Hello Setting</h1>
       <SettingsDashBoard />
     </DashBoardLayout>
   )

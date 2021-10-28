@@ -7,7 +7,6 @@ import AllBookingsDashBoard from "src/components/DashBoard/AllBookings/AllBookin
 const AllBookings = () => {
   return (
     <DashBoardLayout>
-      <h1>Hello Setting</h1>
       <AllBookingsDashBoard />
     </DashBoardLayout>
   )

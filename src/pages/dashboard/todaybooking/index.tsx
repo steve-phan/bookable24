@@ -7,7 +7,6 @@ import TodayDashBoard from "src/components/DashBoard/TodayBookings/TodayBookings
 const TodayBooking = () => {
   return (
     <DashBoardLayout>
-      <h1>Hello TodayBooking</h1>
       <TodayDashBoard />
     </DashBoardLayout>
   )
