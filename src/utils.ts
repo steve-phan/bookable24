@@ -1,3 +1,6 @@
+import moment from "moment"
+
+import { ITermin } from "src/components/DashBoard/SharedComponent/DashBoard.types"
 import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
 
 export const allSlots = [...morningSlots, ...afternoonSlots]
@@ -73,4 +76,37 @@ export const timeAgo = (dateParam: Date, t: ItimeAgoMess) => {
     default:
       return t.month
   }
+}
+
+export const filterBookings = (allTermins: ITermin[], today: string) =>
+  allTermins
+    .filter((termin: ITermin) => termin.selectedDate === today)
+    .sort(
+      (a: ITermin, b: ITermin) =>
+        Number(a.selectedSlot) - Number(b.selectedSlot)
+    )
+
+export const getTodayBookings = (allTermins: ITermin[]) => {
+  const today = moment(new Date()).format("MMM DD")
+  return filterBookings(allTermins, today)
+}
+
+export const getTomorrowBookings = (allTermins: ITermin[]) => {
+  let nextDay = new Date()
+  nextDay.setDate(nextDay.getDate() + 1)
+  const tomorrow = moment(nextDay).format("MMM DD")
+  return filterBookings(allTermins, tomorrow)
+}
+
+/**
+ *
+ * @param allTermins : allTermins pass in
+ * @param date : the termins of this date
+ * @returns : the termins
+ */
+
+export const getDateBookings = (allTermins: ITermin[], date: Date | null) => {
+  let pickedDay = date && new Date(date)
+  const day = moment(pickedDay).format("MMM DD")
+  return filterBookings(allTermins, day)
 }

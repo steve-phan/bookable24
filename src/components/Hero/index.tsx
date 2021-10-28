@@ -151,7 +151,7 @@ const Hero = () => {
           }}
           to="/shop-test1234561"
         >
-          <h2>Demo Booking Page</h2>
+          <h2>Demo Booking PageXXX</h2>
         </Link>
       </Grid>
       <Grid item md={6} xs={12}>

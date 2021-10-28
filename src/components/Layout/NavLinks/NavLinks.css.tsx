@@ -65,4 +65,6 @@ export const BackgroundImgSt = styled("img")(({ theme }) => ({
   zIndex: -1,
   opacity: 0.6,
   height: "100vh",
+  maxHeight: "100vh",
+  width: "100%",
 }))

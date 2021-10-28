@@ -83,6 +83,12 @@
     },
     "allbookings": "",
     "todaybookings": "",
-    "tomorrowbookings": ""
+    "tomorrowbookings": "",
+    "helper": {
+      "time": "Time",
+      "guest": "Guest",
+      "name": "Name",
+      "pickdate": "Pick a date"
+    }
   }
 }

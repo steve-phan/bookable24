@@ -53,10 +53,6 @@ const SignIn = ({ location }: { location: any }) => {
 
   useEffect(() => {
     if (isShopLogin) {
-      setValues({
-        ...values,
-        loading: false,
-      })
       navigate("/dashboard")
     }
   }, [isShopLogin])
@@ -81,10 +77,6 @@ const SignIn = ({ location }: { location: any }) => {
   }
 
   const handleShopLogin = async () => {
-    setValues({
-      ...values,
-      loading: true,
-    })
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password)
       dispatch(
@@ -95,6 +87,7 @@ const SignIn = ({ location }: { location: any }) => {
         })
       )
     } catch (error) {
+      alert("Email or Password was not correct :)")
       console.log(error)
     }
   }
