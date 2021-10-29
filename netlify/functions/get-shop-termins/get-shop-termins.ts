@@ -1,8 +1,9 @@
 import { Handler } from "@netlify/functions"
 import mongoose from "mongoose"
 require("dotenv").config()
-// const { hello } = require('utils');
-import { Appointment, shopinfoSchema } from "../utils/config"
+
+import { Appointment } from "../utils/models/bookingModel"
+import { shopinfoSchema } from "../utils/models/shopInfoModel"
 
 export const handler: Handler = async (event, context) => {
   const { shopname, shopemail } = event.headers

@@ -2,7 +2,6 @@ import mongoose from "mongoose"
 require("dotenv").config()
 
 const Schema = mongoose.Schema
-const ObjectId = mongoose.Schema.Types.ObjectId
 
 const slotSchema = new Schema({
   slot_time: String,
@@ -16,11 +15,7 @@ const appointmentSchema = new Schema({
   phone: String,
   selectedSlot: String,
   selectedDate: String,
-  person: Number,
-  slots: {
-    type: ObjectId,
-    ref: "Slot",
-  },
+  person: String,
   require: String,
   created_at: {
     default: new Date(),
@@ -46,7 +41,7 @@ const shopinfoSchema = new Schema({
   shopname: String,
 })
 
-const tokenSchema = new Schema({
+export const tokenSchema = new Schema({
   token: String,
   expiry: String,
 })
@@ -55,19 +50,19 @@ const requestSchema = new Schema({
   phone: String,
 })
 
-const Token = mongoose.model("Token", tokenSchema)
-const Slot = mongoose.model("Slot", slotSchema)
-const Appointment = mongoose.model("Appointment", appointmentSchema)
-const ShopInfo = mongoose.model("Shopinfo", shopinfoSchema)
-const RequestInfo = mongoose.model("RequestInfo", requestSchema)
+export const Token = mongoose.model("Token", tokenSchema)
+export const Slot = mongoose.model("Slot", slotSchema)
+export const Appointment = mongoose.model("Appointment", appointmentSchema)
+export const ShopInfo = mongoose.model("Shopinfo", shopinfoSchema)
+export const RequestInfo = mongoose.model("RequestInfo", requestSchema)
 
-export {
-  Token,
-  Appointment,
-  Slot,
-  ShopInfo,
-  RequestInfo,
-  appointmentSchema,
-  tokenSchema,
-  shopinfoSchema,
-}
+// export {
+//   Token,
+//   Appointment,
+//   Slot,
+//   ShopInfo,
+//   RequestInfo,
+//   appointmentSchema,
+//   tokenSchema,
+//   shopinfoSchema,
+// }

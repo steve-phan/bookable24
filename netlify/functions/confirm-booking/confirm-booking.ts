@@ -1,16 +1,12 @@
 require("dotenv").config()
 import { Handler } from "@netlify/functions"
 
-// const nodemailer = require('nodemailer')
-// const path = require("path")
-// const hbs = require("nodemailer-express-handlebars")
 import mongoose, { Document } from "mongoose"
 import { google } from "googleapis"
-// const { Appointment, Slot } = require('./models/schema');
-import { Token, Appointment, Slot, tokenSchema } from "../utils/config"
 
-// const createMailTemplate = require('./modules/create-mail-template');
-import { timeSlots } from "../utils/models/timeslot"
+import { Appointment } from "../utils/models/bookingModel"
+import { tokenSchema } from "../utils/models/tokenModel"
+
 import configTransporter from "./transporter"
 import moment from "moment"
 
@@ -62,7 +58,6 @@ export const handler: Handler = async function (event, context) {
       .find({})
 
     if (Number(tokenData[0].expiry) - Date.now() < 3 * 60 * 1000) {
-      // console.log("tokenData ==>>", 1)
       const {
         token,
         res: {
@@ -83,20 +78,27 @@ export const handler: Handler = async function (event, context) {
         }
       )
     } else {
-      // console.log('GREATER');
-
       validToken = tokenData[0].token
     }
-    console.log("tokenData ==>>", tokenData)
-    const newslot = new Slot({
-      slot_time: timeSlots[selectedSlot],
-      slot_date: selectedDate,
-      created_at: Date.now(),
-    })
+
     const formatDate = moment(
       selectedDate,
       selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
     ).format("MMM DD")
+
+    const newappointment = new Appointment({
+      first_name: firstName,
+      last_name: lastName,
+      selectedSlot,
+      selectedDate: formatDate,
+      email,
+      phone,
+      person,
+      require,
+    })
+
+    await newappointment.save()
+
     const { transporter, mailOptions } = configTransporter({
       shopname,
       token: validToken,
@@ -109,47 +111,11 @@ export const handler: Handler = async function (event, context) {
       selectedDate: formatDate,
       require,
       shopinfo,
-      terminId: newslot._id,
+      terminId: newappointment._id,
     })
-
-    await newslot.save((err, saved) => {
-      Slot.find({ _id: saved._id })
-        .populate("slots")
-        .exec((err, slot) => {
-          if (slot) {
-            const newappointment = new Appointment({
-              first_name: firstName,
-              last_name: lastName,
-              selectedSlot,
-              selectedDate: formatDate,
-              email,
-              phone,
-              person,
-              require,
-              slots: newslot._id,
-            })
-            // console.log(newappointment);
-            newappointment.save((err, saved) => {
-              Appointment.find({ _id: saved._id })
-                .populate("appointments")
-                .exec((err, appointment) => {
-                  mongoose.connection.close()
-                  // console.log(mongoose.connection.readyState);
-                })
-            })
-          }
-        })
-    })
-    // console.log("MONGDO DB CONNECT", transporter)
-    await transporter.sendMail(mailOptions, (error, info) => {
-      // oAuth2Client.off();
-      if (error) {
-        console.log("error ===>", error)
-      } else {
-        mongoose.connection.close()
-        console.log("success ===>")
-      }
-    })
+    tokenDB.close()
+    mongoose.connection.close()
+    await transporter.sendMail(mailOptions)
     return {
       statusCode: 200,
       body: "EMAIL_SENT",
