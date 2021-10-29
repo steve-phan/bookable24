@@ -7,7 +7,7 @@ import GlobalStyles from "@mui/material/GlobalStyles"
 
 import { useShopname } from "src/components/Account/accountHook"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { checkUserAuth } from "src/store/shop/shopSlice"
+import { checkUserAuth, setShopLogout } from "src/store/shop/shopSlice"
 import { theme, globalStyles } from "src/theme"
 
 import Footer from "./Footer/Footer"
@@ -18,15 +18,17 @@ import Loading from "../Loading/Loading"
 
 export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
-const Layout = ({ children, location }: any) => {
+const Layout = ({ children, location, isShop }: any) => {
   const dispatch = useAppDispatch()
   const { isShopLogin, status } = useAppSelector(state => state.shop)
 
   const shopList = useShopname()
 
   useEffect(() => {
-    if (!isShopLogin) {
+    if (!isShopLogin && !isShop) {
       dispatch(checkUserAuth(shopList))
+    } else {
+      dispatch(setShopLogout())
     }
   }, [])
 

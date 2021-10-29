@@ -15,20 +15,20 @@ interface IToken {
 type TTokenData = Document<any, any, unknown> & IToken
 
 export const handler: Handler = async (event, context) => {
-  const { bookingId, shopName, shopInfo } = JSON.parse(event.body)
-
-  const oAuth2Client = new google.auth.OAuth2(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_CLIENT_SECRET,
-    process.env.GOOGLE_REDIRECT_URI
-  )
-  oAuth2Client.setCredentials({
-    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-  })
-
-  const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${shopName}?retryWrites=true&w=majority`
-
   try {
+    const { bookingId, shopName, shopInfo } = JSON.parse(event.body)
+
+    const oAuth2Client = new google.auth.OAuth2(
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
+      process.env.GOOGLE_REDIRECT_URI
+    )
+    oAuth2Client.setCredentials({
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+    })
+
+    const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${shopName}?retryWrites=true&w=majority`
+
     await mongoose.connect(url)
 
     let validToken = null
@@ -61,11 +61,10 @@ export const handler: Handler = async (event, context) => {
       validToken = tokenData[0].token
     }
 
-    console.log("shopInfo, =====>", shopInfo)
+    console.log("event, =====>", event)
 
     const appointmentFound = await Appointment.findById(bookingId)
     const {
-      shopName,
       email,
       person,
       phone,

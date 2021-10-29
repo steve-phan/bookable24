@@ -33,7 +33,10 @@ const TotalCustomer = ({ allTermins }: { allTermins: any[] }) => {
   //       setChartInstance(newChartInstance);
   //     }
   //   }, [chartContainer]);
-  const totalCustomers = allTermins.reduce((acc, cur) => acc + cur.person, 0)
+  const totalCustomers = allTermins.reduce(
+    (acc, cur) => acc + Number(cur.person),
+    0
+  )
   return (
     <WrapChartSt>
       <TypoTitleSt variant="h5">
