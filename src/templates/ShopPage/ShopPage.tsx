@@ -114,7 +114,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
         })
       )
       setIsLoading(false)
-      console.log("showCancelBooking")
       setShowCancelBooking(false)
     }
   }, [])

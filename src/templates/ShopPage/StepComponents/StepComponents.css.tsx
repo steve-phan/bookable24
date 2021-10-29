@@ -3,11 +3,12 @@ import Button, { ButtonProps } from "@mui/material/Button"
 import Card from "@mui/material/Card"
 
 import { TextField, Typography } from "@mui/material"
-import { alpha, styled, ThemeOptions } from "@mui/material/styles"
+import { alpha, ThemeOptions } from "@mui/material/styles"
+import styled from "styled-components"
 
 type TButtonOptions = {
-  slotactive: boolean | undefined
-  slotwarning?: boolean | undefined
+  $slotactive: boolean | undefined
+  $slotwarning?: boolean | undefined
 }
 
 type TButton = ButtonProps & TButtonOptions
@@ -24,21 +25,21 @@ export const ButtonGroupSt = styled("div")(({ theme }) => ({
 }))
 
 export const ButtonSlotSt = styled(Button)<TButton>(
-  ({ theme, slotactive, slotwarning }) => ({
+  ({ theme, $slotactive, $slotwarning }) => ({
     flexBasis: "calc(33.3% - 4px)",
     border: `1px solid ${alpha(theme.color.primary, 0.3)} !important`,
     borderRadius: "4px !important",
     fontWeight: "bold",
 
-    color: slotactive ? "white" : theme.color.text,
-    background: slotactive
+    color: $slotactive ? "white" : theme.color.text,
+    background: $slotactive
       ? theme?.color?.primary
-      : slotwarning
+      : $slotwarning
       ? theme.color.warning
       : "inherit",
 
     "&:hover": {
-      background: slotactive ? alpha(theme?.color?.primary, 0.8) : "inherit",
+      background: $slotactive ? alpha(theme?.color?.primary, 0.8) : "inherit",
     },
   })
 )

@@ -44,7 +44,7 @@ const DashBoardLayout = ({ children }: { children: ReactNode }) => {
   }, [])
 
   useEffect(() => {
-    if (status === "logout") {
+    if (!isShopLogin && status === "logout") {
       navigate("/login")
     }
   }, [status])
