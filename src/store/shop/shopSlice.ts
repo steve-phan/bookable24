@@ -98,7 +98,7 @@ export const shopSlice = createSlice({
     setShopLogout: state => {
       state.status = "logout"
       state.isShopLogin = false
-      state.shopInfo = intinitialShopState.shopInfo
+      // state.shopInfo = intinitialShopState.shopInfo
     },
   },
   extraReducers: builder => {
@@ -107,7 +107,7 @@ export const shopSlice = createSlice({
         state.status = "loading"
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
-        state.status = action.payload.isShopLogin ? "login" : state.status
+        state.status = action.payload.isShopLogin ? "login" : "logout"
         state.isShopLogin = action.payload.isShopLogin
           ? true
           : state.isShopLogin

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { WrapColSt } from "../ShopPage.css"
 import { afternoonSlots, morningSlots } from "../utils"
 import { CardSt } from "../StepComponents/StepComponents.css"
-import { ButtonSt } from "../ShopPage.css"
+import { CanCelButtonSt } from "../ShopPage.css"
 
 const CancelBooking = ({ booking }: { booking: any }) => {
   const dispatch = useAppDispatch()
@@ -52,7 +52,7 @@ const CancelBooking = ({ booking }: { booking: any }) => {
         <Typography>Phone: {phone}</Typography>
       </CardSt>
 
-      <ButtonSt
+      <CanCelButtonSt
         style={{
           color: "white",
         }}
@@ -68,7 +68,7 @@ const CancelBooking = ({ booking }: { booking: any }) => {
         }}
       >
         Cancel Booking?
-      </ButtonSt>
+      </CanCelButtonSt>
     </WrapColSt>
   )
 }

@@ -16,6 +16,7 @@ export const WrapTerminSt = styled("div")(({ theme }) => ({
 
 export const WrapTerminContentSt = styled("div")(({ theme }) => ({
   position: "relative",
+  minHeight: 500,
   // margin: "0 auto",
   // maxWidth: 580,
   // borderRadius: 4,
@@ -58,3 +59,14 @@ export const ButtonSt = styled(Button)`
     background: ${({ theme }) => alpha(theme.color.primary, 0.6)};
   }
 `
+
+export const CanCelButtonSt = styled(ButtonSt)(({ theme }) => ({
+  width: "100%",
+
+  [theme.breakpoints.up("md")]: {
+    width: 300,
+    margin: "0 auto",
+    display: "block",
+    marginTop: 36,
+  },
+}))

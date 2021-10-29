@@ -35,28 +35,6 @@ interface IShopPageProps {
   location?: any
 }
 
-const useStyles = makeStyles(theme => ({
-  stepLabel: {
-    flexDirection: "column",
-    textAlign: "center",
-    // width: '33.3%',
-    "& span": {
-      paddingTop: 2,
-      paddingRight: 0,
-      fontSize: 12,
-    },
-  },
-
-  instructions: {
-    // marginTop: theme.spacing(1),
-    // marginBottom: theme.spacing(1),
-  },
-
-  shopName: {
-    fontSize: 32,
-  },
-}))
-
 function getSteps() {
   return [
     "Personen und Datum",
@@ -71,10 +49,9 @@ const ShopPage: React.FC<IShopPageProps> = ({
   location,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [showCancelBooking, setShowCancelBooking] = useState<boolean>(false)
+  const [showCancelBooking, setShowCancelBooking] = useState<boolean>(true)
   const [booking, setBooking] = useState<any>()
 
-  const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
   const dispatch = useAppDispatch()
   const {
@@ -85,20 +62,25 @@ const ShopPage: React.FC<IShopPageProps> = ({
       numberOfGuest,
       isValidInfo,
     },
-    shop: { shopInfo },
+    shop: { shopInfo, status },
   } = useAppSelector(state => state)
   const { shopName, shopEmail } = pageContext
   const steps = getSteps()
 
+  // useEffect(() => {
+  //   dispatch(
+  //     getShopinfo({
+  //       shopname: shopName,
+  //       shopemail: shopEmail,
+  //       isShopLogin: false,
+  //     })
+  //   )
+  // }, [])
   useEffect(() => {
-    dispatch(
-      getShopinfo({
-        shopname: shopName,
-        shopemail: shopEmail,
-        isShopLogin: false,
-      })
-    )
-  }, [])
+    if (status !== "loading" && !showCancelBooking) {
+      setIsLoading(false)
+    }
+  }, [status])
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1)
@@ -109,7 +91,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }
 
   useEffect(() => {
-    if (location.search.includes("?bookingId=") && Boolean(shopInfo?.email)) {
+    if (location.search.includes("?bookingId=")) {
       const bookingId = location.search.replace("?", "").split("=")[1]
       setShowCancelBooking(true)
       axios
@@ -123,8 +105,19 @@ const ShopPage: React.FC<IShopPageProps> = ({
           console.log(res.data)
         })
         .catch(err => console.log("err", err))
+    } else {
+      dispatch(
+        getShopinfo({
+          shopname: shopName,
+          shopemail: shopEmail,
+          isShopLogin: false,
+        })
+      )
+      setIsLoading(false)
+      console.log("showCancelBooking")
+      setShowCancelBooking(false)
     }
-  }, [shopInfo])
+  }, [])
 
   const handleConfirmSubmit = () => {
     const dataBooking = {
@@ -140,10 +133,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
       .post("/.netlify/functions/confirm-booking", JSON.stringify(dataBooking))
       .then(res => {
         if (res.data === "EMAIL_SENT") {
-          // setLoading(false)
-          // localStorage.setItem("termin", JSON.stringify(data))
-          // alert("Successfully! Thanks")
-          // history.push("/thanks", { customer: data })
           setIsLoading(false)
           handleNext()
         }
@@ -153,7 +142,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       })
   }
   return (
-    <Layout>
+    <Layout isShop>
       <SEO title="Booking Online System" />
       {/* {!checkShop && <Loading shopname={shopName} />} */}
       <WrapTerminSt>
