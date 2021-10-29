@@ -4,10 +4,25 @@ import StepLabel from "@mui/material/StepLabel"
 import Button from "@mui/material/Button"
 import { styled, alpha } from "@mui/material/styles"
 
-export const WrapTerminSt = styled("div")`
-  margin: 0 auto;
-  max-width: 580px;
-`
+export const WrapTerminSt = styled("div")(({ theme }) => ({
+  // position: "relative",
+  margin: "0 auto",
+  maxWidth: 580,
+  borderRadius: 4,
+  overflow: "hidden",
+  width: "98%",
+  // background: "red",
+}))
+
+export const WrapTerminContentSt = styled("div")(({ theme }) => ({
+  position: "relative",
+  // margin: "0 auto",
+  // maxWidth: 580,
+  // borderRadius: 4,
+  // overflow: "hidden",
+  // width: "98%",
+  // background: "pink",
+}))
 
 export const StepperSt = styled(Stepper)`
   margin-bottom: 10px;

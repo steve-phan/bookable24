@@ -1,6 +1,7 @@
 import * as React from "react"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid"
 import Collapse from "@mui/material/Collapse"
 import IconButton from "@mui/material/IconButton"
 import Table from "@mui/material/Table"
@@ -18,6 +19,12 @@ import InfoIcon from "@mui/icons-material/Info"
 import { allSlots } from "src/utils"
 
 import { ITermin } from "./DashBoard.types"
+import {
+  GridIconSt,
+  GridItemPhonelSt,
+  GridItemEmailSt,
+  SpanRequireSt,
+} from "./ShareInfo.css"
 
 const createData = ({
   selectedSlot,
@@ -46,13 +53,20 @@ const createData = ({
   }
 }
 
-function Row(props: { row: ReturnType<typeof createData> }) {
-  const { row } = props
+function Row(props: { row: ReturnType<typeof createData>; index: number }) {
+  const { row, index } = props
   const [open, setOpen] = React.useState(false)
   const { phone, email, require } = row.custormer
   return (
     <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow
+        sx={{
+          "& > *": {
+            borderBottom: "unset",
+            background: index % 2 === 0 ? "#ffffff" : "#faf8f8",
+          },
+        }}
+      >
         <TableCell
           style={{
             width: 60,
@@ -78,47 +92,33 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box
               style={{
-                background: "#f3e9e9",
+                background: "#f7e5e5",
                 paddingTop: 8,
                 paddingBottom: 8,
+                paddingRight: 8,
               }}
             >
-              <Table size="small" aria-label="purchases">
-                <TableBody key={phone}>
-                  <TableRow>
-                    <TableCell
-                      style={{
-                        width: 60,
-                        maxWidth: 60,
-                      }}
-                    >
-                      <IconButton>
-                        <InfoIcon color="info" />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {phone}
-                    </TableCell>
-                    <TableCell>{email}</TableCell>
-                    <Hidden mdDown>
-                      <TableCell style={{ color: "red" }} align="left">
-                        {require}
-                      </TableCell>
-                    </Hidden>
-                  </TableRow>
-                  <Hidden mdUp>
-                    <TableRow
-                      style={{
-                        color: "red",
-                        maxWidth: "100vw",
-                        paddingLeft: 16,
-                      }}
-                    >
-                      {require}
-                    </TableRow>
-                  </Hidden>
-                </TableBody>
-              </Table>
+              <Grid
+                container
+                style={{
+                  minWidth: "100%",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <GridIconSt item sm={2}>
+                  <IconButton>
+                    <InfoIcon color="info" />
+                  </IconButton>
+                </GridIconSt>
+                <GridItemPhonelSt item sm={4}>
+                  {phone}
+                </GridItemPhonelSt>
+                <GridItemEmailSt item sm={6}>
+                  {email}
+                </GridItemEmailSt>
+              </Grid>
+              {require && <SpanRequireSt>{require}</SpanRequireSt>}
             </Box>
           </Collapse>
         </TableCell>
@@ -188,8 +188,8 @@ const ShowInfo = ({ todayTermins }: { todayTermins: ITermin[] }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <Row key={row._id} row={row} />
+          {rows.map((row, index) => (
+            <Row key={row._id} row={row} index={index} />
           ))}
         </TableBody>
       </Table>
