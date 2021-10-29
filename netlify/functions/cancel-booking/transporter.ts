@@ -16,9 +16,8 @@ const configTransporter = ({
   firstName,
   selectedSlot,
   selectedDate,
-  terminId,
   require,
-  shopinfo,
+  shopInfo,
 }) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -33,25 +32,24 @@ const configTransporter = ({
     hbs({
       viewEngine: {
         extname: ".hbs",
-        partialsDir: path.resolve("./netlify/functions/utils/booking/views"),
-        // path.join(__dirname, "utils", "views"),
-        layoutsDir: path.resolve(
-          "./netlify/functions/utils/booking/views/layouts"
+        partialsDir: path.resolve(
+          "./netlify/functions/utils/cancel-booking/views"
         ),
-        // path.join(__dirname, "utils", "views", "layouts"),
+        layoutsDir: path.resolve(
+          "./netlify/functions/utils/cancel-booking/views/layouts"
+        ),
       },
-      viewPath: path.resolve("./netlify/functions/utils/booking/views"),
-      // path.join(__dirname, "utils", "views"),
+      viewPath: path.resolve("./netlify/functions/utils/cancel-booking/views"),
       extName: ".hbs",
     })
   )
-  const { company, street, city, cityCode } = shopinfo
+  const { company, street, city, cityCode } = shopInfo
 
   let mailOptions = {
-    from: `${company.toUpperCase()}  <${shopinfo.email}>`,
-    to: [email, shopinfo.email, "lebenistcode@gmail.com"],
-    subject: `Dein Termin - ${company}`,
-    template: "termin",
+    from: `${company}  <${shopInfo.email}>`,
+    to: [email, shopInfo.email, "lebenistcode@gmail.com"],
+    subject: `Cancel Booking at ${company}`,
+    template: "cancel",
     context: {
       name: firstName + lastName,
       person,
@@ -64,7 +62,6 @@ const configTransporter = ({
       city,
       cityCode,
       time: timeSlots[Number(selectedSlot)],
-      link_cancel: `${baseUrl}/${shopName}/${terminId}`,
     },
   }
   return {

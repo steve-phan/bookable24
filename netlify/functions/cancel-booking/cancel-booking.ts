@@ -1,6 +1,4 @@
-require("dotenv").config()
 import { Handler } from "@netlify/functions"
-
 import mongoose, { Document } from "mongoose"
 import { google } from "googleapis"
 
@@ -8,7 +6,6 @@ import { Appointment } from "../utils/models/bookingModel"
 import { tokenSchema } from "../utils/models/tokenModel"
 
 import configTransporter from "./transporter"
-import moment from "moment"
 
 interface IToken {
   _id?: unknown
@@ -17,13 +14,8 @@ interface IToken {
 }
 type TTokenData = Document<any, any, unknown> & IToken
 
-export const handler: Handler = async function (event, context) {
-  if (event.httpMethod === "GET") {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: " NOT allowed" }),
-    }
-  }
+export const handler: Handler = async (event, context) => {
+  const { bookingId, shopName, shopInfo } = JSON.parse(event.body)
 
   const oAuth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -33,17 +25,6 @@ export const handler: Handler = async function (event, context) {
   oAuth2Client.setCredentials({
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   })
-
-  const appointment = JSON.parse(event.body)
-  const {
-    userinfo: { firstName, lastName, email, phone },
-    selectedDate,
-    selectedSlot,
-    person,
-    require,
-    shopinfo,
-  } = appointment
-  const shopName = shopinfo.shopName || shopinfo.shopname // Change shopname to shopName
 
   const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${shopName}?retryWrites=true&w=majority`
 
@@ -80,23 +61,20 @@ export const handler: Handler = async function (event, context) {
       validToken = tokenData[0].token
     }
 
-    const formatDate = moment(
-      selectedDate,
-      selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
-    ).format("MMM DD")
+    console.log("shopInfo, =====>", shopInfo)
 
-    const newappointment = new Appointment({
-      first_name: firstName,
-      last_name: lastName,
-      selectedSlot,
-      selectedDate: formatDate,
+    const appointmentFound = await Appointment.findById(bookingId)
+    const {
+      shopName,
       email,
-      phone,
       person,
+      phone,
+      last_name,
+      first_name,
+      selectedSlot,
+      selectedDate,
       require,
-    })
-
-    await newappointment.save()
+    } = appointmentFound
 
     const { transporter, mailOptions } = configTransporter({
       shopName,
@@ -104,13 +82,12 @@ export const handler: Handler = async function (event, context) {
       email,
       person,
       phone,
-      lastName,
-      firstName,
+      lastName: last_name,
+      firstName: first_name,
       selectedSlot,
-      selectedDate: formatDate,
+      selectedDate,
       require,
-      shopinfo,
-      terminId: newappointment._id,
+      shopInfo,
     })
 
     tokenDB.close()
@@ -118,7 +95,7 @@ export const handler: Handler = async function (event, context) {
     await transporter.sendMail(mailOptions, () => {})
     return {
       statusCode: 200,
-      body: "EMAIL_SENT",
+      body: JSON.stringify(appointmentFound),
     }
   } catch (error) {
     mongoose.connection.close()

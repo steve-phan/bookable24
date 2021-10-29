@@ -14,7 +14,7 @@ export const shopinfoSchema = new Schema({
   firstName: String,
   lastName: String,
   uid: String,
-  shopname: String,
+  shopName: String,
 })
 
 export const ShopInfo = mongoose.model("Shopinfo", shopinfoSchema)
