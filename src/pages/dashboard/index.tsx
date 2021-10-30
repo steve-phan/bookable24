@@ -4,9 +4,10 @@ import { graphql } from "gatsby"
 import DashBoardLayout from "src/components/Layout/DasBoadLayout"
 import HomeDashBoard from "src/components/DashBoard/Home/Home"
 
-const DashBoardHome = () => {
+const DashBoardHome = (props: any) => {
+  console.log("props dashboard", props)
   return (
-    <DashBoardLayout>
+    <DashBoardLayout location={location}>
       <HomeDashBoard />
     </DashBoardLayout>
   )

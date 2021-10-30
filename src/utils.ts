@@ -25,7 +25,8 @@ export const getRandomColor = () => {
 
 export const getShopName = (email: string | null, shopList: any[]) =>
   shopList?.find(
-    (shop: { email: string; shopId: string }) => shop.email === email
+    (shop: { email: string; shopId: string }) =>
+      shop.email.toLowerCase() === email
   )?.shopId
 
 export interface ItimeAgoMess {

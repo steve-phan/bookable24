@@ -26,8 +26,10 @@ const Layout = ({ children, location, isShop }: any) => {
 
   useEffect(() => {
     if (!isShopLogin && !isShop) {
+      console.log("check shop auth")
       dispatch(checkUserAuth(shopList))
     } else {
+      console.log("khiung hay ma")
       dispatch(setShopLogout())
     }
   }, [])

@@ -25,7 +25,14 @@ export interface IMobileToggle {
   handleDrawerToggle?: () => void
 }
 
-const DashBoardLayout = ({ children }: { children: ReactNode }) => {
+const DashBoardLayout = ({
+  children,
+  location,
+}: {
+  children: ReactNode
+  location: any
+}) => {
+  console.log(location)
   const { navigate } = useI18next()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {

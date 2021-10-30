@@ -3,7 +3,7 @@ require("dotenv").config()
 
 const Schema = mongoose.Schema
 
-const appointmentSchema = new Schema({
+export const appointmentSchema = new Schema({
   first_name: String,
   last_name: String,
   email: String,

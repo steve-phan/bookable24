@@ -1,13 +1,14 @@
 require("dotenv").config()
 import { Handler } from "@netlify/functions"
-
-import mongoose, { Document } from "mongoose"
+import { Document } from "mongoose"
 import { google } from "googleapis"
 
-import { Appointment } from "../utils/models/bookingModel"
-import { tokenSchema } from "../utils/models/tokenModel"
+import { connect } from "../utils/mongooseConnect"
 
+import { appointmentSchema } from "../utils/models/bookingModel"
+import { tokenSchema } from "../utils/models/tokenModel"
 import configTransporter from "./transporter"
+import { getValidToken } from "../utils/googleToken"
 import moment from "moment"
 
 interface IToken {
@@ -44,48 +45,42 @@ export const handler: Handler = async function (event, context) {
     shopinfo,
   } = appointment
   const shopName = shopinfo.shopName || shopinfo.shopname // Change shopname to shopName
-
+  console.log("shopinfo  ==>", shopinfo)
   const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${shopName}?retryWrites=true&w=majority`
 
   try {
-    await mongoose.connect(url)
+    const bookingConn = await connect(shopName)
 
-    let validToken = null
-    const tokenDB = mongoose.connection.useDb("token")
-    const tokenData: TTokenData[] = await tokenDB
-      .model("token", tokenSchema)
-      .find({})
-
-    if (Number(tokenData[0].expiry) - Date.now() < 3 * 60 * 1000) {
-      const {
-        token,
-        res: {
-          data: { expiry_date },
-        },
-      } = await oAuth2Client.getAccessToken()
-      validToken = token
-      await tokenDB.model("token", tokenSchema).findOneAndUpdate(
-        {
-          token: tokenData[0].token,
-        },
-        {
-          token: token,
-          expiry: expiry_date,
-        },
-        () => {
-          // console.log('UPDATED .......');
-        }
-      )
-    } else {
-      validToken = tokenData[0].token
-    }
+    // const tokenDB = mongoose.connection.useDb("token")
+    // tokenSchema.pre("findOneAndUpdate", async function () {
+    //   const tokenData: TTokenData[] = await this.model.find({})
+    //   if (Number(tokenData[0].expiry) - Date.now() < 3 * 60 * 1000) {
+    //     const {
+    //       token,
+    //       res: {
+    //         data: { expiry_date },
+    //       },
+    //     } = await oAuth2Client.getAccessToken()
+    //     validToken = token
+    //     this.update({
+    //       token: token,
+    //       expiry: expiry_date,
+    //     })
+    //   } else {
+    //     validToken = tokenData[0].token
+    //   }
+    // })
+    // await tokenDB.model("token", tokenSchema).findOneAndUpdate({})
 
     const formatDate = moment(
       selectedDate,
       selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
     ).format("MMM DD")
 
-    const newappointment = new Appointment({
+    const newappointment = new bookingConn.model(
+      "Appointment",
+      appointmentSchema
+    )({
       first_name: firstName,
       last_name: lastName,
       selectedSlot,
@@ -97,7 +92,7 @@ export const handler: Handler = async function (event, context) {
     })
 
     await newappointment.save()
-
+    let validToken = await getValidToken()
     const { transporter, mailOptions } = configTransporter({
       shopName,
       token: validToken,
@@ -113,15 +108,15 @@ export const handler: Handler = async function (event, context) {
       terminId: newappointment._id,
     })
 
-    tokenDB.close()
-    mongoose.connection.close()
+    // tokenDB.close()
+    // mongoose.connection.close()
     await transporter.sendMail(mailOptions, () => {})
     return {
       statusCode: 200,
       body: "EMAIL_SENT",
     }
   } catch (error) {
-    mongoose.connection.close()
+    // mongoose.connection.close()
     console.log(error)
     return {
       statusCode: 500,
