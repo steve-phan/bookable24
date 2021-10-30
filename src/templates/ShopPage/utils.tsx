@@ -2,15 +2,12 @@ import React, { ReactElement } from "react"
 import DatePicker from "./StepComponents/DatePicker"
 import SlotPicker from "./StepComponents/SlotPicker"
 import InfoUser from "./StepComponents/InfoUser"
-import moment from "moment"
 import PrewView from "./StepComponents/PrewView"
 import ThankYou from "./StepComponents/ThankYou"
+import dayjs from "dayjs"
 
 export const checkDisableDate = (day: Date) => {
-  return (
-    // schedule === 0 ||
-    moment(day).startOf("day").diff(moment().startOf("day")) < 0
-  )
+  return dayjs(day).startOf("day").diff(dayjs().startOf("day")) < 0
 }
 
 export const getStepContent = (step: number): ReactElement => {
@@ -31,19 +28,17 @@ export const getStepContent = (step: number): ReactElement => {
 }
 
 export const morningSlots = [
-  "11:00",
-  "11:30",
   "12:00",
   "12:30",
   "13:00",
   "13:30",
   "14:00",
-]
-export const afternoonSlots = [
   "14:30",
   "15:00",
   "15:30",
   "16:00",
+]
+export const afternoonSlots = [
   "16:30",
   "17:00",
   "17:30",
@@ -57,3 +52,14 @@ export const afternoonSlots = [
   "21:30",
   "22:00",
 ]
+
+export const allSlots = [...morningSlots, ...afternoonSlots]
+
+export const getDefaultSlot = () => {
+  const hour = dayjs().hour()
+  const index = allSlots.findIndex((slot, i) => {
+    return Number(slot.split(":")[0]) === hour + 2
+  })
+
+  return index === -1 ? 0 : index
+}

@@ -27,9 +27,8 @@ const useColorlibStepIconStyles = makeStyles(theme => {
       boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
     },
     completed: {
+      //@ts-ignore
       backgroundColor: theme?.color?.primary,
-      // backgroundImage:
-      //   'linear-gradient( 136deg , rgb(242,113,33) 0%, rgb(249 190 84) 50%, rgb(138,35,135) 100%)',
     },
   }
 })

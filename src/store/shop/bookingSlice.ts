@@ -1,17 +1,11 @@
-import {
-  createSlice,
-  createAction,
-  createAsyncThunk,
-  createReducer,
-  PayloadAction,
-} from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import { IbookingState } from "./shop.types"
 
 const initialBookingState: IbookingState = {
   numberOfGuest: 1,
   selectedDate: new Date(),
-  selectedSlot: 18,
+  selectedSlot: undefined,
   guestInfo: {
     firstName: "",
     lastName: "",

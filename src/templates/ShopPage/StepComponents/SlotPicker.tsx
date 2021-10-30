@@ -4,7 +4,12 @@ import { Link, useTranslation } from "gatsby-plugin-react-i18next"
 import React, { useState } from "react"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setSelectedSlot } from "src/store/shop/bookingSlice"
-import { afternoonSlots, morningSlots } from "../utils"
+import {
+  afternoonSlots,
+  morningSlots,
+  allSlots,
+  getDefaultSlot,
+} from "../utils"
 import {
   ButtonGroupSt,
   ButtonSlotSt,
@@ -20,12 +25,13 @@ const SlotPicker = () => {
   const [terminsBooked, setTerminsBooked] = useState([])
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { selectedSlot, selectedDate } = useAppSelector(state => state.booking)
-  const house = dayjs().hour()
+  const { selectedSlot = getDefaultSlot(), selectedDate } = useAppSelector(
+    state => state.booking
+  )
 
+  console.log("default slot", getDefaultSlot())
   return (
     <WrapColSt>
-      {/* {loading && <Loading />} */}
       <TitleBannerSt>
         <h5>{t("booking.slot.lunch")}</h5>
       </TitleBannerSt>
@@ -39,8 +45,7 @@ const SlotPicker = () => {
                 dispatch(setSelectedSlot(index))
               }}
             >
-              {" "}
-              {slot}{" "}
+              {slot}
             </ButtonSlotSt>
           )
         })}

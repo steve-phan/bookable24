@@ -52,6 +52,7 @@ export const TitleBannerSt = styled("div")(({ theme }) => ({
 
   "& h5": {
     fontSize: 20,
+    marginTop: 16,
     marginBottom: 0,
     padding: 10,
   },
