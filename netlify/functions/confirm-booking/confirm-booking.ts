@@ -47,37 +47,15 @@ export const handler: Handler = async function (event, context) {
   const shopName = shopinfo.shopName || shopinfo.shopname // Change shopname to shopName
   console.log("shopinfo  ==>", shopinfo)
   const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${shopName}?retryWrites=true&w=majority`
-
+  const formatDate = moment(
+    selectedDate,
+    selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
+  ).format("MMM DD")
   try {
-    const bookingConn = await connect(shopName)
+    const shopnamesDb = await connect()
 
-    // const tokenDB = mongoose.connection.useDb("token")
-    // tokenSchema.pre("findOneAndUpdate", async function () {
-    //   const tokenData: TTokenData[] = await this.model.find({})
-    //   if (Number(tokenData[0].expiry) - Date.now() < 3 * 60 * 1000) {
-    //     const {
-    //       token,
-    //       res: {
-    //         data: { expiry_date },
-    //       },
-    //     } = await oAuth2Client.getAccessToken()
-    //     validToken = token
-    //     this.update({
-    //       token: token,
-    //       expiry: expiry_date,
-    //     })
-    //   } else {
-    //     validToken = tokenData[0].token
-    //   }
-    // })
-    // await tokenDB.model("token", tokenSchema).findOneAndUpdate({})
-
-    const formatDate = moment(
-      selectedDate,
-      selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
-    ).format("MMM DD")
-
-    const newappointment = new bookingConn.model(
+    const bookingConn = await shopnamesDb.connection.useDb(shopName)
+    const newappointment = await bookingConn.model(
       "Appointment",
       appointmentSchema
     )({

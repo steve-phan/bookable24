@@ -25,7 +25,8 @@ export const getValidToken = async () => {
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   })
 
-  const tokenDB = await connect("token")
+  // const tokenDB = await connect("token")
+  const shopNamesDb = await connect()
 
   tokenSchema.pre("findOneAndUpdate", async function () {
     const tokenData: TTokenData[] = await this.model.find({})
@@ -47,7 +48,7 @@ export const getValidToken = async () => {
       validToken = tokenData[0].token
     }
   })
-
+  const tokenDB = await shopNamesDb.connection.useDb("token")
   await tokenDB.model("token", tokenSchema).findOneAndUpdate({})
 
   return validToken

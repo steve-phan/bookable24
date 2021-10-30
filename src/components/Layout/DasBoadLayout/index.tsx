@@ -43,17 +43,17 @@ const DashBoardLayout = ({
 
   const shopList = useShopname()
 
-  // useEffect(() => {
-  //   if (!isShopLogin) {
-  //     dispatch(checkUserAuth(shopList))
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (!isShopLogin) {
+      dispatch(checkUserAuth(shopList))
+    }
+  }, [])
 
-  // useEffect(() => {
-  //   if (!isShopLogin && status === "logout") {
-  //     navigate("/login")
-  //   }
-  // }, [status])
+  useEffect(() => {
+    if (!isShopLogin && status === "logout") {
+      navigate("/login")
+    }
+  }, [status])
 
   return (
     <ThemeProvider theme={theme}>

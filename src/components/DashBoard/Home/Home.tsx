@@ -34,6 +34,7 @@ const HomeDashBoard = () => {
   const { shopInfo, allTermins } = useAppSelector(state => state.shop)
 
   const newestTermins = allTermins.slice(allTermins.length - 10)
+  console.log("allTermins", allTermins)
 
   const showMess: ItimeAgoMess = {
     second: t("dashboard.dashboard.timeago.second"),
