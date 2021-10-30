@@ -14,8 +14,6 @@ import Carousel from "react-material-ui-carousel"
 
 import freeTermin from "../../images/free.svg"
 import proTermin from "../../images/pro.svg"
-import { RedShape } from "./Hero.css"
-import RedBackgroundSection from "../Shared/RedBackGround"
 
 const useStyles = makeStyles((theme: Theme) => ({
   wrapCarousel: {

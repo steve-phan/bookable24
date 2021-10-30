@@ -12,6 +12,7 @@ export const checkUserAuth =
   (shopList: any[]): AppThunk =>
   (dispatch, getState) => {
     if (typeof window !== undefined) {
+      console.log("checking ....")
       onAuthStateChanged(auth, user => {
         if (user) {
           // User is signed in, see docs for a list of available properties
@@ -71,6 +72,7 @@ interface IshopQuery {
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
   async ({ shopemail, shopname, isShopLogin }: IshopQuery) => {
+    console.log("heade go go ", shopemail, shopname)
     const response: any = await axios.get(
       "/.netlify/functions/get-shop-termins",
       {
@@ -80,6 +82,7 @@ export const getShopinfo = createAsyncThunk(
         },
       }
     )
+    console.log("responsedata", response.data)
     const { allTermins, shopInfo } = response.data
     return { allTermins, shopInfo, isShopLogin }
   }
@@ -98,7 +101,7 @@ export const shopSlice = createSlice({
     setShopLogout: state => {
       state.status = "logout"
       state.isShopLogin = false
-      // state.shopInfo = intinitialShopState.shopInfo
+      state.shopInfo = intinitialShopState.shopInfo
     },
   },
   extraReducers: builder => {

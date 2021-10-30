@@ -50,7 +50,7 @@ const SignIn = ({ location }: { location: any }) => {
   //     .split("/")
   //     .filter((val: any) => val && val)
   //     .pop() === "login"
-
+  console.log("isShopLogin", isShopLogin)
   useEffect(() => {
     if (isShopLogin) {
       navigate("/dashboard")
@@ -93,7 +93,7 @@ const SignIn = ({ location }: { location: any }) => {
   }
   return (
     <WrapColSt>
-      {status === "loading" && <Loading />}
+      {/* {status === "loading" && <Loading />} */}
       <h1>Bereits Kunde?</h1>
       <TypographySt>
         Loggen Sie sich jetzt ein, um alle Vorteile des Kundenkontos

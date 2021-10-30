@@ -25,7 +25,13 @@ export interface IMobileToggle {
   handleDrawerToggle?: () => void
 }
 
-const DashBoardLayout = ({ children }: { children: ReactNode }) => {
+const DashBoardLayout = ({
+  children,
+  location,
+}: {
+  children: ReactNode
+  location?: any
+}) => {
   const { navigate } = useI18next()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {
@@ -37,24 +43,24 @@ const DashBoardLayout = ({ children }: { children: ReactNode }) => {
 
   const shopList = useShopname()
 
-  useEffect(() => {
-    if (!isShopLogin) {
-      dispatch(checkUserAuth(shopList))
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!isShopLogin) {
+  //     dispatch(checkUserAuth(shopList))
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    if (status === "logout") {
-      navigate("/login")
-    }
-  }, [status])
+  // useEffect(() => {
+  //   if (!isShopLogin && status === "logout") {
+  //     navigate("/login")
+  //   }
+  // }, [status])
 
   return (
     <ThemeProvider theme={theme}>
       <ThemeProviderSt theme={theme}>
         <CssBaseline />
         {inputGlobalStyles}
-        {status === "loading" && <Loading />}
+        {/* {status === "loading" && <Loading />} */}
         <WrapDashBoardSt>
           <SideBar
             mobileOpen={mobileOpen}

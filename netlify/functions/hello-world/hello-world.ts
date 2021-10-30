@@ -1,37 +1,50 @@
 import { Handler } from "@netlify/functions"
 import mongoose, { Document } from "mongoose"
-import { number, string } from "prop-types"
+require("dotenv").config()
+const Schema = mongoose.Schema
 
-import { Appointment } from "../utils/models/bookingModel"
+const personSchme = new Schema({
+  name: String,
+  age: Number,
+})
 
 export const handler: Handler = async (event, context) => {
   const { name = "stranger" } = event.queryStringParameters
 
-  const newBooking = {
-    first_name: "xxx",
-    last_name: "lastName",
-    selectedSlot: "xxx",
-    selectedDate: "xxx",
-    email: "xx",
-    phone: "xx",
-    person: "xx",
-    require: "xxxxx",
+  const newPerson = {
+    name: "Luna",
+    age: 100,
   }
 
   try {
-    const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/helloworld?retryWrites=true&w=majority`
+    const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/person?retryWrites=true&w=majority`
     await mongoose.connect(url)
-    const newApport = new Appointment({ ...newBooking })
-    console.log(newApport)
-    await newApport.save((err, save) => {
-      if (err) {
-        console.log("mongoSave err", err)
-      } else {
-        console.log("mongoSave success", save)
-      }
-    })
 
-    console.log("mongoo pass")
+    // const xxxPerson = new Person({ ...newPerson })
+    let x
+    personSchme.pre("findOneAndUpdate", async function (doc) {
+      // console.log("doc====>", doc)
+      const oldAge = await this.model.find({ age: 150 })
+      // console.log("oldAge", oldAge)
+      // if (oldAge[0]["age"] < 155) {
+      //   this.update({ age: 160 })
+      // }
+      // if (doc[1]["age"] < 101) {
+      //   console.log(typeof doc[1])
+      // }
+      // const xPerson = await Person.find({})
+
+      // if (xPerson[0].age > 20) {
+      //   Person.updateOne({ age: xPerson[0].age }, { age: 20 })
+      // }
+    })
+    const Person = mongoose.model("Person", personSchme)
+
+    const result = await Person.findOneAndUpdate({}).exec()
+
+    console.log("result ", mongoose.connection.name)
+
+    mongoose.connection.close()
     return {
       statusCode: 200,
       body: JSON.stringify({
@@ -39,7 +52,9 @@ export const handler: Handler = async (event, context) => {
       }),
     }
   } catch (error) {
-    console.log("mongooerror")
+    mongoose.connection.close()
+
+    console.log("mongooerror", error)
     return {
       statusCode: 500,
       body: JSON.stringify({

@@ -26,7 +26,7 @@ export interface Iaccount {
 export interface IbookingState {
   numberOfGuest: number
   selectedDate: Date | null
-  selectedSlot: number
+  selectedSlot: number | undefined
   guestInfo: {
     firstName: string
     lastName: string
