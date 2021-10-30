@@ -8,7 +8,6 @@ import ShowInfo from "../SharedComponent/ShowInfo"
 
 const TomorrowBookings = () => {
   const { shopInfo, allTermins } = useAppSelector(state => state.shop)
-  console.log(shopInfo)
   return (
     <ShowInfo
       todayTermins={

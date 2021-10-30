@@ -44,7 +44,7 @@ const TotalCustomer = ({ allTermins }: { allTermins: any[] }) => {
       </TypoTitleSt>
       <CircleSt>
         <NumberSt>{totalCustomers}</NumberSt>
-        <Pie data={showData(totalCustomers, theme.color.primary)} />
+        <Pie data={showData(totalCustomers, theme?.color?.primary)} />
       </CircleSt>
     </WrapChartSt>
   )

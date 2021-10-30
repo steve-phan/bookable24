@@ -4,6 +4,7 @@ import { ThemeProvider } from "@mui/material/styles"
 import React, { useEffect } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
+import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { useShopname } from "src/components/Account/accountHook"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
@@ -23,6 +24,7 @@ const Layout = ({ children, location, isShop }: any) => {
   const { isShopLogin, status } = useAppSelector(state => state.shop)
 
   const shopList = useShopname()
+  const { navigate } = useI18next()
 
   // useEffect(() => {
   //   if (!isShopLogin && !isShop) {
@@ -33,6 +35,18 @@ const Layout = ({ children, location, isShop }: any) => {
   //     dispatch(setShopLogout())
   //   }
   // }, [])
+  useEffect(() => {
+    // const paths = location?.pathname?.split("/").pop() !== 'login'
+    if (!isShopLogin && location?.pathname?.split("/").pop() !== "login") {
+      dispatch(checkUserAuth(shopList))
+    }
+  }, [])
+  console.log("isShopLogin", location)
+  // useEffect(() => {
+  //   if (!isShopLogin && status === "logout") {
+  //     navigate("/login")
+  //   }
+  // }, [status])
 
   return (
     <ThemeProvider theme={theme}>

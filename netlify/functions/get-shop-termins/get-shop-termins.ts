@@ -28,17 +28,11 @@ export const handler: Handler = async (event, context) => {
     )
     // Access to Model method
     const allTermins = await Appointment.find({})
-
     return {
       statusCode: 200,
       body: JSON.stringify({ allTermins, shopInfo }),
-      // // more keys you can return:
-      // headers: { "headerName": "headerValue", ... },
-      // isBase64Encoded: true,
     }
   } catch (error) {
-    console.log("get shoptermin errors", error)
-    // mongoose.connection.close()
     return { statusCode: 500, body: error.toString() }
   }
 }

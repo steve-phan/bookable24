@@ -23,7 +23,11 @@ import { useShopname } from "../accountHook"
 import { getShopName, validateEmail } from "src/utils"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { getShopinfo, setShopInfo } from "src/store/shop/shopSlice"
+import {
+  getShopinfo,
+  setShopInfo,
+  checkUserAuth,
+} from "src/store/shop/shopSlice"
 
 interface IloginStates {
   email: string
@@ -54,6 +58,8 @@ const SignIn = ({ location }: { location: any }) => {
   useEffect(() => {
     if (isShopLogin) {
       navigate("/dashboard")
+    } else {
+      dispatch(checkUserAuth(shopList))
     }
   }, [isShopLogin])
 
@@ -83,7 +89,7 @@ const SignIn = ({ location }: { location: any }) => {
         getShopinfo({
           shopemail: values.email,
           shopname: getShopName(values.email, shopList),
-          isShopLogin,
+          isShopLogin: true,
         })
       )
     } catch (error) {

@@ -1,7 +1,6 @@
-import { graphql } from "gatsby"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
-import { PageProps } from "gatsby"
+import { PageProps, graphql } from "gatsby"
 
 import Layout from "../components/Layout/Layout"
 import SEO from "../components/seo"
