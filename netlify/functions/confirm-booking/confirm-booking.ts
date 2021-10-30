@@ -1,22 +1,12 @@
 require("dotenv").config()
 import { Handler } from "@netlify/functions"
-import { Document } from "mongoose"
 import { google } from "googleapis"
+import dayjs from "dayjs"
 
 import { connect } from "../utils/mongooseConnect"
-
 import { appointmentSchema } from "../utils/models/bookingModel"
-import { tokenSchema } from "../utils/models/tokenModel"
 import configTransporter from "./transporter"
 import { getValidToken } from "../utils/googleToken"
-import moment from "moment"
-
-interface IToken {
-  _id?: unknown
-  expiry?: string
-  token?: string
-}
-type TTokenData = Document<any, any, unknown> & IToken
 
 export const handler: Handler = async function (event, context) {
   if (event.httpMethod === "GET") {
@@ -46,14 +36,12 @@ export const handler: Handler = async function (event, context) {
   } = appointment
   const shopName = shopinfo.shopName || shopinfo.shopname // Change shopname to shopName
   console.log("shopinfo  ==>", shopinfo)
-  const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${shopName}?retryWrites=true&w=majority`
-  const formatDate = moment(
+  const formatDate = dayjs(
     selectedDate,
     selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
   ).format("MMM DD")
   try {
     const shopnamesDb = await connect()
-
     const bookingConn = await shopnamesDb.connection.useDb(shopName)
     const newappointment = await bookingConn.model(
       "Appointment",
@@ -86,15 +74,12 @@ export const handler: Handler = async function (event, context) {
       terminId: newappointment._id,
     })
 
-    // tokenDB.close()
-    // mongoose.connection.close()
     await transporter.sendMail(mailOptions, () => {})
     return {
       statusCode: 200,
       body: "EMAIL_SENT",
     }
   } catch (error) {
-    // mongoose.connection.close()
     console.log(error)
     return {
       statusCode: 500,
