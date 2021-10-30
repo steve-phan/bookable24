@@ -72,6 +72,7 @@ interface IshopQuery {
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
   async ({ shopemail, shopname, isShopLogin }: IshopQuery) => {
+    console.log("heade go go ", shopemail, shopname)
     const response: any = await axios.get(
       "/.netlify/functions/get-shop-termins",
       {

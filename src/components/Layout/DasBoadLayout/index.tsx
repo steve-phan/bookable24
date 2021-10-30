@@ -30,9 +30,8 @@ const DashBoardLayout = ({
   location,
 }: {
   children: ReactNode
-  location: any
+  location?: any
 }) => {
-  console.log(location)
   const { navigate } = useI18next()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {
@@ -44,24 +43,24 @@ const DashBoardLayout = ({
 
   const shopList = useShopname()
 
-  useEffect(() => {
-    if (!isShopLogin) {
-      dispatch(checkUserAuth(shopList))
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!isShopLogin) {
+  //     dispatch(checkUserAuth(shopList))
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    if (!isShopLogin && status === "logout") {
-      navigate("/login")
-    }
-  }, [status])
+  // useEffect(() => {
+  //   if (!isShopLogin && status === "logout") {
+  //     navigate("/login")
+  //   }
+  // }, [status])
 
   return (
     <ThemeProvider theme={theme}>
       <ThemeProviderSt theme={theme}>
         <CssBaseline />
         {inputGlobalStyles}
-        {status === "loading" && <Loading />}
+        {/* {status === "loading" && <Loading />} */}
         <WrapDashBoardSt>
           <SideBar
             mobileOpen={mobileOpen}

@@ -22,4 +22,4 @@ export const appointmentSchema = new Schema({
   },
 })
 
-export const Appointment = mongoose.model("Appointment", appointmentSchema)
+// export const Appointment = mongoose.model("Appointment", appointmentSchema)

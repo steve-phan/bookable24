@@ -6,8 +6,8 @@ let conn = null
 
 // const uri = 'YOUR CONNECTION STRING HERE';
 
-export const connect = async function (dbName: string) {
-  let url = getUrl(dbName)
+export const connect = async function () {
+  let url = getUrl("shopnames")
 
   if (conn == null) {
     conn = mongoose
@@ -19,15 +19,16 @@ export const connect = async function (dbName: string) {
     // `await`ing connection after assigning to the `conn` variable
     // to avoid multiple function calls creating new connections
     await conn
-  } else if (mongoose?.connection?.name !== dbName) {
-    // console.log("check ==>", mongoose.connection.name, dbName)
-    conn = mongoose.connection.useDb(dbName)
-    // mongoose
-    //   .connect(url, {
-    //     serverSelectionTimeoutMS: 5000,
-    //   })
-    //   .then(() => mongoose)
   }
-
+  // } else if (mongoose.connections[0]?.name !== dbName) {
+  //   // console.log("check ==>", mongoose.connection.name, dbName)
+  //   conn = mongoose.connection.useDb(dbName)
+  //   // mongoose
+  //   //   .connect(url, {
+  //   //     serverSelectionTimeoutMS: 5000,
+  //   //   })
+  //   //   .then(() => mongoose)
+  // }
+  console.log("connections", mongoose.connections[0].name)
   return conn
 }

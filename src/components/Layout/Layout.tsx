@@ -24,15 +24,15 @@ const Layout = ({ children, location, isShop }: any) => {
 
   const shopList = useShopname()
 
-  useEffect(() => {
-    if (!isShopLogin && !isShop) {
-      console.log("check shop auth")
-      dispatch(checkUserAuth(shopList))
-    } else {
-      console.log("khiung hay ma")
-      dispatch(setShopLogout())
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!isShopLogin && !isShop) {
+  //     console.log("check shop auth")
+  //     dispatch(checkUserAuth(shopList))
+  //   } else {
+  //     console.log("khiung hay ma")
+  //     dispatch(setShopLogout())
+  //   }
+  // }, [])
 
   return (
     <ThemeProvider theme={theme}>
@@ -49,7 +49,7 @@ const Layout = ({ children, location, isShop }: any) => {
           disableGutters
           maxWidth={false}
         >
-          {status === "loading" && <Loading />}
+          {/* {status === "loading" && <Loading />} */}
           <Header
             // siteTitle={data.site.siteMetadata?.title || `Title`}
             // location={location}
