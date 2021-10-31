@@ -37,11 +37,14 @@ const Layout = ({ children, location, isShop }: any) => {
   // }, [])
   useEffect(() => {
     // const paths = location?.pathname?.split("/").pop() !== 'login'
-    if (!isShopLogin && location?.pathname?.split("/").pop() !== "login") {
+    if (
+      !isShopLogin &&
+      (location?.pathname?.split("/").pop() !== "request-account" ||
+        location?.pathname?.split("/").pop() !== "login")
+    ) {
       dispatch(checkUserAuth(shopList))
     }
   }, [])
-  console.log("isShopLogin", location)
   // useEffect(() => {
   //   if (!isShopLogin && status === "logout") {
   //     navigate("/login")

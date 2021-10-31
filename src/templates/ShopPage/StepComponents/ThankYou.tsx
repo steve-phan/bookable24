@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react"
-import Loading from "../../../components/Loading/Loading"
-import { ThankYouSt, TypographySt } from "./StepComponents.css"
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { Link, useTranslation } from "gatsby-plugin-react-i18next"
+import React from "react"
+import { ThankYouSt } from "./StepComponents.css"
+import { useAppSelector } from "../../../store/hooks"
+import { useTranslation } from "gatsby-plugin-react-i18next"
 
 const ThankYou = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true)
   const {
     guestInfo: { email, lastName, firstName },
   } = useAppSelector(state => state.booking)

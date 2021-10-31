@@ -7,11 +7,11 @@ import axios from "axios"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { getShopinfo } from "src/store/shop/shopSlice"
 
-import Loading from "../../components/Loading/Loading"
+import Loading from "src/components/Loading/Loading"
 
-import Layout from "../../components/Layout/Layout"
+import Layout from "src/components/Layout/Layout"
 import ColorlibStepIcon from "./ColorlibStepIcon"
-import SEO from "../../components/seo"
+import SEO from "src/components/seo"
 
 import {
   WrapTerminSt,
@@ -67,15 +67,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
   const { shopName, shopEmail } = pageContext
   const steps = getSteps()
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getShopinfo({
-  //       shopname: shopName,
-  //       shopemail: shopEmail,
-  //       isShopLogin: false,
-  //     })
-  //   )
-  // }, [])
   useEffect(() => {
     if (status !== "loading" && !showCancelBooking) {
       setIsLoading(false)
@@ -102,7 +93,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
         .then(res => {
           setIsLoading(false)
           setBooking(res.data)
-          console.log(res.data)
         })
         .catch(err => console.log("err", err))
     } else {
@@ -141,7 +131,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       })
   }
   return (
-    <Layout isShop>
+    <Layout isShop location={location}>
       <SEO title="Booking Online System" />
       {/* {!checkShop && <Loading shopname={shopName} />} */}
       <WrapTerminSt>
@@ -149,7 +139,14 @@ const ShopPage: React.FC<IShopPageProps> = ({
         <WrapTerminContentSt>
           {isLoading && <Loading />}
           {showCancelBooking ? (
-            booking?.email && <CancelBooking booking={booking} />
+            booking?.email && (
+              <CancelBooking
+                booking={booking}
+                shopName={shopName}
+                location={location}
+                shopInfo={data.contentfulShopInfo}
+              />
+            )
           ) : (
             <>
               {activeStep !== 4 && (

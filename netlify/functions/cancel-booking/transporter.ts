@@ -2,23 +2,8 @@ require("dotenv").config()
 import nodemailer from "nodemailer"
 import hbs from "nodemailer-express-handlebars"
 import path from "path"
-import { timeSlots } from "../utils/models/timeslot"
-const user = process.env.MAIL_USER
-const baseUrl = process.env.BASE_URL || "https://bookable24.de"
 
-const configTransporter = ({
-  shopName,
-  token,
-  email,
-  phone,
-  person,
-  lastName,
-  firstName,
-  selectedSlot,
-  selectedDate,
-  require,
-  shopInfo,
-}) => {
+const configTransporter = ({ token, email, lastName, firstName, shopInfo }) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -43,27 +28,19 @@ const configTransporter = ({
       extName: ".hbs",
     })
   )
-  const { company, street, city, cityCode } = shopInfo
-
-  let mailOptions = {
-    from: `${company}  <${shopInfo.email}>`,
+  const { shopName, address } = shopInfo
+  const mailOptions = {
+    from: `${shopName}  <${shopInfo.email}>`,
     to: [email, shopInfo.email, "lebenistcode@gmail.com"],
-    subject: `Cancel Booking at ${company}`,
+    subject: `Cancel Booking at ${shopName}`,
     template: "cancel",
     context: {
-      name: firstName + lastName,
-      person,
-      phone,
-      email,
-      require,
-      selectedDate,
-      company,
-      street,
-      city,
-      cityCode,
-      time: timeSlots[Number(selectedSlot)],
+      name: firstName + " " + lastName,
+      address,
+      shopName,
     },
   }
+
   return {
     transporter,
     mailOptions,

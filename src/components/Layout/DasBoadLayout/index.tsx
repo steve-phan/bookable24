@@ -11,7 +11,6 @@ import { checkUserAuth } from "src/store/shop/shopSlice"
 import SideBar from "src/components/Layout/DasBoadLayout/SideBar"
 import Header from "src/components/Layout/DasBoadLayout/Header/Header"
 import { theme } from "src/theme"
-import Loading from "src/components/Loading/Loading"
 
 import { inputGlobalStyles } from "../Layout"
 import {

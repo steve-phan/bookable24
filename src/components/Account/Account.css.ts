@@ -5,7 +5,7 @@ import {
   Button,
   Modal,
 } from "@mui/material"
-import { alpha, styled, ThemeOptions } from "@mui/material/styles"
+import { alpha, styled } from "@mui/material/styles"
 
 export const WrapColSt = styled("div")`
   padding: 16px 8px;

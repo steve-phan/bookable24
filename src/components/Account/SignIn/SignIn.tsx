@@ -10,8 +10,12 @@ import { Link } from "gatsby-plugin-react-i18next"
 import React, { useEffect } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
-import Loading from "src/components/Loading/Loading"
 import { auth } from "src/firebase"
+
+import { getShopName, validateEmail } from "src/utils"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { getShopinfo, checkUserAuth } from "src/store/shop/shopSlice"
+
 import {
   ButtonSt,
   FormControlSt,
@@ -20,14 +24,6 @@ import {
   WrapColSt,
 } from "../Account.css"
 import { useShopname } from "../accountHook"
-import { getShopName, validateEmail } from "src/utils"
-
-import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import {
-  getShopinfo,
-  setShopInfo,
-  checkUserAuth,
-} from "src/store/shop/shopSlice"
 
 interface IloginStates {
   email: string
@@ -48,13 +44,6 @@ const SignIn = ({ location }: { location: any }) => {
   const { isShopLogin, status } = useAppSelector(state => state.shop)
   const shopList = useShopname()
 
-  // const pathname =
-  //   location &&
-  //   location.pathname
-  //     .split("/")
-  //     .filter((val: any) => val && val)
-  //     .pop() === "login"
-  console.log("isShopLogin", isShopLogin)
   useEffect(() => {
     if (isShopLogin) {
       navigate("/dashboard")

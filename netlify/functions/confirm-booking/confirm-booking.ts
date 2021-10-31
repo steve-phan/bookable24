@@ -8,14 +8,13 @@ import { appointmentSchema } from "../utils/models/bookingModel"
 import configTransporter from "./transporter"
 import { getValidToken } from "../utils/googleToken"
 
-export const handler: Handler = async function (event, context) {
+export const handler: Handler = async function (event) {
   if (event.httpMethod === "GET") {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: " NOT allowed" }),
     }
   }
-
   const oAuth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
@@ -24,7 +23,6 @@ export const handler: Handler = async function (event, context) {
   oAuth2Client.setCredentials({
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   })
-
   const appointment = JSON.parse(event.body)
   const {
     userinfo: { firstName, lastName, email, phone },
@@ -35,18 +33,15 @@ export const handler: Handler = async function (event, context) {
     shopinfo,
   } = appointment
   const shopName = shopinfo.shopName || shopinfo.shopname // Change shopname to shopName
-  console.log("shopinfo  ==>", shopinfo)
   const formatDate = dayjs(
     selectedDate,
     selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
   ).format("MMM DD")
   try {
     const shopnamesDb = await connect()
-    const bookingConn = await shopnamesDb.connection.useDb(shopName)
-    const newappointment = await bookingConn.model(
-      "Appointment",
-      appointmentSchema
-    )({
+    const bookingConn = shopnamesDb.connection.useDb(shopName)
+    const Appointment = bookingConn.model("Appointment", appointmentSchema)
+    const newappointment = new Appointment({
       first_name: firstName,
       last_name: lastName,
       selectedSlot,
@@ -58,7 +53,7 @@ export const handler: Handler = async function (event, context) {
     })
 
     await newappointment.save()
-    let validToken = await getValidToken()
+    const validToken = await getValidToken()
     const { transporter, mailOptions } = configTransporter({
       shopName,
       token: validToken,
@@ -74,7 +69,7 @@ export const handler: Handler = async function (event, context) {
       terminId: newappointment._id,
     })
 
-    await transporter.sendMail(mailOptions, () => {})
+    transporter.sendMail(mailOptions, () => {})
     return {
       statusCode: 200,
       body: "EMAIL_SENT",

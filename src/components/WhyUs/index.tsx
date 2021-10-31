@@ -1,9 +1,6 @@
 import React from "react"
 import { Container, Grid } from "@mui/material"
 import { useTheme, ThemeOptions } from "@mui/material/styles"
-import { makeStyles } from "@mui/styles"
-import { GridSt, BoxCenter, BoxContent } from "./WhyUs.css"
-
 import {
   BrushOutlined,
   CheckCircleOutline,
@@ -12,7 +9,9 @@ import {
   ThumbUpOutlined,
   TrendingUp,
 } from "@mui/icons-material"
-import { Link, useTranslation } from "gatsby-plugin-react-i18next"
+import { useTranslation } from "gatsby-plugin-react-i18next"
+
+import { GridSt, BoxCenter, BoxContent } from "./WhyUs.css"
 
 const getIcon = (
   num: number,

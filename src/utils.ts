@@ -1,4 +1,4 @@
-import moment from "moment"
+import dayjs from "dayjs"
 
 import { ITermin } from "src/components/DashBoard/SharedComponent/DashBoard.types"
 import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
@@ -88,14 +88,14 @@ export const filterBookings = (allTermins: ITermin[], today: string) =>
     )
 
 export const getTodayBookings = (allTermins: ITermin[]) => {
-  const today = moment(new Date()).format("MMM DD")
+  const today = dayjs(new Date()).format("MMM DD")
   return filterBookings(allTermins, today)
 }
 
 export const getTomorrowBookings = (allTermins: ITermin[]) => {
   let nextDay = new Date()
   nextDay.setDate(nextDay.getDate() + 1)
-  const tomorrow = moment(nextDay).format("MMM DD")
+  const tomorrow = dayjs(nextDay).format("MMM DD")
   return filterBookings(allTermins, tomorrow)
 }
 
@@ -108,6 +108,6 @@ export const getTomorrowBookings = (allTermins: ITermin[]) => {
 
 export const getDateBookings = (allTermins: ITermin[], date: Date | null) => {
   let pickedDay = date && new Date(date)
-  const day = moment(pickedDay).format("MMM DD")
+  const day = dayjs(pickedDay).format("MMM DD")
   return filterBookings(allTermins, day)
 }

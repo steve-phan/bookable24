@@ -3,9 +3,6 @@ import { google } from "googleapis"
 
 import { connect } from "./mongooseConnect"
 import { tokenSchema } from "./models/tokenModel"
-import { getUrl } from "./utils"
-
-// const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/token?retryWrites=true&w=majority`
 
 interface IToken {
   _id?: unknown
@@ -31,7 +28,6 @@ export const getValidToken = async () => {
   tokenSchema.pre("findOneAndUpdate", async function () {
     const tokenData: TTokenData[] = await this.model.find({})
     if (Number(tokenData[0].expiry) - Date.now() < 3 * 60 * 1000) {
-      console.log("token ==>   expired ")
       const {
         token,
         res: {

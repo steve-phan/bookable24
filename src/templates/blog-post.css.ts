@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 export const GatsbyImageSt = styled(GatsbyImage)`
   width: 100%;

@@ -13,7 +13,7 @@ import {
   ImageDataLike,
 } from "gatsby-plugin-image"
 import { Link } from "gatsby-plugin-react-i18next"
-import moment from "moment"
+import dayjs from "dayjs"
 import React from "react"
 
 import { slugify } from "../../utils"
@@ -87,7 +87,7 @@ const Blog: React.FC<PageProps<any>> = ({ location, data }) => {
                     component="span"
                   >
                     Aktualisiert :{" "}
-                    {moment(post.publishDate).format("MMM/DD/yyyy")}
+                    {dayjs(post.publishDate).format("MMM/DD/yyyy")}
                   </Typography>
                   <Typography
                     component="span"

@@ -1,15 +1,19 @@
 import Typography from "@mui/material/Typography"
-import moment from "moment"
+import dayjs from "dayjs"
 import React from "react"
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { WrapColSt } from "../ShopPage.css"
-import { afternoonSlots, morningSlots } from "../utils"
+import { afternoonSlots, getDefaultSlot, morningSlots } from "../utils"
 import { CardSt } from "./StepComponents.css"
 
 const PrewView = () => {
-  const dispatch = useAppDispatch()
-  const { selectedDate, selectedSlot, guestInfo, numberOfGuest } =
-    useAppSelector(state => state.booking)
+  const {
+    selectedDate,
+    selectedSlot = getDefaultSlot(),
+    guestInfo,
+    numberOfGuest,
+  } = useAppSelector(state => state.booking)
 
   return (
     <WrapColSt>
@@ -27,7 +31,7 @@ const PrewView = () => {
           Time:{" "}
           {[...morningSlots, ...afternoonSlots][selectedSlot] +
             " " +
-            moment(selectedDate).format("dddd, DD. MMMM")}
+            dayjs(selectedDate).format("dddd, DD. MMMM")}
         </Typography>
 
         <Typography>Persons: {numberOfGuest}</Typography>

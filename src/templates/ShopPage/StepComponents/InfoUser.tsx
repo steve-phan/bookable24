@@ -1,12 +1,13 @@
 import React, { useRef, useEffect } from "react"
 
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import {
   setGuestInfo,
   setGuestValidInfo,
   TGuestInfo,
-} from "../../../store/shop/bookingSlice"
-import { validateEmail, validatePhone } from "../../../utils"
+} from "src/store/shop/bookingSlice"
+import { validateEmail, validatePhone } from "src/utils"
+
 import { TextFieldSt, TypographySt } from "./StepComponents.css"
 import { WrapColSt } from "../ShopPage.css"
 
@@ -20,7 +21,6 @@ const InfoUser = () => {
   useEffect(() => {
     if (firstName && lastName && validateEmail(email) && validatePhone(phone)) {
       dispatch(setGuestValidInfo(true))
-      console.log("everything is done")
     }
   }, [email, phone, firstName, lastName])
 
