@@ -41,7 +41,7 @@ const SettingsDashBoard = () => {
         </MenuItem>
       ))
     return (
-      <FormControl variant="standard" sx={{ minWidth: 120 }} fullWidth>
+      <FormControl variant="standard" sx={{ minWidth: 80 }} fullWidth>
         <InputLabel id="select-guest-number-label">Hours</InputLabel>
         <Select
           style={{ paddingLeft: 16 }}
@@ -61,8 +61,10 @@ const SettingsDashBoard = () => {
   return (
     <div>
       <Grid container>
+        <h3>Setting Disable</h3>
         <Grid item xs={12} md={4}>
           <WrapHourSt>
+            <p>Select the time start disable</p>
             <HourSelect />
           </WrapHourSt>
         </Grid>
@@ -71,9 +73,6 @@ const SettingsDashBoard = () => {
             {week.map((day, index) => {
               return (
                 <DaySt key={day + index}>
-                  <label style={{ cursor: "pointer" }} htmlFor={day + index}>
-                    {day}
-                  </label>
                   <Checkbox
                     id={day + index}
                     {...label}
@@ -85,11 +84,15 @@ const SettingsDashBoard = () => {
                     }}
                     checked={list.includes(index)}
                   />
+                  <label style={{ cursor: "pointer" }} htmlFor={day + index}>
+                    {day}
+                  </label>
                 </DaySt>
               )
             })}
           </WrapDaySt>
         </Grid>
+        <button>Update Settings</button>
       </Grid>
     </div>
   )
