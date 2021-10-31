@@ -167,7 +167,7 @@ const Hero = () => {
             textAlign: "center",
           }}
         >
-          <Typography>Email: bookable24.de@gmail.com</Typography> <br />
+          <Typography>Email: bookable24.de@gmail.com</Typography>
           <Typography>Pass: 12345678</Typography>
         </div>
       </Grid>

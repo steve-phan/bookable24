@@ -9,6 +9,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
 import React from "react"
 import axios from "axios"
+import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { validateEmail, validatePhone } from "src/utils"
 import { auth } from "src/firebase"
@@ -22,7 +23,6 @@ import {
   WrapColSt,
 } from "../Account.css"
 import AccountModal from "../AccountModal/AccountModal"
-import { useShopname } from "../accountHook"
 
 interface IshopInfo {
   company: string
@@ -46,6 +46,7 @@ interface IRegistrationStates extends IshopInfo {
 }
 
 const SignIn = () => {
+  const { navigate } = useI18next()
   const [values, setValues] = React.useState<IRegistrationStates>({
     company: "",
     email: "",
@@ -62,7 +63,6 @@ const SignIn = () => {
     open: false,
     modalText: "",
   })
-  const shopList = useShopname()
 
   const handleChange =
     (prop: keyof IRegistrationStates) =>
@@ -137,8 +137,7 @@ const SignIn = () => {
           modalText: `Mit dieser E-Mail ${values.email} stimmt etwas nicht, bitte versuche es später noch einmal`,
         })
       }
-
-      console.log(response)
+      navigate("/")
     } catch (error) {
       setValues({
         ...values,

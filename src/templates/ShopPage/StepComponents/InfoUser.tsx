@@ -21,7 +21,6 @@ const InfoUser = () => {
   useEffect(() => {
     if (firstName && lastName && validateEmail(email) && validatePhone(phone)) {
       dispatch(setGuestValidInfo(true))
-      console.log("everything is done")
     }
   }, [email, phone, firstName, lastName])
 
