@@ -6,7 +6,7 @@ import HomeDashBoard from "src/components/DashBoard/Home/Home"
 
 const DashBoardHome = (props: any) => {
   return (
-    <DashBoardLayout location={location}>
+    <DashBoardLayout>
       <HomeDashBoard />
     </DashBoardLayout>
   )
