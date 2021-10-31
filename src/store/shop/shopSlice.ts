@@ -12,22 +12,41 @@ export const checkUserAuth =
   (shopList: any[]): AppThunk =>
   (dispatch, getState) => {
     if (typeof window !== undefined) {
-      onAuthStateChanged(auth, user => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          const shopname = getShopName(user?.email, shopList)
-          dispatch(
-            getShopinfo({
-              shopemail: user?.email || "",
-              shopname,
-              isShopLogin: true,
-            })
-          )
-        } else {
-          dispatch(setShopLogout())
-        }
-      })
+      const user = auth.currentUser
+
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        // ...
+        const shopname = getShopName(user?.email, shopList)
+        dispatch(
+          getShopinfo({
+            shopemail: user?.email || "",
+            shopname,
+            isShopLogin: true,
+          })
+        )
+      } else {
+        // No user is signed in.
+        dispatch(setShopLogout())
+      }
+      // onAuthStateChanged(auth, user => {
+      //   console.log("user   =====>", user)
+      //   if (user) {
+      //     // User is signed in, see docs for a list of available properties
+      //     // https://firebase.google.com/docs/reference/js/firebase.User
+      //     const shopname = getShopName(user?.email, shopList)
+      //     dispatch(
+      //       getShopinfo({
+      //         shopemail: user?.email || "",
+      //         shopname,
+      //         isShopLogin: true,
+      //       })
+      //     )
+      //   } else {
+      //     dispatch(setShopLogout())
+      //   }
+      // })
     }
   }
 
@@ -47,6 +66,10 @@ const intinitialShopState: IshopState = {
   isShopLogin: false,
   status: "loading",
   allTermins: [],
+  settings: {
+    time: "12:30",
+    weekdays: [],
+  },
 }
 
 // export const getShopinfo = createAsyncThunk(

@@ -16,6 +16,10 @@ export interface IshopState {
   status: "login" | "loading" | "logout"
   isShopLogin: boolean
   allTermins: any[]
+  settings: {
+    time: string
+    weekdays: number[]
+  }
 }
 
 export interface Iaccount {

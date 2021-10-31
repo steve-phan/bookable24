@@ -58,7 +58,7 @@ export const allSlots = [...morningSlots, ...afternoonSlots]
 export const getDefaultSlot = () => {
   const hour = dayjs().hour()
   const index = allSlots.findIndex((slot, i) => {
-    return Number(slot.split(":")[0]) === hour + 2
+    return Number(slot.split(":")[0]) === hour + 3
   })
 
   return index === -1 ? 0 : index

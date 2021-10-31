@@ -5,6 +5,7 @@ import mongoose from "mongoose"
 // const { ShopInfo } = require('./schema');
 import { shopinfoSchema } from "../utils/config"
 import { connect } from "../utils/mongooseConnect"
+import { getValidToken } from "../utils/googleToken"
 
 const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/shopnames?retryWrites=true&w=majority`
 
@@ -42,21 +43,6 @@ export const handler: Handler = async event => {
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   })
   try {
-    const { token } = await oAuth2Client.getAccessToken()
-    const { transporter, mailOptions } = configTransporter({
-      shopname,
-      company,
-      email,
-      phoneNumber,
-      city,
-      cityCode,
-      street,
-      firstName,
-      lastName,
-      uid,
-      token,
-    })
-
     const shopNamesDb = await connect()
     const ShopInfo = shopNamesDb.model("Shopinfo", shopinfoSchema)
     const newShop = new ShopInfo({
@@ -71,6 +57,21 @@ export const handler: Handler = async event => {
       uid,
       shopname,
     })
+    const validToken = await getValidToken()
+    const { transporter, mailOptions } = configTransporter({
+      shopname,
+      company,
+      email,
+      phoneNumber,
+      city,
+      cityCode,
+      street,
+      firstName,
+      lastName,
+      uid,
+      token: validToken,
+    })
+
     await newShop.save(() => {})
     transporter.sendMail(mailOptions, () => {})
 
