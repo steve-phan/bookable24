@@ -50,6 +50,7 @@ const Layout = ({ children, location, isShop }: any) => {
   //     navigate("/login")
   //   }
   // }, [status])
+  console.log("rerender layout")
 
   return (
     <ThemeProvider theme={theme}>

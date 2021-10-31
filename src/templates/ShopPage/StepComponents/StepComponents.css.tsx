@@ -33,13 +33,13 @@ export const ButtonSlotSt = styled(Button)<TButton>(
 
     color: $slotactive ? "white" : theme.color.text,
     background: $slotactive
-      ? theme?.color?.primary
-      : $slotwarning
-      ? theme.color.warning
-      : "inherit",
+      ? alpha(theme?.color?.primary, 0.8)
+      : // : $slotwarning
+        // ? theme.color.warning
+        "inherit",
 
     "&:hover": {
-      background: $slotactive ? alpha(theme?.color?.primary, 0.8) : "inherit",
+      background: $slotactive ? alpha(theme?.color?.primary, 0.6) : "inherit",
     },
   })
 )

@@ -83,10 +83,6 @@ const SignIn = () => {
     event.preventDefault()
   }
 
-  // React.useEffect(() => {
-  //   isShopLogged && history.push('/dashboard');
-  // }, [isShopLogged]);
-
   const handleShopLogin = async () => {
     setValues({
       ...values,
@@ -138,7 +134,9 @@ const SignIn = () => {
           modalText: `Mit dieser E-Mail ${values.email} stimmt etwas nicht, bitte versuche es später noch einmal`,
         })
       }
-      navigate("/")
+      setTimeout(() => {
+        navigate("/")
+      }, 5000)
     } catch (error) {
       setValues({
         ...values,
@@ -227,7 +225,7 @@ const SignIn = () => {
         />
       </FormControlSt>
 
-      <>
+      {/* <>
         <TextFieldSt
           value={values.company}
           variant="filled"
@@ -297,7 +295,7 @@ const SignIn = () => {
             ) : null
           }
         />
-      </>
+      </> */}
       <span
         style={{
           color: "red",
@@ -313,20 +311,20 @@ const SignIn = () => {
         variant="contained"
         onClick={handleShopLogin}
         type="submit"
-        disabled={
-          values.email.length === 0 ||
-          !validateEmail(values.email) ||
-          values.password.length < 5 ||
-          values.password !== values.confirmPassword ||
-          values.company.length === 0 ||
-          values.email.length === 0 ||
-          values.phoneNumber.length === 0 ||
-          values.city.length === 0 ||
-          values.cityCode.length === 0 ||
-          values.street.length === 0 ||
-          values.firstName.length === 0 ||
-          values.lastName.length === 0
-        }
+        // disabled={
+        //   values.email.length === 0 ||
+        //   !validateEmail(values.email) ||
+        //   values.password.length < 5 ||
+        //   values.password !== values.confirmPassword ||
+        //   values.company.length === 0 ||
+        //   values.email.length === 0 ||
+        //   values.phoneNumber.length === 0 ||
+        //   values.city.length === 0 ||
+        //   values.cityCode.length === 0 ||
+        //   values.street.length === 0 ||
+        //   values.firstName.length === 0 ||
+        //   values.lastName.length === 0
+        // }
       >
         Anfrage-Demo
       </ButtonSt>

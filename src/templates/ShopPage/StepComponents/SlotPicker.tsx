@@ -44,6 +44,10 @@ const SlotPicker = () => {
               onClick={() => {
                 dispatch(setSelectedSlot(index))
               }}
+              disabled={
+                dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
+                dayjs().day() === dayjs(selectedDate).day()
+              }
             >
               {slot}
             </ButtonSlotSt>
@@ -53,9 +57,7 @@ const SlotPicker = () => {
       <TitleBannerSt>
         <h5>{t("booking.slot.dinner")}</h5>
         {selectedDate && isWeekend(selectedDate) ? (
-          <span>
-            {t("booking.slot.warning")} <strong></strong>
-          </span>
+          <span>{t("booking.slot.warning")}</span>
         ) : null}
       </TitleBannerSt>
       <ButtonGroupSt>
@@ -68,16 +70,15 @@ const SlotPicker = () => {
                 dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
                 dayjs().day() === dayjs(selectedDate).day()
               }
-              $slotwarning={
-                [13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
-                isWeekend(selectedDate)
-              }
+              // $slotwarning={
+              //   [13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
+              //   isWeekend(selectedDate)
+              // }
               key={newIndex + slot}
               onClick={() => {
                 dispatch(setSelectedSlot(newIndex))
               }}
             >
-              {" "}
               {/* {[13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
               terminsBooked[String(newIndex)] >= 2
                 ? "full"
