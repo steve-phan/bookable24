@@ -5,7 +5,7 @@ import FilledInput from "@mui/material/FilledInput"
 import IconButton from "@mui/material/IconButton"
 import InputAdornment from "@mui/material/InputAdornment"
 import InputLabel from "@mui/material/InputLabel"
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
 import React from "react"
 import axios from "axios"
@@ -98,6 +98,7 @@ const SignIn = () => {
         values.email,
         values.password
       )
+      await signOut(auth)
       const {
         company,
         email,
