@@ -1,13 +1,11 @@
-// import { Link } from "gatsby"
 import AppBar from "@mui/material/AppBar"
 import Hidden from "@mui/material/Hidden"
 import IconButton from "@mui/material/IconButton"
 import Toolbar from "@mui/material/Toolbar"
-// @material-ui/icons
 import Menu from "@mui/icons-material/Menu"
-import { Link, useTranslation } from "gatsby-plugin-react-i18next"
-
+import { useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
+
 import { routes } from "../routes"
 import Logo from "../../Logo"
 import { CTAButtons, WrapLoginSt, DashBoardButtonSt } from "./Header.css"
@@ -15,7 +13,6 @@ import LangSelect from "../LangSelect"
 import MobileMenu from "../NavLinks/MobileMenu"
 import { NavLinks } from "../NavLinks/Navlinks"
 
-// Styled-component Overidde
 interface IHeaderProps {
   isShopLogin: boolean | undefined
 }

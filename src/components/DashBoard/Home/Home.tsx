@@ -10,9 +10,7 @@ import ScheduleIcon from "@mui/icons-material/Schedule"
 import GroupIcon from "@mui/icons-material/Group"
 import InfoIcon from "@mui/icons-material/Info"
 
-import { timeAgo, ItimeAgoMess, getRandomColor } from "src/utils"
-import moment from "moment"
-
+import { timeAgo, ItimeAgoMess } from "src/utils"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
 
@@ -30,8 +28,7 @@ import {
 
 const HomeDashBoard = () => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
-  const { shopInfo, allTermins } = useAppSelector(state => state.shop)
+  const { allTermins } = useAppSelector(state => state.shop)
 
   const newestTermins = allTermins.slice(allTermins.length - 10)
   console.log("allTermins", allTermins)

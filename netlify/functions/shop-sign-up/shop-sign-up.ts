@@ -1,14 +1,16 @@
-import { Handler } from "@netlify/functions"
 require("dotenv").config()
+import { Handler } from "@netlify/functions"
+import { google } from "googleapis"
 import mongoose from "mongoose"
 // const { ShopInfo } = require('./schema');
-import { ShopInfo } from "../utils/config"
-import { google } from "googleapis"
+import { shopinfoSchema } from "../utils/config"
+import { connect } from "../utils/mongooseConnect"
+
 const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/shopnames?retryWrites=true&w=majority`
 
 import configTransporter from "./transporter"
 
-export const handler: Handler = async (event, context) => {
+export const handler: Handler = async event => {
   const data = JSON.parse(event.body)
   // console.log(data);
   const {
@@ -55,8 +57,8 @@ export const handler: Handler = async (event, context) => {
       token,
     })
 
-    await mongoose.connect(url)
-
+    const shopNamesDb = await connect()
+    const ShopInfo = shopNamesDb.model("Shopinfo", shopinfoSchema)
     const newShop = new ShopInfo({
       company,
       email,
@@ -69,32 +71,14 @@ export const handler: Handler = async (event, context) => {
       uid,
       shopname,
     })
-    await newShop.save((err, data) => {
-      if (!err) {
-      } else {
-      }
-      mongoose.connection.close()
-    })
-    let isSendMail: boolean = false
-    await transporter.sendMail(mailOptions, (error, info) => {
-      // oAuth2Client.off();
-      if (error) {
-        console.log("error ===>", error)
-      } else {
-        isSendMail = true
-        mongoose.connection.close()
-        console.log("success ===>")
-      }
-    })
+    await newShop.save(() => {})
+    transporter.sendMail(mailOptions, () => {})
 
     return {
       statusCode: 200,
       body: "EMAIL_SENT",
     }
   } catch (error) {
-    mongoose.connection.close()
-
-    console.log("ERROR ===========>", error)
     return { statusCode: 500, body: error.toString() }
   }
 }

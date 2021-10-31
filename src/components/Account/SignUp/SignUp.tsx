@@ -10,8 +10,10 @@ import { Link } from "gatsby-plugin-react-i18next"
 import React from "react"
 import axios from "axios"
 
+import { validateEmail, validatePhone } from "src/utils"
+import { auth } from "src/firebase"
+
 import Loading from "../../Loading/Loading"
-import { auth } from "../../../firebase"
 import {
   ButtonSt,
   FormControlSt,
@@ -21,7 +23,6 @@ import {
 } from "../Account.css"
 import AccountModal from "../AccountModal/AccountModal"
 import { useShopname } from "../accountHook"
-import { validateEmail, validatePhone } from "../../../utils"
 
 interface IshopInfo {
   company: string

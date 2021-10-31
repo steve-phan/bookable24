@@ -1,4 +1,4 @@
-import { styled, alpha } from "@mui/material/styles"
+import { styled } from "@mui/material/styles"
 import { Typography } from "@mui/material"
 
 export const WrapChartSt = styled("div")(({ theme }) => ({

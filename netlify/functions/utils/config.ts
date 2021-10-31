@@ -27,7 +27,7 @@ const appointmentSchema = new Schema({
   },
 })
 
-const shopinfoSchema = new Schema({
+export const shopinfoSchema = new Schema({
   company: String,
   email: String,
   password: String,

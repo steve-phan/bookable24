@@ -1,15 +1,11 @@
 import dayjs from "dayjs"
-import { Link, useTranslation } from "gatsby-plugin-react-i18next"
+import { useTranslation } from "gatsby-plugin-react-i18next"
+import React, { useEffect, useState } from "react"
 
-import React, { useState } from "react"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setSelectedSlot } from "src/store/shop/bookingSlice"
-import {
-  afternoonSlots,
-  morningSlots,
-  allSlots,
-  getDefaultSlot,
-} from "../utils"
+
+import { afternoonSlots, morningSlots, getDefaultSlot } from "../utils"
 import {
   ButtonGroupSt,
   ButtonSlotSt,
@@ -29,7 +25,11 @@ const SlotPicker = () => {
     state => state.booking
   )
 
-  console.log("default slot", getDefaultSlot())
+  useEffect(() => {
+    // Need dispatch selectedSlot, otherwise it'll be udnefine as a intialState
+    dispatch(setSelectedSlot(getDefaultSlot()))
+  }, [])
+
   return (
     <WrapColSt>
       <TitleBannerSt>

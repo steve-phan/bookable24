@@ -9,14 +9,11 @@ import MenuItem from "@mui/material/MenuItem"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import TextField from "@mui/material/TextField"
 
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import {
-  setSelectedDate,
-  setNumberOfGuest,
-} from "../../../store/shop/bookingSlice"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { setSelectedDate, setNumberOfGuest } from "src/store/shop/bookingSlice"
+
 import { WrapRowSt } from "../ShopPage.css"
 import { checkDisableDate } from "../utils"
-import Loading from "../../../components/Loading/Loading"
 
 const SelectDatePicker = () => {
   const dispatch = useAppDispatch()

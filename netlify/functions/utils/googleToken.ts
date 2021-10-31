@@ -3,9 +3,6 @@ import { google } from "googleapis"
 
 import { connect } from "./mongooseConnect"
 import { tokenSchema } from "./models/tokenModel"
-import { getUrl } from "./utils"
-
-// const url = `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/token?retryWrites=true&w=majority`
 
 interface IToken {
   _id?: unknown

@@ -24,7 +24,7 @@ const configTransporter = ({
     service: "gmail",
     auth: {
       type: "OAuth2",
-      user: "lebenistcode@gmail.com",
+      user,
       accessToken: token,
     },
   })
@@ -34,14 +34,11 @@ const configTransporter = ({
       viewEngine: {
         extname: ".hbs",
         partialsDir: path.resolve("./netlify/functions/utils/booking/views"),
-        // path.join(__dirname, "utils", "views"),
         layoutsDir: path.resolve(
           "./netlify/functions/utils/booking/views/layouts"
         ),
-        // path.join(__dirname, "utils", "views", "layouts"),
       },
       viewPath: path.resolve("./netlify/functions/utils/booking/views"),
-      // path.join(__dirname, "utils", "views"),
       extName: ".hbs",
     })
   )

@@ -1,17 +1,27 @@
 import Typography from "@mui/material/Typography"
-import moment from "moment"
+import dayjs from "dayjs"
 import React from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import axios from "axios"
 
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { IshopInfo } from "src/store/shop/shop.types"
+
 import { WrapColSt } from "../ShopPage.css"
 import { afternoonSlots, morningSlots } from "../utils"
 import { CardSt } from "../StepComponents/StepComponents.css"
 import { CanCelButtonSt } from "../ShopPage.css"
 
-const CancelBooking = ({ booking }: { booking: any }) => {
-  const dispatch = useAppDispatch()
+const CancelBooking = ({
+  booking,
+  shopName,
+  shopInfo,
+  location,
+}: {
+  booking: any
+  shopName: string
+  shopInfo: IshopInfo
+  location: any
+}) => {
   const { navigate } = useI18next()
   const {
     selectedDate,
@@ -24,7 +34,25 @@ const CancelBooking = ({ booking }: { booking: any }) => {
     email,
     phone,
   } = booking
-  //   useAppSelector(state => state.booking)
+
+  const handleCancelBooking = () => {
+    const bookingId = location.search.replace("?", "").split("=")[1]
+    axios
+      .get("/.netlify/functions/cancel-booking", {
+        headers: {
+          shopName,
+          bookingId,
+          shopInfo: JSON.stringify(shopInfo),
+        },
+      })
+      .then(res => {
+        alert("Cancel success. Thanks")
+        navigate("/")
+      })
+      .catch(err => {
+        console.log("err", err)
+      })
+  }
 
   return (
     <WrapColSt>
@@ -36,7 +64,7 @@ const CancelBooking = ({ booking }: { booking: any }) => {
           Time:{" "}
           {[...morningSlots, ...afternoonSlots][selectedSlot] +
             " " +
-            moment(selectedDate).format("dddd, DD. MMMM")}
+            dayjs(selectedDate).format("dddd, DD. MMMM")}
         </Typography>
 
         <Typography>Persons: {person}</Typography>
@@ -56,16 +84,7 @@ const CancelBooking = ({ booking }: { booking: any }) => {
         style={{
           color: "white",
         }}
-        onClick={() => {
-          axios
-            .get("/.netlify/functions/cancel-booking")
-            .then(res => {
-              console.log(res.data)
-            })
-            .catch(err => console.log("err", err))
-          alert("Cancel success. Thanks")
-          navigate("/")
-        }}
+        onClick={handleCancelBooking}
       >
         Cancel Booking?
       </CanCelButtonSt>

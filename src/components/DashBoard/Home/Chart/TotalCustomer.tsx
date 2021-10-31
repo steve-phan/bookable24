@@ -1,6 +1,5 @@
 import React from "react"
-import * as Chartjs from "chart.js"
-import { Doughnut, Pie } from "react-chartjs-2"
+import { Pie } from "react-chartjs-2"
 
 import { useTheme } from "@mui/material/styles"
 import { useTranslation } from "gatsby-plugin-react-i18next"
@@ -23,16 +22,6 @@ const showData = (num: number, color: string) => ({
 const TotalCustomer = ({ allTermins }: { allTermins: any[] }) => {
   const theme = useTheme()
   const { t } = useTranslation()
-
-  //   const chartContainer = useRef(null);
-  //   const [chartInstance, setChartInstance] = useState(null);
-
-  //   useEffect(() => {
-  //     if (chartContainer && chartContainer.current) {
-  //       const newChartInstance = new Chartjs(chartContainer.current, chartConfig);
-  //       setChartInstance(newChartInstance);
-  //     }
-  //   }, [chartContainer]);
   const totalCustomers = allTermins.reduce(
     (acc, cur) => acc + Number(cur.person),
     0

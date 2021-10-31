@@ -41,7 +41,6 @@ const Layout = ({ children, location, isShop }: any) => {
       dispatch(checkUserAuth(shopList))
     }
   }, [])
-  console.log("isShopLogin", location)
   // useEffect(() => {
   //   if (!isShopLogin && status === "logout") {
   //     navigate("/login")

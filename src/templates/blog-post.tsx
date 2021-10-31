@@ -1,12 +1,14 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
-import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image"
+import { graphql } from "gatsby"
+import { getImage, IGatsbyImageData } from "gatsby-plugin-image"
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer"
+import { Link } from "gatsby-plugin-react-i18next"
 
 import Layout from "../components/Layout/Layout"
 import { CtaPagesSt, GatsbyImageSt } from "./blog-post.css"
 import SEO from "../components/seo"
-const BlogPost: React.FC = ({ data, pageContext, navigate }: any) => {
+
+const BlogPost: React.FC = ({ data, pageContext }: any) => {
   const image = getImage(data.contentfulMyBlog.thumbPicture) as IGatsbyImageData
   return (
     <Layout>

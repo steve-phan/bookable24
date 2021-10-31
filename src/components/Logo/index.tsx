@@ -1,6 +1,5 @@
-import React, { useMemo } from "react"
-import { StaticImage } from "gatsby-plugin-image"
-import { withPrefix } from "gatsby"
+import React from "react"
+
 import { WrapLogoSt } from "./logo.css"
 import bookable24 from "./bookable24.png"
 

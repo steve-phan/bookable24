@@ -2,7 +2,7 @@ import { Typography } from "@mui/material"
 import { sendPasswordResetEmail } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
 import React from "react"
-import { navigate } from "gatsby"
+
 import { auth } from "../../../firebase"
 import { ButtonSt, TextFieldSt, TypographySt, WrapColSt } from "../Account.css"
 import { useShopname } from "../accountHook"
@@ -29,9 +29,6 @@ const SignIn = () => {
       setValues({ ...values, [prop]: event.target.value })
     }
 
-  // const handleClickShowPassword = () => {
-  //   setInputState({ ...inputState, showPassword: !inputState.showPassword })
-  // }
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -45,7 +42,6 @@ const SignIn = () => {
     try {
       await sendPasswordResetEmail(auth, values.email)
       //   navigate("/")
-      console.log("email sent")
       setValues({
         ...values,
         open: true,

@@ -1,7 +1,5 @@
 import React from "react"
 import { Bar } from "react-chartjs-2"
-
-import { useTheme } from "@mui/material/styles"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
 import { WrapChartSt, BarSt, NumberSt, TypoTitleSt } from "./Chart.css"
