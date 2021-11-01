@@ -1,12 +1,11 @@
-import { onAuthStateChanged } from "@firebase/auth"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
 import { auth } from "src/firebase"
-
 import { getShopName } from "src/utils"
+
 import { AppThunk } from "../store"
-import { IshopState } from "./shop.types"
+import { IshopState, IshopQuery } from "./shop.types"
 
 export const checkUserAuth =
   (shopList: any[]): AppThunk =>
@@ -15,9 +14,6 @@ export const checkUserAuth =
       const user = auth.currentUser
 
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // ...
         const shopname = getShopName(user?.email, shopList)
         dispatch(
           getShopinfo({
@@ -30,23 +26,6 @@ export const checkUserAuth =
         // No user is signed in.
         dispatch(setShopLogout())
       }
-      // onAuthStateChanged(auth, user => {
-      //   console.log("user   =====>", user)
-      //   if (user) {
-      //     // User is signed in, see docs for a list of available properties
-      //     // https://firebase.google.com/docs/reference/js/firebase.User
-      //     const shopname = getShopName(user?.email, shopList)
-      //     dispatch(
-      //       getShopinfo({
-      //         shopemail: user?.email || "",
-      //         shopname,
-      //         isShopLogin: true,
-      //       })
-      //     )
-      //   } else {
-      //     dispatch(setShopLogout())
-      //   }
-      // })
     }
   }
 
@@ -84,12 +63,6 @@ const intinitialShopState: IshopState = {
 //     return response.data.shopInfo
 //   }
 // )
-
-interface IshopQuery {
-  shopemail: string
-  shopname: string
-  isShopLogin: boolean
-}
 
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",

@@ -1,18 +1,18 @@
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import { Typography } from "@mui/material"
 import FilledInput from "@mui/material/FilledInput"
 import IconButton from "@mui/material/IconButton"
 import InputAdornment from "@mui/material/InputAdornment"
 import InputLabel from "@mui/material/InputLabel"
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
-import React from "react"
+import React, { useEffect } from "react"
 import axios from "axios"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { validateEmail, validatePhone } from "src/utils"
 import { auth } from "src/firebase"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
 
 import Loading from "../../Loading/Loading"
 import {
@@ -63,6 +63,7 @@ const SignIn = () => {
     open: false,
     modalText: "",
   })
+  const { isShopLogin, status } = useAppSelector(state => state.shop)
 
   const handleChange =
     (prop: keyof IRegistrationStates) =>
@@ -82,7 +83,11 @@ const SignIn = () => {
   ) => {
     event.preventDefault()
   }
-
+  useEffect(() => {
+    if (isShopLogin) {
+      navigate("/dashboard")
+    }
+  }, [isShopLogin])
   const handleShopLogin = async () => {
     setValues({
       ...values,

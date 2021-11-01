@@ -60,8 +60,8 @@ const SettingsDashBoard = () => {
 
   return (
     <div>
+      <h3>Setting Disable</h3>
       <Grid container>
-        <h3>Setting Disable</h3>
         <Grid item xs={12} md={4}>
           <WrapHourSt>
             <p>Select the time start disable</p>
@@ -92,8 +92,8 @@ const SettingsDashBoard = () => {
             })}
           </WrapDaySt>
         </Grid>
-        <button>Update Settings</button>
       </Grid>
+      <button>Update Settings</button>
     </div>
   )
 }
