@@ -47,8 +47,6 @@ const SignIn = ({ location }: { location: any }) => {
   useEffect(() => {
     if (isShopLogin) {
       navigate("/dashboard")
-    } else {
-      dispatch(checkUserAuth(shopList))
     }
   }, [isShopLogin])
 

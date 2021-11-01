@@ -11,6 +11,7 @@ import { checkUserAuth } from "src/store/shop/shopSlice"
 import SideBar from "src/components/Layout/DasBoadLayout/SideBar"
 import Header from "src/components/Layout/DasBoadLayout/Header/Header"
 import { theme } from "src/theme"
+import Loading from "src/components/Loading/Loading"
 
 import { inputGlobalStyles } from "../Layout"
 import {
@@ -44,15 +45,10 @@ const DashBoardLayout = ({
 
   useEffect(() => {
     if (!isShopLogin) {
-      dispatch(checkUserAuth(shopList))
+      navigate("/login")
+      // dispatch(checkUserAuth(shopList))
     }
   }, [])
-
-  useEffect(() => {
-    if (!isShopLogin && status === "logout") {
-      navigate("/login")
-    }
-  }, [status])
 
   return (
     <ThemeProvider theme={theme}>
@@ -70,7 +66,9 @@ const DashBoardLayout = ({
               mobileOpen={mobileOpen}
               handleDrawerToggle={handleDrawerToggle}
             />
-            <WrapContentSt>{children}</WrapContentSt>
+            <WrapContentSt>
+              {status === "loading" ? <Loading /> : children}
+            </WrapContentSt>
           </DashBoardContentSt>
         </WrapDashBoardSt>
       </ThemeProviderSt>

@@ -1,15 +1,20 @@
-import Grid from "@mui/material/Grid"
 import Checkbox from "@mui/material/Checkbox"
-import FormControl from "@mui/material/FormControl"
-import InputLabel from "@mui/material/InputLabel"
-import MenuItem from "@mui/material/MenuItem"
-import Select, { SelectChangeEvent } from "@mui/material/Select"
+import Grid from "@mui/material/Grid"
 import React, { useState } from "react"
-import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { setNumberOfGuest } from "src/store/shop/bookingSlice"
-import { allSlots } from "src/templates/ShopPage/utils"
+import axios from "axios"
 
-import { WrapDaySt, WrapHourSt, DaySt } from "./Settings.css"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { setSetingsDisableDays } from "src/store/shop/shopSlice"
+
+import HourSelect from "./HourSelect"
+import {
+  DaySt,
+  SubmitButtonSt,
+  TitleSt,
+  WrapDaySt,
+  WrapHourSt,
+} from "./Settings.css"
+import { updateList } from "./utils"
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } }
 
@@ -22,47 +27,34 @@ const week = [
   "Friday",
   "Saturday",
 ]
-const updateList = (arr: number[], i: number) => {
-  const newArr = arr.filter(num => num !== i)
-  return newArr
-}
 
 const SettingsDashBoard = () => {
   const [check, setCheck] = useState(false)
   const [list, setList] = useState<number[]>([])
   const dispatch = useAppDispatch()
-  const { weekdays, time } = useAppSelector(state => state?.shop?.settings)
-
-  const HourSelect = () => {
-    const menuItems = () =>
-      allSlots.map((h, i) => (
-        <MenuItem key={Math.random() + i + Math.random()} value={h}>
-          {h}
-        </MenuItem>
-      ))
-    return (
-      <FormControl variant="standard" sx={{ minWidth: 120 }} fullWidth>
-        <InputLabel id="select-guest-number-label">Hours</InputLabel>
-        <Select
-          style={{ paddingLeft: 16 }}
-          labelId="select-guest-number-label"
-          value={time}
-          label="Personen"
-          onChange={(event: SelectChangeEvent) => {
-            // dispatch(setNumberOfGuest(Number(event.target.value as string)))
-          }}
-        >
-          {menuItems()}
-        </Select>
-      </FormControl>
+  const { shopInfo } = useAppSelector(state => state?.shop)
+  const { shopName } = shopInfo
+  const { weekdays = [], time = "12:30" } = shopInfo?.settings || {}
+  const handleSubmitDisable = async () => {
+    const res = await axios.post(
+      "/.netlify/functions/admin-setting-booking",
+      JSON.stringify({
+        shopName,
+        weekdays,
+        time,
+      })
     )
+    if (res.data === "EMAIL_SENT") {
+      alert("Setting Success")
+    }
   }
-
   return (
     <div>
+      <TitleSt>Setting Disable</TitleSt>
       <Grid container>
         <Grid item xs={12} md={4}>
           <WrapHourSt>
+            <p>Select the time to disable booking</p>
             <HourSelect />
           </WrapHourSt>
         </Grid>
@@ -71,26 +63,33 @@ const SettingsDashBoard = () => {
             {week.map((day, index) => {
               return (
                 <DaySt key={day + index}>
-                  <label style={{ cursor: "pointer" }} htmlFor={day + index}>
-                    {day}
-                  </label>
                   <Checkbox
                     id={day + index}
                     {...label}
                     value={index}
                     onChange={() => {
-                      list.includes(index)
-                        ? setList(updateList(list, index))
-                        : setList([...list, index])
+                      if (weekdays?.includes(index)) {
+                        dispatch(
+                          setSetingsDisableDays(updateList(weekdays, index))
+                        )
+                      } else {
+                        dispatch(setSetingsDisableDays([...weekdays, index]))
+                      }
                     }}
-                    checked={list.includes(index)}
+                    checked={weekdays?.includes(index)}
                   />
+                  <label style={{ cursor: "pointer" }} htmlFor={day + index}>
+                    {day}
+                  </label>
                 </DaySt>
               )
             })}
           </WrapDaySt>
         </Grid>
       </Grid>
+      <SubmitButtonSt onClick={handleSubmitDisable}>
+        Update Settings
+      </SubmitButtonSt>
     </div>
   )
 }

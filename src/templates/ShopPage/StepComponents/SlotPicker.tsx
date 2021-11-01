@@ -5,7 +5,12 @@ import React, { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setSelectedSlot } from "src/store/shop/bookingSlice"
 
-import { afternoonSlots, morningSlots, getDefaultSlot } from "../utils"
+import {
+  afternoonSlots,
+  morningSlots,
+  getDefaultSlot,
+  allSlots,
+} from "../utils"
 import {
   ButtonGroupSt,
   ButtonSlotSt,
@@ -24,7 +29,13 @@ const SlotPicker = () => {
   const { selectedSlot = getDefaultSlot(), selectedDate } = useAppSelector(
     state => state.booking
   )
+  const { shopInfo } = useAppSelector(state => state.shop)
 
+  const { weekdays, time } = shopInfo?.settings || {}
+
+  const dayDisable =
+    weekdays?.includes(dayjs(selectedDate).day()) &&
+    dayjs().date() === dayjs(selectedDate).date()
   useEffect(() => {
     // Need dispatch selectedSlot, otherwise it'll be udnefine as a intialState
     dispatch(setSelectedSlot(getDefaultSlot()))
@@ -46,7 +57,7 @@ const SlotPicker = () => {
               }}
               disabled={
                 dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
-                dayjs().day() === dayjs(selectedDate).day()
+                dayjs().date() === dayjs(selectedDate).date()
               }
             >
               {slot}
@@ -67,13 +78,10 @@ const SlotPicker = () => {
             <ButtonSlotSt
               $slotactive={selectedSlot === newIndex ? true : undefined}
               disabled={
-                dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
-                dayjs().day() === dayjs(selectedDate).day()
+                (dayDisable && dayjs().hour() >= Number(time?.split(":")[0])) ||
+                (dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
+                  dayjs().date() === dayjs(selectedDate).date())
               }
-              // $slotwarning={
-              //   [13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
-              //   isWeekend(selectedDate)
-              // }
               key={newIndex + slot}
               onClick={() => {
                 dispatch(setSelectedSlot(newIndex))

@@ -26,13 +26,13 @@ export const handler: Handler = async event => {
     lastName,
     uid,
   } = data.userinfo
-  let shopname = company
+  let shopName = company
     .toLowerCase()
     .split(" ")
     .filter(str => !!str)
     .join("-")
 
-  shopname = shopname + cityCode + Math.floor(Math.random() * 100)
+  shopName = shopName + cityCode + Math.floor(Math.random() * 100)
 
   const oAuth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -55,11 +55,11 @@ export const handler: Handler = async event => {
       firstName,
       lastName,
       uid,
-      shopname,
+      shopName,
     })
     const validToken = await getValidToken()
     const { transporter, mailOptions } = configTransporter({
-      shopname,
+      shopName,
       company,
       email,
       phoneNumber,

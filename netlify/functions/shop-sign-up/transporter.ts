@@ -7,7 +7,7 @@ const user = process.env.MAIL_USER
 const baseUrl = process.env.BASE_URL || "https://bookable24.de"
 
 const configTransporter = ({
-  shopname,
+  shopName,
   company,
   email,
   phoneNumber,
@@ -48,7 +48,7 @@ const configTransporter = ({
     subject: "Your Shop Booking System Request",
     template: "account",
     context: {
-      shopname,
+      shopName,
       company,
       email,
       phoneNumber,
@@ -58,7 +58,7 @@ const configTransporter = ({
       firstName,
       lastName,
       uid,
-      link_shop: `${baseUrl}/${shopname}`,
+      link_shop: `${baseUrl}/${shopName}`,
     },
   }
   return {

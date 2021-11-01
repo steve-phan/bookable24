@@ -1,12 +1,11 @@
-import { onAuthStateChanged } from "@firebase/auth"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
 import { auth } from "src/firebase"
-
 import { getShopName } from "src/utils"
+
 import { AppThunk } from "../store"
-import { IshopState } from "./shop.types"
+import { IshopState, IshopQuery } from "./shop.types"
 
 export const checkUserAuth =
   (shopList: any[]): AppThunk =>
@@ -15,9 +14,6 @@ export const checkUserAuth =
       const user = auth.currentUser
 
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // ...
         const shopname = getShopName(user?.email, shopList)
         dispatch(
           getShopinfo({
@@ -30,23 +26,6 @@ export const checkUserAuth =
         // No user is signed in.
         dispatch(setShopLogout())
       }
-      // onAuthStateChanged(auth, user => {
-      //   console.log("user   =====>", user)
-      //   if (user) {
-      //     // User is signed in, see docs for a list of available properties
-      //     // https://firebase.google.com/docs/reference/js/firebase.User
-      //     const shopname = getShopName(user?.email, shopList)
-      //     dispatch(
-      //       getShopinfo({
-      //         shopemail: user?.email || "",
-      //         shopname,
-      //         isShopLogin: true,
-      //       })
-      //     )
-      //   } else {
-      //     dispatch(setShopLogout())
-      //   }
-      // })
     }
   }
 
@@ -62,6 +41,10 @@ const intinitialShopState: IshopState = {
     shopName: "",
     street: "",
     uid: "",
+    settings: {
+      time: "12:30",
+      weekdays: [],
+    },
   },
   isShopLogin: false,
   status: "loading",
@@ -84,12 +67,6 @@ const intinitialShopState: IshopState = {
 //     return response.data.shopInfo
 //   }
 // )
-
-interface IshopQuery {
-  shopemail: string
-  shopname: string
-  isShopLogin: boolean
-}
 
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
@@ -115,13 +92,19 @@ export const shopSlice = createSlice({
     setShopInfo: (state, action) => {
       state.status = "login"
       state.isShopLogin = true
-      state.shopInfo = action.payload
+      state.shopInfo = { ...state.shopInfo, ...action.payload }
     },
 
     setShopLogout: state => {
       state.status = "logout"
       state.isShopLogin = false
       state.shopInfo = intinitialShopState.shopInfo
+    },
+    setSettingDisableTime: (state, action) => {
+      state.shopInfo.settings.time = action.payload
+    },
+    setSetingsDisableDays: (state, action) => {
+      state.shopInfo.settings.weekdays = action.payload
     },
   },
   extraReducers: builder => {
@@ -134,7 +117,7 @@ export const shopSlice = createSlice({
         state.isShopLogin = action.payload.isShopLogin
           ? true
           : state.isShopLogin
-        state.shopInfo = action.payload.shopInfo
+        state.shopInfo = { ...state.shopInfo, ...action.payload }
         state.allTermins = action.payload.allTermins
       })
       .addCase(getShopinfo.rejected, state => {
@@ -143,6 +126,11 @@ export const shopSlice = createSlice({
   },
 })
 
-export const { setShopInfo, setShopLogout } = shopSlice.actions
+export const {
+  setShopInfo,
+  setShopLogout,
+  setSetingsDisableDays,
+  setSettingDisableTime,
+} = shopSlice.actions
 
 export default shopSlice.reducer

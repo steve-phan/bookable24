@@ -35,22 +35,23 @@ const Layout = ({ children, location, isShop }: any) => {
   //     dispatch(setShopLogout())
   //   }
   // }, [])
-  useEffect(() => {
-    // const paths = location?.pathname?.split("/").pop() !== 'login'
-    if (
-      !isShopLogin &&
-      (location?.pathname?.split("/").pop() !== "request-account" ||
-        location?.pathname?.split("/").pop() !== "login")
-    ) {
-      dispatch(checkUserAuth(shopList))
-    }
-  }, [])
+  // useEffect(() => {
+  //   // const paths = location?.pathname?.split("/").pop() !== 'login'
+  //   if (
+  //     !isShopLogin &&
+  //     (location?.pathname?.split("/").pop() !== "request-account" ||
+  //       location?.pathname?.split("/").pop() !== "login")
+  //   ) {
+  //     console.log("just check")
+  //     dispatch(checkUserAuth(shopList))
+  //   }
+  // }, [])
   // useEffect(() => {
   //   if (!isShopLogin && status === "logout") {
   //     navigate("/login")
   //   }
   // }, [status])
-  console.log("rerender layout")
+  // console.log("rerender layout")
 
   return (
     <ThemeProvider theme={theme}>
