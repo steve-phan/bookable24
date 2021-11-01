@@ -49,7 +49,7 @@ const DashBoardLayout = ({
       // dispatch(checkUserAuth(shopList))
     }
   }, [])
-  console.log("status", status)
+
   return (
     <ThemeProvider theme={theme}>
       <ThemeProviderSt theme={theme}>

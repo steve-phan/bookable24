@@ -96,6 +96,12 @@ export const shopSlice = createSlice({
       state.isShopLogin = false
       state.shopInfo = intinitialShopState.shopInfo
     },
+    setSettingDisableTime: (state, action) => {
+      state.settings.time = action.payload
+    },
+    setSetingsDisableDays: (state, action) => {
+      state.settings.weekdays = action.payload
+    },
   },
   extraReducers: builder => {
     builder
@@ -116,6 +122,11 @@ export const shopSlice = createSlice({
   },
 })
 
-export const { setShopInfo, setShopLogout } = shopSlice.actions
+export const {
+  setShopInfo,
+  setShopLogout,
+  setSetingsDisableDays,
+  setSettingDisableTime,
+} = shopSlice.actions
 
 export default shopSlice.reducer

@@ -3,16 +3,15 @@ import { makeStyles } from "@mui/styles"
 import { graphql } from "gatsby"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import dayjs from "dayjs"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { getShopinfo } from "src/store/shop/shopSlice"
-
 import Loading from "src/components/Loading/Loading"
-
 import Layout from "src/components/Layout/Layout"
-import ColorlibStepIcon from "./ColorlibStepIcon"
 import SEO from "src/components/seo"
 
+import ColorlibStepIcon from "./ColorlibStepIcon"
 import {
   WrapTerminSt,
   WrapTerminContentSt,
@@ -21,9 +20,8 @@ import {
   WrapRowSt,
   ButtonSt,
 } from "./ShopPage.css"
-import { getStepContent } from "./utils"
+import { getStepContent, allSlots, getDefaultSlot } from "./utils"
 import ShopLogo from "./ShopLogo/ShopLogo"
-
 import CancelBooking from "./CancelBooking/CancelBooking"
 
 interface IShopPageProps {
@@ -57,7 +55,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   const {
     booking: {
       selectedDate,
-      selectedSlot,
+      selectedSlot = getDefaultSlot(),
       guestInfo,
       numberOfGuest,
       isValidInfo,
@@ -65,6 +63,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
     shop: { shopInfo, status },
   } = useAppSelector(state => state)
   const { shopName, shopEmail } = pageContext
+
   const steps = getSteps()
 
   useEffect(() => {
@@ -130,6 +129,14 @@ const ShopPage: React.FC<IShopPageProps> = ({
         setIsLoading(false)
       })
   }
+
+  const isNextButtonDisable = () => {
+    return (
+      dayjs().hour() >= Number(allSlots[selectedSlot].split(":")[0]) &&
+      dayjs().date() === dayjs(selectedDate).date()
+    )
+  }
+  console.log("month", dayjs().date(), dayjs(selectedDate).date())
   return (
     <Layout isShop location={location}>
       <SEO title="Booking Online System" />
@@ -186,7 +193,10 @@ const ShopPage: React.FC<IShopPageProps> = ({
                       Back
                     </ButtonSt>
                     <ButtonSt
-                      disabled={activeStep === 2 && !isValidInfo}
+                      disabled={
+                        (activeStep === 2 && !isValidInfo) ||
+                        isNextButtonDisable()
+                      }
                       variant="contained"
                       color="primary"
                       onClick={() => {
