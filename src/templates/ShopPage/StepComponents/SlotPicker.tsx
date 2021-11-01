@@ -31,10 +31,10 @@ const SlotPicker = () => {
   )
   const { shopInfo } = useAppSelector(state => state.shop)
 
-  const { weekdays, time } = shopInfo?.settings
+  const { weekdays, time } = shopInfo?.settings || {}
 
   const dayDisable =
-    weekdays.includes(dayjs(selectedDate).day()) &&
+    weekdays?.includes(dayjs(selectedDate).day()) &&
     dayjs().date() === dayjs(selectedDate).date()
   useEffect(() => {
     // Need dispatch selectedSlot, otherwise it'll be udnefine as a intialState
@@ -78,7 +78,7 @@ const SlotPicker = () => {
             <ButtonSlotSt
               $slotactive={selectedSlot === newIndex ? true : undefined}
               disabled={
-                (dayDisable && dayjs().hour() >= Number(time.split(":")[0])) ||
+                (dayDisable && dayjs().hour() >= Number(time?.split(":")[0])) ||
                 (dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
                   dayjs().date() === dayjs(selectedDate).date())
               }

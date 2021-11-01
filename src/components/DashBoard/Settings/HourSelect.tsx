@@ -23,7 +23,9 @@ import {
 const HourSelect = () => {
   const dispatch = useAppDispatch()
 
-  const { weekdays, time } = useAppSelector(state => state?.shop?.settings)
+  const { weekdays = [], time = "12:30" } = useAppSelector(
+    state => state?.shop?.settings
+  )
 
   const menuItems = () =>
     allSlots.map((h, i) => (

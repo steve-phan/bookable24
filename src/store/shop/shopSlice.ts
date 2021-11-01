@@ -41,6 +41,10 @@ const intinitialShopState: IshopState = {
     shopName: "",
     street: "",
     uid: "",
+    settings: {
+      time: "12:30",
+      weekdays: [],
+    },
   },
   isShopLogin: false,
   status: "loading",
@@ -88,7 +92,7 @@ export const shopSlice = createSlice({
     setShopInfo: (state, action) => {
       state.status = "login"
       state.isShopLogin = true
-      state.shopInfo = action.payload
+      state.shopInfo = { ...state.shopInfo, ...action.payload }
     },
 
     setShopLogout: state => {
@@ -97,10 +101,10 @@ export const shopSlice = createSlice({
       state.shopInfo = intinitialShopState.shopInfo
     },
     setSettingDisableTime: (state, action) => {
-      state.settings.time = action.payload
+      state.shopInfo.settings.time = action.payload
     },
     setSetingsDisableDays: (state, action) => {
-      state.settings.weekdays = action.payload
+      state.shopInfo.settings.weekdays = action.payload
     },
   },
   extraReducers: builder => {
@@ -113,7 +117,7 @@ export const shopSlice = createSlice({
         state.isShopLogin = action.payload.isShopLogin
           ? true
           : state.isShopLogin
-        state.shopInfo = action.payload.shopInfo
+        state.shopInfo = { ...state.shopInfo, ...action.payload }
         state.allTermins = action.payload.allTermins
       })
       .addCase(getShopinfo.rejected, state => {

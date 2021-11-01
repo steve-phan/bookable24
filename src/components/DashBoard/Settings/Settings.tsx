@@ -33,10 +33,8 @@ const SettingsDashBoard = () => {
   const [list, setList] = useState<number[]>([])
   const dispatch = useAppDispatch()
   const { shopInfo } = useAppSelector(state => state?.shop)
-  const {
-    shopName,
-    settings: { weekdays, time },
-  } = shopInfo
+  const { shopName } = shopInfo
+  const { weekdays = [], time = "12:30" } = shopInfo?.settings || {}
   const handleSubmitDisable = async () => {
     const res = await axios.post(
       "/.netlify/functions/admin-setting-booking",
@@ -50,7 +48,6 @@ const SettingsDashBoard = () => {
       alert("Setting Success")
     }
   }
-  console.log("weekdays", weekdays)
   return (
     <div>
       <TitleSt>Setting Disable</TitleSt>
@@ -71,7 +68,7 @@ const SettingsDashBoard = () => {
                     {...label}
                     value={index}
                     onChange={() => {
-                      if (weekdays.includes(index)) {
+                      if (weekdays?.includes(index)) {
                         dispatch(
                           setSetingsDisableDays(updateList(weekdays, index))
                         )
@@ -79,7 +76,7 @@ const SettingsDashBoard = () => {
                         dispatch(setSetingsDisableDays([...weekdays, index]))
                       }
                     }}
-                    checked={weekdays.includes(index)}
+                    checked={weekdays?.includes(index)}
                   />
                   <label style={{ cursor: "pointer" }} htmlFor={day + index}>
                     {day}
