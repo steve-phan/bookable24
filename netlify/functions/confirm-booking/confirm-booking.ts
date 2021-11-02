@@ -15,14 +15,7 @@ export const handler: Handler = async function (event) {
       body: JSON.stringify({ error: " NOT allowed" }),
     }
   }
-  const oAuth2Client = new google.auth.OAuth2(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_CLIENT_SECRET,
-    process.env.GOOGLE_REDIRECT_URI
-  )
-  oAuth2Client.setCredentials({
-    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-  })
+
   const appointment = JSON.parse(event.body)
   const {
     userinfo: { firstName, lastName, email, phone },
@@ -30,13 +23,13 @@ export const handler: Handler = async function (event) {
     selectedSlot,
     person,
     require,
-    shopinfo,
+    shopInfo,
   } = appointment
-  const shopName = shopinfo.shopName || shopinfo.shopname // Change shopname to shopName
+  const shopName = shopInfo.shopName
   const formatDate = dayjs(
     selectedDate,
     selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
-  ).format("MMM DD")
+  ).format("MMM DD YYYY")
   try {
     const shopnamesDb = await connect()
     const bookingConn = shopnamesDb.connection.useDb(shopName)
@@ -65,7 +58,7 @@ export const handler: Handler = async function (event) {
       selectedSlot,
       selectedDate: formatDate,
       require,
-      shopinfo,
+      shopInfo,
       terminId: newappointment._id,
     })
 

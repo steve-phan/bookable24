@@ -18,7 +18,7 @@ const configTransporter = ({
   selectedDate,
   terminId,
   require,
-  shopinfo,
+  shopInfo,
 }) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -42,11 +42,11 @@ const configTransporter = ({
       extName: ".hbs",
     })
   )
-  const { company, street, city, cityCode } = shopinfo
+  const { company, street, city, cityCode } = shopInfo
 
   let mailOptions = {
-    from: `${company.toUpperCase()}  <${shopinfo.email}>`,
-    to: [email, shopinfo.email, "lebenistcode@gmail.com"],
+    from: `${company.toUpperCase()}  <${shopInfo.email}>`,
+    to: [email, shopInfo.email, "lebenistcode@gmail.com"],
     subject: `Dein Termin - ${company}`,
     template: "termin",
     context: {

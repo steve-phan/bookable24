@@ -92,7 +92,7 @@ export const shopSlice = createSlice({
     setShopInfo: (state, action) => {
       state.status = "login"
       state.isShopLogin = true
-      state.shopInfo = { ...state.shopInfo, ...action.payload }
+      state.shopInfo = { ...state.shopInfo, ...action.payload.shopInfo }
     },
 
     setShopLogout: state => {
@@ -117,7 +117,7 @@ export const shopSlice = createSlice({
         state.isShopLogin = action.payload.isShopLogin
           ? true
           : state.isShopLogin
-        state.shopInfo = { ...state.shopInfo, ...action.payload }
+        state.shopInfo = { ...state.shopInfo, ...action.payload.shopInfo }
         state.allTermins = action.payload.allTermins
       })
       .addCase(getShopinfo.rejected, state => {

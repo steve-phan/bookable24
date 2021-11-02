@@ -15,7 +15,6 @@ const CheckAuth = () => {
       (location?.pathname?.split("/").pop() !== "request-account" ||
         location?.pathname?.split("/").pop() !== "login")
     ) {
-      console.log("just check", location)
       dispatch(checkUserAuth(shopList))
     }
   }, [])

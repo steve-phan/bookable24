@@ -29,14 +29,6 @@ export const handler: Handler = async (event, context) => {
     }
   } else if (event.httpMethod === "GET") {
     const { bookingid: bookingId, shopname: shopName, shopinfo } = event.headers
-    const oAuth2Client = new google.auth.OAuth2(
-      process.env.GOOGLE_CLIENT_ID,
-      process.env.GOOGLE_CLIENT_SECRET,
-      process.env.GOOGLE_REDIRECT_URI
-    )
-    oAuth2Client.setCredentials({
-      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-    })
     const shopInfo = JSON.parse(shopinfo)
     const shopNamesDB = await connect()
     const bookingConn = shopNamesDB.connection.useDb(shopName)
@@ -54,7 +46,7 @@ export const handler: Handler = async (event, context) => {
       firstName: first_name,
       shopInfo,
     })
-    await transporter.sendMail(mailOptions, () => {})
+    transporter.sendMail(mailOptions, () => {})
 
     return {
       statusCode: 200,
