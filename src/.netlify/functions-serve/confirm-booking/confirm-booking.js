@@ -1,0 +1,1 @@
+module.exports = require('./src/netlify/functions/confirm-booking/confirm-booking.js')
