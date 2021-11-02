@@ -34,16 +34,16 @@ const configTransporter = ({
         extname: ".hbs",
         partialsDir: path.resolve(
           __dirname,
-          "../../../../../../../netlify/functions/utils/booking/views"
+          "../../../../../../../src/utils/booking/views"
         ),
         layoutsDir: path.resolve(
           __dirname,
-          "../../../../../../../netlify/functions/utils/booking/views/layouts"
+          "../../../../../../../src/utils/booking/views/layouts"
         ),
       },
       viewPath: path.resolve(
         __dirname,
-        "../../../../../../../netlify/functions/utils/booking/views"
+        "../../../../../../../src/utils/booking/views"
       ),
       extName: ".hbs",
     })
