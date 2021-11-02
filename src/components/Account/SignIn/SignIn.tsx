@@ -5,10 +5,15 @@ import FilledInput from "@mui/material/FilledInput"
 import IconButton from "@mui/material/IconButton"
 import InputAdornment from "@mui/material/InputAdornment"
 import InputLabel from "@mui/material/InputLabel"
-import { signInWithEmailAndPassword } from "firebase/auth"
+import {
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
+} from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
 import React, { useEffect } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
+import { navigate } from "gatsby-link"
 
 import { auth } from "src/firebase"
 
@@ -24,6 +29,7 @@ import {
   WrapColSt,
 } from "../Account.css"
 import { useShopname } from "../accountHook"
+import { async } from "@firebase/util"
 
 interface IloginStates {
   email: string
@@ -33,7 +39,7 @@ interface IloginStates {
 }
 
 const SignIn = ({ location }: { location: any }) => {
-  const { navigate } = useI18next()
+  // const { navigate } = useI18next()
   const [values, setValues] = React.useState<IloginStates>({
     email: "",
     password: "",
@@ -45,8 +51,14 @@ const SignIn = ({ location }: { location: any }) => {
   const shopList = useShopname()
 
   useEffect(() => {
-    if (isShopLogin) {
-      navigate("/dashboard")
+    const checkShop = async () => {
+      if (isShopLogin) {
+        await navigate("/dashboard")
+      }
+    }
+    checkShop()
+    return () => {
+      checkShop()
     }
   }, [isShopLogin])
 
@@ -72,6 +84,11 @@ const SignIn = ({ location }: { location: any }) => {
   const handleShopLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password)
+      await setPersistence(auth, browserLocalPersistence)
+        .then(() => {
+          return signInWithEmailAndPassword(auth, values.email, values.password)
+        })
+        .catch(err => console.log(err))
       dispatch(
         getShopinfo({
           shopemail: values.email,

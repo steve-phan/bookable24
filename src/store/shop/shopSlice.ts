@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
+// import {} from "firebase"
 
 import { auth } from "src/firebase"
 import { getShopName } from "src/utils"
@@ -10,9 +11,8 @@ import { IshopState, IshopQuery } from "./shop.types"
 export const checkUserAuth =
   (shopList: any[]): AppThunk =>
   (dispatch, getState) => {
-    if (typeof window !== undefined) {
+    if (typeof window !== "undefined") {
       const user = auth.currentUser
-
       if (user) {
         const shopname = getShopName(user?.email, shopList)
         dispatch(
@@ -24,7 +24,7 @@ export const checkUserAuth =
         )
       } else {
         // No user is signed in.
-        dispatch(setShopLogout())
+        // dispatch(setShopLogout())
       }
     }
   }
