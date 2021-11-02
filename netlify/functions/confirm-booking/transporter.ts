@@ -33,12 +33,10 @@ const configTransporter = ({
     hbs({
       viewEngine: {
         extname: ".hbs",
-        partialsDir: path.resolve("./netlify/functions/utils/booking/views"),
-        layoutsDir: path.resolve(
-          "./netlify/functions/utils/booking/views/layouts"
-        ),
+        partialsDir: path.resolve("./.netlify/booking/views"),
+        layoutsDir: path.resolve("./.netlify/booking/views/layouts"),
       },
-      viewPath: path.resolve("./netlify/functions/utils/booking/views"),
+      viewPath: path.resolve("./.netlify/booking/views"),
       extName: ".hbs",
     })
   )
@@ -50,7 +48,7 @@ const configTransporter = ({
     subject: `Dein Termin - ${company}`,
     template: "termin",
     context: {
-      name: firstName + lastName,
+      name: firstName + " " + lastName,
       person,
       phone,
       email,
