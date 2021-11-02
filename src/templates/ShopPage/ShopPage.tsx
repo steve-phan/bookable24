@@ -139,7 +139,8 @@ const ShopPage: React.FC<IShopPageProps> = ({
   const isNextButtonDisable = () => {
     return (
       dayjs().hour() >= Number(allSlots[selectedSlot].split(":")[0]) &&
-      dayjs().date() === dayjs(selectedDate).date()
+      dayjs().date() === dayjs(selectedDate).date() &&
+      activeStep !== 0
     )
   }
 

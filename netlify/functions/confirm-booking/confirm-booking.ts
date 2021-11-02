@@ -62,7 +62,13 @@ export const handler: Handler = async function (event) {
       terminId: newappointment._id,
     })
 
-    transporter.sendMail(mailOptions, () => {})
+    transporter.sendMail(mailOptions, (err, doc) => {
+      if (err) {
+        console.log("sendmail err", err)
+      } else {
+        console.log("sendmail success", doc)
+      }
+    })
     return {
       statusCode: 200,
       body: "EMAIL_SENT",
