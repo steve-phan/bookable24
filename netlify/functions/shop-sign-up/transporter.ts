@@ -32,12 +32,10 @@ const configTransporter = ({
     hbs({
       viewEngine: {
         extname: ".hbs",
-        partialsDir: path.resolve("./netlify/functions/utils/signup/views"),
-        layoutsDir: path.resolve(
-          "./netlify/functions/utils/signup/views/layouts"
-        ),
+        partialsDir: path.resolve("./netlify/signup/views"),
+        layoutsDir: path.resolve("./netlify/signup/views/layouts"),
       },
-      viewPath: path.resolve("./netlify/functions/utils/signup/views"),
+      viewPath: path.resolve("./netlify/signup/views"),
       extName: ".hbs",
     })
   )

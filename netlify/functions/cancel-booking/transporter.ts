@@ -17,14 +17,10 @@ const configTransporter = ({ token, email, lastName, firstName, shopInfo }) => {
     hbs({
       viewEngine: {
         extname: ".hbs",
-        partialsDir: path.resolve(
-          "./netlify/functions/utils/cancel-booking/views"
-        ),
-        layoutsDir: path.resolve(
-          "./netlify/functions/utils/cancel-booking/views/layouts"
-        ),
+        partialsDir: path.resolve("./.netlify/cancel-booking/views"),
+        layoutsDir: path.resolve("./netlify/cancel-booking/views/layouts"),
       },
-      viewPath: path.resolve("./netlify/functions/utils/cancel-booking/views"),
+      viewPath: path.resolve("./.netlify/cancel-booking/views"),
       extName: ".hbs",
     })
   )
