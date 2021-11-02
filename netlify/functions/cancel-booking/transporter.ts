@@ -17,19 +17,10 @@ const configTransporter = ({ token, email, lastName, firstName, shopInfo }) => {
     hbs({
       viewEngine: {
         extname: ".hbs",
-        partialsDir: path.resolve(
-          __dirname,
-          "../../../../../../../netlify/functions/utils/booking/views"
-        ),
-        layoutsDir: path.resolve(
-          __dirname,
-          "../../../../../../../netlify/functions/utils/booking/views/layouts"
-        ),
+        partialsDir: path.join(__dirname, "/booking/views"),
+        layoutsDir: path.join(__dirname, "/booking/views/layouts"),
       },
-      viewPath: path.resolve(
-        __dirname,
-        "../../../../../../../netlify/functions/utils/booking/views"
-      ),
+      viewPath: path.join(__dirname, "/booking/views"),
 
       extName: ".hbs",
     })

@@ -1,0 +1,1 @@
+module.exports = require('./src/netlify/functions/shop-sign-up/shop-sign-up.js')
