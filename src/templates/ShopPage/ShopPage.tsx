@@ -107,6 +107,12 @@ const ShopPage: React.FC<IShopPageProps> = ({
     }
   }, [])
 
+  // const testTime = dayjs("Dec 31").diff()
+  // const testTime1 = dayjs().diff("Nov 1 2021")
+
+  // const dateFormatted = dayjs("2021/03/02").format("MMM DD YYYY")
+  // console.log("time now is", dateFormatted)
+
   const handleConfirmSubmit = () => {
     const dataBooking = {
       selectedDate,
@@ -114,7 +120,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       userinfo: { ...guestInfo },
       person: numberOfGuest,
       require: guestInfo.require,
-      shopinfo: shopInfo,
+      shopInfo,
     }
     setIsLoading(true)
     axios
@@ -136,7 +142,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       dayjs().date() === dayjs(selectedDate).date()
     )
   }
-  console.log("month", dayjs().date(), dayjs(selectedDate).date())
+
   return (
     <Layout isShop location={location}>
       <SEO title="Booking Online System" />

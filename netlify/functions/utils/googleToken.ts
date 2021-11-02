@@ -44,7 +44,7 @@ export const getValidToken = async () => {
       validToken = tokenData[0].token
     }
   })
-  const tokenDB = await shopNamesDb.connection.useDb("token")
+  const tokenDB = shopNamesDb.connection.useDb("token")
   await tokenDB.model("token", tokenSchema).findOneAndUpdate({})
 
   return validToken

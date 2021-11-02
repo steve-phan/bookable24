@@ -5,7 +5,7 @@ import { IbookingState } from "./shop.types"
 const initialBookingState: IbookingState = {
   numberOfGuest: 1,
   selectedDate: new Date(),
-  selectedSlot: undefined,
+  selectedSlot: 0,
   guestInfo: {
     firstName: "",
     lastName: "",

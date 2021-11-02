@@ -17,7 +17,6 @@ export const handler: Handler = async event => {
   const {
     company,
     email,
-    password,
     phoneNumber,
     city,
     cityCode,
@@ -33,15 +32,6 @@ export const handler: Handler = async event => {
     .join("-")
 
   shopName = shopName + cityCode + Math.floor(Math.random() * 100)
-
-  const oAuth2Client = new google.auth.OAuth2(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_CLIENT_SECRET,
-    process.env.GOOGLE_REDIRECT_URI
-  )
-  oAuth2Client.setCredentials({
-    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-  })
   try {
     const shopNamesDb = await connect()
     const ShopInfo = shopNamesDb.model("Shopinfo", shopinfoSchema)
@@ -72,7 +62,7 @@ export const handler: Handler = async event => {
       token: validToken,
     })
 
-    await newShop.save(() => {})
+    await newShop.save()
     transporter.sendMail(mailOptions, () => {})
 
     return {
