@@ -29,7 +29,6 @@ import {
   WrapColSt,
 } from "../Account.css"
 import { useShopname } from "../accountHook"
-import { async } from "@firebase/util"
 
 interface IloginStates {
   email: string

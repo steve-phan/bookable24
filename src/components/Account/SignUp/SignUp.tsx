@@ -110,19 +110,22 @@ const SignIn = () => {
         firstName,
         lastName,
       } = values
-      const response = await axios.post("/.netlify/functions/shop-sign-up", {
-        userinfo: {
-          company,
-          email,
-          phoneNumber,
-          city,
-          cityCode,
-          street,
-          firstName,
-          lastName,
-          uid: userRef.user.uid,
-        },
-      })
+      const response = await axios.post(
+        "/.netlify/functions/registration-shop",
+        {
+          userinfo: {
+            company,
+            email,
+            phoneNumber,
+            city,
+            cityCode,
+            street,
+            firstName,
+            lastName,
+            uid: userRef.user.uid,
+          },
+        }
+      )
 
       if (response.data === "EMAIL_SENT") {
         setValues({
@@ -230,7 +233,7 @@ const SignIn = () => {
         />
       </FormControlSt>
 
-      {/* <>
+      <>
         <TextFieldSt
           value={values.company}
           variant="filled"
@@ -300,7 +303,7 @@ const SignIn = () => {
             ) : null
           }
         />
-      </> */}
+      </>
       <span
         style={{
           color: "red",
@@ -316,20 +319,20 @@ const SignIn = () => {
         variant="contained"
         onClick={handleShopLogin}
         type="submit"
-        // disabled={
-        //   values.email.length === 0 ||
-        //   !validateEmail(values.email) ||
-        //   values.password.length < 5 ||
-        //   values.password !== values.confirmPassword ||
-        //   values.company.length === 0 ||
-        //   values.email.length === 0 ||
-        //   values.phoneNumber.length === 0 ||
-        //   values.city.length === 0 ||
-        //   values.cityCode.length === 0 ||
-        //   values.street.length === 0 ||
-        //   values.firstName.length === 0 ||
-        //   values.lastName.length === 0
-        // }
+        disabled={
+          values.email.length === 0 ||
+          !validateEmail(values.email) ||
+          values.password.length < 5 ||
+          values.password !== values.confirmPassword ||
+          values.company.length === 0 ||
+          values.email.length === 0 ||
+          values.phoneNumber.length === 0 ||
+          values.city.length === 0 ||
+          values.cityCode.length === 0 ||
+          values.street.length === 0 ||
+          values.firstName.length === 0 ||
+          values.lastName.length === 0
+        }
       >
         Anfrage-Demo
       </ButtonSt>

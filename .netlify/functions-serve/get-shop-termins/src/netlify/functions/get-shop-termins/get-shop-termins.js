@@ -22,9 +22,6 @@ var __spreadValues = (a, b) => {
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
-var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[Object.keys(fn)[0]])(fn = 0)), res;
-};
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
@@ -9058,31 +9055,31 @@ var require_connection = __commonJS({
       }
     };
     exports.CryptoConnection = CryptoConnection;
-    function hasSessionSupport(conn2) {
-      const description = conn2.description;
+    function hasSessionSupport(conn) {
+      const description = conn.description;
       return description.logicalSessionTimeoutMinutes != null || !!description.loadBalanced;
     }
     exports.hasSessionSupport = hasSessionSupport;
-    function supportsOpMsg(conn2) {
-      const description = conn2.description;
+    function supportsOpMsg(conn) {
+      const description = conn.description;
       if (description == null) {
         return false;
       }
-      return utils_1.maxWireVersion(conn2) >= 6 && !description.__nodejs_mock_server__;
+      return utils_1.maxWireVersion(conn) >= 6 && !description.__nodejs_mock_server__;
     }
-    function messageHandler(conn2) {
+    function messageHandler(conn) {
       return function messageHandler2(message) {
-        conn2.emit("message", message);
-        const operationDescription = conn2[kQueue].get(message.responseTo);
+        conn.emit("message", message);
+        const operationDescription = conn[kQueue].get(message.responseTo);
         if (!operationDescription) {
           return;
         }
         const callback = operationDescription.cb;
-        conn2[kQueue].delete(message.responseTo);
+        conn[kQueue].delete(message.responseTo);
         if ("moreToCome" in message && message.moreToCome) {
-          conn2[kQueue].set(message.requestId, operationDescription);
+          conn[kQueue].set(message.requestId, operationDescription);
         } else if (operationDescription.socketTimeoutOverride) {
-          conn2[kStream].setTimeout(conn2.socketTimeoutMS);
+          conn[kStream].setTimeout(conn.socketTimeoutMS);
         }
         try {
           message.parse(operationDescription);
@@ -9097,8 +9094,8 @@ var require_connection = __commonJS({
             sessions_1.updateSessionFromResponse(session, document2);
           }
           if (document2.$clusterTime) {
-            conn2[kClusterTime] = document2.$clusterTime;
-            conn2.emit(Connection.CLUSTER_TIME_RECEIVED, document2.$clusterTime);
+            conn[kClusterTime] = document2.$clusterTime;
+            conn.emit(Connection.CLUSTER_TIME_RECEIVED, document2.$clusterTime);
           }
           if (operationDescription.command) {
             if (document2.writeConcernError) {
@@ -9125,7 +9122,7 @@ var require_connection = __commonJS({
       }
       return utils_1.uuidV4().toString("hex");
     }
-    function write(conn2, command, options, callback) {
+    function write(conn, command, options, callback) {
       if (typeof options === "function") {
         callback = options;
       }
@@ -9145,27 +9142,27 @@ var require_connection = __commonJS({
         raw: typeof options.raw === "boolean" ? options.raw : false,
         started: 0
       };
-      if (conn2[kDescription] && conn2[kDescription].compressor) {
-        operationDescription.agreedCompressor = conn2[kDescription].compressor;
-        if (conn2[kDescription].zlibCompressionLevel) {
-          operationDescription.zlibCompressionLevel = conn2[kDescription].zlibCompressionLevel;
+      if (conn[kDescription] && conn[kDescription].compressor) {
+        operationDescription.agreedCompressor = conn[kDescription].compressor;
+        if (conn[kDescription].zlibCompressionLevel) {
+          operationDescription.zlibCompressionLevel = conn[kDescription].zlibCompressionLevel;
         }
       }
       if (typeof options.socketTimeoutMS === "number") {
         operationDescription.socketTimeoutOverride = true;
-        conn2[kStream].setTimeout(options.socketTimeoutMS);
+        conn[kStream].setTimeout(options.socketTimeoutMS);
       }
-      if (conn2.monitorCommands) {
-        conn2.emit(Connection.COMMAND_STARTED, new command_monitoring_events_1.CommandStartedEvent(conn2, command));
+      if (conn.monitorCommands) {
+        conn.emit(Connection.COMMAND_STARTED, new command_monitoring_events_1.CommandStartedEvent(conn, command));
         operationDescription.started = utils_1.now();
         operationDescription.cb = (err, reply) => {
           if (err) {
-            conn2.emit(Connection.COMMAND_FAILED, new command_monitoring_events_1.CommandFailedEvent(conn2, command, err, operationDescription.started));
+            conn.emit(Connection.COMMAND_FAILED, new command_monitoring_events_1.CommandFailedEvent(conn, command, err, operationDescription.started));
           } else {
             if (reply && (reply.ok === 0 || reply.$err)) {
-              conn2.emit(Connection.COMMAND_FAILED, new command_monitoring_events_1.CommandFailedEvent(conn2, command, reply, operationDescription.started));
+              conn.emit(Connection.COMMAND_FAILED, new command_monitoring_events_1.CommandFailedEvent(conn, command, reply, operationDescription.started));
             } else {
-              conn2.emit(Connection.COMMAND_SUCCEEDED, new command_monitoring_events_1.CommandSucceededEvent(conn2, command, reply, operationDescription.started));
+              conn.emit(Connection.COMMAND_SUCCEEDED, new command_monitoring_events_1.CommandSucceededEvent(conn, command, reply, operationDescription.started));
             }
           }
           if (typeof callback === "function") {
@@ -9174,13 +9171,13 @@ var require_connection = __commonJS({
         };
       }
       if (!operationDescription.noResponse) {
-        conn2[kQueue].set(operationDescription.requestId, operationDescription);
+        conn[kQueue].set(operationDescription.requestId, operationDescription);
       }
       try {
-        conn2[kMessageStream].writeCommand(command, operationDescription);
+        conn[kMessageStream].writeCommand(command, operationDescription);
       } catch (e) {
         if (!operationDescription.noResponse) {
-          conn2[kQueue].delete(operationDescription.requestId);
+          conn[kQueue].delete(operationDescription.requestId);
           operationDescription.cb(e);
           return;
         }
@@ -9326,12 +9323,12 @@ var require_sessions = __commonJS({
       get pinnedConnection() {
         return this[kPinnedConnection];
       }
-      pin(conn2) {
+      pin(conn) {
         if (this[kPinnedConnection]) {
           throw TypeError("Cannot pin multiple connections to the same session");
         }
-        this[kPinnedConnection] = conn2;
-        conn2.emit(connection_1.Connection.PINNED, this.inTransaction() ? metrics_1.ConnectionPoolMetrics.TXN : metrics_1.ConnectionPoolMetrics.CURSOR);
+        this[kPinnedConnection] = conn;
+        conn.emit(connection_1.Connection.PINNED, this.inTransaction() ? metrics_1.ConnectionPoolMetrics.TXN : metrics_1.ConnectionPoolMetrics.CURSOR);
       }
       unpin(options) {
         if (this.loadBalanced) {
@@ -9464,19 +9461,19 @@ var require_sessions = __commonJS({
       return isMaxTimeMSExpiredError(err) || !isNonDeterministicWriteConcernError && err.code !== error_1.MONGODB_ERROR_CODES.UnsatisfiableWriteConcern && err.code !== error_1.MONGODB_ERROR_CODES.UnknownReplWriteConcern;
     }
     function maybeClearPinnedConnection(session, options) {
-      const conn2 = session[kPinnedConnection];
+      const conn = session[kPinnedConnection];
       const error = options === null || options === void 0 ? void 0 : options.error;
       if (session.inTransaction() && error && error instanceof error_1.MongoError && error.hasErrorLabel("TransientTransactionError")) {
         return;
       }
-      if (conn2) {
+      if (conn) {
         const servers = Array.from(session.topology.s.servers.values());
         const loadBalancer = servers[0];
         if ((options === null || options === void 0 ? void 0 : options.error) == null || (options === null || options === void 0 ? void 0 : options.force)) {
-          loadBalancer.s.pool.checkIn(conn2);
-          conn2.emit(connection_1.Connection.UNPINNED, session.transaction.state !== transactions_1.TxnState.NO_TRANSACTION ? metrics_1.ConnectionPoolMetrics.TXN : metrics_1.ConnectionPoolMetrics.CURSOR);
+          loadBalancer.s.pool.checkIn(conn);
+          conn.emit(connection_1.Connection.UNPINNED, session.transaction.state !== transactions_1.TxnState.NO_TRANSACTION ? metrics_1.ConnectionPoolMetrics.TXN : metrics_1.ConnectionPoolMetrics.CURSOR);
           if (options === null || options === void 0 ? void 0 : options.forceClear) {
-            loadBalancer.s.pool.clear(conn2.serviceId);
+            loadBalancer.s.pool.clear(conn.serviceId);
           }
         }
         session[kPinnedConnection] = void 0;
@@ -16258,10 +16255,10 @@ var require_connect = __commonJS({
       const message = `Server at ${options.hostAddress} reports maximum wire version ${(_a = JSON.stringify(ismaster.maxWireVersion)) !== null && _a !== void 0 ? _a : 0}, but this version of the Node.js Driver requires at least ${constants_1.MIN_SUPPORTED_WIRE_VERSION} (MongoDB ${constants_1.MIN_SUPPORTED_SERVER_VERSION})`;
       return new error_1.MongoCompatibilityError(message);
     }
-    function performInitialHandshake(conn2, options, _callback) {
+    function performInitialHandshake(conn, options, _callback) {
       const callback = function(err, ret) {
-        if (err && conn2) {
-          conn2.destroy();
+        if (err && conn) {
+          conn.destroy();
         }
         _callback(err, ret);
       };
@@ -16272,7 +16269,7 @@ var require_connect = __commonJS({
           return;
         }
       }
-      const authContext = new auth_provider_1.AuthContext(conn2, credentials, options);
+      const authContext = new auth_provider_1.AuthContext(conn, credentials, options);
       prepareHandshakeDocument(authContext, (err, handshakeDoc) => {
         if (err || !handshakeDoc) {
           return callback(err);
@@ -16282,7 +16279,7 @@ var require_connect = __commonJS({
           handshakeOptions.socketTimeoutMS = options.connectTimeoutMS;
         }
         const start = new Date().getTime();
-        conn2.command(utils_1.ns("admin.$cmd"), handshakeDoc, handshakeOptions, (err2, response) => {
+        conn.command(utils_1.ns("admin.$cmd"), handshakeDoc, handshakeOptions, (err2, response) => {
           if (err2) {
             callback(err2);
             return;
@@ -16295,7 +16292,7 @@ var require_connect = __commonJS({
             response.ismaster = response.isWritablePrimary;
           }
           if (response.helloOk) {
-            conn2.helloOk = true;
+            conn.helloOk = true;
           }
           const supportedServerErr = checkSupportedServer(response, options);
           if (supportedServerErr) {
@@ -16310,8 +16307,8 @@ var require_connect = __commonJS({
               return callback(new error_1.MongoCompatibilityError("Driver attempted to initialize in load balancing mode, but the server does not support this mode."));
             }
           }
-          conn2.ismaster = response;
-          conn2.lastIsMasterMS = new Date().getTime() - start;
+          conn.ismaster = response;
+          conn.lastIsMasterMS = new Date().getTime() - start;
           if (!response.arbiterOnly && credentials) {
             authContext.response = response;
             const resolvedCredentials = credentials.resolveAuthMechanism(response);
@@ -16322,11 +16319,11 @@ var require_connect = __commonJS({
             provider.auth(authContext, (err3) => {
               if (err3)
                 return callback(err3);
-              callback(void 0, conn2);
+              callback(void 0, conn);
             });
             return;
           }
-          callback(void 0, conn2);
+          callback(void 0, conn);
         });
       });
     }
@@ -16784,18 +16781,18 @@ var require_connection_pool = __commonJS({
           this[kConnectionCounter].return(void 0);
         }
         this.closed = true;
-        utils_1.eachAsync(this[kConnections].toArray(), (conn2, cb) => {
-          this.emit(ConnectionPool.CONNECTION_CLOSED, new connection_pool_events_1.ConnectionClosedEvent(this, conn2, "poolClosed"));
-          conn2.destroy(options, cb);
+        utils_1.eachAsync(this[kConnections].toArray(), (conn, cb) => {
+          this.emit(ConnectionPool.CONNECTION_CLOSED, new connection_pool_events_1.ConnectionClosedEvent(this, conn, "poolClosed"));
+          conn.destroy(options, cb);
         }, (err) => {
           this[kConnections].clear();
           this.emit(ConnectionPool.CONNECTION_POOL_CLOSED, new connection_pool_events_1.ConnectionPoolClosedEvent(this));
           callback(err);
         });
       }
-      withConnection(conn2, fn, callback) {
-        if (conn2) {
-          fn(void 0, conn2, (fnErr, result) => {
+      withConnection(conn, fn, callback) {
+        if (conn) {
+          fn(void 0, conn, (fnErr, result) => {
             if (typeof callback === "function") {
               if (fnErr) {
                 callback(fnErr);
@@ -16806,8 +16803,8 @@ var require_connection_pool = __commonJS({
           });
           return;
         }
-        this.checkOut((err, conn3) => {
-          fn(err, conn3, (fnErr, result) => {
+        this.checkOut((err, conn2) => {
+          fn(err, conn2, (fnErr, result) => {
             if (typeof callback === "function") {
               if (fnErr) {
                 callback(fnErr);
@@ -16815,8 +16812,8 @@ var require_connection_pool = __commonJS({
                 callback(void 0, result);
               }
             }
-            if (conn3) {
-              this.checkIn(conn3);
+            if (conn2) {
+              this.checkIn(conn2);
             }
           });
         });
@@ -17238,7 +17235,7 @@ var require_monitor = __commonJS({
         });
         return;
       }
-      connect_1.connect(monitor.connectOptions, (err, conn2) => {
+      connect_1.connect(monitor.connectOptions, (err, conn) => {
         if (err) {
           monitor[kConnection] = void 0;
           if (!(err instanceof error_1.MongoNetworkError)) {
@@ -17247,14 +17244,14 @@ var require_monitor = __commonJS({
           failureHandler(err);
           return;
         }
-        if (conn2) {
+        if (conn) {
           if (isInCloseState(monitor)) {
-            conn2.destroy({ force: true });
+            conn.destroy({ force: true });
             return;
           }
-          monitor[kConnection] = conn2;
-          monitor.emit(server_1.Server.SERVER_HEARTBEAT_SUCCEEDED, new events_1.ServerHeartbeatSucceededEvent(monitor.address, utils_1.calculateDurationInMs(start), conn2.ismaster));
-          callback(void 0, conn2.ismaster);
+          monitor[kConnection] = conn;
+          monitor.emit(server_1.Server.SERVER_HEARTBEAT_SUCCEEDED, new events_1.ServerHeartbeatSucceededEvent(monitor.address, utils_1.calculateDurationInMs(start), conn.ismaster));
+          callback(void 0, conn.ismaster);
         }
       });
     }
@@ -17320,26 +17317,26 @@ var require_monitor = __commonJS({
       if (rttPinger.closed) {
         return;
       }
-      function measureAndReschedule(conn2) {
+      function measureAndReschedule(conn) {
         if (rttPinger.closed) {
-          conn2 === null || conn2 === void 0 ? void 0 : conn2.destroy({ force: true });
+          conn === null || conn === void 0 ? void 0 : conn.destroy({ force: true });
           return;
         }
         if (rttPinger[kConnection] == null) {
-          rttPinger[kConnection] = conn2;
+          rttPinger[kConnection] = conn;
         }
         rttPinger[kRoundTripTime] = utils_1.calculateDurationInMs(start);
         rttPinger[kMonitorId] = setTimeout(() => measureRoundTripTime(rttPinger, options), heartbeatFrequencyMS);
       }
       const connection = rttPinger[kConnection];
       if (connection == null) {
-        connect_1.connect(options, (err, conn2) => {
+        connect_1.connect(options, (err, conn) => {
           if (err) {
             rttPinger[kConnection] = void 0;
             rttPinger[kRoundTripTime] = 0;
             return;
           }
-          measureAndReschedule(conn2);
+          measureAndReschedule(conn);
         });
         return;
       }
@@ -17491,8 +17488,8 @@ var require_server = __commonJS({
           return;
         }
         const session = finalOptions.session;
-        const conn2 = session === null || session === void 0 ? void 0 : session.pinnedConnection;
-        if (this.loadBalanced && session && conn2 == null && isPinnableCommand(cmd, session)) {
+        const conn = session === null || session === void 0 ? void 0 : session.pinnedConnection;
+        if (this.loadBalanced && session && conn == null && isPinnableCommand(cmd, session)) {
           this.s.pool.checkOut((err, checkedOut) => {
             if (err || checkedOut == null) {
               if (callback)
@@ -17504,12 +17501,12 @@ var require_server = __commonJS({
           });
           return;
         }
-        this.s.pool.withConnection(conn2, (err, conn3, cb) => {
-          if (err || !conn3) {
+        this.s.pool.withConnection(conn, (err, conn2, cb) => {
+          if (err || !conn2) {
             markServerUnknown(this, err);
             return cb(err);
           }
-          conn3.command(ns, cmd, finalOptions, makeOperationHandler(this, conn3, cmd, finalOptions, cb));
+          conn2.command(ns, cmd, finalOptions, makeOperationHandler(this, conn2, cmd, finalOptions, cb));
         }, callback);
       }
       query(ns, cmd, options, callback) {
@@ -17517,12 +17514,12 @@ var require_server = __commonJS({
           callback(new error_1.MongoServerClosedError());
           return;
         }
-        this.s.pool.withConnection(void 0, (err, conn2, cb) => {
-          if (err || !conn2) {
+        this.s.pool.withConnection(void 0, (err, conn, cb) => {
+          if (err || !conn) {
             markServerUnknown(this, err);
             return cb(err);
           }
-          conn2.query(ns, cmd, options, makeOperationHandler(this, conn2, cmd, options, cb));
+          conn.query(ns, cmd, options, makeOperationHandler(this, conn, cmd, options, cb));
         }, callback);
       }
       getMore(ns, cursorId, options, callback) {
@@ -17531,12 +17528,12 @@ var require_server = __commonJS({
           callback(new error_1.MongoServerClosedError());
           return;
         }
-        this.s.pool.withConnection((_a = options.session) === null || _a === void 0 ? void 0 : _a.pinnedConnection, (err, conn2, cb) => {
-          if (err || !conn2) {
+        this.s.pool.withConnection((_a = options.session) === null || _a === void 0 ? void 0 : _a.pinnedConnection, (err, conn, cb) => {
+          if (err || !conn) {
             markServerUnknown(this, err);
             return cb(err);
           }
-          conn2.getMore(ns, cursorId, options, makeOperationHandler(this, conn2, {}, options, cb));
+          conn.getMore(ns, cursorId, options, makeOperationHandler(this, conn, {}, options, cb));
         }, callback);
       }
       killCursors(ns, cursorIds, options, callback) {
@@ -17547,12 +17544,12 @@ var require_server = __commonJS({
           }
           return;
         }
-        this.s.pool.withConnection((_a = options.session) === null || _a === void 0 ? void 0 : _a.pinnedConnection, (err, conn2, cb) => {
-          if (err || !conn2) {
+        this.s.pool.withConnection((_a = options.session) === null || _a === void 0 ? void 0 : _a.pinnedConnection, (err, conn, cb) => {
+          if (err || !conn) {
             markServerUnknown(this, err);
             return cb(err);
           }
-          conn2.killCursors(ns, cursorIds, options, makeOperationHandler(this, conn2, {}, void 0, cb));
+          conn.killCursors(ns, cursorIds, options, makeOperationHandler(this, conn, {}, void 0, cb));
         }, callback);
       }
     };
@@ -24219,7 +24216,7 @@ var require_collection2 = __commonJS({
     var EventEmitter = require("events").EventEmitter;
     var STATES = require_connectionstate();
     var immediate = require_immediate();
-    function Collection(name, conn2, opts) {
+    function Collection(name, conn, opts) {
       if (opts === void 0) {
         opts = {};
       }
@@ -24232,7 +24229,7 @@ var require_collection2 = __commonJS({
       this.opts = opts;
       this.name = name;
       this.collectionName = name;
-      this.conn = conn2;
+      this.conn = conn;
       this.queue = [];
       this.buffer = true;
       this.emitter = new EventEmitter();
@@ -24335,7 +24332,7 @@ var require_collection2 = __commonJS({
       return this.conn._shouldBufferCommands();
     };
     Collection.prototype._getBufferTimeoutMS = function _getBufferTimeoutMS() {
-      const conn2 = this.conn;
+      const conn = this.conn;
       const opts = this.opts;
       if (opts.bufferTimeoutMS != null) {
         return opts.bufferTimeoutMS;
@@ -24343,11 +24340,11 @@ var require_collection2 = __commonJS({
       if (opts && opts.schemaUserProvidedOptions != null && opts.schemaUserProvidedOptions.bufferTimeoutMS != null) {
         return opts.schemaUserProvidedOptions.bufferTimeoutMS;
       }
-      if (conn2.config.bufferTimeoutMS != null) {
-        return conn2.config.bufferTimeoutMS;
+      if (conn.config.bufferTimeoutMS != null) {
+        return conn.config.bufferTimeoutMS;
       }
-      if (conn2.base != null && conn2.base.get("bufferTimeoutMS") != null) {
-        return conn2.base.get("bufferTimeoutMS");
+      if (conn.base != null && conn.base.get("bufferTimeoutMS") != null) {
+        return conn.base.get("bufferTimeoutMS");
       }
       return 1e4;
     };
@@ -39488,7 +39485,7 @@ var require_collection5 = __commonJS({
     var sliced = require_sliced();
     var stream = require("stream");
     var util = require("util");
-    function NativeCollection(name, conn2, options) {
+    function NativeCollection(name, conn, options) {
       this.collection = null;
       this.Promise = options.Promise || Promise;
       this.modelName = options.modelName;
@@ -40605,20 +40602,20 @@ var require_connection2 = __commonJS({
       }
       return this.$initialConnection;
     };
-    function _setClient(conn2, client, options, dbName) {
+    function _setClient(conn, client, options, dbName) {
       const db = dbName != null ? client.db(dbName) : client.db();
-      conn2.db = db;
-      conn2.client = client;
-      conn2.host = get(client, "s.options.hosts.0.host", void 0);
-      conn2.port = get(client, "s.options.hosts.0.port", void 0);
-      conn2.name = dbName != null ? dbName : get(client, "s.options.dbName", void 0);
-      conn2._closeCalled = client._closeCalled;
+      conn.db = db;
+      conn.client = client;
+      conn.host = get(client, "s.options.hosts.0.host", void 0);
+      conn.port = get(client, "s.options.hosts.0.port", void 0);
+      conn.name = dbName != null ? dbName : get(client, "s.options.dbName", void 0);
+      conn._closeCalled = client._closeCalled;
       const _handleReconnect = () => {
-        if (conn2.readyState !== STATES.connected) {
-          conn2.readyState = STATES.connected;
-          conn2.emit("reconnect");
-          conn2.emit("reconnected");
-          conn2.onOpen();
+        if (conn.readyState !== STATES.connected) {
+          conn.readyState = STATES.connected;
+          conn.emit("reconnect");
+          conn.emit("reconnected");
+          conn.onOpen();
         }
       };
       const type = get(client, "topology.description.type", "");
@@ -40628,23 +40625,23 @@ var require_connection2 = __commonJS({
           if (newDescription.type === "Standalone") {
             _handleReconnect();
           } else {
-            conn2.readyState = STATES.disconnected;
+            conn.readyState = STATES.disconnected;
           }
         });
       } else if (type.startsWith("ReplicaSet")) {
         client.on("topologyDescriptionChanged", (ev) => {
           const description = ev.newDescription;
-          if (conn2.readyState === STATES.connected && description.type !== "ReplicaSetWithPrimary") {
-            conn2.readyState = STATES.disconnected;
-          } else if (conn2.readyState === STATES.disconnected && description.type === "ReplicaSetWithPrimary") {
+          if (conn.readyState === STATES.connected && description.type !== "ReplicaSetWithPrimary") {
+            conn.readyState = STATES.disconnected;
+          } else if (conn.readyState === STATES.disconnected && description.type === "ReplicaSetWithPrimary") {
             _handleReconnect();
           }
         });
       }
-      conn2.onOpen();
-      for (const i in conn2.collections) {
-        if (utils.object.hasOwnProperty(conn2.collections, i)) {
-          conn2.collections[i].onOpen();
+      conn.onOpen();
+      for (const i in conn.collections) {
+        if (utils.object.hasOwnProperty(conn.collections, i)) {
+          conn.collections[i].onOpen();
         }
       }
     }
@@ -50090,7 +50087,7 @@ var require_model = __commonJS({
         model.Query.prototype[i] = methods[i];
       }
     }
-    Model.__subclass = function subclass(conn2, schema, collection) {
+    Model.__subclass = function subclass(conn, schema, collection) {
       const _this = this;
       const Model2 = function Model3(doc, fields, skipId) {
         if (!(this instanceof Model3)) {
@@ -50100,9 +50097,9 @@ var require_model = __commonJS({
       };
       Model2.__proto__ = _this;
       Model2.prototype.__proto__ = _this.prototype;
-      Model2.db = conn2;
-      Model2.prototype.db = conn2;
-      Model2.prototype[modelDbSymbol] = conn2;
+      Model2.db = conn;
+      Model2.prototype.db = conn;
+      Model2.prototype[modelDbSymbol] = conn;
       _this[subclassedSymbol] = _this[subclassedSymbol] || [];
       _this[subclassedSymbol].push(Model2);
       if (_this.discriminators != null) {
@@ -50121,7 +50118,7 @@ var require_model = __commonJS({
         schemaUserProvidedOptions: _userProvidedOptions,
         capped: s && options.capped
       };
-      Model2.prototype.collection = conn2.collection(collection, collectionOptions);
+      Model2.prototype.collection = conn.collection(collection, collectionOptions);
       Model2.prototype.$collection = Model2.prototype.collection;
       Model2.prototype[modelCollectionSymbol] = Model2.prototype.collection;
       Model2.collection = Model2.prototype.collection;
@@ -50650,8 +50647,8 @@ var require_lib6 = __commonJS({
         autoIndex: true,
         autoCreate: true
       }, options);
-      const conn2 = this.createConnection();
-      conn2.models = this.models;
+      const conn = this.createConnection();
+      conn.models = this.models;
       if (this.options.pluralization) {
         this._pluralize = legacyPluralize;
       }
@@ -50688,7 +50685,7 @@ var require_lib6 = __commonJS({
     Mongoose.prototype.STATES = STATES;
     Mongoose.prototype.driver = driver;
     Mongoose.prototype.set = function(key, value) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       if (VALID_OPTIONS.indexOf(key) === -1)
         throw new Error(`\`${key}\` is an invalid option.`);
       if (arguments.length === 1) {
@@ -50697,7 +50694,7 @@ var require_lib6 = __commonJS({
       _mongoose.options[key] = value;
       if (key === "objectIdGetter") {
         if (value) {
-          Object.defineProperty(mongoose3.Types.ObjectId.prototype, "_id", {
+          Object.defineProperty(mongoose2.Types.ObjectId.prototype, "_id", {
             enumerable: false,
             configurable: true,
             get: function() {
@@ -50705,31 +50702,31 @@ var require_lib6 = __commonJS({
             }
           });
         } else {
-          delete mongoose3.Types.ObjectId.prototype._id;
+          delete mongoose2.Types.ObjectId.prototype._id;
         }
       }
       return _mongoose;
     };
     Mongoose.prototype.get = Mongoose.prototype.set;
     Mongoose.prototype.createConnection = function(uri, options, callback) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
-      const conn2 = new Connection(_mongoose);
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const conn = new Connection(_mongoose);
       if (typeof options === "function") {
         callback = options;
         options = null;
       }
-      _mongoose.connections.push(conn2);
-      _mongoose.events.emit("createConnection", conn2);
+      _mongoose.connections.push(conn);
+      _mongoose.events.emit("createConnection", conn);
       if (arguments.length > 0) {
-        conn2.openUri(uri, options, callback);
+        conn.openUri(uri, options, callback);
       }
-      return conn2;
+      return conn;
     };
     Mongoose.prototype.connect = function(uri, options, callback) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
-      const conn2 = _mongoose.connection;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const conn = _mongoose.connection;
       return _mongoose._promiseOrCallback(callback, (cb) => {
-        conn2.openUri(uri, options, (err) => {
+        conn.openUri(uri, options, (err) => {
           if (err != null) {
             return cb(err);
           }
@@ -50738,14 +50735,14 @@ var require_lib6 = __commonJS({
       });
     };
     Mongoose.prototype.disconnect = function(callback) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       return _mongoose._promiseOrCallback(callback, (cb) => {
         let remaining = _mongoose.connections.length;
         if (remaining <= 0) {
           return cb(null);
         }
-        _mongoose.connections.forEach((conn2) => {
-          conn2.close(function(error) {
+        _mongoose.connections.forEach((conn) => {
+          conn.close(function(error) {
             if (error) {
               return cb(error);
             }
@@ -50757,18 +50754,18 @@ var require_lib6 = __commonJS({
       });
     };
     Mongoose.prototype.startSession = function() {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       return _mongoose.connection.startSession.apply(_mongoose.connection, arguments);
     };
     Mongoose.prototype.pluralize = function(fn) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       if (arguments.length > 0) {
         _mongoose._pluralize = fn;
       }
       return _mongoose._pluralize;
     };
     Mongoose.prototype.model = function(name, schema, collection, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       if (typeof schema === "string") {
         collection = schema;
         schema = false;
@@ -50809,7 +50806,7 @@ var require_lib6 = __commonJS({
       return model;
     };
     Mongoose.prototype._model = function(name, schema, collection, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       let model;
       if (typeof name === "function") {
         model = name;
@@ -50838,25 +50835,25 @@ var require_lib6 = __commonJS({
       return model;
     };
     Mongoose.prototype.deleteModel = function(name) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       _mongoose.connection.deleteModel(name);
       delete _mongoose.models[name];
       return _mongoose;
     };
     Mongoose.prototype.modelNames = function() {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       const names = Object.keys(_mongoose.models);
       return names;
     };
     Mongoose.prototype._applyPlugins = function(schema, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       options = options || {};
       options.applyPluginsToDiscriminators = get(_mongoose, "options.applyPluginsToDiscriminators", false);
       options.applyPluginsToChildSchemas = get(_mongoose, "options.applyPluginsToChildSchemas", true);
       applyPlugins(schema, _mongoose.plugins, options, "$globalPluginsApplied");
     };
     Mongoose.prototype.plugin = function(fn, opts) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose3;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       _mongoose.plugins.push([fn, opts]);
       return _mongoose;
     };
@@ -50900,7 +50897,7 @@ var require_lib6 = __commonJS({
       if (v == null) {
         return true;
       }
-      const base = this || mongoose3;
+      const base = this || mongoose2;
       const ObjectId2 = base.driver.get().ObjectId;
       if (v instanceof ObjectId2) {
         return true;
@@ -50948,7 +50945,7 @@ var require_lib6 = __commonJS({
     Mongoose.prototype._promiseOrCallback = function(callback, fn, ee) {
       return promiseOrCallback(callback, fn, ee, this.Promise);
     };
-    var mongoose3 = module2.exports = exports = new Mongoose({
+    var mongoose2 = module2.exports = exports = new Mongoose({
       [defaultMongooseSymbol]: true
     });
   }
@@ -51038,83 +51035,107 @@ var require_main = __commonJS({
   }
 });
 
-// netlify/functions/utils/utils.ts
-var utils_exports = {};
-__export(utils_exports, {
-  getUrl: () => getUrl
-});
-var getUrl;
-var init_utils = __esm({
-  "netlify/functions/utils/utils.ts"() {
-    getUrl = (dbName) => `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+// netlify/functions/utils/models/bookingModel.ts
+var require_bookingModel = __commonJS({
+  "netlify/functions/utils/models/bookingModel.ts"(exports, module2) {
+    var mongoose2 = require_mongoose();
+    require_main().config();
+    var Schema2 = mongoose2.Schema;
+    var appointmentSchema2 = new Schema2({
+      first_name: String,
+      last_name: String,
+      email: String,
+      phone: String,
+      selectedSlot: String,
+      selectedDate: String,
+      person: String,
+      require: String,
+      created_at: {
+        default: new Date(),
+        type: Date
+      },
+      status: {
+        default: false,
+        type: Boolean
+      }
+    });
+    module2.exports = { appointmentSchema: appointmentSchema2 };
   }
 });
 
-// netlify/functions/hello-world/hello-world.ts
+// netlify/functions/utils/utils.ts
+var require_utils6 = __commonJS({
+  "netlify/functions/utils/utils.ts"(exports, module2) {
+    var getUrl = (dbName) => `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+    module2.exports = { getUrl };
+  }
+});
+
+// netlify/functions/utils/mongooseConnect.js
+var require_mongooseConnect = __commonJS({
+  "netlify/functions/utils/mongooseConnect.js"(exports, module2) {
+    var mongoose2 = require_mongoose();
+    var { getUrl } = require_utils6();
+    var conn = null;
+    var connect2 = async function() {
+      let url = getUrl("shopnames");
+      if (conn == null) {
+        conn = mongoose2.connect(url, {
+          serverSelectionTimeoutMS: 5e3
+        }).then(() => mongoose2);
+        await conn;
+      }
+      return conn;
+    };
+    module2.exports = { connect: connect2 };
+  }
+});
+
+// netlify/functions/get-shop-termins/get-shop-termins.ts
 __export(exports, {
   handler: () => handler
 });
+var import_bookingModel = __toModule(require_bookingModel());
 
-// netlify/functions/utils/models/bookingModel.ts
+// netlify/functions/utils/models/shopInfoModel.ts
 var import_mongoose = __toModule(require_mongoose());
 require_main().config();
 var Schema = import_mongoose.default.Schema;
-var appointmentSchema = new Schema({
-  first_name: String,
-  last_name: String,
+var shopinfoSchema = new Schema({
+  company: String,
   email: String,
-  phone: String,
-  selectedSlot: String,
-  selectedDate: String,
-  person: String,
-  require: String,
-  created_at: {
-    default: new Date(),
-    type: Date
-  },
-  status: {
-    default: false,
-    type: Boolean
-  }
+  password: String,
+  phoneNumber: String,
+  city: String,
+  cityCode: String,
+  street: String,
+  firstName: String,
+  lastName: String,
+  uid: String,
+  shopName: String,
+  settings: {}
 });
+var ShopInfo = import_mongoose.default.model("Shopinfo", shopinfoSchema);
 
-// netlify/functions/utils/mongooseConnect.ts
-var mongoose2 = require_mongoose();
-var { getUrl: getUrl2 } = (init_utils(), utils_exports);
-var conn = null;
-var connect = async function() {
-  let url = getUrl2("shopnames");
-  if (conn == null) {
-    conn = mongoose2.connect(url, {
-      serverSelectionTimeoutMS: 5e3
-    }).then(() => mongoose2);
-    await conn;
-  }
-  return conn;
-};
-
-// netlify/functions/hello-world/hello-world.ts
+// netlify/functions/get-shop-termins/get-shop-termins.ts
+var import_mongooseConnect = __toModule(require_mongooseConnect());
 require_main().config();
-var handler = async (event, context) => {
+var handler = async (event) => {
+  const { shopname, shopemail } = event.headers;
   try {
-    const shopNameConn = await connect();
-    const bookingConn = shopNameConn.connection.useDb("shop-test1234561");
-    const Appointment = bookingConn.model("Appointment", appointmentSchema);
-    const found = await Appointment.find({ xxxxx: "tsting@mgia.com" });
+    const shopNamesDb = await (0, import_mongooseConnect.connect)();
+    const shopInfo = await ShopInfo.findOne({
+      email: shopemail
+    });
+    const shopTerminsDb = shopNamesDb.connection.useDb(shopname);
+    const Appointment = shopTerminsDb.model("Appointment", import_bookingModel.appointmentSchema);
+    const allTermins = await Appointment.find({});
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        message: found
-      })
+      body: JSON.stringify({ allTermins, shopInfo })
     };
   } catch (error) {
-    console.log("Not found", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: `Not found  !`
-      })
-    };
+    return { statusCode: 500, body: error.toString() };
   }
 };
 // Annotate the CommonJS export names for ESM import in node:
@@ -52286,4 +52307,4 @@ var handler = async (event, context) => {
     OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
     PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
-//# sourceMappingURL=hello-world.js.map
+//# sourceMappingURL=get-shop-termins.js.map

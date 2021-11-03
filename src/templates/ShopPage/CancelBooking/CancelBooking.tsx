@@ -38,7 +38,7 @@ const CancelBooking = ({
   const handleCancelBooking = () => {
     const bookingId = location.search.replace("?", "").split("=")[1]
     axios
-      .get("/.netlify/functions/cancel-booking", {
+      .get("/.netlify/functions/cancel-termin", {
         headers: {
           shopName,
           bookingId,
