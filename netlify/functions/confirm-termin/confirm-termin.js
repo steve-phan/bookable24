@@ -30,7 +30,7 @@ const handler = async function (event) {
   ).format("MMM DD YYYY")
   try {
     const shopnamesDb = await connect()
-    console.log("shopname ", shopName)
+
     const bookingConn = shopnamesDb.connection.useDb(shopName)
 
     const Appointment = bookingConn.model("Appointment", appointmentSchema)
@@ -57,13 +57,7 @@ const handler = async function (event) {
     //   require,
     // })
 
-    await newappointment.save((err, doc) => {
-      if (err) {
-        console.log("err   =>>>>>>>>", err)
-      } else {
-        console.log("doc   =>>>>>>>>", doc)
-      }
-    })
+    await newappointment.save()
     const validToken = await getValidToken()
     const { transporter, mailOptions } = configTransporter({
       shopName,
@@ -80,13 +74,7 @@ const handler = async function (event) {
       terminId: newappointment._id,
     })
 
-    transporter.sendMail(mailOptions, (err, doc) => {
-      if (err) {
-        console.log("sendmail err", err)
-      } else {
-        console.log("sendmail success", doc)
-      }
-    })
+    await transporter.sendMail(mailOptions)
     return {
       statusCode: 200,
       body: "EMAIL_SENT",

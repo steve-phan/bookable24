@@ -57,7 +57,7 @@ const handler = async event => {
     })
 
     await newShop.save()
-    transporter.sendMail(mailOptions, () => {})
+    await transporter.sendMail(mailOptions)
 
     return {
       statusCode: 200,

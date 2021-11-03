@@ -43,7 +43,7 @@ const handler = async (event, context) => {
       firstName: first_name,
       shopInfo,
     })
-    transporter.sendMail(mailOptions, () => {})
+    await transporter.sendMail(mailOptions)
 
     return {
       statusCode: 200,
