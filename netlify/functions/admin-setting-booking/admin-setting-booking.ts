@@ -1,7 +1,5 @@
 require("dotenv").config()
 import { Handler } from "@netlify/functions"
-import { google } from "googleapis"
-import dayjs from "dayjs"
 
 import { connect } from "../utils/mongooseConnect"
 import { shopinfoSchema } from "../utils/models/shopInfoModel"

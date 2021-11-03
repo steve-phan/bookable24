@@ -65,12 +65,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-styled-components`,
-    {
-      resolve: `gatsby-plugin-material-ui`,
-      options: {
-        pathToEmotionCacheProps: `src/emotion-cache-props`,
-      },
-    },
+    `gatsby-plugin-material-ui`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

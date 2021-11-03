@@ -1,1 +1,0 @@
-module.exports = require('./src/netlify/functions/admin-setting-booking/admin-setting-booking.js')

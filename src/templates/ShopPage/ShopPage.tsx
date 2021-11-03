@@ -86,10 +86,11 @@ const ShopPage: React.FC<IShopPageProps> = ({
       setShowCancelBooking(true)
       axios
         .post(
-          "/.netlify/functions/cancel-booking",
+          "/.netlify/functions/cancel-termin",
           JSON.stringify({ bookingId, shopName, shopInfo })
         )
         .then(res => {
+          console.log("res.data", res.data)
           setIsLoading(false)
           setBooking(res.data)
         })
@@ -124,7 +125,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
     }
     setIsLoading(true)
     axios
-      .post("/.netlify/functions/confirm-booking", JSON.stringify(dataBooking))
+      .post("/.netlify/functions/confirm-termin", JSON.stringify(dataBooking))
       .then(res => {
         if (res.data === "EMAIL_SENT") {
           setIsLoading(false)
