@@ -12,8 +12,8 @@ import { Link, useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
 import Carousel from "react-material-ui-carousel"
 
-import freeTermin from "../../images/free.svg"
-import proTermin from "../../images/pro.svg"
+import freeTermin from "src/images/free.svg"
+import proTermin from "src/images/pro.svg"
 
 const useStyles = makeStyles((theme: Theme) => ({
   wrapCarousel: {

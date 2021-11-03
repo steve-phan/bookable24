@@ -1,10 +1,10 @@
 import { graphql, PageProps } from "gatsby"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 import * as React from "react"
-import Hero from "../components/Hero"
+import Hero from "../components/ContentComponents/Hero"
 import Layout from "../components/Layout/Layout"
 import SEO from "../components/seo"
-import WhyUs from "../components/WhyUs"
+import WhyUs from "../components/ContentComponents/WhyUs"
 
 const IndexPage: React.FC<PageProps> = ({ location, data }) => {
   const { t } = useTranslation()

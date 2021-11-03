@@ -15,7 +15,7 @@ import Footer from "./Footer/Footer"
 import Header from "./Header"
 import { BodySt } from "./Layout.css"
 // import "./reset.css"
-import Loading from "../Loading/Loading"
+import Loading from "../ContentComponents/Loading/Loading"
 
 export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 

@@ -10,7 +10,7 @@ import Hidden from "@mui/material/Hidden"
 import Menu from "@mui/icons-material/Menu"
 import { Button } from "@mui/material"
 
-import Logo from "src/components/Logo"
+import Logo from "src/components/ContentComponents/Logo"
 
 import { AppBarSt } from "./Header.css"
 import LangSelect from "../../LangSelect"

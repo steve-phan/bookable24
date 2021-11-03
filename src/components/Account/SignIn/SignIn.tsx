@@ -13,7 +13,6 @@ import {
 import { Link } from "gatsby-plugin-react-i18next"
 import React, { useEffect } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
-import { navigate } from "gatsby-link"
 
 import { auth } from "src/firebase"
 
@@ -38,7 +37,7 @@ interface IloginStates {
 }
 
 const SignIn = ({ location }: { location: any }) => {
-  // const { navigate } = useI18next()
+  const { navigate } = useI18next()
   const [values, setValues] = React.useState<IloginStates>({
     email: "",
     password: "",
@@ -46,7 +45,8 @@ const SignIn = ({ location }: { location: any }) => {
     loading: false,
   })
   const dispatch = useAppDispatch()
-  const { isShopLogin, status } = useAppSelector(state => state.shop)
+  const { isShopLogin, status, allTermins, shopInfo, settings } =
+    useAppSelector(state => state.shop)
   const shopList = useShopname()
 
   useEffect(() => {
@@ -82,19 +82,29 @@ const SignIn = ({ location }: { location: any }) => {
 
   const handleShopLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password)
+      await signInWithEmailAndPassword(
+        auth,
+        values.email.toLowerCase(),
+        values.password
+      )
       await setPersistence(auth, browserLocalPersistence)
         .then(() => {
-          return signInWithEmailAndPassword(auth, values.email, values.password)
+          return signInWithEmailAndPassword(
+            auth,
+            values.email.toLowerCase(),
+            values.password
+          )
         })
         .catch(err => console.log(err))
-      dispatch(
+      await dispatch(
         getShopinfo({
           shopemail: values.email,
           shopname: getShopName(values.email, shopList),
           isShopLogin: true,
         })
       )
+
+      await navigate("/dashboard")
     } catch (error) {
       alert("Email or Password was not correct :)")
       console.log(error)

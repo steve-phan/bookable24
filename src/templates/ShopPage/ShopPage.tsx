@@ -7,7 +7,7 @@ import dayjs from "dayjs"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { getShopinfo } from "src/store/shop/shopSlice"
-import Loading from "src/components/Loading/Loading"
+import Loading from "src/components/ContentComponents/Loading/Loading"
 import Layout from "src/components/Layout/Layout"
 import SEO from "src/components/seo"
 

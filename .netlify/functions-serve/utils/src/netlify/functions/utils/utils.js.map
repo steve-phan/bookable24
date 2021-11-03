@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../../../../../Users/stephan/Dev/Working/gatsby-template/netlify/functions/utils/utils.ts"],
-  "sourceRoot": "/var/folders/zm/6xzb_hrn4q545hn87_2fq4_c0000gn/T/tmp-5441-j1bjGZMlc9p5",
+  "sourceRoot": "/var/folders/zm/6xzb_hrn4q545hn87_2fq4_c0000gn/T/tmp-21463-WaYcVwF9uRGj",
   "sourcesContent": ["/**\n *\n * @param {string} dbName\n * @returns {string}\n */\n\nconst getUrl = dbName =>\n  `mongodb+srv://teddy:${process.env.MONGO_PASSWORD}@cluster0.nanpu.mongodb.net/${dbName}?retryWrites=true&w=majority`\n\nmodule.exports = { getUrl }\n"],
   "mappings": ";AAMA,IAAM,SAAS,YACb,uBAAuB,QAAQ,IAAI,6CAA6C;AAElF,OAAO,UAAU,EAAE;",
   "names": []
