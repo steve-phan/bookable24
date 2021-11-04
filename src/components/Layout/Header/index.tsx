@@ -7,7 +7,7 @@ import { useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
 
 import { routes } from "../routes"
-import Logo from "../../Logo"
+import Logo from "../../ContentComponents/Logo"
 import { CTAButtons, WrapLoginSt, DashBoardButtonSt } from "./Header.css"
 import LangSelect from "../LangSelect"
 import MobileMenu from "../NavLinks/MobileMenu"

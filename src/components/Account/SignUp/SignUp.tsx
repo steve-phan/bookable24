@@ -14,7 +14,7 @@ import { validateEmail, validatePhone } from "src/utils"
 import { auth } from "src/firebase"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 
-import Loading from "../../Loading/Loading"
+import Loading from "../../ContentComponents/Loading/Loading"
 import {
   ButtonSt,
   FormControlSt,

@@ -13,7 +13,6 @@ const RequestAccount: React.FC<PageProps> = ({ location, data }) => {
   return (
     <Layout location={location}>
       <SEO title="Request Account BookAble24" />
-
       <SignUp />
     </Layout>
   )

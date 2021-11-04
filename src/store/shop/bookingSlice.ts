@@ -15,6 +15,7 @@ const initialBookingState: IbookingState = {
   },
   isValidInfo: false,
 }
+
 // export const setNumberOfGuest = createAction<number>("booking/number-of-guest")
 // const bookingReducers = createReducer(initialBookingState, builder => {
 //   builder.addCase(setNumberOfGuest, (state: IbookingState, action) => {
@@ -22,6 +23,7 @@ const initialBookingState: IbookingState = {
 //     state.numberOfGuest = action.payload
 //   })
 // })
+
 export type TGuestInfo =
   | "firstName"
   | "lastName"

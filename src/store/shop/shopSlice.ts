@@ -6,7 +6,7 @@ import { auth } from "src/firebase"
 import { getShopName } from "src/utils"
 
 import { AppThunk } from "../store"
-import { IshopState, IshopQuery } from "./shop.types"
+import { IshopState, IshopQuery, IshopInfo } from "./shop.types"
 
 export const checkUserAuth =
   (shopList: any[]): AppThunk =>
@@ -80,7 +80,8 @@ export const getShopinfo = createAsyncThunk(
         },
       }
     )
-    const { allTermins, shopInfo } = response.data
+    const { allTermins, shopInfo }: { allTermins: any[]; shopInfo: IshopInfo } =
+      response.data
     return { allTermins, shopInfo, isShopLogin }
   }
 )
@@ -101,7 +102,9 @@ export const shopSlice = createSlice({
       state.shopInfo = intinitialShopState.shopInfo
     },
     setSettingDisableTime: (state, action) => {
-      state.shopInfo.settings.time = action.payload
+      if (action.payload) {
+        state.shopInfo.settings.time = action.payload
+      }
     },
     setSetingsDisableDays: (state, action) => {
       state.shopInfo.settings.weekdays = action.payload
@@ -113,12 +116,47 @@ export const shopSlice = createSlice({
         state.status = "loading"
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
-        state.status = action.payload.isShopLogin ? "login" : "logout"
-        state.isShopLogin = action.payload.isShopLogin
-          ? true
-          : state.isShopLogin
-        state.shopInfo = { ...state.shopInfo, ...action.payload.shopInfo }
-        state.allTermins = action.payload.allTermins
+        console.log("action.payload.shopInfo", action.payload.shopInfo)
+        const {
+          city,
+          cityCode,
+          company,
+          email,
+          firstName,
+          lastName,
+          phoneNumber,
+          shopName,
+          street,
+          uid,
+          settings,
+        } = action.payload.shopInfo
+        const { time, weekdays } = settings
+        const newarr = [...action.payload.allTermins]
+        const isShopLogin = action.payload.isShopLogin ? true : false
+        const status = action.payload.isShopLogin ? "login" : "logout"
+
+        return {
+          ...state,
+          allTermins: [...newarr],
+          isShopLogin,
+          status,
+          shopInfo: {
+            city,
+            cityCode,
+            company,
+            email,
+            firstName,
+            lastName,
+            phoneNumber,
+            shopName,
+            street,
+            uid,
+            settings: {
+              time,
+              weekdays,
+            },
+          },
+        }
       })
       .addCase(getShopinfo.rejected, state => {
         state.status = "logout"

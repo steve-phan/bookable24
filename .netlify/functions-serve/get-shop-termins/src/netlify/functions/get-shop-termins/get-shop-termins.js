@@ -34773,9 +34773,9 @@ var require_schema2 = __commonJS({
     var documentHooks = require_applyHooks().middlewareFunctions;
     var hookNames = queryHooks.concat(documentHooks).reduce((s, hook) => s.add(hook), new Set());
     var id = 0;
-    function Schema2(obj, options) {
-      if (!(this instanceof Schema2)) {
-        return new Schema2(obj, options);
+    function Schema(obj, options) {
+      if (!(this instanceof Schema)) {
+        return new Schema(obj, options);
       }
       this.obj = obj;
       this.paths = {};
@@ -34844,29 +34844,29 @@ var require_schema2 = __commonJS({
         }(prop));
       }
     }
-    Schema2.prototype = Object.create(EventEmitter.prototype);
-    Schema2.prototype.constructor = Schema2;
-    Schema2.prototype.instanceOfSchema = true;
-    Object.defineProperty(Schema2.prototype, "$schemaType", {
+    Schema.prototype = Object.create(EventEmitter.prototype);
+    Schema.prototype.constructor = Schema;
+    Schema.prototype.instanceOfSchema = true;
+    Object.defineProperty(Schema.prototype, "$schemaType", {
       configurable: false,
       enumerable: false,
       writable: true
     });
-    Object.defineProperty(Schema2.prototype, "childSchemas", {
+    Object.defineProperty(Schema.prototype, "childSchemas", {
       configurable: false,
       enumerable: true,
       writable: true
     });
-    Object.defineProperty(Schema2.prototype, "virtuals", {
+    Object.defineProperty(Schema.prototype, "virtuals", {
       configurable: false,
       enumerable: true,
       writable: true
     });
-    Schema2.prototype.obj;
-    Schema2.prototype.paths;
-    Schema2.prototype.tree;
-    Schema2.prototype.clone = function() {
-      const Constructor = this.base == null ? Schema2 : this.base.Schema;
+    Schema.prototype.obj;
+    Schema.prototype.paths;
+    Schema.prototype.tree;
+    Schema.prototype.clone = function() {
+      const Constructor = this.base == null ? Schema : this.base.Schema;
       const s = new Constructor({}, this._userProvidedOptions);
       s.base = this.base;
       s.obj = this.obj;
@@ -34904,8 +34904,8 @@ var require_schema2 = __commonJS({
       s.on("init", (v) => this.emit("init", v));
       return s;
     };
-    Schema2.prototype.pick = function(paths, options) {
-      const newSchema = new Schema2({}, options || this.options);
+    Schema.prototype.pick = function(paths, options) {
+      const newSchema = new Schema({}, options || this.options);
       if (!Array.isArray(paths)) {
         throw new MongooseError('Schema#pick() only accepts an array argument, got "' + typeof paths + '"');
       }
@@ -34922,7 +34922,7 @@ var require_schema2 = __commonJS({
       }
       return newSchema;
     };
-    Schema2.prototype.defaultOptions = function(options) {
+    Schema.prototype.defaultOptions = function(options) {
       this._userProvidedOptions = options == null ? {} : utils.clone(options);
       const baseOptions = get(this, "base.options", {});
       const strict = "strict" in baseOptions ? baseOptions.strict : true;
@@ -34954,8 +34954,8 @@ var require_schema2 = __commonJS({
       }
       return options;
     };
-    Schema2.prototype.add = function add(obj, prefix) {
-      if (obj instanceof Schema2 || obj != null && obj.instanceOfSchema) {
+    Schema.prototype.add = function add(obj, prefix) {
+      if (obj instanceof Schema || obj != null && obj.instanceOfSchema) {
         merge(this, obj);
         return this;
       }
@@ -35001,7 +35001,7 @@ var require_schema2 = __commonJS({
             if (prefix) {
               this.nested[prefix.substr(0, prefix.length - 1)] = true;
             }
-            const _schema = new Schema2(_typeDef);
+            const _schema = new Schema(_typeDef);
             const schemaWrappedPath = Object.assign({}, obj[key], { type: _schema });
             this.path(prefix + key, schemaWrappedPath);
           } else {
@@ -35016,12 +35016,12 @@ var require_schema2 = __commonJS({
       aliasFields(this, addedKeys);
       return this;
     };
-    Schema2.reserved = Object.create(null);
-    Schema2.prototype.reserved = Schema2.reserved;
-    var reserved = Schema2.reserved;
+    Schema.reserved = Object.create(null);
+    Schema.prototype.reserved = Schema.reserved;
+    var reserved = Schema.reserved;
     reserved["prototype"] = reserved.emit = reserved.listeners = reserved.on = reserved.removeListener = reserved.collection = reserved.errors = reserved.get = reserved.init = reserved.isModified = reserved.isNew = reserved.populated = reserved.remove = reserved.save = reserved.toObject = reserved.validate = 1;
     reserved.collection = 1;
-    Schema2.prototype.path = function(path, obj) {
+    Schema.prototype.path = function(path, obj) {
       const cleanPath = _pathToPositionalSyntax(path);
       if (obj === void 0) {
         let schematype = _getPath(this, path, cleanPath);
@@ -35195,13 +35195,13 @@ var require_schema2 = __commonJS({
       }
       return null;
     }
-    Object.defineProperty(Schema2.prototype, "base", {
+    Object.defineProperty(Schema.prototype, "base", {
       configurable: true,
       enumerable: false,
       writable: true,
       value: null
     });
-    Schema2.prototype.interpretAsType = function(path, obj, options) {
+    Schema.prototype.interpretAsType = function(path, obj, options) {
       if (obj instanceof SchemaType) {
         if (obj.path === path) {
           return obj;
@@ -35210,7 +35210,7 @@ var require_schema2 = __commonJS({
         clone.path = path;
         return clone;
       }
-      const MongooseTypes2 = this.base != null ? this.base.Schema.Types : Schema2.Types;
+      const MongooseTypes2 = this.base != null ? this.base.Schema.Types : Schema.Types;
       if (!utils.isPOJO(obj) && !(obj instanceof SchemaTypeOptions)) {
         const constructorName = utils.getFunctionName(obj.constructor);
         if (constructorName !== "Object") {
@@ -35227,13 +35227,13 @@ var require_schema2 = __commonJS({
       if (Array.isArray(type) || type === Array || type === "array" || type === MongooseTypes2.Array) {
         let cast = type === Array || type === "array" ? obj.cast || obj.of : type[0];
         if (cast && cast.instanceOfSchema) {
-          if (!(cast instanceof Schema2)) {
+          if (!(cast instanceof Schema)) {
             throw new TypeError("Schema for array path `" + path + "` is from a different copy of the Mongoose module. Please make sure you're using the same version of Mongoose everywhere with `npm list mongoose`.");
           }
           return new MongooseTypes2.DocumentArray(path, cast, obj);
         }
         if (cast && cast[options.typeKey] && cast[options.typeKey].instanceOfSchema) {
-          if (!(cast[options.typeKey] instanceof Schema2)) {
+          if (!(cast[options.typeKey] instanceof Schema)) {
             throw new TypeError("Schema for array path `" + path + "` is from a different copy of the Mongoose module. Please make sure you're using the same version of Mongoose everywhere with `npm list mongoose`.");
           }
           return new MongooseTypes2.DocumentArray(path, cast[options.typeKey], obj, cast);
@@ -35255,10 +35255,10 @@ var require_schema2 = __commonJS({
             }
             if (this._userProvidedOptions.hasOwnProperty("_id")) {
               childSchemaOptions._id = this._userProvidedOptions._id;
-            } else if (Schema2.Types.DocumentArray.defaultOptions._id != null) {
-              childSchemaOptions._id = Schema2.Types.DocumentArray.defaultOptions._id;
+            } else if (Schema.Types.DocumentArray.defaultOptions._id != null) {
+              childSchemaOptions._id = Schema.Types.DocumentArray.defaultOptions._id;
             }
-            const childSchema = new Schema2(castFromTypeKey, childSchemaOptions);
+            const childSchema = new Schema(castFromTypeKey, childSchemaOptions);
             childSchema.$implicitlyCreated = true;
             return new MongooseTypes2.DocumentArray(path, childSchema, obj);
           } else {
@@ -35317,7 +35317,7 @@ var require_schema2 = __commonJS({
       if (utils.hasUserDefinedProperty(obj, "of")) {
         const isInlineSchema = utils.isPOJO(obj.of) && Object.keys(obj.of).length > 0 && !utils.hasUserDefinedProperty(obj.of, schema.options.typeKey);
         if (isInlineSchema) {
-          _mapType = { [schema.options.typeKey]: new Schema2(obj.of) };
+          _mapType = { [schema.options.typeKey]: new Schema(obj.of) };
         } else if (utils.isPOJO(obj.of)) {
           _mapType = Object.assign({}, obj.of);
         } else {
@@ -35329,7 +35329,7 @@ var require_schema2 = __commonJS({
       }
       schemaType.$__schemaType = schema.interpretAsType(mapPath, _mapType, options);
     }
-    Schema2.prototype.eachPath = function(fn) {
+    Schema.prototype.eachPath = function(fn) {
       const keys = Object.keys(this.paths);
       const len = keys.length;
       for (let i = 0; i < len; ++i) {
@@ -35337,7 +35337,7 @@ var require_schema2 = __commonJS({
       }
       return this;
     };
-    Schema2.prototype.requiredPaths = function requiredPaths(invalidate) {
+    Schema.prototype.requiredPaths = function requiredPaths(invalidate) {
       if (this._requiredpaths && !invalidate) {
         return this._requiredpaths;
       }
@@ -35353,14 +35353,14 @@ var require_schema2 = __commonJS({
       this._requiredpaths = ret;
       return this._requiredpaths;
     };
-    Schema2.prototype.indexedPaths = function indexedPaths() {
+    Schema.prototype.indexedPaths = function indexedPaths() {
       if (this._indexedpaths) {
         return this._indexedpaths;
       }
       this._indexedpaths = this.indexes();
       return this._indexedpaths;
     };
-    Schema2.prototype.pathType = function(path) {
+    Schema.prototype.pathType = function(path) {
       const cleanPath = _pathToPositionalSyntax(path);
       if (this.paths.hasOwnProperty(path)) {
         return "real";
@@ -35387,7 +35387,7 @@ var require_schema2 = __commonJS({
       }
       return "adhocOrUndefined";
     };
-    Schema2.prototype.hasMixedParent = function(path) {
+    Schema.prototype.hasMixedParent = function(path) {
       const subpaths = path.split(/\./g);
       path = "";
       for (let i = 0; i < subpaths.length; ++i) {
@@ -35398,7 +35398,7 @@ var require_schema2 = __commonJS({
       }
       return null;
     };
-    Schema2.prototype.setupTimestamp = function(timestamps) {
+    Schema.prototype.setupTimestamp = function(timestamps) {
       return setupTimestamps(this, timestamps);
     };
     function getPositionalPathType(self2, path) {
@@ -35452,11 +35452,11 @@ var require_schema2 = __commonJS({
       getPositionalPathType(self2, path);
       return self2.subpaths[path];
     }
-    Schema2.prototype.queue = function(name, args) {
+    Schema.prototype.queue = function(name, args) {
       this.callQueue.push([name, args]);
       return this;
     };
-    Schema2.prototype.pre = function(name) {
+    Schema.prototype.pre = function(name) {
       if (name instanceof RegExp) {
         const remainingArgs = Array.prototype.slice.call(arguments, 1);
         for (const fn of hookNames) {
@@ -35476,7 +35476,7 @@ var require_schema2 = __commonJS({
       this.s.hooks.pre.apply(this.s.hooks, arguments);
       return this;
     };
-    Schema2.prototype.post = function(name) {
+    Schema.prototype.post = function(name) {
       if (name instanceof RegExp) {
         const remainingArgs = Array.prototype.slice.call(arguments, 1);
         for (const fn of hookNames) {
@@ -35496,7 +35496,7 @@ var require_schema2 = __commonJS({
       this.s.hooks.post.apply(this.s.hooks, arguments);
       return this;
     };
-    Schema2.prototype.plugin = function(fn, opts) {
+    Schema.prototype.plugin = function(fn, opts) {
       if (typeof fn !== "function") {
         throw new Error('First param to `schema.plugin()` must be a function, got "' + typeof fn + '"');
       }
@@ -35511,7 +35511,7 @@ var require_schema2 = __commonJS({
       fn(this, opts);
       return this;
     };
-    Schema2.prototype.method = function(name, fn, options) {
+    Schema.prototype.method = function(name, fn, options) {
       if (typeof name !== "string") {
         for (const i in name) {
           this.methods[i] = name[i];
@@ -35523,7 +35523,7 @@ var require_schema2 = __commonJS({
       }
       return this;
     };
-    Schema2.prototype.static = function(name, fn) {
+    Schema.prototype.static = function(name, fn) {
       if (typeof name !== "string") {
         for (const i in name) {
           this.statics[i] = name[i];
@@ -35533,7 +35533,7 @@ var require_schema2 = __commonJS({
       }
       return this;
     };
-    Schema2.prototype.index = function(fields, options) {
+    Schema.prototype.index = function(fields, options) {
       fields || (fields = {});
       options || (options = {});
       if (options.expires) {
@@ -35542,7 +35542,7 @@ var require_schema2 = __commonJS({
       this._indexes.push([fields, options]);
       return this;
     };
-    Schema2.prototype.set = function(key, value, _tags) {
+    Schema.prototype.set = function(key, value, _tags) {
       if (arguments.length === 1) {
         return this.options[key];
       }
@@ -35572,11 +35572,11 @@ var require_schema2 = __commonJS({
       }
       return this;
     };
-    Schema2.prototype.get = function(key) {
+    Schema.prototype.get = function(key) {
       return this.options[key];
     };
     var indexTypes = "2d 2dsphere hashed text".split(" ");
-    Object.defineProperty(Schema2, "indexTypes", {
+    Object.defineProperty(Schema, "indexTypes", {
       get: function() {
         return indexTypes;
       },
@@ -35584,10 +35584,10 @@ var require_schema2 = __commonJS({
         throw new Error("Cannot overwrite Schema.indexTypes");
       }
     });
-    Schema2.prototype.indexes = function() {
+    Schema.prototype.indexes = function() {
       return getIndexes(this);
     };
-    Schema2.prototype.virtual = function(name, options) {
+    Schema.prototype.virtual = function(name, options) {
       if (name instanceof VirtualType || getConstructorName(name) === "VirtualType") {
         return this.virtual(name.path, name.options);
       }
@@ -35657,10 +35657,10 @@ var require_schema2 = __commonJS({
       }, this.tree);
       return virtuals[name];
     };
-    Schema2.prototype.virtualpath = function(name) {
+    Schema.prototype.virtualpath = function(name) {
       return this.virtuals.hasOwnProperty(name) ? this.virtuals[name] : null;
     };
-    Schema2.prototype.remove = function(path) {
+    Schema.prototype.remove = function(path) {
       if (typeof path === "string") {
         path = [path];
       }
@@ -35697,7 +35697,7 @@ var require_schema2 = __commonJS({
       }
       delete branch[last];
     }
-    Schema2.prototype.loadClass = function(model, virtualsOnly) {
+    Schema.prototype.loadClass = function(model, virtualsOnly) {
       if (model === Object.prototype || model === Function.prototype || model.prototype.hasOwnProperty("$isMongooseModelPrototype")) {
         return this;
       }
@@ -35738,7 +35738,7 @@ var require_schema2 = __commonJS({
       }, this);
       return this;
     };
-    Schema2.prototype._getSchema = function(path) {
+    Schema.prototype._getSchema = function(path) {
       const _this = this;
       const pathschema = _this.path(path);
       const resultPath = [];
@@ -35803,7 +35803,7 @@ var require_schema2 = __commonJS({
       }
       return search(parts, _this);
     };
-    Schema2.prototype._getPathType = function(path) {
+    Schema.prototype._getPathType = function(path) {
       const _this = this;
       const pathschema = _this.path(path);
       if (pathschema) {
@@ -35845,11 +35845,11 @@ var require_schema2 = __commonJS({
     function isArrayFilter(piece) {
       return piece.startsWith("$[") && piece.endsWith("]");
     }
-    Schema2.prototype._preCompile = function _preCompile() {
+    Schema.prototype._preCompile = function _preCompile() {
       idGetter(this);
     };
-    module2.exports = exports = Schema2;
-    Schema2.Types = MongooseTypes = require_schema();
+    module2.exports = exports = Schema;
+    Schema.Types = MongooseTypes = require_schema();
     exports.ObjectId = MongooseTypes.ObjectId;
   }
 });
@@ -36393,7 +36393,7 @@ var require_document = __commonJS({
     var ObjectExpectedError = require_objectExpected();
     var ObjectParameterError = require_objectParameter();
     var ParallelValidateError = require_parallelValidate();
-    var Schema2 = require_schema2();
+    var Schema = require_schema2();
     var StrictModeError = require_strict();
     var ValidationError = require_validation();
     var ValidatorError = require_validator();
@@ -36443,7 +36443,7 @@ var require_document = __commonJS({
       }
       options = Object.assign({}, options);
       if (this.$__schema == null) {
-        const _schema = utils.isObject(fields) && !fields.instanceOfSchema ? new Schema2(fields) : fields;
+        const _schema = utils.isObject(fields) && !fields.instanceOfSchema ? new Schema(fields) : fields;
         this.$__setSchema(_schema);
         fields = skipId;
         skipId = options;
@@ -40274,7 +40274,7 @@ var require_connection2 = __commonJS({
     "use strict";
     var ChangeStream = require_ChangeStream();
     var EventEmitter = require("events").EventEmitter;
-    var Schema2 = require_schema2();
+    var Schema = require_schema2();
     var Collection = require_driver().get().Collection;
     var STATES = require_connectionstate();
     var MongooseError = require_error3();
@@ -40741,7 +40741,7 @@ var require_connection2 = __commonJS({
         schema = false;
       }
       if (utils.isObject(schema) && !schema.instanceOfSchema) {
-        schema = new Schema2(schema);
+        schema = new Schema(schema);
       }
       if (schema && !schema.instanceOfSchema) {
         throw new Error("The 2nd parameter to `mongoose.model()` should be a schema or a POJO");
@@ -47885,7 +47885,7 @@ var require_model = __commonJS({
     var Query = require_query();
     var RemoveOptions = require_removeOptions();
     var SaveOptions = require_saveOptions();
-    var Schema2 = require_schema2();
+    var Schema = require_schema2();
     var ServerSelectionError = require_serverSelection();
     var ValidationError = require_validation();
     var VersionError = require_version();
@@ -47929,7 +47929,7 @@ var require_model = __commonJS({
       bson: true
     });
     function Model(doc, fields, skipId) {
-      if (fields instanceof Schema2) {
+      if (fields instanceof Schema) {
         throw new TypeError("2nd argument to `Model` must be a POJO or string, **not** a schema. Make sure you're calling `mongoose.model()`, not `mongoose.Model()`.");
       }
       Document.call(this, doc, fields, skipId);
@@ -48455,9 +48455,9 @@ var require_model = __commonJS({
       const clone = get(options, "clone", true);
       _checkContext(this, "discriminator");
       if (utils.isObject(schema) && !schema.instanceOfSchema) {
-        schema = new Schema2(schema);
+        schema = new Schema(schema);
       }
-      if (schema instanceof Schema2 && clone) {
+      if (schema instanceof Schema && clone) {
         schema = schema.clone();
       }
       schema = discriminator(this, name, schema, value, true);
@@ -49606,7 +49606,7 @@ var require_model = __commonJS({
         cb = this.$wrapCallback(cb);
         if (!Model.mapReduce.schema) {
           const opts = { _id: false, id: false, strict: false };
-          Model.mapReduce.schema = new Schema2({}, opts);
+          Model.mapReduce.schema = new Schema({}, opts);
         }
         if (!o.out)
           o.out = { inline: 1 };
@@ -50529,7 +50529,7 @@ var require_browserDocument = __commonJS({
     var NodeJSDocument = require_document();
     var EventEmitter = require("events").EventEmitter;
     var MongooseError = require_error3();
-    var Schema2 = require_schema2();
+    var Schema = require_schema2();
     var ObjectId2 = require_objectid3();
     var ValidationError = MongooseError.ValidationError;
     var applyHooks = require_applyHooks();
@@ -50539,7 +50539,7 @@ var require_browserDocument = __commonJS({
         return new Document(obj, schema, fields, skipId, skipInit);
       }
       if (isObject(schema) && !schema.instanceOfSchema) {
-        schema = new Schema2(schema);
+        schema = new Schema(schema);
       }
       schema = this.schema || schema;
       if (!this.schema && schema.options._id) {
@@ -50610,7 +50610,7 @@ var require_lib6 = __commonJS({
     require_driver().set(require_node_mongodb_native());
     var Document = require_document();
     var EventEmitter = require("events").EventEmitter;
-    var Schema2 = require_schema2();
+    var Schema = require_schema2();
     var SchemaType = require_schematype();
     var SchemaTypes = require_schema();
     var VirtualType = require_virtualtype();
@@ -50656,12 +50656,12 @@ var require_lib6 = __commonJS({
         const _this = this;
         this.Schema = function() {
           this.base = _this;
-          return Schema2.apply(this, arguments);
+          return Schema.apply(this, arguments);
         };
-        this.Schema.prototype = Object.create(Schema2.prototype);
-        Object.assign(this.Schema, Schema2);
+        this.Schema.prototype = Object.create(Schema.prototype);
+        Object.assign(this.Schema, Schema);
         this.Schema.base = this;
-        this.Schema.Types = Object.assign({}, Schema2.Types);
+        this.Schema.Types = Object.assign({}, Schema.Types);
       } else {
         for (const key of ["Schema", "model"]) {
           this[key] = Mongoose.prototype[key];
@@ -50685,7 +50685,7 @@ var require_lib6 = __commonJS({
     Mongoose.prototype.STATES = STATES;
     Mongoose.prototype.driver = driver;
     Mongoose.prototype.set = function(key, value) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       if (VALID_OPTIONS.indexOf(key) === -1)
         throw new Error(`\`${key}\` is an invalid option.`);
       if (arguments.length === 1) {
@@ -50694,7 +50694,7 @@ var require_lib6 = __commonJS({
       _mongoose.options[key] = value;
       if (key === "objectIdGetter") {
         if (value) {
-          Object.defineProperty(mongoose2.Types.ObjectId.prototype, "_id", {
+          Object.defineProperty(mongoose.Types.ObjectId.prototype, "_id", {
             enumerable: false,
             configurable: true,
             get: function() {
@@ -50702,14 +50702,14 @@ var require_lib6 = __commonJS({
             }
           });
         } else {
-          delete mongoose2.Types.ObjectId.prototype._id;
+          delete mongoose.Types.ObjectId.prototype._id;
         }
       }
       return _mongoose;
     };
     Mongoose.prototype.get = Mongoose.prototype.set;
     Mongoose.prototype.createConnection = function(uri, options, callback) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       const conn = new Connection(_mongoose);
       if (typeof options === "function") {
         callback = options;
@@ -50723,7 +50723,7 @@ var require_lib6 = __commonJS({
       return conn;
     };
     Mongoose.prototype.connect = function(uri, options, callback) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       const conn = _mongoose.connection;
       return _mongoose._promiseOrCallback(callback, (cb) => {
         conn.openUri(uri, options, (err) => {
@@ -50735,7 +50735,7 @@ var require_lib6 = __commonJS({
       });
     };
     Mongoose.prototype.disconnect = function(callback) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       return _mongoose._promiseOrCallback(callback, (cb) => {
         let remaining = _mongoose.connections.length;
         if (remaining <= 0) {
@@ -50754,26 +50754,26 @@ var require_lib6 = __commonJS({
       });
     };
     Mongoose.prototype.startSession = function() {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       return _mongoose.connection.startSession.apply(_mongoose.connection, arguments);
     };
     Mongoose.prototype.pluralize = function(fn) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       if (arguments.length > 0) {
         _mongoose._pluralize = fn;
       }
       return _mongoose._pluralize;
     };
     Mongoose.prototype.model = function(name, schema, collection, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       if (typeof schema === "string") {
         collection = schema;
         schema = false;
       }
-      if (utils.isObject(schema) && !(schema instanceof Schema2)) {
-        schema = new Schema2(schema);
+      if (utils.isObject(schema) && !(schema instanceof Schema)) {
+        schema = new Schema(schema);
       }
-      if (schema && !(schema instanceof Schema2)) {
+      if (schema && !(schema instanceof Schema)) {
         throw new Error("The 2nd parameter to `mongoose.model()` should be a schema or a POJO");
       }
       options = options || {};
@@ -50806,7 +50806,7 @@ var require_lib6 = __commonJS({
       return model;
     };
     Mongoose.prototype._model = function(name, schema, collection, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       let model;
       if (typeof name === "function") {
         model = name;
@@ -50835,25 +50835,25 @@ var require_lib6 = __commonJS({
       return model;
     };
     Mongoose.prototype.deleteModel = function(name) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       _mongoose.connection.deleteModel(name);
       delete _mongoose.models[name];
       return _mongoose;
     };
     Mongoose.prototype.modelNames = function() {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       const names = Object.keys(_mongoose.models);
       return names;
     };
     Mongoose.prototype._applyPlugins = function(schema, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       options = options || {};
       options.applyPluginsToDiscriminators = get(_mongoose, "options.applyPluginsToDiscriminators", false);
       options.applyPluginsToChildSchemas = get(_mongoose, "options.applyPluginsToChildSchemas", true);
       applyPlugins(schema, _mongoose.plugins, options, "$globalPluginsApplied");
     };
     Mongoose.prototype.plugin = function(fn, opts) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose2;
+      const _mongoose = this instanceof Mongoose ? this : mongoose;
       _mongoose.plugins.push([fn, opts]);
       return _mongoose;
     };
@@ -50874,9 +50874,9 @@ var require_lib6 = __commonJS({
     Mongoose.prototype.Connection = Connection;
     Mongoose.prototype.version = pkg.version;
     Mongoose.prototype.Mongoose = Mongoose;
-    Mongoose.prototype.Schema = Schema2;
+    Mongoose.prototype.Schema = Schema;
     Mongoose.prototype.SchemaType = SchemaType;
-    Mongoose.prototype.SchemaTypes = Schema2.Types;
+    Mongoose.prototype.SchemaTypes = Schema.Types;
     Mongoose.prototype.VirtualType = VirtualType;
     Mongoose.prototype.Types = Types;
     Mongoose.prototype.Query = Query;
@@ -50897,7 +50897,7 @@ var require_lib6 = __commonJS({
       if (v == null) {
         return true;
       }
-      const base = this || mongoose2;
+      const base = this || mongoose;
       const ObjectId2 = base.driver.get().ObjectId;
       if (v instanceof ObjectId2) {
         return true;
@@ -50945,7 +50945,7 @@ var require_lib6 = __commonJS({
     Mongoose.prototype._promiseOrCallback = function(callback, fn, ee) {
       return promiseOrCallback(callback, fn, ee, this.Promise);
     };
-    var mongoose2 = module2.exports = exports = new Mongoose({
+    var mongoose = module2.exports = exports = new Mongoose({
       [defaultMongooseSymbol]: true
     });
   }
@@ -51035,13 +51035,13 @@ var require_main = __commonJS({
   }
 });
 
-// netlify/functions/utils/models/bookingModel.ts
+// netlify/functions/utils/models/bookingModel.js
 var require_bookingModel = __commonJS({
-  "netlify/functions/utils/models/bookingModel.ts"(exports, module2) {
-    var mongoose2 = require_mongoose();
+  "netlify/functions/utils/models/bookingModel.js"(exports, module2) {
+    var mongoose = require_mongoose();
     require_main().config();
-    var Schema2 = mongoose2.Schema;
-    var appointmentSchema2 = new Schema2({
+    var Schema = mongoose.Schema;
+    var appointmentSchema2 = new Schema({
       first_name: String,
       last_name: String,
       email: String,
@@ -51063,6 +51063,31 @@ var require_bookingModel = __commonJS({
   }
 });
 
+// netlify/functions/utils/models/shopInfoModel.js
+var require_shopInfoModel = __commonJS({
+  "netlify/functions/utils/models/shopInfoModel.js"(exports, module2) {
+    var mongoose = require_mongoose();
+    require_main().config();
+    var Schema = mongoose.Schema;
+    var shopinfoSchema = new Schema({
+      company: String,
+      email: String,
+      password: String,
+      phoneNumber: String,
+      city: String,
+      cityCode: String,
+      street: String,
+      firstName: String,
+      lastName: String,
+      uid: String,
+      shopName: String,
+      settings: {}
+    });
+    var ShopInfo2 = mongoose.model("Shopinfo", shopinfoSchema);
+    module2.exports = { shopinfoSchema, ShopInfo: ShopInfo2 };
+  }
+});
+
 // netlify/functions/utils/utils.ts
 var require_utils6 = __commonJS({
   "netlify/functions/utils/utils.ts"(exports, module2) {
@@ -51074,15 +51099,15 @@ var require_utils6 = __commonJS({
 // netlify/functions/utils/mongooseConnect.js
 var require_mongooseConnect = __commonJS({
   "netlify/functions/utils/mongooseConnect.js"(exports, module2) {
-    var mongoose2 = require_mongoose();
+    var mongoose = require_mongoose();
     var { getUrl } = require_utils6();
     var conn = null;
     var connect2 = async function() {
       let url = getUrl("shopnames");
       if (conn == null) {
-        conn = mongoose2.connect(url, {
+        conn = mongoose.connect(url, {
           serverSelectionTimeoutMS: 5e3
-        }).then(() => mongoose2);
+        }).then(() => mongoose);
         await conn;
       }
       return conn;
@@ -51096,35 +51121,14 @@ __export(exports, {
   handler: () => handler
 });
 var import_bookingModel = __toModule(require_bookingModel());
-
-// netlify/functions/utils/models/shopInfoModel.ts
-var import_mongoose = __toModule(require_mongoose());
-require_main().config();
-var Schema = import_mongoose.default.Schema;
-var shopinfoSchema = new Schema({
-  company: String,
-  email: String,
-  password: String,
-  phoneNumber: String,
-  city: String,
-  cityCode: String,
-  street: String,
-  firstName: String,
-  lastName: String,
-  uid: String,
-  shopName: String,
-  settings: {}
-});
-var ShopInfo = import_mongoose.default.model("Shopinfo", shopinfoSchema);
-
-// netlify/functions/get-shop-termins/get-shop-termins.ts
+var import_shopInfoModel = __toModule(require_shopInfoModel());
 var import_mongooseConnect = __toModule(require_mongooseConnect());
 require_main().config();
 var handler = async (event) => {
   const { shopname, shopemail } = event.headers;
   try {
     const shopNamesDb = await (0, import_mongooseConnect.connect)();
-    const shopInfo = await ShopInfo.findOne({
+    const shopInfo = await import_shopInfoModel.ShopInfo.findOne({
       email: shopemail
     });
     const shopTerminsDb = shopNamesDb.connection.useDb(shopname);
