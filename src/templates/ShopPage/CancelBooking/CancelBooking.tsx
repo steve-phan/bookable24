@@ -33,6 +33,7 @@ const CancelBooking = ({
     person,
     email,
     phone,
+    status,
   } = booking
 
   const handleCancelBooking = () => {
@@ -52,6 +53,9 @@ const CancelBooking = ({
       .catch(err => {
         console.log("err", err)
       })
+  }
+  if (status) {
+    return <p>This reservation is not exist</p>
   }
 
   return (

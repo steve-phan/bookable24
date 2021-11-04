@@ -11,8 +11,9 @@ const handler = async (event, context) => {
       const shopNamesDB = await connect()
       const bookingConn = shopNamesDB.connection.useDb(shopName)
       const Appointment = bookingConn.model("Appointment", appointmentSchema)
-      const appointmentFound = await Appointment.findById(bookingId)
 
+      const appointmentFound = await Appointment.findById(bookingId)
+      console.log("shopname", appointmentFound)
       return {
         statusCode: 200,
         body: JSON.stringify(appointmentFound),

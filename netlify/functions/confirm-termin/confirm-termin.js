@@ -46,17 +46,6 @@ const handler = async function (event) {
       require,
     })
 
-    // const newappointment = new Appointment({
-    //   first_name: firstName,
-    //   last_name: lastName,
-    //   selectedSlot,
-    //   selectedDate: formatDate,
-    //   email,
-    //   phone,
-    //   person,
-    //   require,
-    // })
-
     await newappointment.save()
     const validToken = await getValidToken()
     const { transporter, mailOptions } = configTransporter({
