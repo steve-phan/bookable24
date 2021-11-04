@@ -7,14 +7,13 @@ import { useAppSelector } from "src/store/hooks"
 const WithAuth = () => {
   const { navigate } = useI18next()
   const { isShopLogin, status } = useAppSelector(state => state.shop)
-
-  if (status === "loading") {
+  if (status === "loading" && !isShopLogin) {
     return <Loading />
-  } else if (!isShopLogin) {
+  } else if (status === "logout") {
     navigate("/login")
-    return null
+    return <></>
   } else {
-    return null
+    return <></>
   }
 }
 
