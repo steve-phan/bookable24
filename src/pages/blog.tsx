@@ -47,7 +47,6 @@ const Blog: React.FC<PageProps<any>> = ({ location, data }) => {
 
   // const { t } = useTranslation()
   const allPosts = data?.allContentfulMyBlog?.nodes
-
   return (
     <Layout location={location}>
       <SEO title="Our blog" />
@@ -55,6 +54,7 @@ const Blog: React.FC<PageProps<any>> = ({ location, data }) => {
       <Grid container className={classes.container}>
         {allPosts.map((post: any, index: number) => {
           const image = getImage(post.thumbPicture) as IGatsbyImageData
+          console.log("date", dayjs(post.publishDate).format("MMM/DD/YYYY"))
           return (
             <Link to={`/blog/${slugify(post.title)}`} key={post.title}>
               <Card className={classes.root}>
@@ -87,7 +87,7 @@ const Blog: React.FC<PageProps<any>> = ({ location, data }) => {
                     component="span"
                   >
                     Aktualisiert :{" "}
-                    {dayjs(post.publishDate).format("MMM/DD/yyyy")}
+                    {dayjs(post.publishDate).format("MMM/DD/YYYY")}
                   </Typography>
                   <Typography
                     component="span"
