@@ -69,7 +69,6 @@ const handler = async function (event) {
       body: "EMAIL_SENT",
     }
   } catch (error) {
-    console.log(error)
     return {
       statusCode: 500,
       body: JSON.stringify(error),

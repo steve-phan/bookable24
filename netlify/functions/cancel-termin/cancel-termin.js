@@ -13,13 +13,11 @@ const handler = async (event, context) => {
       const Appointment = bookingConn.model("Appointment", appointmentSchema)
 
       const appointmentFound = await Appointment.findById(bookingId)
-      console.log("shopname", appointmentFound)
       return {
         statusCode: 200,
         body: JSON.stringify(appointmentFound),
       }
     } catch (error) {
-      console.log(error)
       return {
         statusCode: 500,
         body: JSON.stringify(error),

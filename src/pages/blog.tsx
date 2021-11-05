@@ -54,7 +54,6 @@ const Blog: React.FC<PageProps<any>> = ({ location, data }) => {
       <Grid container className={classes.container}>
         {allPosts.map((post: any, index: number) => {
           const image = getImage(post.thumbPicture) as IGatsbyImageData
-          console.log("date", dayjs(post.publishDate).format("MMM/DD/YYYY"))
           return (
             <Link to={`/blog/${slugify(post.title)}`} key={post.title}>
               <Card className={classes.root}>
