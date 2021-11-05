@@ -23,7 +23,9 @@ const handler = async function (event) {
     require,
     shopInfo,
   } = appointment
-  const shopName = shopInfo.shopName || shopInfo.shopname
+  const shopName = Boolean(shopInfo.shopName)
+    ? shopInfo.shopName
+    : shopInfo.shopname
   const formatDate = dayjs(
     selectedDate,
     selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
