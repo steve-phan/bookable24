@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setSelectedSlot } from "src/store/shop/bookingSlice"
+import { getDateBookings } from "src/utils"
+import { ITermin } from "src/components/DashBoard/SharedComponent/DashBoard.types"
 
 import {
   afternoonSlots,
@@ -21,6 +23,21 @@ import { WrapColSt } from "../ShopPage.css"
 const isWeekend = (date: Date | null) =>
   dayjs(date).day() === 6 || dayjs(date).day() === 0
 
+const reduceTermins = (arr: ITermin[]) =>
+  arr.reduce((acc: any, cur: any) => {
+    if (acc.hasOwnProperty(cur.selectedSlot)) {
+      return {
+        ...acc,
+        [cur.selectedSlot]: acc[cur.selectedSlot] + 1,
+      }
+    } else {
+      return {
+        ...acc,
+        [cur.selectedSlot]: 1,
+      }
+    }
+  }, {})
+
 const SlotPicker = () => {
   const [loading, setLoading] = useState(true)
   const [terminsBooked, setTerminsBooked] = useState([])
@@ -29,7 +46,11 @@ const SlotPicker = () => {
   const { selectedSlot = getDefaultSlot(), selectedDate } = useAppSelector(
     state => state.booking
   )
-  const { shopInfo } = useAppSelector(state => state.shop)
+  const { shopInfo, allTermins } = useAppSelector(state => state.shop)
+
+  const pickedDayTermins = getDateBookings(allTermins, selectedDate)
+
+  // console.log(reduceTermins(pickedDayTermins))
 
   const { weekdays, time } = shopInfo?.settings || {}
 
@@ -80,18 +101,18 @@ const SlotPicker = () => {
               disabled={
                 (dayDisable && dayjs().hour() >= Number(time?.split(":")[0])) ||
                 (dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
-                  dayjs().date() === dayjs(selectedDate).date())
+                  dayjs().date() === dayjs(selectedDate).date()) ||
+                reduceTermins(pickedDayTermins)[String(newIndex)] >= 2
               }
               key={newIndex + slot}
               onClick={() => {
                 dispatch(setSelectedSlot(newIndex))
               }}
             >
-              {/* {[13, 14, 15, 16, 17, 18, 19].includes(newIndex) &&
-              terminsBooked[String(newIndex)] >= 2
+              {reduceTermins(pickedDayTermins)[String(newIndex)] >= 2
                 ? "full"
-                : slot} */}
-              {slot}
+                : slot}
+              {/* {slot} */}
             </ButtonSlotSt>
           )
         })}
