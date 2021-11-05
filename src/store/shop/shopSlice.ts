@@ -130,7 +130,9 @@ export const shopSlice = createSlice({
           settings,
         } = action.payload.shopInfo
         const { time, weekdays } = settings || {}
-        const newarr = [...action.payload.allTermins]
+        const newarr = [
+          ...action.payload.allTermins.filter(termin => !termin.status),
+        ]
         const isShopLogin = action.payload.isShopLogin ? true : false
         const status = action.payload.isShopLogin ? "login" : "logout"
 
