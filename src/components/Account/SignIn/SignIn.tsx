@@ -88,6 +88,7 @@ const SignIn = ({ location }: { location: any }) => {
   const handleShopLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password)
+
       await setPersistence(auth, browserLocalPersistence)
         .then(() => {
           return signInWithEmailAndPassword(auth, values.email, values.password)
@@ -100,7 +101,6 @@ const SignIn = ({ location }: { location: any }) => {
           isShopLogin: true,
         })
       )
-
       await navigate("/dashboard")
     } catch (error) {
       alert("Email or Password was not correct :)")

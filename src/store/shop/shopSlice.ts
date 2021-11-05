@@ -24,7 +24,7 @@ export const checkUserAuth =
         )
       } else {
         // No user is signed in.
-        // dispatch(setShopLogout())
+        dispatch(setShopLogout())
       }
     }
   }

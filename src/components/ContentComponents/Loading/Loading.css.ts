@@ -7,9 +7,9 @@ export const LoadingSt = styled("div")(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  background: theme.color.white,
+  background: "white",
 
   "& svg": {
-    color: theme.color.primary,
+    color: "#f05123",
   },
 }))
