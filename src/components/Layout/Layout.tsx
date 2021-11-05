@@ -43,7 +43,7 @@ const Layout = ({ children, location, isShop }: any) => {
           {/* {status === "loading" && <Loading />} */}
           <Header
             // siteTitle={data.site.siteMetadata?.title || `Title`}
-            // location={location}
+            location={location}
             isShopLogin={isShopLogin}
           />
           <BodySt>

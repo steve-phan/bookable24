@@ -9,9 +9,9 @@ const WithAuth = () => {
   const { isShopLogin, status } = useAppSelector(state => state.shop)
   if (status === "loading" && !isShopLogin) {
     return <Loading />
-  } else if (status === "logout") {
-    navigate("/login")
-    return <></>
+    // } else if (status === "logout") {
+    //   navigate("/login")
+    //   return <></>
   } else {
     return <></>
   }

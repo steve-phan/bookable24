@@ -15,9 +15,10 @@ import { NavLinks } from "../NavLinks/Navlinks"
 
 interface IHeaderProps {
   isShopLogin: boolean | undefined
+  location: any
 }
 
-const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin }) => {
+const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin, location }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const { t } = useTranslation()
   const handleDrawerToggle = () => {
@@ -41,7 +42,7 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin }) => {
         <Hidden mdDown>
           <NavLinks routes={routes} />
           <WrapLoginSt>
-            {isShopLogin ? (
+            {isShopLogin && !location.pathname.includes("/login") ? (
               <DashBoardButtonSt to="/dashboard">
                 {t("menu.DashBoard", "DashBoard")}
               </DashBoardButtonSt>
@@ -59,7 +60,7 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin }) => {
         />
         <Hidden mdUp>
           <div>
-            {isShopLogin && (
+            {isShopLogin && !location.pathname.includes("/login") && (
               <DashBoardButtonSt to="/dashboard">
                 {t("menu.DashBoard", "DashBoard")}{" "}
               </DashBoardButtonSt>

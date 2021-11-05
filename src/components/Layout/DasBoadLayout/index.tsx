@@ -44,18 +44,21 @@ const DashBoardLayout = ({
   const shopList = useShopname()
 
   useEffect(() => {
-    if (!isShopLogin) {
+    if (!isShopLogin && status === "logout") {
       navigate("/login")
       // dispatch(checkUserAuth(shopList))
     }
-  }, [])
+  }, [status])
+
+  if (status !== "login") {
+    return <Loading />
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <ThemeProviderSt theme={theme}>
         <CssBaseline />
         {inputGlobalStyles}
-        {/* {status === "loading" && <Loading />} */}
         <WrapDashBoardSt>
           <SideBar
             mobileOpen={mobileOpen}
@@ -66,9 +69,7 @@ const DashBoardLayout = ({
               mobileOpen={mobileOpen}
               handleDrawerToggle={handleDrawerToggle}
             />
-            <WrapContentSt>
-              {status === "loading" ? <Loading /> : children}
-            </WrapContentSt>
+            <WrapContentSt>{children}</WrapContentSt>
           </DashBoardContentSt>
         </WrapDashBoardSt>
       </ThemeProviderSt>
