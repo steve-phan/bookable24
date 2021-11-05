@@ -90,7 +90,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
           JSON.stringify({ bookingId, shopName, shopInfo })
         )
         .then(res => {
-          console.log("res.data", res.data)
           setIsLoading(false)
           setBooking(res.data)
         })

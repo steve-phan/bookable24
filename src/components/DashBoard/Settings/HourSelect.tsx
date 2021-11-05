@@ -41,7 +41,6 @@ const HourSelect = () => {
         value={time}
         label="Personen"
         onChange={(event: SelectChangeEvent) => {
-          console.log("event Onchange", event.target.value)
           dispatch(setSettingDisableTime(event.target.value as string))
           // dispatch(setNumberOfGuest(Number(event.target.value as string)))
         }}

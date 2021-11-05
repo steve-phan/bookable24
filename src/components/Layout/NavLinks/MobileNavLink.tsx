@@ -5,13 +5,14 @@ import { useTranslation } from "gatsby-plugin-react-i18next"
 
 import { LinkItemSt } from "./NavLinks.css"
 
-export const MobileNavLinks = ({ routes }: any) => {
+export const MobileNavLinks = ({ routes, handleDrawerToggle }: any) => {
   const theme = useTheme<ThemeOptions>()
   const { t } = useTranslation()
   return (
     <div>
       {routes.map((route: any, i: number) => (
         <LinkItemSt
+          onClick={handleDrawerToggle}
           key={i}
           activeStyle={{
             backgroundColor: "#f5f5f5",

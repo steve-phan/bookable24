@@ -53,7 +53,6 @@ const SignIn = () => {
         open: true,
         modalText: `Diese E-Mail ${values.email} ist auf unserem System nicht vorhanden, versuchen Sie es mit der anderen erneut`,
       })
-      console.log(error)
     }
   }
   const handleOpen = () => {

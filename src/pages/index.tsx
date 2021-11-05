@@ -8,7 +8,6 @@ import WhyUs from "../components/ContentComponents/WhyUs"
 
 const IndexPage: React.FC<PageProps> = ({ location, data }) => {
   const { t } = useTranslation()
-  // console.log(t("menu")["homepage"])
   return (
     <Layout location={location}>
       <SEO title={t("Home")} />

@@ -67,7 +67,10 @@ const MobileMenu = ({
             </CTAButtonAccountSt>
             <LangSelect />
           </WrapLoginMobileSt>
-          <MobileNavLinks routes={routes} />
+          <MobileNavLinks
+            routes={routes}
+            handleDrawerToggle={handleDrawerToggle}
+          />
         </DrawerSt>
       </Hidden>
       {isDesktop && (
@@ -95,7 +98,10 @@ const MobileMenu = ({
             </CTAButtonAccountSt>
             <LangSelect />
           </WrapLoginMobileSt>
-          <MobileNavLinks routes={routes} />
+          <MobileNavLinks
+            handleDrawerToggle={handleDrawerToggle}
+            routes={routes}
+          />
         </>
       )}
     </>

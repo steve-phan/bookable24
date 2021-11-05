@@ -43,7 +43,7 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin }) => {
           <WrapLoginSt>
             {isShopLogin ? (
               <DashBoardButtonSt to="/dashboard">
-                {t("menu.DashBoard", "DashBoard")}{" "}
+                {t("menu.DashBoard", "DashBoard")}
               </DashBoardButtonSt>
             ) : (
               <CTAButtons to="/login">{t("account.login", "Login")}</CTAButtons>
@@ -57,7 +57,6 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin }) => {
           mobileOpen={mobileOpen}
           routes={routes}
         />
-
         <Hidden mdUp>
           <div>
             {isShopLogin && (

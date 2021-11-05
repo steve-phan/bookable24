@@ -19,6 +19,7 @@ import { auth } from "src/firebase"
 import { getShopName, validateEmail } from "src/utils"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { getShopinfo, checkUserAuth } from "src/store/shop/shopSlice"
+import Loading from "src/components/ContentComponents/Loading/Loading"
 
 import {
   ButtonSt,
@@ -64,6 +65,10 @@ const SignIn = ({ location }: { location: any }) => {
   const handleChange =
     (prop: keyof IloginStates) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (prop === "email") {
+        setValues({ ...values, email: event.target.value.toLowerCase() })
+        return
+      }
       setValues({ ...values, [prop]: event.target.value })
     }
 
@@ -82,18 +87,10 @@ const SignIn = ({ location }: { location: any }) => {
 
   const handleShopLogin = async () => {
     try {
-      await signInWithEmailAndPassword(
-        auth,
-        values.email.toLowerCase(),
-        values.password
-      )
+      await signInWithEmailAndPassword(auth, values.email, values.password)
       await setPersistence(auth, browserLocalPersistence)
         .then(() => {
-          return signInWithEmailAndPassword(
-            auth,
-            values.email.toLowerCase(),
-            values.password
-          )
+          return signInWithEmailAndPassword(auth, values.email, values.password)
         })
         .catch(err => console.log(err))
       await dispatch(
@@ -107,12 +104,11 @@ const SignIn = ({ location }: { location: any }) => {
       await navigate("/dashboard")
     } catch (error) {
       alert("Email or Password was not correct :)")
-      console.log(error)
     }
   }
   return (
     <WrapColSt>
-      {/* {status === "loading" && <Loading />} */}
+      {status === "loading" && <Loading />}
       <h1>Bereits Kunde?</h1>
       <TypographySt>
         Loggen Sie sich jetzt ein, um alle Vorteile des Kundenkontos

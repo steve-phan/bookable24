@@ -46,17 +46,6 @@ const handler = async function (event) {
       require,
     })
 
-    // const newappointment = new Appointment({
-    //   first_name: firstName,
-    //   last_name: lastName,
-    //   selectedSlot,
-    //   selectedDate: formatDate,
-    //   email,
-    //   phone,
-    //   person,
-    //   require,
-    // })
-
     await newappointment.save()
     const validToken = await getValidToken()
     const { transporter, mailOptions } = configTransporter({
@@ -80,7 +69,6 @@ const handler = async function (event) {
       body: "EMAIL_SENT",
     }
   } catch (error) {
-    console.log(error)
     return {
       statusCode: 500,
       body: JSON.stringify(error),

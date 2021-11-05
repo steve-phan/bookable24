@@ -24,34 +24,6 @@ const Layout = ({ children, location, isShop }: any) => {
   const { isShopLogin, status } = useAppSelector(state => state.shop)
 
   const shopList = useShopname()
-  const { navigate } = useI18next()
-
-  // useEffect(() => {
-  //   if (!isShopLogin && !isShop) {
-  //     console.log("check shop auth")
-  //     dispatch(checkUserAuth(shopList))
-  //   } else {
-  //     console.log("khiung hay ma")
-  //     dispatch(setShopLogout())
-  //   }
-  // }, [])
-  // useEffect(() => {
-  //   // const paths = location?.pathname?.split("/").pop() !== 'login'
-  //   if (
-  //     !isShopLogin &&
-  //     (location?.pathname?.split("/").pop() !== "request-account" ||
-  //       location?.pathname?.split("/").pop() !== "login")
-  //   ) {
-  //     console.log("just check")
-  //     dispatch(checkUserAuth(shopList))
-  //   }
-  // }, [])
-  // useEffect(() => {
-  //   if (!isShopLogin && status === "logout") {
-  //     navigate("/login")
-  //   }
-  // }, [status])
-  // console.log("rerender layout")
 
   return (
     <ThemeProvider theme={theme}>

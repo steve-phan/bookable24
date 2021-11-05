@@ -152,7 +152,6 @@ const SignIn = () => {
         open: true,
         modalText: `Mit dieser E-Mail ${values.email} stimmt etwas nicht, bitte versuche es später noch einmal`,
       })
-      console.log(error)
     }
   }
   return (

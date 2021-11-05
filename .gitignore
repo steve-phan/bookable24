@@ -95,6 +95,7 @@ yarn-error.log
 
 # Local Netlify folder
 
+.netlify
 # Data 
 
 src/templates/ShopPage/data.ts

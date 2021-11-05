@@ -36,7 +36,6 @@ const getValidToken = async () => {
         expiry: expiry_date,
       })
     } else {
-      console.log("token ==>    not expiry ")
       validToken = tokenData[0].token
     }
   })

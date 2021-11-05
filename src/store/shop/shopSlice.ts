@@ -13,8 +13,8 @@ export const checkUserAuth =
   (dispatch, getState) => {
     if (typeof window !== "undefined") {
       const user = auth.currentUser
-      if (user) {
-        const shopname = getShopName(user?.email, shopList)
+      if (user?.email) {
+        const shopname = getShopName(user.email, shopList)
         dispatch(
           getShopinfo({
             shopemail: user?.email || "",
@@ -116,7 +116,6 @@ export const shopSlice = createSlice({
         state.status = "loading"
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
-        console.log("action.payload.shopInfo", action.payload.shopInfo)
         const {
           city,
           cityCode,
