@@ -14,6 +14,7 @@ import { theme, globalStyles } from "src/theme"
 import Footer from "./Footer/Footer"
 import Header from "./Header"
 import { BodySt } from "./Layout.css"
+import ErrorBoudary from "../../ErrorBoundary"
 // import "./reset.css"
 import Loading from "../ContentComponents/Loading/Loading"
 
@@ -36,6 +37,7 @@ const Layout = ({ children, location, isShop }: any) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            minHeight: "100vh",
           }}
           disableGutters
           maxWidth={false}

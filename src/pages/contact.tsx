@@ -4,14 +4,21 @@ import React from "react"
 import Layout from "../components/Layout/Layout"
 import SEO from "../components/seo"
 
-const Contact = () => {
+const Contact = ({ location }: any) => {
   const { t } = useTranslation()
 
   return (
-    <Layout>
+    <Layout location={location}>
       <SEO title="Contact" />
 
-      <h1>vietappeu@gmail.com </h1>
+      <h2
+        style={{
+          textAlign: "center",
+        }}
+      >
+        vietappeu@gmail.com <br />
+        01745284655
+      </h2>
     </Layout>
   )
 }

@@ -35,6 +35,7 @@ const SettingsDashBoard = () => {
   const { shopInfo } = useAppSelector(state => state?.shop)
   const { shopName } = shopInfo
   const { weekdays = [], time = "12:30" } = shopInfo?.settings || {}
+
   const handleSubmitDisable = async () => {
     const res = await axios.post(
       "/.netlify/functions/admin-setting-booking",
@@ -55,7 +56,7 @@ const SettingsDashBoard = () => {
         <Grid item xs={12} md={4}>
           <WrapHourSt>
             <p>Select the time to disable booking</p>
-            <HourSelect />
+            <HourSelect time={time} />
           </WrapHourSt>
         </Grid>
         <Grid item xs={12} md={8}>

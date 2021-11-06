@@ -19,6 +19,7 @@ import {
   DashBoardContentSt,
   WrapContentSt,
 } from "./dashboard.css"
+import Footer from "../Footer/Footer"
 
 export interface IMobileToggle {
   mobileOpen?: boolean
@@ -70,6 +71,7 @@ const DashBoardLayout = ({
               handleDrawerToggle={handleDrawerToggle}
             />
             <WrapContentSt>{children}</WrapContentSt>
+            <Footer />
           </DashBoardContentSt>
         </WrapDashBoardSt>
       </ThemeProviderSt>
