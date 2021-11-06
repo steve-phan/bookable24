@@ -144,7 +144,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       false
     )
   }
-  console.log(Number(allSlots[selectedSlot].split(":")[0]))
+
   return (
     <Layout isShop location={location}>
       <SEO title="Booking Online System" />

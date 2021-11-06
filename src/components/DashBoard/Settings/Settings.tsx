@@ -35,7 +35,7 @@ const SettingsDashBoard = () => {
   const { shopInfo } = useAppSelector(state => state?.shop)
   const { shopName } = shopInfo
   const { weekdays = [], time = "12:30" } = shopInfo?.settings || {}
-  console.log("shopInfo", shopInfo)
+
   const handleSubmitDisable = async () => {
     const res = await axios.post(
       "/.netlify/functions/admin-setting-booking",
