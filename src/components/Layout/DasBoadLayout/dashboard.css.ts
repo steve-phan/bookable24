@@ -10,17 +10,22 @@ export const WrapDashBoardSt = styled("div")(({ theme }) => ({
 }))
 
 export const DashBoardContentSt = styled("main")(({ theme }) => ({
-  [theme.breakpoints.up("md")]: {
-    width: `calc(100% - ${drawerWidth}px)`,
-  },
+  display: "flex",
+  flexDirection: "column",
+
   overflow: "auto",
   position: "relative",
   float: "right",
-  maxHeight: "100%",
+  minHeight: "100%",
   width: "100%",
+
+  [theme.breakpoints.up("md")]: {
+    width: `calc(100% - ${drawerWidth}px)`,
+  },
 }))
 
 export const WrapContentSt = styled("div")(({ theme }) => ({
+  flexGrow: 1,
   paddingTop: 100,
 }))
 

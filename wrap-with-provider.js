@@ -1,7 +1,9 @@
 import React from "react"
 import { Provider } from "react-redux"
+
 import { store } from "./src/store/store"
 import CheckAuth from "./CheckAuth"
+import ErrorBoundary from "./src/ErrorBoundary"
 
 // eslint-disable-next-line react/display-name,react/prop-types
 export default function ({ element }) {
@@ -13,8 +15,10 @@ export default function ({ element }) {
   //  - it will be called only once in browser, when React mounts
   return (
     <Provider store={store}>
-      {element}
-      <CheckAuth />
+      <ErrorBoundary>
+        {element}
+        <CheckAuth />
+      </ErrorBoundary>
     </Provider>
   )
 }

@@ -138,12 +138,13 @@ const ShopPage: React.FC<IShopPageProps> = ({
 
   const isNextButtonDisable = () => {
     return (
-      dayjs().hour() >= Number(allSlots[selectedSlot].split(":")[0]) &&
-      dayjs().date() === dayjs(selectedDate).date() &&
-      activeStep !== 0
+      (dayjs().hour() + 3 >= Number(allSlots[selectedSlot].split(":")[0]) &&
+        dayjs().date() === dayjs(selectedDate).date() &&
+        activeStep !== 0) ||
+      false
     )
   }
-
+  console.log(Number(allSlots[selectedSlot].split(":")[0]))
   return (
     <Layout isShop location={location}>
       <SEO title="Booking Online System" />

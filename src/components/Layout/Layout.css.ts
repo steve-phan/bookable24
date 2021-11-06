@@ -1,6 +1,7 @@
 import { styled } from "@mui/material/styles"
 
 export const BodySt = styled("div")`
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;

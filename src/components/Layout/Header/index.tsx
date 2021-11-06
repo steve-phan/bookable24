@@ -42,7 +42,7 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin, location }) => {
         <Hidden mdDown>
           <NavLinks routes={routes} />
           <WrapLoginSt>
-            {isShopLogin && !location.pathname.includes("/login") ? (
+            {isShopLogin && !location?.pathname?.includes("/login") ? (
               <DashBoardButtonSt to="/dashboard">
                 {t("menu.DashBoard", "DashBoard")}
               </DashBoardButtonSt>

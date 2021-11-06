@@ -9,17 +9,17 @@ const routes = [
     name: "Home",
     icon: HomeWorkTwoToneIcon,
   },
-  {
-    path: "/services",
-    name: "Services",
-    icon: MenuIcon,
-  },
+  // {
+  //   path: "/services",
+  //   name: "Services",
+  //   icon: MenuIcon,
+  // },
 
-  {
-    path: "/about",
-    name: "About",
-    icon: AboutIcon,
-  },
+  // {
+  //   path: "/about",
+  //   name: "About",
+  //   icon: AboutIcon,
+  // },
 
   {
     path: "/contact",
@@ -27,11 +27,11 @@ const routes = [
     icon: ContactIcon,
   },
 
-  {
-    path: "/blog",
-    name: "Blog",
-    icon: AboutIcon,
-  },
+  // {
+  //   path: "/blog",
+  //   name: "Blog",
+  //   icon: AboutIcon,
+  // },
 ]
 
 export { routes }

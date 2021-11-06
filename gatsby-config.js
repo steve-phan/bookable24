@@ -1,4 +1,5 @@
 require("dotenv").config()
+
 module.exports = {
   siteMetadata: {
     title: `VietApp Template || Restaurant or Landing-Page`,
@@ -87,6 +88,16 @@ module.exports = {
         // host: `preview.contentful.com`,
       },
     },
+    // {
+    //   resolve: "@sentry/gatsby",
+    //   options: {
+    //     dsn: "https://bfa58b14270a45fb8067e1dcf45d74e8@o1061869.ingest.sentry.io/6052276",
+    //     sampleRate: 0.7, // Adjust this value in production
+    //     // integrations: [new Integrations.BrowserTracing()],
+    //     // Cannot set `beforeSend`
+    //     // debug: true,
+    //   },
+    // },
 
     `gatsby-plugin-gatsby-cloud`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
