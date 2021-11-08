@@ -1,6 +1,4 @@
-const timeSlots = [
-  "11:00",
-  "11:30",
+export const morningSlots = [
   "12:00",
   "12:30",
   "13:00",
@@ -10,6 +8,8 @@ const timeSlots = [
   "15:00",
   "15:30",
   "16:00",
+]
+export const afternoonSlots = [
   "16:30",
   "17:00",
   "17:30",
@@ -23,5 +23,7 @@ const timeSlots = [
   "21:30",
   "22:00",
 ]
+
+const timeSlots = [...morningSlots, ...afternoonSlots]
 
 module.exports = { timeSlots }
