@@ -1,4 +1,4 @@
-export const morningSlots = [
+const morningSlots = [
   "12:00",
   "12:30",
   "13:00",
@@ -9,7 +9,7 @@ export const morningSlots = [
   "15:30",
   "16:00",
 ]
-export const afternoonSlots = [
+const afternoonSlots = [
   "16:30",
   "17:00",
   "17:30",
