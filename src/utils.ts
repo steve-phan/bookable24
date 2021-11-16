@@ -81,7 +81,9 @@ export const timeAgo = (dateParam: Date, t: ItimeAgoMess) => {
 
 export const filterBookings = (allTermins: ITermin[], today: string) =>
   allTermins
-    .filter((termin: ITermin) => termin.selectedDate === today)
+    .filter(
+      (termin: ITermin) => dayjs(termin.selectedDate).format("MMM DD") === today
+    )
     .sort(
       (a: ITermin, b: ITermin) =>
         Number(a.selectedSlot) - Number(b.selectedSlot)
