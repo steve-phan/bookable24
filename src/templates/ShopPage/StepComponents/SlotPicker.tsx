@@ -59,7 +59,6 @@ const SlotPicker = () => {
     dayjs().date() === dayjs(selectedDate).date()
   useEffect(() => {
     // Need dispatch selectedSlot, otherwise it'll be udnefine as a intialState
-    console.log("dispat.....")
     dispatch(setSelectedSlot(getDefaultSlot()))
   }, [])
 

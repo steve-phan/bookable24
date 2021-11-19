@@ -7,6 +7,7 @@ import { connect } from "../utils/mongooseConnect"
 
 export const handler: Handler = async event => {
   const { shopname, shopemail } = event.headers
+
   try {
     /**
      * @useCase : to access to multiple databases
@@ -24,6 +25,7 @@ export const handler: Handler = async event => {
     const Appointment = shopTerminsDb.model("Appointment", appointmentSchema)
     // Access to Model method
     const allTermins = await Appointment.find({})
+    console.log("shopemail", shopname)
 
     return {
       statusCode: 200,
