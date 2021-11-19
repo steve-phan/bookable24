@@ -6,7 +6,6 @@ import { getTodayBookings } from "src/utils"
 
 const TodayBookings = () => {
   const { shopInfo, allTermins } = useAppSelector(state => state.shop)
-  console.log("alltermin", allTermins)
   return (
     <ShowInfo
       todayTermins={

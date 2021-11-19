@@ -6,8 +6,6 @@ const { timeSlots } = require("../utils/models/timeslot")
 const user = process.env.MAIL_USER
 const baseUrl = process.env.BASE_URL || "https://bookable24.de"
 
-console.log("timeslot", timeSlots)
-
 const configTransporter = ({
   shopName,
   token,
