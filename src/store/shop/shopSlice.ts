@@ -71,6 +71,7 @@ const intinitialShopState: IshopState = {
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
   async ({ shopemail, shopname, isShopLogin }: IshopQuery) => {
+    console.log("data", shopemail, shopname)
     const response: any = await axios.get(
       "/.netlify/functions/get-shop-termins",
       {
@@ -82,6 +83,7 @@ export const getShopinfo = createAsyncThunk(
     )
     const { allTermins, shopInfo }: { allTermins: any[]; shopInfo: IshopInfo } =
       response.data
+
     return { allTermins, shopInfo, isShopLogin }
   }
 )

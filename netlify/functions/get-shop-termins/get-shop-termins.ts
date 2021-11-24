@@ -17,7 +17,7 @@ export const handler: Handler = async event => {
 
     // This is the global connection, so we can use Model directly
     const shopInfo = await ShopInfo.findOne({
-      email: shopemail,
+      email: shopemail.toLowerCase(),
     })
     // Next we use useDb method to connect to another database
     const shopTerminsDb = shopNamesDb.connection.useDb(shopname)
@@ -25,7 +25,6 @@ export const handler: Handler = async event => {
     const Appointment = shopTerminsDb.model("Appointment", appointmentSchema)
     // Access to Model method
     const allTermins = await Appointment.find({})
-    console.log("shopemail", shopname)
 
     return {
       statusCode: 200,
