@@ -65,4 +65,4 @@ const configTransporter = ({
   }
 }
 
-export default configTransporter
+module.exports = configTransporter

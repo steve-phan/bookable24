@@ -38,7 +38,7 @@ const shopinfoSchema = new Schema({
   firstName: String,
   lastName: String,
   uid: String,
-  shopname: String,
+  shopName: String,
 })
 
 const tokenSchema = new Schema({

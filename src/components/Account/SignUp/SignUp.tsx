@@ -146,6 +146,7 @@ const SignIn = () => {
         navigate("/")
       }, 5000)
     } catch (error) {
+      console.log("error", error)
       setValues({
         ...values,
         loading: false,
