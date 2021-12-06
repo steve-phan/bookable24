@@ -7,6 +7,12 @@
   "xxx": "XXX EN",
   "default": "This is a Default Text",
   "notfound": "Not found",
+  "button": {
+    "back": "Back",
+    "next": "Next",
+    "preview": "Preview",
+    "book": "Book"
+  },
   "menu": {
     "Home": "Home",
     "Services": "Services",
