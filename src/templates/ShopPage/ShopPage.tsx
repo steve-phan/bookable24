@@ -1,6 +1,6 @@
 import Step from "@mui/material/Step"
-import { makeStyles } from "@mui/styles"
 import { graphql } from "gatsby"
+import { useTranslation } from "gatsby-plugin-react-i18next"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import dayjs from "dayjs"
@@ -46,6 +46,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   data,
   location,
 }) => {
+  const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [showCancelBooking, setShowCancelBooking] = useState<boolean>(true)
   const [booking, setBooking] = useState<any>()
@@ -138,7 +139,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
 
   const isNextButtonDisable = () => {
     return (
-      (dayjs().hour() + 3 >= Number(allSlots[selectedSlot].split(":")[0]) &&
+      (dayjs().hour() + 2 >= Number(allSlots[selectedSlot].split(":")[0]) &&
         dayjs().date() === dayjs(selectedDate).date() &&
         activeStep !== 0) ||
       false
@@ -198,7 +199,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
                       color="primary"
                       onClick={handleBack}
                     >
-                      Back
+                      {t("button.back")}
                     </ButtonSt>
                     <ButtonSt
                       disabled={
@@ -216,10 +217,10 @@ const ShopPage: React.FC<IShopPageProps> = ({
                       }}
                     >
                       {activeStep < 2
-                        ? "Next"
+                        ? t("button.next")
                         : activeStep === 2
-                        ? "Preview"
-                        : "Book"}
+                        ? t("button.preview")
+                        : t("button.book")}
                     </ButtonSt>
                   </WrapRowSt>
                 )}

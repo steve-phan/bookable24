@@ -6,6 +6,12 @@
   "Go to page 2": "Geh zu seite 2",
   "xxx": "XXX DE",
   "notfound": "Nicht gefunden",
+  "button": {
+    "back": "Zurück",
+    "next": "Weiter",
+    "preview": "Überblick",
+    "book": "Reservieren"
+  },
   "menu": {
     "Home": "StartSeite",
     "Services": "Services",

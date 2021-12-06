@@ -6,6 +6,12 @@
   "Go to page 2": "Đến  page  2",
   "xxx": "XXX VN",
   "notfound": "Không tìm thấy",
+  "button": {
+    "back": "Back",
+    "next": "Next",
+    "preview": "Preview",
+    "book": "Book"
+  },
   "menu": {
     "Home": "Trang chủ",
     "Services": "Dịch vụ",
