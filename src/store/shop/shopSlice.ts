@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-// import {} from "firebase"
+import { onAuthStateChanged } from "firebase/auth"
 
 import { auth } from "src/firebase"
 import { getShopName } from "src/utils"
@@ -12,22 +12,42 @@ export const checkUserAuth =
   (shopList: any[]): AppThunk =>
   (dispatch, getState) => {
     if (typeof window !== "undefined") {
-      console.log("check Auth localStorage")
-      const user = auth.currentUser
-      if (user?.email) {
-        console.log("check Auth localStorage, user Logged")
-        const shopname = getShopName(user.email, shopList)
-        dispatch(
-          getShopinfo({
-            shopemail: user?.email || "",
-            shopname,
-            isShopLogin: true,
-          })
-        )
-      } else {
-        // No user is signed in.
-        dispatch(setShopLogout())
-      }
+      onAuthStateChanged(auth, user => {
+        if (user?.email) {
+          const shopname = getShopName(user.email, shopList)
+          dispatch(
+            getShopinfo({
+              shopemail: user?.email || "",
+              shopname,
+              isShopLogin: true,
+            })
+          )
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          // const uid = user.uid
+          // ...
+        } else {
+          // User is signed out
+          // ...
+          dispatch(setShopLogout())
+        }
+      })
+      // console.log("check Auth localStorage")
+      // const user = auth.currentUser
+      // if (user?.email) {
+      //   console.log("check Auth localStorage, user Logged")
+      //   const shopname = getShopName(user.email, shopList)
+      //   dispatch(
+      //     getShopinfo({
+      //       shopemail: user?.email || "",
+      //       shopname,
+      //       isShopLogin: true,
+      //     })
+      //   )
+      // } else {
+      //   // No user is signed in.
+      //   dispatch(setShopLogout())
+      // }
     }
   }
 

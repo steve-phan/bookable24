@@ -1,10 +1,11 @@
 import Typography from "@mui/material/Typography"
 import dayjs from "dayjs"
-import React from "react"
+import React, { useState } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import axios from "axios"
 
 import { IshopInfo } from "src/store/shop/shop.types"
+import Loading from "src/components/ContentComponents/Loading/Loading"
 
 import { WrapColSt } from "../ShopPage.css"
 import { afternoonSlots, morningSlots } from "../utils"
@@ -22,6 +23,7 @@ const CancelBooking = ({
   shopInfo: IshopInfo
   location: any
 }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const { navigate } = useI18next()
   const {
     selectedDate,
@@ -37,6 +39,7 @@ const CancelBooking = ({
   } = booking
 
   const handleCancelBooking = () => {
+    setIsLoading(true)
     const bookingId = location.search.replace("?", "").split("=")[1]
     axios
       .get("/.netlify/functions/cancel-termin", {
@@ -48,10 +51,12 @@ const CancelBooking = ({
       })
       .then(res => {
         alert("Cancel success. Thanks")
+        setIsLoading(false)
         navigate("/")
       })
       .catch(err => {
         console.log("err", err)
+        setIsLoading(false)
       })
   }
   if (status) {
@@ -60,6 +65,7 @@ const CancelBooking = ({
 
   return (
     <WrapColSt>
+      {isLoading && <Loading />}
       <CardSt>
         <Typography variant="h6" component="h5">
           Details Info
