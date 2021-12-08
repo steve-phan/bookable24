@@ -3,7 +3,20 @@ const nodemailer = require("nodemailer")
 const hbs = require("nodemailer-express-handlebars")
 const path = require("path")
 
-const configTransporter = ({ token, email, lastName, firstName, shopInfo }) => {
+const { timeSlots } = require("../utils/models/timeslot")
+
+const configTransporter = ({
+  token,
+  email,
+  lastName,
+  firstName,
+  shopInfo,
+  selectedSlot,
+  selectedDate,
+  phone,
+  person,
+  require,
+}) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -35,6 +48,13 @@ const configTransporter = ({ token, email, lastName, firstName, shopInfo }) => {
       name: firstName + " " + lastName,
       address,
       shopName,
+      selectedSlot,
+      selectedDate,
+      phone,
+      person,
+      require,
+      email,
+      time: timeSlots[Number(selectedSlot)],
     },
   }
 

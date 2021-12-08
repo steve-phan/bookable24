@@ -33,7 +33,16 @@ const handler = async (event, context) => {
       { _id: bookingId },
       { status: true }
     )
-    const { email, last_name, first_name } = appointmentFound
+    const {
+      email,
+      last_name,
+      first_name,
+      selectedSlot,
+      selectedDate,
+      phone,
+      person,
+      require,
+    } = appointmentFound
     const validToken = await getValidToken()
     const { transporter, mailOptions } = configTransporter({
       token: validToken,
@@ -41,6 +50,11 @@ const handler = async (event, context) => {
       lastName: last_name,
       firstName: first_name,
       shopInfo,
+      selectedSlot,
+      selectedDate,
+      phone,
+      person,
+      require,
     })
     await transporter.sendMail(mailOptions)
 
