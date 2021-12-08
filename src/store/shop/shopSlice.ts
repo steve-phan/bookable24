@@ -12,8 +12,10 @@ export const checkUserAuth =
   (shopList: any[]): AppThunk =>
   (dispatch, getState) => {
     if (typeof window !== "undefined") {
+      console.log("check Auth localStorage")
       const user = auth.currentUser
       if (user?.email) {
+        console.log("check Auth localStorage, user Logged")
         const shopname = getShopName(user.email, shopList)
         dispatch(
           getShopinfo({
@@ -71,7 +73,6 @@ const intinitialShopState: IshopState = {
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
   async ({ shopemail, shopname, isShopLogin }: IshopQuery) => {
-    console.log("data", shopemail, shopname)
     const response: any = await axios.get(
       "/.netlify/functions/get-shop-termins",
       {
