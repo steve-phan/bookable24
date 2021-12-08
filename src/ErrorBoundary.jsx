@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import * as Sentry from "@sentry/gatsby"
 
 import Layout from "./components/Layout/Layout"
@@ -34,7 +33,6 @@ class ErrorBoundary extends React.Component {
         <Layout>
           <SEO title="404: Not found" />
           <h1>404: Not Found</h1>
-
           <p>
             You just hit a route that doesn&#39;t exist... the sadness. Thanks
             Sentry :)
@@ -43,13 +41,9 @@ class ErrorBoundary extends React.Component {
       )
     } else {
       // when there's not an error, render children untouched
-      return this.props.children
+      return <>{this.props.children}</>
     }
   }
-}
-
-ErrorBoundary.propTypes = {
-  children: PropTypes.object.isRequired,
 }
 
 export default ErrorBoundary
