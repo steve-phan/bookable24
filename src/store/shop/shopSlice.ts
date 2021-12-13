@@ -65,6 +65,7 @@ const intinitialShopState: IshopState = {
     uid: "",
     settings: {
       time: "12:30",
+      slotTime: "22:00",
       weekdays: [],
     },
   },
@@ -73,6 +74,7 @@ const intinitialShopState: IshopState = {
   allTermins: [],
   settings: {
     time: "12:30",
+    slotTime: "22:00",
     weekdays: [],
   },
 }
@@ -129,6 +131,11 @@ export const shopSlice = createSlice({
         state.shopInfo.settings.time = action.payload
       }
     },
+    setSettingsDisableSlot: (state, action) => {
+      if (action.payload) {
+        state.shopInfo.settings.slotTime = action.payload
+      }
+    },
     setSetingsDisableDays: (state, action) => {
       state.shopInfo.settings.weekdays = action.payload
     },
@@ -152,7 +159,7 @@ export const shopSlice = createSlice({
           uid,
           settings,
         } = action.payload.shopInfo
-        const { time, weekdays } = settings || {}
+        const { time, weekdays, slotTime } = settings || {}
         const newarr = [
           ...action.payload.allTermins.filter(termin => !termin.status),
         ]
@@ -178,6 +185,7 @@ export const shopSlice = createSlice({
             settings: {
               time,
               weekdays,
+              slotTime,
             },
           },
         }
@@ -193,6 +201,7 @@ export const {
   setShopLogout,
   setSetingsDisableDays,
   setSettingDisableTime,
+  setSettingsDisableSlot,
 } = shopSlice.actions
 
 export default shopSlice.reducer

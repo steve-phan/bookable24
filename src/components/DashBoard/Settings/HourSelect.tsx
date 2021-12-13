@@ -5,10 +5,13 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import React from "react"
 
 import { useAppDispatch } from "src/store/hooks"
-import { setSettingDisableTime } from "src/store/shop/shopSlice"
+import {
+  setSettingDisableTime,
+  setSettingsDisableSlot,
+} from "src/store/shop/shopSlice"
 import { allSlots } from "src/templates/ShopPage/utils"
 
-const HourSelect = ({ time }: any) => {
+const HourSelect = ({ time, slotTime }: any) => {
   const dispatch = useAppDispatch()
   const menuItems = () =>
     allSlots.map((h, i) => (
@@ -21,10 +24,16 @@ const HourSelect = ({ time }: any) => {
       <InputLabel id="select-guest-number-label">Hours</InputLabel>
       <Select
         labelId="select-guest-number-label"
-        value={time}
+        value={time || slotTime}
         label="Personen"
         onChange={(event: SelectChangeEvent) => {
-          dispatch(setSettingDisableTime(event.target.value as string))
+          if (time) {
+            dispatch(setSettingDisableTime(event.target.value as string))
+          } else if (slotTime) {
+            dispatch(setSettingsDisableSlot(event.target.value as string))
+          } else {
+            return null
+          }
         }}
       >
         {menuItems()}

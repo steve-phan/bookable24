@@ -7,7 +7,7 @@ import { shopinfoSchema } from "../utils/models/shopInfoModel"
 export const handler: Handler = async function (event) {
   const data = JSON.parse(event.body)
 
-  const { shopName, weekdays, time } = data
+  const { shopName, weekdays, time, slotTime } = data
   try {
     const shopnamesDb = await connect()
     const Shopinfo = shopnamesDb.model("Shopinfo", shopinfoSchema)
@@ -18,6 +18,7 @@ export const handler: Handler = async function (event) {
         settings: {
           weekdays,
           time,
+          slotTime,
         },
       }
     )
