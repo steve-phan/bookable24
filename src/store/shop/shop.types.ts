@@ -11,6 +11,7 @@ export interface IshopInfo {
   uid?: string
   settings: {
     time: string
+    slotTime: string
     weekdays: number[]
   }
 }
@@ -22,6 +23,7 @@ export interface IshopState {
   allTermins: any[]
   settings: {
     time: string
+    slotTime: string
     weekdays: number[]
   }
 }

@@ -22,7 +22,7 @@ export const DaySt = styled("div")(({ theme }) => ({
 export const WrapHourSt = styled("div")(({ theme }) => ({
   padding: 24,
   width: "100%",
-  height: "100%",
+  // height: "100%",
   display: "inline-flex",
   justifyContent: "space-evenly",
   alignItems: "center",

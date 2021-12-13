@@ -52,7 +52,7 @@ const SlotPicker = () => {
 
   // console.log(reduceTermins(pickedDayTermins))
 
-  const { weekdays, time } = shopInfo?.settings || {}
+  const { weekdays, time, slotTime } = shopInfo?.settings || {}
 
   const dayDisable =
     weekdays?.includes(dayjs(selectedDate).day()) &&
@@ -61,6 +61,10 @@ const SlotPicker = () => {
     // Need dispatch selectedSlot, otherwise it'll be udnefine as a intialState
     dispatch(setSelectedSlot(getDefaultSlot()))
   }, [])
+  const slotDisableMorning = morningSlots.findIndex(time => time === slotTime)
+  const slotDisableAfternoon = afternoonSlots.findIndex(
+    time => time === slotTime
+  )
 
   return (
     <WrapColSt>
@@ -77,8 +81,9 @@ const SlotPicker = () => {
                 dispatch(setSelectedSlot(index))
               }}
               disabled={
-                dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
-                dayjs().date() === dayjs(selectedDate).date()
+                (dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
+                  dayjs().date() === dayjs(selectedDate).date()) ||
+                (slotDisableMorning >= 0 && index >= slotDisableMorning)
               }
             >
               {slot}
@@ -95,6 +100,7 @@ const SlotPicker = () => {
       <ButtonGroupSt>
         {afternoonSlots.map((slot, index: number) => {
           const newIndex = morningSlots?.length + index
+
           return (
             <ButtonSlotSt
               $slotactive={selectedSlot === newIndex ? true : undefined}
@@ -102,7 +108,9 @@ const SlotPicker = () => {
                 (dayDisable && dayjs().hour() >= Number(time?.split(":")[0])) ||
                 (dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
                   dayjs().date() === dayjs(selectedDate).date()) ||
-                reduceTermins(pickedDayTermins)[String(newIndex)] >= 2
+                reduceTermins(pickedDayTermins)[String(newIndex)] >= 2 ||
+                dayjs().hour() >= Number(slotTime?.split(":")[0]) ||
+                (slotDisableAfternoon >= 0 && index >= slotDisableAfternoon)
               }
               key={newIndex + slot}
               onClick={() => {

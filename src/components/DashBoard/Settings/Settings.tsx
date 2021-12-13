@@ -34,7 +34,11 @@ const SettingsDashBoard = () => {
   const dispatch = useAppDispatch()
   const { shopInfo } = useAppSelector(state => state?.shop)
   const { shopName } = shopInfo
-  const { weekdays = [], time = "12:30" } = shopInfo?.settings || {}
+  const {
+    weekdays = [],
+    time = "12:30",
+    slotTime = "22:00",
+  } = shopInfo?.settings || {}
 
   const handleSubmitDisable = async () => {
     const res = await axios.post(
@@ -43,6 +47,7 @@ const SettingsDashBoard = () => {
         shopName,
         weekdays,
         time,
+        slotTime,
       })
     )
     if (res.data === "EMAIL_SENT") {
@@ -57,6 +62,10 @@ const SettingsDashBoard = () => {
           <WrapHourSt>
             <p>Select the time to disable booking</p>
             <HourSelect time={time} />
+          </WrapHourSt>
+          <WrapHourSt>
+            <p>Select the slot(time) unavailable</p>
+            <HourSelect slotTime={slotTime} />
           </WrapHourSt>
         </Grid>
         <Grid item xs={12} md={8}>

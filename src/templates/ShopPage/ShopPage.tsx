@@ -63,6 +63,9 @@ const ShopPage: React.FC<IShopPageProps> = ({
     },
     shop: { shopInfo, status },
   } = useAppSelector(state => state)
+
+  const { slotTime } = shopInfo?.settings || {}
+  const slotDisable = allSlots.findIndex(time => time === slotTime)
   const { shopName, shopEmail } = pageContext
 
   const steps = getSteps()
@@ -142,6 +145,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       (dayjs().hour() + 2 >= Number(allSlots[selectedSlot].split(":")[0]) &&
         dayjs().date() === dayjs(selectedDate).date() &&
         activeStep !== 0) ||
+      (slotDisable >= 0 && activeStep !== 0 && selectedSlot >= slotDisable) ||
       false
     )
   }
