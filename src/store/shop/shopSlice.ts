@@ -14,11 +14,11 @@ export const checkUserAuth =
     if (typeof window !== "undefined") {
       onAuthStateChanged(auth, user => {
         if (user?.email) {
-          const shopname = getShopName(user.email, shopList)
+          const shopId = getShopName(user.email, shopList)
           dispatch(
             getShopinfo({
               shopemail: user?.email || "",
-              shopname,
+              shopId,
               isShopLogin: true,
             })
           )
@@ -94,13 +94,13 @@ const intinitialShopState: IshopState = {
 
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
-  async ({ shopemail, shopname, isShopLogin }: IshopQuery) => {
+  async ({ shopemail, shopId, isShopLogin }: IshopQuery) => {
     const response: any = await axios.get(
       "/.netlify/functions/get-shop-termins",
       {
         headers: {
           shopemail,
-          shopname,
+          shopId,
         },
       }
     )

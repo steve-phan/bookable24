@@ -19,6 +19,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         nodes {
           shopId
           email
+          shopName
         }
       }
     }
@@ -31,7 +32,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: `/${shop.shopId}/`,
       component: shopPage,
       context: {
-        shopName: shop.shopId,
+        shopName: shop.shopName,
+        shopId: shop.shopId,
         shopEmail: shop.email,
       },
     })

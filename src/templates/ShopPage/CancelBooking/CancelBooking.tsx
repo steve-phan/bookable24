@@ -14,12 +14,12 @@ import { CanCelButtonSt } from "../ShopPage.css"
 
 const CancelBooking = ({
   booking,
-  shopName,
+  shopId,
   shopInfo,
   location,
 }: {
   booking: any
-  shopName: string
+  shopId: string
   shopInfo: IshopInfo
   location: any
 }) => {
@@ -44,7 +44,7 @@ const CancelBooking = ({
     axios
       .get("/.netlify/functions/cancel-termin", {
         headers: {
-          shopName,
+          shopId: shopId,
           bookingId,
           shopInfo: JSON.stringify(shopInfo),
         },
