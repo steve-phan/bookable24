@@ -28,6 +28,7 @@ interface IShopPageProps {
   pageContext: {
     shopName: string
     shopEmail: string
+    shopId: string
   }
   data: any // Do it later
   location?: any
@@ -66,7 +67,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
 
   const { slotTime } = shopInfo?.settings || {}
   const slotDisable = allSlots.findIndex(time => time === slotTime)
-  const { shopName, shopEmail } = pageContext
+  const { shopName, shopEmail, shopId } = pageContext
 
   const steps = getSteps()
 
@@ -91,7 +92,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       axios
         .post(
           "/.netlify/functions/cancel-termin",
-          JSON.stringify({ bookingId, shopName, shopInfo })
+          JSON.stringify({ bookingId, shopId, shopInfo })
         )
         .then(res => {
           setIsLoading(false)
@@ -101,7 +102,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
     } else {
       dispatch(
         getShopinfo({
-          shopname: shopName,
+          shopId: shopId,
           shopemail: shopEmail,
           isShopLogin: false,
         })
@@ -149,10 +150,11 @@ const ShopPage: React.FC<IShopPageProps> = ({
       false
     )
   }
-
+  if (!shopEmail) return null
+  console.log("data", data)
   return (
     <Layout isShop location={location}>
-      <SEO title="Booking Online System" />
+      <SEO title={`${shopName} || Online Booking System`} />
       {/* {!checkShop && <Loading shopname={shopName} />} */}
       <WrapTerminSt>
         <ShopLogo shopinfo={data.contentfulShopInfo} />
@@ -162,7 +164,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
             booking?.email && (
               <CancelBooking
                 booking={booking}
-                shopName={shopName}
+                shopId={shopId}
                 location={location}
                 shopInfo={data.contentfulShopInfo}
               />
@@ -240,7 +242,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
 export default ShopPage
 
 export const query = graphql`
-  query ($language: String!, $shopName: String!) {
+  query ($language: String!, $shopId: String!) {
     locales: allLocale(filter: { language: { eq: $language } }) {
       edges {
         node {
@@ -250,7 +252,7 @@ export const query = graphql`
         }
       }
     }
-    contentfulShopInfo(shopId: { eq: $shopName }) {
+    contentfulShopInfo(shopId: { eq: $shopId }) {
       email
       shopName
       shopId

@@ -6,10 +6,10 @@ const { getValidToken } = require("../utils/googleToken")
 const handler = async (event, context) => {
   if (event.httpMethod === "POST") {
     try {
-      const { bookingId, shopName, shopInfo } = JSON.parse(event.body)
+      const { bookingId, shopId, shopInfo } = JSON.parse(event.body)
 
       const shopNamesDB = await connect()
-      const bookingConn = shopNamesDB.connection.useDb(shopName)
+      const bookingConn = shopNamesDB.connection.useDb(shopId)
       const Appointment = bookingConn.model("Appointment", appointmentSchema)
 
       const appointmentFound = await Appointment.findById(bookingId)
@@ -24,10 +24,10 @@ const handler = async (event, context) => {
       }
     }
   } else if (event.httpMethod === "GET") {
-    const { bookingid: bookingId, shopname: shopName, shopinfo } = event.headers
+    const { bookingid: bookingId, shopid, shopinfo } = event.headers
     const shopInfo = JSON.parse(shopinfo)
     const shopNamesDB = await connect()
-    const bookingConn = shopNamesDB.connection.useDb(shopName)
+    const bookingConn = shopNamesDB.connection.useDb(shopid)
     const Appointment = bookingConn.model("Appointment", appointmentSchema)
     const appointmentFound = await Appointment.findOneAndUpdate(
       { _id: bookingId },
