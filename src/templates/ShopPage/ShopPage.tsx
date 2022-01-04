@@ -151,11 +151,9 @@ const ShopPage: React.FC<IShopPageProps> = ({
     )
   }
   if (!shopEmail) return null
-  console.log("data", data)
   return (
     <Layout isShop location={location}>
       <SEO title={`${shopName} || Online Booking System`} />
-      {/* {!checkShop && <Loading shopname={shopName} />} */}
       <WrapTerminSt>
         <ShopLogo shopinfo={data.contentfulShopInfo} />
         <WrapTerminContentSt>

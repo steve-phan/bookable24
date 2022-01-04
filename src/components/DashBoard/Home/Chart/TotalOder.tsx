@@ -4,7 +4,7 @@ import { useTranslation } from "gatsby-plugin-react-i18next"
 
 import { WrapChartSt, BarSt, NumberSt, TypoTitleSt } from "./Chart.css"
 
-const months = [
+let months = [
   "Jan",
   "Feb",
   "Mar",
@@ -18,8 +18,31 @@ const months = [
   "Nov",
   "Dec",
 ]
+const currentMonth = new Date().getMonth()
+let newMonth = ["", "", "", "", "", "", "", "", "", "", "", ""]
+let newOders = Array(12)
+  .fill({})
+  .map((_, i) => ({
+    id:
+      i + currentMonth + 5 > 11
+        ? i + currentMonth + 5 - 12
+        : i + currentMonth + 5,
+  }))
+
+const getMonths = () => {
+  newMonth.forEach((_, i) => {
+    newMonth[i] =
+      months[
+        i + currentMonth + 5 > 11
+          ? i + currentMonth + 5 - 12
+          : i + currentMonth + 5
+      ]
+  })
+  return newMonth
+}
+
 const getData = (data: any, mess: string) => ({
-  labels: months,
+  labels: getMonths(),
   datasets: [
     {
       label: mess,
@@ -90,6 +113,8 @@ const TotalOders = ({ allTermins }: { allTermins: any[] }) => {
     const m = created_at.split("-")[1]
     newData[m - 1] += 1
   })
+  // let x = newData.map((_, i) => newOders.find(({ id }) => id === i))
+  let x = newOders.map(({ id }, i) => newData[id])
 
   return (
     <WrapChartSt>
@@ -98,7 +123,7 @@ const TotalOders = ({ allTermins }: { allTermins: any[] }) => {
       </TypoTitleSt>
       <BarSt>
         <Bar
-          data={getData(newData, t("dashboard.dashboard.bookings", "Bookings"))}
+          data={getData(x, t("dashboard.dashboard.bookings", "Bookings"))}
           options={options}
         />
       </BarSt>
