@@ -1,12 +1,9 @@
 import { graphql } from "gatsby"
-import { useTranslation } from "gatsby-plugin-react-i18next"
 import React from "react"
 import Layout from "../components/Layout/Layout"
 import SEO from "../components/seo"
 
 const Contact = ({ location }: any) => {
-  const { t } = useTranslation()
-
   return (
     <Layout location={location}>
       <SEO title="Contact" />
@@ -17,7 +14,6 @@ const Contact = ({ location }: any) => {
         }}
       >
         vietappeu@gmail.com <br />
-        01745284655
       </h2>
     </Layout>
   )
