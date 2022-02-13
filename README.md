@@ -1,3 +1,30 @@
+### Environment variables (REQUIRED)
+
+- BASE_URL
+  •••••••
+- CONTENTFUL_ACCESS_TOKEN
+  •••••••
+- GOOGLE_ACCESS_TOKEN
+  •••••••
+- GOOGLE_CLIENT_ID
+  •••••••
+- GOOGLE_CLIENT_SECRET
+  •••••••
+- GOOGLE_REDIRECT_URI
+  •••••••
+- GOOGLE_REFRESH_TOKEN
+  •••••••
+- MAIL_PASSWORD
+  •••••••
+- MAIL_USER
+  •••••••
+- MONGO_PASSWORD
+  •••••••
+- MONGO_URI
+  •••••••
+- PREVIEW_CONTENTFUL_ACCESS_TOKEN
+  •••••••
+
 ### Gatsby BoilerPlate
 
 - Material-ui
