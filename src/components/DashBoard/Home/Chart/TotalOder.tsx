@@ -1,8 +1,8 @@
-import React from "react"
+import * as React from "react"
 import { Bar } from "react-chartjs-2"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
-import { WrapChartSt, BarSt, NumberSt, TypoTitleSt } from "./Chart.css"
+import { WrapChartSt, BarSt, TypoTitleSt } from "./Chart.css"
 
 let months = [
   "Jan",

@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import axios from "axios"
+import axios, { ResponseType, AxiosResponse } from "axios"
 import { onAuthStateChanged } from "firebase/auth"
 
 import { auth } from "src/firebase"
 import { getShopName } from "src/utils"
 
 import { AppThunk } from "../store"
-import { IshopState, IshopQuery, IshopInfo } from "./shop.types"
+import { IshopState, IshopQuery, IshopInfo, IbookingState } from "./shop.types"
 
 export const checkUserAuth =
   (shopList: any[]): AppThunk =>
@@ -79,6 +79,22 @@ const intinitialShopState: IshopState = {
   },
 }
 
+export interface ITermin {
+  created_at: string
+  email: string
+  first_name: string
+  last_name: string
+  person: string
+  phone: string
+  require: null | string
+  selectedDate: string
+  selectedSlot: string
+  slots: string
+  status: boolean
+  __v: number
+  _id: string
+}
+
 // export const getShopinfo = createAsyncThunk(
 //   "shop/getShopInfo",
 //   async (shopName: string) => {
@@ -95,7 +111,7 @@ const intinitialShopState: IshopState = {
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
   async ({ shopemail, shopId, isShopLogin }: IshopQuery) => {
-    const response: any = await axios.get(
+    const response: AxiosResponse = await axios.get(
       "/.netlify/functions/get-shop-termins",
       {
         headers: {
@@ -104,9 +120,11 @@ export const getShopinfo = createAsyncThunk(
         },
       }
     )
-    const { allTermins, shopInfo }: { allTermins: any[]; shopInfo: IshopInfo } =
-      response.data
-
+    const { allTermins, shopInfo } = response.data as {
+      allTermins: ITermin[]
+      shopInfo: IshopInfo
+    }
+    console.log("alltermin ===> Redux", allTermins)
     return { allTermins, shopInfo, isShopLogin }
   }
 )

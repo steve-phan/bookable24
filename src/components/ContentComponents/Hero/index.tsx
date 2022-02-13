@@ -1,3 +1,4 @@
+import * as React from "react"
 import {
   Button,
   Card,
@@ -7,10 +8,8 @@ import {
   Grid,
 } from "@mui/material"
 import { makeStyles } from "@mui/styles"
-import { Theme, ThemeOptions } from "@mui/material/styles"
+import { Theme } from "@mui/material/styles"
 import { Link, useTranslation } from "gatsby-plugin-react-i18next"
-import React from "react"
-import Carousel from "react-material-ui-carousel"
 
 import freeTermin from "src/images/free.svg"
 import proTermin from "src/images/pro.svg"
@@ -92,12 +91,6 @@ const Hero = () => {
       image: proTermin,
       description: t("hero.item2.description"),
     },
-    // {
-    //   name: 'on Time',
-    //   image: calendar,
-    //   description:
-    //     'Haben Sie umfang­reichere An­forderungen an die Funktionalität der Online-Termin­buchung, so ist Terminland Profi für Sie das passende Produkt. Für einen einfachen Einstieg, starten Sie mit einem für Ihr Einsatz­gebiet vor­konfigurierten System. Dieses können Sie anschließend an Ihre An­forderungen anpassen und nach Ihren Wünschen konfigurieren. So erhalten Sie ein Online-Termin­buchungs­system mit höchster Effizienz.',
-    // },
   ]
   function Item({ item }: any) {
     const classes = useStyles()

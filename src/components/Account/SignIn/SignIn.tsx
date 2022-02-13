@@ -1,3 +1,4 @@
+import React, { useEffect } from "react"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import { Typography } from "@mui/material"
@@ -11,15 +12,14 @@ import {
   browserLocalPersistence,
 } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
-import React, { useEffect } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { auth } from "src/firebase"
-
 import { getShopName, validateEmail } from "src/utils"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { getShopinfo, checkUserAuth } from "src/store/shop/shopSlice"
+import { getShopinfo } from "src/store/shop/shopSlice"
 import Loading from "src/components/ContentComponents/Loading/Loading"
+import { RootState } from "src/store/store"
 
 import {
   ButtonSt,
@@ -37,7 +37,7 @@ interface IloginStates {
   loading: boolean
 }
 
-const SignIn = ({ location }: { location: any }) => {
+const SignIn = () => {
   const { navigate } = useI18next()
   const [values, setValues] = React.useState<IloginStates>({
     email: "",
@@ -46,8 +46,9 @@ const SignIn = ({ location }: { location: any }) => {
     loading: false,
   })
   const dispatch = useAppDispatch()
-  const { isShopLogin, status, allTermins, shopInfo, settings } =
-    useAppSelector(state => state.shop)
+  const { isShopLogin, status } = useAppSelector(
+    (state: RootState) => state.shop
+  )
   const shopList = useShopname()
 
   useEffect(() => {

@@ -6,7 +6,7 @@ export const CTAButtons = styled(Link)`
   font-weight: 600;
   color: ${({ theme }) => theme.color.white};
   background-color: ${({ theme }) => theme.color.primary};
-  padding: 12px 20px;
+  padding: 8px 22px;
   cursor: pointer;
   border-radius: 20px;
   text-transform: uppercase;

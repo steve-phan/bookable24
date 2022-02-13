@@ -7,15 +7,18 @@ import DatePicker from "@mui/lab/DatePicker"
 
 import { useAppSelector } from "src/store/hooks"
 import { getDateBookings } from "src/utils"
+import { RootState } from "src/store/store"
 
 import ShowInfo from "../SharedComponent/ShowInfo"
 import { FlexRowSt } from "./AllBookings.css"
 
 const AllBookingsDashBoard = () => {
-  const { shopInfo, allTermins } = useAppSelector(state => state.shop)
+  const { shopInfo, allTermins } = useAppSelector(
+    (state: RootState) => state.shop
+  )
   const [value, setValue] = React.useState<Date | null>(new Date())
   const { t } = useTranslation()
-
+  console.log("allTermins", allTermins)
   return (
     <div>
       <FlexRowSt>

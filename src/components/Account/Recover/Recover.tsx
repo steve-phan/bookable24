@@ -1,7 +1,7 @@
+import React from "react"
 import { Typography } from "@mui/material"
 import { sendPasswordResetEmail } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
-import React from "react"
 
 import { auth } from "../../../firebase"
 import { ButtonSt, TextFieldSt, TypographySt, WrapColSt } from "../Account.css"
@@ -21,8 +21,6 @@ const SignIn = () => {
     modalText: "",
     open: false,
   })
-  const shopList = useShopname()
-
   const handleChange =
     (prop: keyof IloginStates) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +39,6 @@ const SignIn = () => {
     })
     try {
       await sendPasswordResetEmail(auth, values.email)
-      //   navigate("/")
       setValues({
         ...values,
         open: true,
@@ -69,7 +66,6 @@ const SignIn = () => {
         open={values.open}
         modalText={values.modalText}
       />
-      {/* {inputState.loading && <Loading />} */}
       <h1>Passwort vergessen?</h1>
       <TypographySt>
         Geben Sie Ihre E-Mail-Adresse ein, mit der Sie sich bei BookAble24

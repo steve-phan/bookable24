@@ -1,3 +1,5 @@
+import React, { useEffect } from "react"
+import axios from "axios"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import FilledInput from "@mui/material/FilledInput"
@@ -6,13 +8,12 @@ import InputAdornment from "@mui/material/InputAdornment"
 import InputLabel from "@mui/material/InputLabel"
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
-import React, { useEffect } from "react"
-import axios from "axios"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { validateEmail, validatePhone } from "src/utils"
 import { auth } from "src/firebase"
-import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { useAppSelector } from "src/store/hooks"
+import { RootState } from "src/store/store"
 
 import Loading from "../../ContentComponents/Loading/Loading"
 import {
@@ -63,7 +64,9 @@ const SignIn = () => {
     open: false,
     modalText: "",
   })
-  const { isShopLogin, status } = useAppSelector(state => state.shop)
+  const { isShopLogin, status } = useAppSelector(
+    (state: RootState) => state.shop
+  )
 
   const handleChange =
     (prop: keyof IRegistrationStates) =>
