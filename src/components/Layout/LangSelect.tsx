@@ -1,8 +1,8 @@
+import * as React from "react"
+import styled from "styled-components"
 import MenuItem from "@mui/material/MenuItem"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import { useI18next } from "gatsby-plugin-react-i18next"
-import * as React from "react"
-import styled from "styled-components"
 
 import de from "./flag/de.png"
 import en from "./flag/en.png"

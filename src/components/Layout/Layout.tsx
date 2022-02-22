@@ -1,30 +1,24 @@
+import * as React from "react"
 import { ThemeProvider as ThemeProviderSt } from "styled-components"
 import { Container } from "@mui/material"
 import { ThemeProvider } from "@mui/material/styles"
-import React, { useEffect } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
-import { useI18next } from "gatsby-plugin-react-i18next"
 
-import { useShopname } from "src/components/Account/accountHook"
-import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { checkUserAuth, setShopLogout } from "src/store/shop/shopSlice"
+import { useAppSelector } from "src/store/hooks"
 import { theme, globalStyles } from "src/theme"
 
 import Footer from "./Footer/Footer"
 import Header from "./Header"
 import { BodySt } from "./Layout.css"
-import ErrorBoudary from "../../ErrorBoundary"
-// import "./reset.css"
-import Loading from "../ContentComponents/Loading/Loading"
+import { RootState } from "src/store/store"
+import { PageProps } from "gatsby"
 
 export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
-const Layout = ({ children, location, isShop }: any) => {
-  const dispatch = useAppDispatch()
-  const { isShopLogin, status } = useAppSelector(state => state.shop)
-
-  const shopList = useShopname()
+const Layout = ({ children, location }: PageProps) => {
+  console.log("location", location)
+  const { isShopLogin } = useAppSelector((state: RootState) => state.shop)
 
   return (
     <ThemeProvider theme={theme}>
@@ -42,12 +36,7 @@ const Layout = ({ children, location, isShop }: any) => {
           disableGutters
           maxWidth={false}
         >
-          {/* {status === "loading" && <Loading />} */}
-          <Header
-            // siteTitle={data.site.siteMetadata?.title || `Title`}
-            location={location}
-            isShopLogin={isShopLogin}
-          />
+          <Header location={location} isShopLogin={isShopLogin} />
           <BodySt>
             <Container disableGutters>{children}</Container>
           </BodySt>

@@ -35,19 +35,28 @@ const bookingSlice = createSlice({
   name: "booking",
   initialState: initialBookingState,
   reducers: {
-    setNumberOfGuest: (state, action: PayloadAction<number>) => {
+    setNumberOfGuest: (state: IbookingState, action: PayloadAction<number>) => {
       state.numberOfGuest = action.payload
     },
-    setSelectedSlot: (state, action: PayloadAction<number>) => {
+    setSelectedSlot: (state: IbookingState, action: PayloadAction<number>) => {
       state.selectedSlot = action.payload
     },
-    setSelectedDate: (state, action: PayloadAction<Date | null>) => {
+    setSelectedDate: (
+      state: IbookingState,
+      action: PayloadAction<Date | null>
+    ) => {
       state.selectedDate = action.payload
     },
-    setGuestInfo: (state, action: PayloadAction<[TGuestInfo, string]>) => {
+    setGuestInfo: (
+      state: IbookingState,
+      action: PayloadAction<[TGuestInfo, string]>
+    ) => {
       state.guestInfo[action.payload[0]] = action.payload[1]
     },
-    setGuestValidInfo: (state, action: PayloadAction<boolean>) => {
+    setGuestValidInfo: (
+      state: IbookingState,
+      action: PayloadAction<boolean>
+    ) => {
       state.isValidInfo = action.payload
     },
   },

@@ -9,15 +9,24 @@ import * as React from "react"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql, PageProps } from "gatsby"
 
+interface IMeta {
+  name: string
+  content: string
+}
+interface ISEOProps {
+  meta: IMeta
+  description: string
+  title: string
+}
+
 function Seo({
   description = "Booking Online System for Restaurant, Nail, Doctor",
-  lang,
   meta = {
     name: `Website:https://vietapp.eu`,
     content: "BookAble24 Booking Online System",
   },
   title,
-}: any) {
+}: ISEOProps) {
   const { site } = useStaticQuery(
     graphql`
       query {

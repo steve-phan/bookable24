@@ -1,13 +1,14 @@
-import React from "react"
-import { Pie } from "react-chartjs-2"
+import * as React from "react"
+import { Pie } from "react-chartjs-2/"
 
 import { useTheme } from "@mui/material/styles"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
 import { WrapChartSt, CircleSt, NumberSt, TypoTitleSt } from "./Chart.css"
+import { IbookingState } from "src/store/shop/shop.types"
+import { ITermin } from "src/store/shop/shopSlice"
 
 const showData = (num: number, color: string) => ({
-  //   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
   datasets: [
     {
       label: "# of Votes",
@@ -19,7 +20,7 @@ const showData = (num: number, color: string) => ({
   ],
 })
 
-const TotalCustomer = ({ allTermins }: { allTermins: any[] }) => {
+const TotalCustomer = ({ allTermins }: { allTermins: ITermin[] }) => {
   const theme = useTheme()
   const { t } = useTranslation()
   const totalCustomers = allTermins.reduce(
