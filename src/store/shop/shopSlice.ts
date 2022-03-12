@@ -124,7 +124,6 @@ export const getShopinfo = createAsyncThunk(
       allTermins: ITermin[]
       shopInfo: IshopInfo
     }
-    console.log("alltermin ===> Redux", allTermins)
     return { allTermins, shopInfo, isShopLogin }
   }
 )

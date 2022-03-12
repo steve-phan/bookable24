@@ -17,7 +17,6 @@ import { PageProps } from "gatsby"
 export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
 const Layout = ({ children, location }: PageProps) => {
-  console.log("location", location)
   const { isShopLogin } = useAppSelector((state: RootState) => state.shop)
 
   return (
