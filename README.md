@@ -11,6 +11,7 @@
 <p align="center">
   <a href="#environment-variables">Environment variables</a> •
   <a href="#key-features">Key Features</a> •
+  <a href="#screen-shots">Key Features</a> •
 </p>
 
 ### Environment variables (REQUIRED)
@@ -58,6 +59,14 @@
 - [x] Booking cancel.
 
 - ### [WIP] Iframe to embed to client website.
+
+### Screen shots
+
+<div style="display:flex, flex-direction: column">
+    <img  width="100%"  src="./src/images/admin.png" >
+    <img  width="100%"  src="./src/images/time.png" >
+    <img  width="100%"  src="./src/images/slot.png" >
+</div>
 
 ### Gatsby BoilerPlate
 
