@@ -13,24 +13,18 @@ import {
   TitleSt,
   WrapDaySt,
   WrapHourSt,
+  WrapHourSelectedSt,
 } from "./Settings.css"
 import { updateList } from "./utils"
+import Loading from "src/components/ContentComponents/Loading/Loading"
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } }
 
-const week = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-]
+const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri ", "Sat"]
 
 const SettingsDashBoard = () => {
-  const [check, setCheck] = useState(false)
-  const [list, setList] = useState<number[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+
   const dispatch = useAppDispatch()
   const { shopInfo } = useAppSelector(state => state?.shop)
   const { shopName } = shopInfo
@@ -41,6 +35,7 @@ const SettingsDashBoard = () => {
   } = shopInfo?.settings || {}
 
   const handleSubmitDisable = async () => {
+    setIsLoading(true)
     const res = await axios.post(
       "/.netlify/functions/admin-setting-booking",
       JSON.stringify({
@@ -51,49 +46,69 @@ const SettingsDashBoard = () => {
       })
     )
     if (res.data === "EMAIL_SENT") {
-      alert("Setting Success")
+      setIsLoading(false)
+      alert("Setting successfully")
     }
   }
   return (
     <div>
-      <TitleSt>Setting Disable</TitleSt>
+      {isLoading && <Loading />}
+      <TitleSt>Setting Time/Date avaiable</TitleSt>
       <Grid container>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12}>
           <WrapHourSt>
-            <p>Select the time to disable booking</p>
-            <HourSelect time={time} />
-          </WrapHourSt>
-          <WrapHourSt>
-            <p>Select the slot(time) unavailable</p>
+            <p>
+              <strong>(Apply to daily***)</strong> Disable after:
+            </p>
             <HourSelect slotTime={slotTime} />
           </WrapHourSt>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12}>
           <WrapDaySt>
-            {week.map((day, index) => {
-              return (
-                <DaySt key={day + index}>
-                  <Checkbox
-                    id={day + index}
-                    {...label}
-                    value={index}
-                    onChange={() => {
-                      if (weekdays?.includes(index)) {
-                        dispatch(
-                          setSetingsDisableDays(updateList(weekdays, index))
-                        )
-                      } else {
-                        dispatch(setSetingsDisableDays([...weekdays, index]))
-                      }
-                    }}
-                    checked={weekdays?.includes(index)}
-                  />
-                  <label style={{ cursor: "pointer" }} htmlFor={day + index}>
-                    {day}
-                  </label>
-                </DaySt>
-              )
-            })}
+            <Grid
+              item
+              xs={12}
+              md={8}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+              }}
+            >
+              {week.map((day, index) => {
+                return (
+                  <DaySt key={day + index}>
+                    <Checkbox
+                      id={day + index}
+                      {...label}
+                      value={index}
+                      onChange={() => {
+                        if (weekdays?.includes(index)) {
+                          dispatch(
+                            setSetingsDisableDays(updateList(weekdays, index))
+                          )
+                        } else {
+                          dispatch(setSetingsDisableDays([...weekdays, index]))
+                        }
+                      }}
+                      checked={weekdays?.includes(index)}
+                    />
+                    <label style={{ cursor: "pointer" }} htmlFor={day + index}>
+                      {day}
+                    </label>
+                  </DaySt>
+                )
+              })}
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <WrapHourSelectedSt>
+                <p>
+                  <strong>(Apply with checked***)</strong> Disable after:{" "}
+                </p>
+                <br />
+
+                <HourSelect time={time} />
+              </WrapHourSelectedSt>
+            </Grid>
           </WrapDaySt>
         </Grid>
       </Grid>

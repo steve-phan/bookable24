@@ -14,32 +14,52 @@ export const WrapDaySt = styled("div")(({ theme }) => ({
   background: theme.color.background,
 }))
 export const DaySt = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   padding: "6px 24px",
   flexShrink: 1,
   width: "50%",
+  minWidth: 130,
 }))
 
 export const WrapHourSt = styled("div")(({ theme }) => ({
   padding: 24,
   width: "100%",
   // height: "100%",
-  display: "inline-flex",
+  display: "flex",
   justifyContent: "space-evenly",
   alignItems: "center",
   "& div ": {
     width: 100,
   },
-  "& p": {
-    maxWidth: 150,
-  },
+  // "& p": {
+  //   maxWidth: 150,
+  // },
 }))
+
+export const WrapHourSelectedSt = styled("div")`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  padding: 24px;
+
+  & div {
+    width: 150px;
+  }
+`
 
 export const SubmitButtonSt = styled(Button)(({ theme }) => ({
   width: "calc(100% - 32px)",
-  maxWidth: 360,
+  maxWidth: 260,
+
   background: theme.color.primary,
   color: theme.color.white,
   margin: "24px auto",
+  padding: 10,
   display: "block",
   fontWeight: "bold",
 
