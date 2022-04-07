@@ -2,6 +2,7 @@ import dayjs from "dayjs"
 
 import { ITermin } from "src/components/DashBoard/SharedComponent/DashBoard.types"
 import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
+import { IShop } from "./store/shop/shop.types"
 
 export const allSlots = [...morningSlots, ...afternoonSlots]
 export const validateEmail = (email: string) => {
@@ -23,11 +24,11 @@ export const getRandomColor = () => {
   return color
 }
 
-export const getShopName = (email: string, shopList: any[]) =>
-  shopList?.find(
-    (shop: { email: string; shopId: string }) =>
-      shop.email.toLowerCase() === email.toLowerCase()
+export const getShopName = (emailVerify: string, shopList: IShop[]) => {
+  return shopList?.find(
+    ({ email }: IShop) => email.toLowerCase() === emailVerify.toLowerCase()
   )?.shopId
+}
 
 export interface ItimeAgoMess {
   second: string

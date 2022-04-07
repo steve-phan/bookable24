@@ -6,10 +6,16 @@ import { auth } from "src/firebase"
 import { getShopName } from "src/utils"
 
 import { AppThunk } from "../store"
-import { IshopState, IshopQuery, IshopInfo, IbookingState } from "./shop.types"
+import {
+  IshopState,
+  IshopQuery,
+  IshopInfo,
+  IbookingState,
+  IShop,
+} from "./shop.types"
 
 export const checkUserAuth =
-  (shopList: any[]): AppThunk =>
+  (shopList: IShop[]): AppThunk =>
   (dispatch, getState) => {
     if (typeof window !== "undefined") {
       onAuthStateChanged(auth, user => {
@@ -18,7 +24,7 @@ export const checkUserAuth =
           dispatch(
             getShopinfo({
               shopemail: user?.email || "",
-              shopId,
+              shopId: shopId as string,
               isShopLogin: true,
             })
           )
@@ -94,19 +100,6 @@ export interface ITermin {
   __v: number
   _id: string
 }
-
-// export const getShopinfo = createAsyncThunk(
-//   "shop/getShopInfo",
-//   async (shopName: string) => {
-//     const response: any = await axios.post(
-//       "/.netlify/functions/check-shop-list",
-//       {
-//         shopName,
-//       }
-//     )
-//     return response.data.shopInfo
-//   }
-// )
 
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",

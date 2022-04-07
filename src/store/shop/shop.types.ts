@@ -52,3 +52,8 @@ export interface IbookingState {
   }
   isValidInfo: boolean
 }
+
+export interface IShop {
+  email: string
+  shopId: string
+}
