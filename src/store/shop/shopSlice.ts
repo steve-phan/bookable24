@@ -174,7 +174,7 @@ export const shopSlice = createSlice({
           uid,
           settings,
         } = action.payload.shopInfo
-        const { time, weekdays, slotTime } = settings || {}
+        const { time, weekdays, slotTime, maxTerminPerSlot } = settings || {}
         const newarr = [
           ...action.payload.allTermins.filter(termin => !termin.status),
         ]
@@ -201,6 +201,7 @@ export const shopSlice = createSlice({
               time,
               weekdays,
               slotTime,
+              maxTerminPerSlot,
             },
           },
         }
