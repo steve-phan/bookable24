@@ -2,9 +2,13 @@ import Checkbox from "@mui/material/Checkbox"
 import Grid from "@mui/material/Grid"
 import React, { useState } from "react"
 import axios from "axios"
+import TextField from "@mui/material/TextField"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { setSetingsDisableDays } from "src/store/shop/shopSlice"
+import {
+  setSetingsDisableDays,
+  setSetingsMaxTerminPerSlot,
+} from "src/store/shop/shopSlice"
 
 import HourSelect from "./HourSelect"
 import {
@@ -32,6 +36,7 @@ const SettingsDashBoard = () => {
     weekdays = [],
     time = "12:30",
     slotTime = "22:00",
+    maxTerminPerSlot = 2,
   } = shopInfo?.settings || {}
 
   const handleSubmitDisable = async () => {
@@ -43,6 +48,7 @@ const SettingsDashBoard = () => {
         weekdays,
         time,
         slotTime,
+        maxTerminPerSlot,
       })
     )
     if (res.data === "EMAIL_SENT") {
@@ -55,6 +61,26 @@ const SettingsDashBoard = () => {
       {isLoading && <Loading />}
       <TitleSt>Setting Time/Date avaiable</TitleSt>
       <Grid container>
+        <Grid item xs={12}>
+          <WrapHourSt>
+            <p>
+              <strong>(Apply to daily***)</strong> MAX termins / per SLOT:
+            </p>
+            <TextField
+              id="standard-number"
+              label="Number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              value={maxTerminPerSlot}
+              onChange={event => {
+                dispatch(setSetingsMaxTerminPerSlot(event.target.value))
+              }}
+            />
+          </WrapHourSt>
+        </Grid>
         <Grid item xs={12}>
           <WrapHourSt>
             <p>

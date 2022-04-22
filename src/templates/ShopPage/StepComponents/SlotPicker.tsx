@@ -39,8 +39,6 @@ const reduceTermins = (arr: ITermin[]) =>
   }, {})
 
 const SlotPicker = () => {
-  const [loading, setLoading] = useState(true)
-  const [terminsBooked, setTerminsBooked] = useState([])
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { selectedSlot = getDefaultSlot(), selectedDate } = useAppSelector(
@@ -50,10 +48,12 @@ const SlotPicker = () => {
 
   const pickedDayTermins = getDateBookings(allTermins, selectedDate)
 
-  // console.log(reduceTermins(pickedDayTermins))
-
-  const { weekdays, time, slotTime } = shopInfo?.settings || {}
-
+  const {
+    weekdays,
+    time,
+    slotTime,
+    maxTerminPerSlot = 2,
+  } = shopInfo?.settings || {}
   const dayDisable =
     weekdays?.includes(dayjs(selectedDate).day()) &&
     dayjs().date() === dayjs(selectedDate).date()
@@ -108,7 +108,8 @@ const SlotPicker = () => {
                 (dayDisable && dayjs().hour() >= Number(time?.split(":")[0])) ||
                 (dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
                   dayjs().date() === dayjs(selectedDate).date()) ||
-                reduceTermins(pickedDayTermins)[String(newIndex)] >= 2 ||
+                reduceTermins(pickedDayTermins)[String(newIndex)] >=
+                  maxTerminPerSlot ||
                 dayjs().hour() >= Number(slotTime?.split(":")[0]) ||
                 (slotDisableAfternoon >= 0 && index >= slotDisableAfternoon)
               }
@@ -117,7 +118,8 @@ const SlotPicker = () => {
                 dispatch(setSelectedSlot(newIndex))
               }}
             >
-              {reduceTermins(pickedDayTermins)[String(newIndex)] >= 2
+              {reduceTermins(pickedDayTermins)[String(newIndex)] >=
+              maxTerminPerSlot
                 ? "full"
                 : slot}
               {/* {slot} */}

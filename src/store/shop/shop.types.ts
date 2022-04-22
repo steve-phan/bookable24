@@ -13,6 +13,7 @@ export interface IshopInfo {
     time: string
     slotTime: string
     weekdays: number[]
+    maxTerminPerSlot?: number
   }
 }
 
@@ -25,6 +26,7 @@ export interface IshopState {
     time: string
     slotTime: string
     weekdays: number[]
+    maxTerminPerSlot?: number
   }
 }
 
