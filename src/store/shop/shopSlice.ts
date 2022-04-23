@@ -73,6 +73,7 @@ const intinitialShopState: IshopState = {
       time: "12:30",
       slotTime: "22:00",
       weekdays: [],
+      terminBefore: 2,
       maxTerminPerSlot: 2,
     },
   },
@@ -83,6 +84,7 @@ const intinitialShopState: IshopState = {
     time: "12:30",
     slotTime: "22:00",
     weekdays: [],
+    terminBefore: 2,
     maxTerminPerSlot: 2,
   },
 }
@@ -151,6 +153,9 @@ export const shopSlice = createSlice({
     setSetingsDisableDays: (state, action) => {
       state.shopInfo.settings.weekdays = action.payload
     },
+    setSetingsTerminBefore: (state, action) => {
+      state.shopInfo.settings.terminBefore = action.payload
+    },
     setSetingsMaxTerminPerSlot: (state, action) => {
       state.shopInfo.settings.maxTerminPerSlot = action.payload
     },
@@ -174,7 +179,8 @@ export const shopSlice = createSlice({
           uid,
           settings,
         } = action.payload.shopInfo
-        const { time, weekdays, slotTime, maxTerminPerSlot } = settings || {}
+        const { time, weekdays, slotTime, maxTerminPerSlot, terminBefore } =
+          settings || {}
         const newarr = [
           ...action.payload.allTermins.filter(termin => !termin.status),
         ]
@@ -201,6 +207,7 @@ export const shopSlice = createSlice({
               time,
               weekdays,
               slotTime,
+              terminBefore,
               maxTerminPerSlot,
             },
           },
@@ -218,6 +225,7 @@ export const {
   setSetingsDisableDays,
   setSettingDisableTime,
   setSettingsDisableSlot,
+  setSetingsTerminBefore,
   setSetingsMaxTerminPerSlot,
 } = shopSlice.actions
 

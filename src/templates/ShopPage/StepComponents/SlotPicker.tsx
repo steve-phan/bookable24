@@ -52,6 +52,7 @@ const SlotPicker = () => {
     weekdays,
     time,
     slotTime,
+    terminBefore = 2,
     maxTerminPerSlot = 2,
   } = shopInfo?.settings || {}
   const dayDisable =
@@ -81,7 +82,7 @@ const SlotPicker = () => {
                 dispatch(setSelectedSlot(index))
               }}
               disabled={
-                (dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
+                (dayjs().hour() + terminBefore >= Number(slot.split(":")[0]) &&
                   dayjs().date() === dayjs(selectedDate).date()) ||
                 (slotDisableMorning >= 0 && index >= slotDisableMorning)
               }
@@ -106,7 +107,7 @@ const SlotPicker = () => {
               $slotactive={selectedSlot === newIndex ? true : undefined}
               disabled={
                 (dayDisable && dayjs().hour() >= Number(time?.split(":")[0])) ||
-                (dayjs().hour() + 2 >= Number(slot.split(":")[0]) &&
+                (dayjs().hour() + terminBefore >= Number(slot.split(":")[0]) &&
                   dayjs().date() === dayjs(selectedDate).date()) ||
                 reduceTermins(pickedDayTermins)[String(newIndex)] >=
                   maxTerminPerSlot ||

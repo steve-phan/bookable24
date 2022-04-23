@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import {
   setSetingsDisableDays,
+  setSetingsTerminBefore,
   setSetingsMaxTerminPerSlot,
 } from "src/store/shop/shopSlice"
 
@@ -36,6 +37,7 @@ const SettingsDashBoard = () => {
     weekdays = [],
     time = "12:30",
     slotTime = "22:00",
+    terminBefore = 2,
     maxTerminPerSlot = 2,
   } = shopInfo?.settings || {}
 
@@ -67,8 +69,8 @@ const SettingsDashBoard = () => {
               <strong>(Apply to daily***)</strong> MAX termins / per SLOT:
             </p>
             <TextField
-              id="standard-number"
-              label="Number"
+              id="standard-termin"
+              label="Termins"
               type="number"
               InputLabelProps={{
                 shrink: true,
@@ -77,6 +79,26 @@ const SettingsDashBoard = () => {
               value={maxTerminPerSlot}
               onChange={event => {
                 dispatch(setSetingsMaxTerminPerSlot(event.target.value))
+              }}
+            />
+          </WrapHourSt>
+        </Grid>
+        <Grid item xs={12}>
+          <WrapHourSt>
+            <p>
+              <strong>(Apply to daily***)</strong>MUST make a termin before:
+            </p>
+            <TextField
+              id="standard-hours"
+              label="Hours"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              value={terminBefore}
+              onChange={event => {
+                dispatch(setSetingsTerminBefore(event.target.value))
               }}
             />
           </WrapHourSt>
