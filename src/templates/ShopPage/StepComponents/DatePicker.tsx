@@ -18,7 +18,7 @@ import { checkDisableDate, getClosedDay } from "../utils"
 const SelectDatePicker = () => {
   const dispatch = useAppDispatch()
   const { numberOfGuest, selectedDate } = useAppSelector(state => state.booking)
-  const { closedDay } = useAppSelector(state => state.shop.settings)
+  const { closedDay } = useAppSelector(state => state.shop.shopInfo?.settings)
 
   const PersonSelect = ({ numberOfGuest }: { numberOfGuest: number }) => {
     const menuItems = () =>
