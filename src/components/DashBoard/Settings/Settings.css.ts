@@ -24,12 +24,14 @@ export const DaySt = styled("div")(({ theme }) => ({
 }))
 
 export const WrapHourSt = styled("div")(({ theme }) => ({
-  padding: 12,
-  width: "100%",
-  // height: "100%",
   display: "flex",
-  justifyContent: "space-evenly",
+  justifyContent: "space-between",
   alignItems: "center",
+  width: "100%",
+  maxWidth: 650,
+
+  padding: "0 12px",
+  margin: "auto",
   "& div ": {
     width: 100,
   },

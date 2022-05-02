@@ -5,6 +5,7 @@ import axios from "axios"
 import TextField from "@mui/material/TextField"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import Loading from "src/components/ContentComponents/Loading/Loading"
 import {
   setSetingsDisableDays,
   setSetingsTerminBefore,
@@ -21,7 +22,6 @@ import {
   WrapHourSelectedSt,
 } from "./Settings.css"
 import { updateList } from "./utils"
-import Loading from "src/components/ContentComponents/Loading/Loading"
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } }
 
@@ -86,7 +86,7 @@ const SettingsDashBoard = () => {
         <Grid item xs={12}>
           <WrapHourSt>
             <p>
-              <strong>(Apply to daily***)</strong>MUST make a termin before:
+              <strong>(Apply to daily***)</strong> Acceptable termin before:
             </p>
             <TextField
               id="standard-hours"
