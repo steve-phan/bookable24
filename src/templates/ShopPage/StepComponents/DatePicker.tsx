@@ -46,7 +46,6 @@ const SelectDatePicker = () => {
       </Box>
     )
   }
-  console.log({ closedDay: getClosedDay("Mon") })
   return (
     <WrapRowSt>
       <PersonSelect numberOfGuest={numberOfGuest} />

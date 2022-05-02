@@ -50,6 +50,7 @@ const SettingsDashBoard = () => {
       JSON.stringify({
         shopName,
         weekdays,
+        closedDay,
         time,
         slotTime,
         maxTerminPerSlot,
