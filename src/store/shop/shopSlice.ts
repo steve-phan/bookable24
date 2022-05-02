@@ -72,6 +72,7 @@ const intinitialShopState: IshopState = {
     settings: {
       time: "12:30",
       slotTime: "22:00",
+      closedDay: "none",
       weekdays: [],
       terminBefore: 2,
       maxTerminPerSlot: 2,
@@ -82,6 +83,7 @@ const intinitialShopState: IshopState = {
   allTermins: [],
   settings: {
     time: "12:30",
+    closedDay: "none",
     slotTime: "22:00",
     weekdays: [],
     terminBefore: 2,
@@ -159,6 +161,9 @@ export const shopSlice = createSlice({
     setSetingsMaxTerminPerSlot: (state, action) => {
       state.shopInfo.settings.maxTerminPerSlot = action.payload
     },
+    setSetingsClosedDay: (state, action) => {
+      state.shopInfo.settings.closedDay = action.payload
+    },
   },
   extraReducers: builder => {
     builder
@@ -179,8 +184,14 @@ export const shopSlice = createSlice({
           uid,
           settings,
         } = action.payload.shopInfo
-        const { time, weekdays, slotTime, maxTerminPerSlot, terminBefore } =
-          settings || {}
+        const {
+          time,
+          weekdays,
+          slotTime,
+          closedDay,
+          maxTerminPerSlot,
+          terminBefore,
+        } = settings || {}
         const newarr = [
           ...action.payload.allTermins.filter(termin => !termin.status),
         ]
@@ -205,6 +216,7 @@ export const shopSlice = createSlice({
             uid,
             settings: {
               time,
+              closedDay,
               weekdays,
               slotTime,
               terminBefore,
@@ -222,6 +234,7 @@ export const shopSlice = createSlice({
 export const {
   setShopInfo,
   setShopLogout,
+  setSetingsClosedDay,
   setSetingsDisableDays,
   setSettingDisableTime,
   setSettingsDisableSlot,

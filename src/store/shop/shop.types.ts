@@ -13,6 +13,7 @@ export interface IshopInfo {
     time: string
     slotTime: string
     weekdays: number[]
+    closedDay: "none" | "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat"
     terminBefore?: number
     maxTerminPerSlot?: number
   }
@@ -26,6 +27,7 @@ export interface IshopState {
   settings: {
     time: string
     slotTime: string
+    closedDay: "none" | "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat"
     weekdays: number[]
     terminBefore?: number
     maxTerminPerSlot?: number
@@ -45,7 +47,7 @@ export interface Iaccount {
 
 export interface IbookingState {
   numberOfGuest: number
-  selectedDate: Date | null
+  selectedDate: Date
   selectedSlot: number
   guestInfo: {
     firstName: string

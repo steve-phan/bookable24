@@ -12,7 +12,6 @@ import {
   setSetingsMaxTerminPerSlot,
 } from "src/store/shop/shopSlice"
 
-import HourSelect from "./HourSelect"
 import {
   DaySt,
   SubmitButtonSt,
@@ -22,6 +21,8 @@ import {
   WrapHourSelectedSt,
 } from "./Settings.css"
 import { updateList } from "./utils"
+import HourSelect from "./HourSelect"
+import DateSelect from "./DateSelect"
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } }
 
@@ -36,6 +37,7 @@ const SettingsDashBoard = () => {
   const {
     weekdays = [],
     time = "12:30",
+    closedDay = "none",
     slotTime = "22:00",
     terminBefore = 2,
     maxTerminPerSlot = 2,
@@ -96,7 +98,7 @@ const SettingsDashBoard = () => {
                 shrink: true,
               }}
               variant="standard"
-              value={terminBefore}
+              value={terminBefore || 0}
               onChange={event => {
                 dispatch(setSetingsTerminBefore(event.target.value))
               }}
@@ -109,6 +111,14 @@ const SettingsDashBoard = () => {
               <strong>(Apply to daily***)</strong> Disable after:
             </p>
             <HourSelect slotTime={slotTime} />
+          </WrapHourSt>
+        </Grid>
+        <Grid item xs={12}>
+          <WrapHourSt>
+            <p>
+              <strong>Close day</strong> Regular a weekday:
+            </p>
+            <DateSelect slotDate={week} closedDay={closedDay} />
           </WrapHourSt>
         </Grid>
         <Grid item xs={12}>

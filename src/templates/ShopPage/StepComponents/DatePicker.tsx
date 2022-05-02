@@ -13,11 +13,12 @@ import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setSelectedDate, setNumberOfGuest } from "src/store/shop/bookingSlice"
 
 import { WrapRowSt } from "../ShopPage.css"
-import { checkDisableDate } from "../utils"
+import { checkDisableDate, getClosedDay } from "../utils"
 
 const SelectDatePicker = () => {
   const dispatch = useAppDispatch()
   const { numberOfGuest, selectedDate } = useAppSelector(state => state.booking)
+  const { closedDay } = useAppSelector(state => state.shop.settings)
 
   const PersonSelect = ({ numberOfGuest }: { numberOfGuest: number }) => {
     const menuItems = () =>
@@ -45,13 +46,13 @@ const SelectDatePicker = () => {
       </Box>
     )
   }
-
+  console.log({ closedDay: getClosedDay("Mon") })
   return (
     <WrapRowSt>
       <PersonSelect numberOfGuest={numberOfGuest} />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
-          shouldDisableDate={checkDisableDate}
+          shouldDisableDate={date => checkDisableDate(date, closedDay)}
           label="Datum"
           inputFormat="MMM-dd-yyyy"
           value={selectedDate}
