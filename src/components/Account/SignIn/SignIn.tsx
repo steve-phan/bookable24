@@ -90,11 +90,11 @@ const SignIn = () => {
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password)
 
-      await setPersistence(auth, browserLocalPersistence)
-        .then(() => {
-          return signInWithEmailAndPassword(auth, values.email, values.password)
-        })
-        .catch(err => console.log(err))
+      // await setPersistence(auth, browserLocalPersistence)
+      //   .then(() => {
+      //     return signInWithEmailAndPassword(auth, values.email, values.password)
+      //   })
+      //   .catch(err => console.log(err))
       await dispatch(
         getShopinfo({
           shopemail: values.email,
