@@ -38,7 +38,7 @@ module.exports = {
         languages: [`en`, `de`, `vn`],
         defaultLanguage: `en`,
         // if you are using Helmet, you must include siteUrl, and make sure you add http:https
-        siteUrl: `https://vietappeu.de/`,
+        siteUrl: `https://bookable24.de/`,
         // you can pass any i18next options
         // pass following options to allow message content as a key
         i18nextOptions: {
@@ -88,20 +88,34 @@ module.exports = {
         // host: `preview.contentful.com`,
       },
     },
-    // {
-    //   resolve: "@sentry/gatsby",
-    //   options: {
-    //     dsn: "https://bfa58b14270a45fb8067e1dcf45d74e8@o1061869.ingest.sentry.io/6052276",
-    //     sampleRate: 0.7, // Adjust this value in production
-    //     // integrations: [new Integrations.BrowserTracing()],
-    //     // Cannot set `beforeSend`
-    //     // debug: true,
-    //   },
-    // },
-
-    `gatsby-plugin-gatsby-cloud`,
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        // You can add multiple tracking ids and a pageview event will be fired for all of them.
+        trackingIds: [
+          "G-TDXYN152CB", // Google Analytics / GA
+          // "AW-CONVERSION_ID", // Google Ads / Adwords / AW
+          // "DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
+        ],
+        // This object gets passed directly to the gtag config command
+        // This config will be shared across all trackingIds
+        // gtagConfig: {
+        //   optimize_id: "OPT_CONTAINER_ID",
+        //   anonymize_ip: true,
+        //   cookie_expires: 0,
+        // },
+        // This object is used for configuration specific to this plugin
+        pluginConfig: {
+          // Puts tracking script in the head instead of the body
+          head: false,
+          // Setting this parameter is also optional
+          respectDNT: true,
+          // Avoids sending pageview hits from custom paths
+          // exclude: ["/preview/**", "/do-not-track/me/too/"],
+          // Defaults to https://www.googletagmanager.com
+          // origin: "YOUR_SELF_HOSTED_ORIGIN",
+        },
+      },
+    },
   ],
 }
