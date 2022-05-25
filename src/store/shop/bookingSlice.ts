@@ -41,10 +41,7 @@ const bookingSlice = createSlice({
     setSelectedSlot: (state: IbookingState, action: PayloadAction<number>) => {
       state.selectedSlot = action.payload
     },
-    setSelectedDate: (
-      state: IbookingState,
-      action: PayloadAction<Date | null>
-    ) => {
+    setSelectedDate: (state: IbookingState, action: PayloadAction<Date>) => {
       state.selectedDate = action.payload
     },
     setGuestInfo: (

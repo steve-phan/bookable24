@@ -60,7 +60,7 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin, location }) => {
         />
         <Hidden mdUp>
           <div>
-            {isShopLogin && !location.pathname.includes("/login") && (
+            {isShopLogin && !location?.pathname?.includes("/login") && (
               <DashBoardButtonSt to="/dashboard">
                 {t("menu.DashBoard", "DashBoard")}{" "}
               </DashBoardButtonSt>
