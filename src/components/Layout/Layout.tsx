@@ -12,11 +12,15 @@ import Footer from "./Footer/Footer"
 import Header from "./Header"
 import { BodySt } from "./Layout.css"
 import { RootState } from "src/store/store"
-import { PageProps } from "gatsby"
 
 export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
-const Layout = ({ children, location }: PageProps) => {
+interface ILayoutProps {
+  location?: Record<string, any>
+  children: JSX.Element
+}
+
+const Layout = ({ children, location }: ILayoutProps) => {
   const { isShopLogin } = useAppSelector((state: RootState) => state.shop)
 
   return (

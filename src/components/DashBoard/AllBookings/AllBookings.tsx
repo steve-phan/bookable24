@@ -19,7 +19,7 @@ const AllBookingsDashBoard = () => {
   const [value, setValue] = React.useState<Date | null>(new Date())
   const { t } = useTranslation()
   return (
-    <div>
+    <>
       <FlexRowSt>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
@@ -39,7 +39,7 @@ const AllBookingsDashBoard = () => {
             : allTermins
         }
       />
-    </div>
+    </>
   )
 }
 export default AllBookingsDashBoard

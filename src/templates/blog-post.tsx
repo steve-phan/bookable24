@@ -12,19 +12,21 @@ const BlogPost: React.FC = ({ data, pageContext }: any) => {
   const image = getImage(data.contentfulMyBlog.thumbPicture) as IGatsbyImageData
   return (
     <Layout>
-      <SEO title="Blog BooKAble24" />
-      <GatsbyImageSt image={image} alt="Image" />
-      <div
-        dangerouslySetInnerHTML={{
-          __html: documentToHtmlString(
-            JSON.parse(data.contentfulMyBlog.body.raw)
-          ),
-        }}
-      />
-      <CtaPagesSt>
-        <Link to={`/blog/${pageContext.previousPostSlug}`}>Pre </Link>
-        <Link to={`/blog/${pageContext.nextPostSlug}`}>Next </Link>
-      </CtaPagesSt>
+      <>
+        <SEO title="Blog BooKAble24" />
+        <GatsbyImageSt image={image} alt="Image" />
+        <div
+          dangerouslySetInnerHTML={{
+            __html: documentToHtmlString(
+              JSON.parse(data.contentfulMyBlog.body.raw)
+            ),
+          }}
+        />
+        <CtaPagesSt>
+          <Link to={`/blog/${pageContext.previousPostSlug}`}>Pre </Link>
+          <Link to={`/blog/${pageContext.nextPostSlug}`}>Next </Link>
+        </CtaPagesSt>
+      </>
     </Layout>
   )
 }

@@ -14,8 +14,8 @@ interface IMeta {
   content: string
 }
 interface ISEOProps {
-  meta: IMeta
-  description: string
+  meta?: IMeta
+  description?: string
   title: string
 }
 

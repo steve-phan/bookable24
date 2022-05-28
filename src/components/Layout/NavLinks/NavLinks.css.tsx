@@ -2,8 +2,6 @@ import { Link } from "gatsby-plugin-react-i18next"
 import { styled, alpha } from "@mui/material/styles"
 import Drawer from "@mui/material/Drawer"
 
-import { getRandomColor } from "src/utils"
-
 export const PageLinkSt = styled(Link)(({ theme }) => ({
   color: alpha(theme.color.text, 0.8),
   fontWeight: "bold",

@@ -32,13 +32,6 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin, location }) => {
         }}
       >
         <Logo />
-        {/* <Hidden mdUp>
-          {isShopLogin && (
-            <DashBoardButtonSt to="/dashboard">
-              {t("menu.DashBoard", "DashBoard")}{" "}
-            </DashBoardButtonSt>
-          )}
-        </Hidden> */}
         <Hidden mdDown>
           <NavLinks routes={routes} />
           <WrapLoginSt>

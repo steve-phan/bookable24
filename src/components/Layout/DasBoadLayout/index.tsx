@@ -1,4 +1,3 @@
-import { graphql } from "gatsby"
 import { ThemeProvider } from "@mui/material/styles"
 import { ThemeProvider as ThemeProviderSt } from "styled-components"
 import React, { ReactNode, useEffect } from "react"
@@ -7,7 +6,6 @@ import CssBaseline from "@mui/material/CssBaseline"
 
 import { useShopname } from "src/components/Account/accountHook"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { checkUserAuth } from "src/store/shop/shopSlice"
 import SideBar from "src/components/Layout/DasBoadLayout/SideBar"
 import Header from "src/components/Layout/DasBoadLayout/Header/Header"
 import { theme } from "src/theme"
@@ -42,12 +40,9 @@ const DashBoardLayout = ({
   const dispatch = useAppDispatch()
   const { isShopLogin, status } = useAppSelector(state => state.shop)
 
-  const shopList = useShopname()
-
   useEffect(() => {
     if (!isShopLogin && status === "logout") {
       navigate("/login")
-      // dispatch(checkUserAuth(shopList))
     }
   }, [status])
 
