@@ -4,6 +4,17 @@ import { ITermin } from "src/components/DashBoard/SharedComponent/DashBoard.type
 import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
 import { IShop } from "./store/shop/shop.types"
 
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone" // dependent on utc plug
+/**
+ * @TODO : Working with timezone
+ */
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault("Europe/Berlin")
+
+export const dayjsModified = dayjs
+
 export const allSlots = [...morningSlots, ...afternoonSlots]
 export const validateEmail = (email: string) => {
   const regex =

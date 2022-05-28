@@ -11,18 +11,20 @@ import { checkClosedDay } from "./utils"
 import dayjs from "dayjs"
 
 interface IDisableDate {
-  disableDay: Date | string
-  setDisableDay: React.Dispatch<React.SetStateAction<Date | string>>
+  disableDay: Date
+  setDisableDay: React.Dispatch<React.SetStateAction<Date>>
 }
 
-const DisabelDate = ({ disableDay, setDisableDay }: IDisableDate) => {
+const DisabelDate = ({
+  disableDay = new Date(),
+  setDisableDay,
+}: IDisableDate) => {
   //   const [disableDay, setDisableDay] = useState(new Date())
   const dispatch = useAppDispatch()
 
   const { closedSpecificDay } = useAppSelector(
     store => store.shop.shopInfo.settings
   )
-  console.log({ closedSpecificDay })
   return (
     <div>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -32,9 +34,7 @@ const DisabelDate = ({ disableDay, setDisableDay }: IDisableDate) => {
           inputFormat="MMM-dd-yyyy"
           value={disableDay}
           onChange={newValue => {
-            console.log(newValue)
-            setDisableDay(newValue)
-            // dispatch(setSetingsClosedSpecificDay(disableDay))
+            setDisableDay(newValue as Date)
           }}
           renderInput={params => <TextField variant="standard" {...params} />}
         />

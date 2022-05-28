@@ -5,6 +5,7 @@ import InfoUser from "./StepComponents/InfoUser"
 import PrewView from "./StepComponents/PrewView"
 import ThankYou from "./StepComponents/ThankYou"
 import dayjs from "dayjs"
+import { dayjsModified } from "src/utils"
 
 const week = {
   Sun: 0,
@@ -21,10 +22,21 @@ type TWeek = "none" | "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat"
 
 export const getClosedDay = (day: TWeek) => dayjs().day() === week[day]
 
-export const checkDisableDate = (day: Date, closedDay: TWeek) => {
+export const checkDisableDate = (
+  day: Date,
+  closedDay: TWeek,
+  closedSpecificDay: Date[]
+) => {
+  const foundDayClosed = closedSpecificDay.findIndex(specificDay => {
+    return (
+      specificDay &&
+      dayjsModified(day).isSame(dayjsModified(specificDay), "day")
+    )
+  })
   return (
     dayjs(day).startOf("day").diff(dayjs().startOf("day")) < 0 ||
-    (closedDay !== "none" && dayjs(day).day() === week[closedDay])
+    (closedDay !== "none" && dayjs(day).day() === week[closedDay]) ||
+    foundDayClosed >= 0
   )
 }
 
@@ -81,3 +93,6 @@ export const getDefaultSlot = () => {
 
   return index === -1 ? 0 : index
 }
+
+export const isSameDay = (day: Date) => dayjs().isSame(dayjs(day), "hour")
+export const currentHour = dayjs().hour()

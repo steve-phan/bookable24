@@ -24,12 +24,17 @@ const DateSelect = ({
       </MenuItem>
     ))
   return (
-    <FormControl variant="standard" sx={{ minWidth: 80 }} fullWidth>
+    <FormControl
+      variant="standard"
+      sx={{ minWidth: 80, maxWidth: 220 }}
+      fullWidth
+    >
       <InputLabel id="select-guest-number-label">Closed day</InputLabel>
       <Select
         labelId="select-guest-number-label"
         value={closedRegularDay}
         label="Personen"
+        placeholder="hallo"
         onChange={(event: SelectChangeEvent) => {
           dispatch(setSetingsClosedRegularDay(event.target.value as string))
         }}

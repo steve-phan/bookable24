@@ -22,7 +22,7 @@ export interface IshopInfo {
       | "Thu"
       | "Fri"
       | "Sat"
-    closedSpecificDay: string[] | Date[]
+    closedSpecificDay: Date[]
     terminBefore?: number
     maxTerminPerSlot?: number
   }

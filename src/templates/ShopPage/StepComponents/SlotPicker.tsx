@@ -12,6 +12,8 @@ import {
   morningSlots,
   getDefaultSlot,
   allSlots,
+  isSameDay,
+  currentHour,
 } from "../utils"
 import {
   ButtonGroupSt,
@@ -55,16 +57,19 @@ const SlotPicker = () => {
     terminBefore = 2,
     maxTerminPerSlot = 2,
   } = shopInfo?.settings || {}
-  const dayDisable =
-    weekdays?.includes(dayjs(selectedDate).day()) &&
-    dayjs().date() === dayjs(selectedDate).date()
+  const dayDisable = weekdays?.includes(dayjs(selectedDate).day())
+  //This is the currentDay in list to custom disable
+  // && isSameDay(selectedDate)
+
   useEffect(() => {
-    // Need dispatch selectedSlot, otherwise it'll be udnefine as a intialState
+    // Need dispatch selectedSlot, otherwise it'll be undefine as a intialState
     dispatch(setSelectedSlot(getDefaultSlot()))
   }, [])
-  const slotDisableMorning = morningSlots.findIndex(time => time === slotTime)
+  const slotDisableMorning = morningSlots.findIndex(
+    morningSlot => morningSlot === slotTime
+  )
   const slotDisableAfternoon = afternoonSlots.findIndex(
-    time => time === slotTime
+    afternoonSlot => afternoonSlot === slotTime
   )
 
   return (
@@ -83,7 +88,7 @@ const SlotPicker = () => {
               }}
               disabled={
                 (dayjs().hour() + terminBefore >= Number(slot.split(":")[0]) &&
-                  dayjs().date() === dayjs(selectedDate).date()) ||
+                  isSameDay(selectedDate)) ||
                 (slotDisableMorning >= 0 && index >= slotDisableMorning)
               }
             >
@@ -106,12 +111,13 @@ const SlotPicker = () => {
             <ButtonSlotSt
               $slotactive={selectedSlot === newIndex ? true : undefined}
               disabled={
-                (dayDisable && dayjs().hour() >= Number(time?.split(":")[0])) ||
-                (dayjs().hour() + terminBefore >= Number(slot.split(":")[0]) &&
-                  dayjs().date() === dayjs(selectedDate).date()) ||
+                (dayDisable &&
+                  Number(slot.split(":")[0]) >= Number(time?.split(":")[0])) ||
+                (currentHour + terminBefore >= Number(slot.split(":")[0]) &&
+                  isSameDay(selectedDate)) ||
                 reduceTermins(pickedDayTermins)[String(newIndex)] >=
                   maxTerminPerSlot ||
-                dayjs().hour() >= Number(slotTime?.split(":")[0]) ||
+                currentHour >= Number(slotTime?.split(":")[0]) ||
                 (slotDisableAfternoon >= 0 && index >= slotDisableAfternoon)
               }
               key={newIndex + slot}
@@ -123,7 +129,6 @@ const SlotPicker = () => {
               maxTerminPerSlot
                 ? "full"
                 : slot}
-              {/* {slot} */}
             </ButtonSlotSt>
           )
         })}

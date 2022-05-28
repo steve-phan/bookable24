@@ -24,14 +24,15 @@ import { updateList } from "./utils"
 import HourSelect from "./HourSelect"
 import DateSelect from "./DateSelect"
 import DisabelDate from "./DisabelDate"
+import { isSameDay } from "src/templates/ShopPage/utils"
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } }
 
-const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri ", "Sat"]
+const week = ["None", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri ", "Sat"]
 
 const SettingsDashBoard = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [disableDay, setDisableDay] = useState<Date | string>(new Date())
+  const [disableDay, setDisableDay] = useState<Date>(new Date())
   const dispatch = useAppDispatch()
   const { shopInfo } = useAppSelector(state => state?.shop)
   const { shopName } = shopInfo
@@ -54,7 +55,9 @@ const SettingsDashBoard = () => {
         shopName,
         weekdays,
         closedRegularDay,
-        closedSpecificDay: [...closedSpecificDay, disableDay],
+        closedSpecificDay: isSameDay(disableDay)
+          ? closedSpecificDay
+          : [...closedSpecificDay, disableDay],
         time,
         slotTime,
         maxTerminPerSlot,
@@ -65,6 +68,7 @@ const SettingsDashBoard = () => {
       alert("Setting successfully")
     }
   }
+  console.log({ today: disableDay })
   return (
     <div>
       {isLoading && <Loading />}
@@ -118,14 +122,7 @@ const SettingsDashBoard = () => {
             <HourSelect slotTime={slotTime} />
           </WrapHourSt>
         </Grid>
-        <Grid item xs={12}>
-          <WrapHourSt>
-            <p>
-              <strong>Close day</strong> Regular a weekday:
-            </p>
-            <DateSelect slotDate={week} closedRegularDay={closedRegularDay} />
-          </WrapHourSt>
-        </Grid>
+        <Grid item xs={12}></Grid>
         <Grid item xs={12}>
           <WrapDaySt>
             <Grid
@@ -138,6 +135,9 @@ const SettingsDashBoard = () => {
               }}
             >
               {week.map((day, index) => {
+                if (day === "None") {
+                  return null
+                }
                 return (
                   <DaySt key={day + index}>
                     <Checkbox
@@ -174,9 +174,36 @@ const SettingsDashBoard = () => {
             </Grid>
           </WrapDaySt>
         </Grid>
-        <Grid item xs={12}>
-          <h1>Hello</h1>
-          <DisabelDate disableDay={disableDay} setDisableDay={setDisableDay} />
+        <Grid container>
+          <Grid
+            alignItems="center"
+            display="flex"
+            flexDirection="column"
+            item
+            xs={12}
+            md={6}
+          >
+            <p>
+              <strong>Close</strong> Regular WeekDay:
+            </p>
+            <DateSelect slotDate={week} closedRegularDay={closedRegularDay} />
+          </Grid>
+          <Grid
+            alignItems="center"
+            display="flex"
+            flexDirection="column"
+            item
+            xs={12}
+            md={6}
+          >
+            <p>
+              <strong>Close </strong>a Specific day:
+            </p>
+            <DisabelDate
+              disableDay={disableDay}
+              setDisableDay={setDisableDay}
+            />
+          </Grid>
         </Grid>
       </Grid>
       <SubmitButtonSt onClick={handleSubmitDisable}>

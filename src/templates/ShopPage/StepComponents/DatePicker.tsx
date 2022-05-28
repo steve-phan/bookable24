@@ -18,10 +18,9 @@ import { checkDisableDate, getClosedDay } from "../utils"
 const SelectDatePicker = () => {
   const dispatch = useAppDispatch()
   const { numberOfGuest, selectedDate } = useAppSelector(state => state.booking)
-  const { closedRegularDay } = useAppSelector(
+  const { closedRegularDay, closedSpecificDay } = useAppSelector(
     state => state.shop.shopInfo?.settings
   )
-  console.log({ closedRegularDay })
   const PersonSelect = ({ numberOfGuest }: { numberOfGuest: number }) => {
     const menuItems = () =>
       [...Array(10)].map((_, i) => (
@@ -53,12 +52,13 @@ const SelectDatePicker = () => {
       <PersonSelect numberOfGuest={numberOfGuest} />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
-          shouldDisableDate={date => checkDisableDate(date, closedRegularDay)}
+          shouldDisableDate={date =>
+            checkDisableDate(date, closedRegularDay, closedSpecificDay)
+          }
           label="Datum"
           inputFormat="MMM-dd-yyyy"
           value={selectedDate}
           onChange={newValue => {
-            console.log({ newValue })
             dispatch(setSelectedDate(newValue as Date))
           }}
           renderInput={params => <TextField variant="standard" {...params} />}
