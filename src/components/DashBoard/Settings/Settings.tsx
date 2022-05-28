@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import Loading from "src/components/ContentComponents/Loading/Loading"
 import {
-  setSetingsDisableDays,
+  setSetingsRegularDays,
   setSetingsTerminBefore,
   setSetingsMaxTerminPerSlot,
 } from "src/store/shop/shopSlice"
@@ -23,6 +23,7 @@ import {
 import { updateList } from "./utils"
 import HourSelect from "./HourSelect"
 import DateSelect from "./DateSelect"
+import DisabelDate from "./DisabelDate"
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } }
 
@@ -143,10 +144,10 @@ const SettingsDashBoard = () => {
                       onChange={() => {
                         if (weekdays?.includes(index)) {
                           dispatch(
-                            setSetingsDisableDays(updateList(weekdays, index))
+                            setSetingsRegularDays(updateList(weekdays, index))
                           )
                         } else {
-                          dispatch(setSetingsDisableDays([...weekdays, index]))
+                          dispatch(setSetingsRegularDays([...weekdays, index]))
                         }
                       }}
                       checked={weekdays?.includes(index)}
@@ -169,6 +170,10 @@ const SettingsDashBoard = () => {
               </WrapHourSelectedSt>
             </Grid>
           </WrapDaySt>
+        </Grid>
+        <Grid item xs={12}>
+          <h1>Hello</h1>
+          <DisabelDate />
         </Grid>
       </Grid>
       <SubmitButtonSt onClick={handleSubmitDisable}>

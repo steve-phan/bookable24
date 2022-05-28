@@ -19,7 +19,7 @@ const SelectDatePicker = () => {
   const dispatch = useAppDispatch()
   const { numberOfGuest, selectedDate } = useAppSelector(state => state.booking)
   const { closedDay } = useAppSelector(state => state.shop.shopInfo?.settings)
-
+  console.log({ closedDay })
   const PersonSelect = ({ numberOfGuest }: { numberOfGuest: number }) => {
     const menuItems = () =>
       [...Array(10)].map((_, i) => (
@@ -56,7 +56,8 @@ const SelectDatePicker = () => {
           inputFormat="MMM-dd-yyyy"
           value={selectedDate}
           onChange={newValue => {
-            dispatch(setSelectedDate(newValue))
+            console.log({ newValue })
+            dispatch(setSelectedDate(newValue as Date))
           }}
           renderInput={params => <TextField variant="standard" {...params} />}
         />

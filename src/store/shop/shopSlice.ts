@@ -152,7 +152,7 @@ export const shopSlice = createSlice({
         state.shopInfo.settings.slotTime = action.payload
       }
     },
-    setSetingsDisableDays: (state, action) => {
+    setSetingsRegularDays: (state, action) => {
       state.shopInfo.settings.weekdays = action.payload
     },
     setSetingsTerminBefore: (state, action) => {
@@ -235,7 +235,7 @@ export const {
   setShopInfo,
   setShopLogout,
   setSetingsClosedDay,
-  setSetingsDisableDays,
+  setSetingsRegularDays,
   setSettingDisableTime,
   setSettingsDisableSlot,
   setSetingsTerminBefore,
