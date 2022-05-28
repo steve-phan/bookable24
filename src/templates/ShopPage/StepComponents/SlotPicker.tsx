@@ -71,7 +71,6 @@ const SlotPicker = () => {
   const slotDisableAfternoon = afternoonSlots.findIndex(
     afternoonSlot => afternoonSlot === slotTime
   )
-
   return (
     <WrapColSt>
       <TitleBannerSt>
@@ -106,7 +105,6 @@ const SlotPicker = () => {
       <ButtonGroupSt>
         {afternoonSlots.map((slot, index: number) => {
           const newIndex = morningSlots?.length + index
-
           return (
             <ButtonSlotSt
               $slotactive={selectedSlot === newIndex ? true : undefined}
@@ -117,7 +115,8 @@ const SlotPicker = () => {
                   isSameDay(selectedDate)) ||
                 reduceTermins(pickedDayTermins)[String(newIndex)] >=
                   maxTerminPerSlot ||
-                currentHour >= Number(slotTime?.split(":")[0]) ||
+                (dayDisable &&
+                  currentHour >= Number(slotTime?.split(":")[0])) ||
                 (slotDisableAfternoon >= 0 && index >= slotDisableAfternoon)
               }
               key={newIndex + slot}

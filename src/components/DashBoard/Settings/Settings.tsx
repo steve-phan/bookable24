@@ -28,7 +28,7 @@ import { isSameDay } from "src/templates/ShopPage/utils"
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } }
 
-const week = ["None", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri ", "Sat"]
+const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri ", "Sat", "None"]
 
 const SettingsDashBoard = () => {
   const [isLoading, setIsLoading] = useState(false)
