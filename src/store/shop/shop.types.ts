@@ -13,7 +13,16 @@ export interface IshopInfo {
     time: string
     slotTime: string
     weekdays: number[]
-    closedDay: "none" | "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat"
+    closedRegularDay:
+      | "none"
+      | "Sun"
+      | "Mon"
+      | "Tue"
+      | "Wed"
+      | "Thu"
+      | "Fri"
+      | "Sat"
+    closedSpecificDay: string[] | Date[]
     terminBefore?: number
     maxTerminPerSlot?: number
   }
@@ -24,14 +33,6 @@ export interface IshopState {
   status: "login" | "loading" | "logout"
   isShopLogin: boolean
   allTermins: any[]
-  settings: {
-    time: string
-    slotTime: string
-    closedDay: "none" | "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat"
-    weekdays: number[]
-    terminBefore?: number
-    maxTerminPerSlot?: number
-  }
 }
 
 export interface IshopQuery {

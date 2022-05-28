@@ -5,14 +5,17 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import React from "react"
 
 import { useAppDispatch } from "src/store/hooks"
-import { setSetingsClosedDay } from "src/store/shop/shopSlice"
+import { setSetingsClosedRegularDay } from "src/store/shop/shopSlice"
 
 interface DateSelectProps {
   slotDate: string[]
-  closedDay: string
+  closedRegularDay: string
 }
 
-const DateSelect = ({ slotDate, closedDay = "none" }: DateSelectProps) => {
+const DateSelect = ({
+  slotDate,
+  closedRegularDay = "none",
+}: DateSelectProps) => {
   const dispatch = useAppDispatch()
   const menuItems = () =>
     slotDate.map((h, i) => (
@@ -25,10 +28,10 @@ const DateSelect = ({ slotDate, closedDay = "none" }: DateSelectProps) => {
       <InputLabel id="select-guest-number-label">Closed day</InputLabel>
       <Select
         labelId="select-guest-number-label"
-        value={closedDay}
+        value={closedRegularDay}
         label="Personen"
         onChange={(event: SelectChangeEvent) => {
-          dispatch(setSetingsClosedDay(event.target.value as string))
+          dispatch(setSetingsClosedRegularDay(event.target.value as string))
         }}
       >
         {menuItems()}

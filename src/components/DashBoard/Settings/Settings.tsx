@@ -31,14 +31,15 @@ const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri ", "Sat"]
 
 const SettingsDashBoard = () => {
   const [isLoading, setIsLoading] = useState(false)
-
+  const [disableDay, setDisableDay] = useState<Date | string>(new Date())
   const dispatch = useAppDispatch()
   const { shopInfo } = useAppSelector(state => state?.shop)
   const { shopName } = shopInfo
   const {
     weekdays = [],
     time = "12:30",
-    closedDay = "none",
+    closedRegularDay = "none",
+    closedSpecificDay,
     slotTime = "22:00",
     terminBefore = 2,
     maxTerminPerSlot = 2,
@@ -46,12 +47,14 @@ const SettingsDashBoard = () => {
 
   const handleSubmitDisable = async () => {
     setIsLoading(true)
+
     const res = await axios.post(
       "/.netlify/functions/admin-setting-booking",
       JSON.stringify({
         shopName,
         weekdays,
-        closedDay,
+        closedRegularDay,
+        closedSpecificDay: [...closedSpecificDay, disableDay],
         time,
         slotTime,
         maxTerminPerSlot,
@@ -120,7 +123,7 @@ const SettingsDashBoard = () => {
             <p>
               <strong>Close day</strong> Regular a weekday:
             </p>
-            <DateSelect slotDate={week} closedDay={closedDay} />
+            <DateSelect slotDate={week} closedRegularDay={closedRegularDay} />
           </WrapHourSt>
         </Grid>
         <Grid item xs={12}>
@@ -173,7 +176,7 @@ const SettingsDashBoard = () => {
         </Grid>
         <Grid item xs={12}>
           <h1>Hello</h1>
-          <DisabelDate />
+          <DisabelDate disableDay={disableDay} setDisableDay={setDisableDay} />
         </Grid>
       </Grid>
       <SubmitButtonSt onClick={handleSubmitDisable}>

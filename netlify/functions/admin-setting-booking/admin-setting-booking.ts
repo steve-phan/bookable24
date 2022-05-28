@@ -11,7 +11,8 @@ export const handler: Handler = async function (event) {
     shopName,
     weekdays,
     time,
-    closedDay,
+    closedRegularDay,
+    closedSpecificDay,
     slotTime,
     maxTerminPerSlot,
     terminBefore,
@@ -26,10 +27,11 @@ export const handler: Handler = async function (event) {
         settings: {
           weekdays,
           time,
-          closedDay,
+          closedRegularDay,
           slotTime,
           terminBefore,
           maxTerminPerSlot,
+          closedSpecificDay,
         },
       }
     )

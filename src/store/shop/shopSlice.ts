@@ -72,23 +72,26 @@ const intinitialShopState: IshopState = {
     settings: {
       time: "12:30",
       slotTime: "22:00",
-      closedDay: "none",
+      closedRegularDay: "none",
+      closedSpecificDay: [],
       weekdays: [],
       terminBefore: 2,
       maxTerminPerSlot: 2,
+      // disableDays: [],
     },
   },
   isShopLogin: false,
   status: "loading",
   allTermins: [],
-  settings: {
-    time: "12:30",
-    closedDay: "none",
-    slotTime: "22:00",
-    weekdays: [],
-    terminBefore: 2,
-    maxTerminPerSlot: 2,
-  },
+  // settings: {
+  //   time: "12:30",
+  //   // closedDay: "none",
+  //   closedRegularDay: "none",
+  //   slotTime: "22:00",
+  //   weekdays: [],
+  //   terminBefore: 2,
+  //   maxTerminPerSlot: 2,
+  // },
 }
 
 export interface ITermin {
@@ -161,8 +164,14 @@ export const shopSlice = createSlice({
     setSetingsMaxTerminPerSlot: (state, action) => {
       state.shopInfo.settings.maxTerminPerSlot = action.payload
     },
-    setSetingsClosedDay: (state, action) => {
-      state.shopInfo.settings.closedDay = action.payload
+    setSetingsClosedRegularDay: (state, action) => {
+      state.shopInfo.settings.closedRegularDay = action.payload
+    },
+    setSetingsClosedSpecificDay: (state, action) => {
+      state.shopInfo.settings.closedSpecificDay = [
+        ...state.shopInfo.settings.closedSpecificDay,
+        action.payload,
+      ]
     },
   },
   extraReducers: builder => {
@@ -188,7 +197,8 @@ export const shopSlice = createSlice({
           time,
           weekdays,
           slotTime,
-          closedDay,
+          closedRegularDay,
+          closedSpecificDay = [],
           maxTerminPerSlot,
           terminBefore,
         } = settings || {}
@@ -216,7 +226,8 @@ export const shopSlice = createSlice({
             uid,
             settings: {
               time,
-              closedDay,
+              closedRegularDay,
+              closedSpecificDay,
               weekdays,
               slotTime,
               terminBefore,
@@ -234,7 +245,8 @@ export const shopSlice = createSlice({
 export const {
   setShopInfo,
   setShopLogout,
-  setSetingsClosedDay,
+  setSetingsClosedRegularDay,
+  setSetingsClosedSpecificDay,
   setSetingsRegularDays,
   setSettingDisableTime,
   setSettingsDisableSlot,
