@@ -57,11 +57,20 @@
     "typescript": "^4.4.4"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "12.1.5",
+    "@types/babel__core": "^7.1.19",
+    "@types/jest": "^28.1.1",
     "@types/nodemailer": "^6.4.4",
     "@types/nodemailer-express-handlebars": "^4.0.1",
     "@types/styled-components": "^5.1.15",
+    "babel-jest": "^28.1.0",
+    "babel-preset-gatsby": "^2.15.0",
     "dotenv": "^10.0.0",
-    "prettier": "2.3.2"
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "prettier": "2.3.2",
+    "ts-jest": "^28.0.4"
   },
   "keywords": [
     "gatsby"
@@ -74,6 +83,6 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "jest"
   }
 }

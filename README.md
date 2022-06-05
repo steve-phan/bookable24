@@ -2,7 +2,7 @@
   <br>
   <a href=""><img src="./src/images/bookable24.png" alt="Markdownify" width="200"></a>
   <br>
-  Booking Room
+  Booking System
   <br>
 </h1>
 
