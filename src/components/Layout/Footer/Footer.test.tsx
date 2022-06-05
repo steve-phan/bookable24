@@ -4,11 +4,12 @@
 // import Footer from "./Footer"
 
 // test("Displays the correct title", () => {
+//   console.log(<Footer />)
 //   const { getByText } = render(<Footer />)
 //   // Assertion
 //   expect(getByText("BookAble24")).toBeInTheDocument()
 // })
 
-test("test", () => {
+it("should test", () => {
   expect(true).toEqual(true)
 })
