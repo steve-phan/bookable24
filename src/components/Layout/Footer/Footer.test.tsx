@@ -1,15 +1,12 @@
-// import React from "react"
-// import { render } from "@testing-library/react"
+import React from "react"
+import { render } from "@testing-library/react"
+import "jest-styled-components"
 
-// import Footer from "./Footer"
+import Footer from "./Footer"
 
-// test("Displays the correct title", () => {
-//   console.log(<Footer />)
-//   const { getByText } = render(<Footer />)
-//   // Assertion
-//   expect(getByText("BookAble24")).toBeInTheDocument()
-// })
-
-it("should test", () => {
-  expect(true).toEqual(true)
+test("Displays the correct title", () => {
+  const { getByText } = render(<Footer />)
+  expect(
+    getByText(`@ ${new Date().getFullYear()} BookAble24`)
+  ).toBeInTheDocument()
 })
