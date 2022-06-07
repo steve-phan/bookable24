@@ -31,7 +31,7 @@ const handler = async event => {
     const ShopInfo = shopNamesDb.model("Shopinfo", shopinfoSchema)
     const newShop = new ShopInfo({
       company,
-      email,
+      email: email.toLowerCase(), // Avoid the first letter Capitalize
       phoneNumber,
       city,
       cityCode,

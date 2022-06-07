@@ -112,12 +112,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
     }
   }, [])
 
-  // const testTime = dayjs("Dec 31").diff()
-  // const testTime1 = dayjs().diff("Nov 1 2021")
-
-  // const dateFormatted = dayjs("2021/03/02").format("MMM DD YYYY")
-  // console.log("time now is", dateFormatted)
-
   const handleConfirmSubmit = () => {
     const dataBooking = {
       selectedDate,

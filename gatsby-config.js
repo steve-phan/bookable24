@@ -5,7 +5,7 @@ module.exports = {
     title: `VietApp Template || Restaurant or Landing-Page`,
     description: `Better for developers, faster for developers, everything for developers :)`,
     author: `stevephan`,
-    siteUrl: `https://vietappeu.de`,
+    siteUrl: `https://bookable24.de`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
