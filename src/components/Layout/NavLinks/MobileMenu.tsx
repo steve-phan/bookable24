@@ -21,6 +21,7 @@ import background from "./background.jpg"
 export interface IMobileMenu extends IMobileToggle {
   isDesktop?: boolean
   routes?: any
+  isShop?: boolean
 }
 
 const MobileMenu = ({
@@ -28,6 +29,7 @@ const MobileMenu = ({
   mobileOpen,
   handleDrawerToggle,
   routes,
+  isShop,
 }: IMobileMenu) => {
   const { t } = useTranslation()
   const { navigate } = useI18next()
@@ -48,23 +50,25 @@ const MobileMenu = ({
         >
           <BackgroundImgSt src={background} alt="Bookable24" />
           <WrapLoginMobileSt>
-            <CTAButtonAccountSt
-              onClick={async () => {
-                try {
-                  if (isShopLogin) {
-                    await signOut(auth)
-                    dispatch(setShopLogout())
+            {!isShop && (
+              <CTAButtonAccountSt
+                onClick={async () => {
+                  try {
+                    if (isShopLogin) {
+                      await signOut(auth)
+                      dispatch(setShopLogout())
+                    }
+                    navigate("/login")
+                  } catch (error) {
+                    alert("Try Again")
                   }
-                  navigate("/login")
-                } catch (error) {
-                  alert("Try Again")
-                }
-              }}
-            >
-              {isShopLogin
-                ? t("account.logout", "Logout")
-                : t("account.login", "Login")}
-            </CTAButtonAccountSt>
+                }}
+              >
+                {isShopLogin
+                  ? t("account.logout", "Logout")
+                  : t("account.login", "Login")}
+              </CTAButtonAccountSt>
+            )}
             <LangSelect />
           </WrapLoginMobileSt>
           <MobileNavLinks

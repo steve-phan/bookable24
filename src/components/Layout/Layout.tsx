@@ -18,9 +18,10 @@ export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 interface ILayoutProps {
   location?: Record<string, any>
   children: JSX.Element
+  isShop?: boolean
 }
 
-const Layout = ({ children, location }: ILayoutProps) => {
+const Layout = ({ children, location, isShop }: ILayoutProps) => {
   const { isShopLogin } = useAppSelector((state: RootState) => state.shop)
 
   return (
@@ -39,7 +40,11 @@ const Layout = ({ children, location }: ILayoutProps) => {
           disableGutters
           maxWidth={false}
         >
-          <Header location={location} isShopLogin={isShopLogin} />
+          <Header
+            location={location}
+            isShopLogin={isShopLogin}
+            isShop={isShop}
+          />
           <BodySt>
             <Container disableGutters>{children}</Container>
           </BodySt>

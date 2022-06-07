@@ -38,6 +38,7 @@ export const WrapLoginMobileSt = styled("div")`
 export const DrawerSt = styled(Drawer)(({ theme }) => ({
   "& .MuiPaper-root ": {
     justifyContent: "space-evenly",
+    minWidth: 180,
   },
 }))
 

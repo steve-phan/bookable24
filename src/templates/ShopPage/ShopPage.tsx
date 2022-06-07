@@ -146,87 +146,89 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }
   if (!shopEmail) return null
   return (
-    <Layout isShop location={location}>
-      <SEO title={`${shopName} || Online Booking System`} />
-      <WrapTerminSt>
-        <ShopLogo shopinfo={data.contentfulShopInfo} />
-        <WrapTerminContentSt>
-          {isLoading && <Loading />}
-          {showCancelBooking ? (
-            booking?.email && (
-              <CancelBooking
-                booking={booking}
-                shopId={shopId}
-                location={location}
-                shopInfo={data.contentfulShopInfo}
-              />
-            )
-          ) : (
-            <>
-              {activeStep !== 4 && (
-                <StepperSt activeStep={activeStep}>
-                  {steps.map((label, index) => {
-                    const stepProps = {}
-                    const labelProps = {}
-
-                    return (
-                      <Step
-                        style={{ padding: 0, width: "33.3333%" }}
-                        key={label}
-                        {...stepProps}
-                      >
-                        <StepLabelSt
-                          // className={classes.stepLabel}
-                          StepIconComponent={ColorlibStepIcon}
-                          {...labelProps}
-                        >
-                          {label}
-                        </StepLabelSt>
-                      </Step>
-                    )
-                  })}
-                </StepperSt>
-              )}
+    <Layout isShop={true} location={location}>
+      <>
+        <SEO title={`${shopName} || Online Booking System`} />
+        <WrapTerminSt>
+          <ShopLogo shopinfo={data.contentfulShopInfo} />
+          <WrapTerminContentSt>
+            {isLoading && <Loading />}
+            {showCancelBooking ? (
+              booking?.email && (
+                <CancelBooking
+                  booking={booking}
+                  shopId={shopId}
+                  location={location}
+                  shopInfo={data.contentfulShopInfo}
+                />
+              )
+            ) : (
               <>
-                {getStepContent(activeStep)}
                 {activeStep !== 4 && (
-                  <WrapRowSt>
-                    <ButtonSt
-                      disabled={activeStep === 0}
-                      variant="contained"
-                      color="primary"
-                      onClick={handleBack}
-                    >
-                      {t("button.back")}
-                    </ButtonSt>
-                    <ButtonSt
-                      disabled={
-                        (activeStep === 2 && !isValidInfo) ||
-                        isNextButtonDisable()
-                      }
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        if (activeStep < 3) {
-                          handleNext()
-                        } else {
-                          handleConfirmSubmit()
-                        }
-                      }}
-                    >
-                      {activeStep < 2
-                        ? t("button.next")
-                        : activeStep === 2
-                        ? t("button.preview")
-                        : t("button.book")}
-                    </ButtonSt>
-                  </WrapRowSt>
+                  <StepperSt activeStep={activeStep}>
+                    {steps.map((label, index) => {
+                      const stepProps = {}
+                      const labelProps = {}
+
+                      return (
+                        <Step
+                          style={{ padding: 0, width: "33.3333%" }}
+                          key={label}
+                          {...stepProps}
+                        >
+                          <StepLabelSt
+                            // className={classes.stepLabel}
+                            StepIconComponent={ColorlibStepIcon}
+                            {...labelProps}
+                          >
+                            {label}
+                          </StepLabelSt>
+                        </Step>
+                      )
+                    })}
+                  </StepperSt>
                 )}
+                <>
+                  {getStepContent(activeStep)}
+                  {activeStep !== 4 && (
+                    <WrapRowSt>
+                      <ButtonSt
+                        disabled={activeStep === 0}
+                        variant="contained"
+                        color="primary"
+                        onClick={handleBack}
+                      >
+                        {t("button.back")}
+                      </ButtonSt>
+                      <ButtonSt
+                        disabled={
+                          (activeStep === 2 && !isValidInfo) ||
+                          isNextButtonDisable()
+                        }
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          if (activeStep < 3) {
+                            handleNext()
+                          } else {
+                            handleConfirmSubmit()
+                          }
+                        }}
+                      >
+                        {activeStep < 2
+                          ? t("button.next")
+                          : activeStep === 2
+                          ? t("button.preview")
+                          : t("button.book")}
+                      </ButtonSt>
+                    </WrapRowSt>
+                  )}
+                </>
               </>
-            </>
-          )}
-        </WrapTerminContentSt>
-      </WrapTerminSt>
+            )}
+          </WrapTerminContentSt>
+        </WrapTerminSt>
+      </>
     </Layout>
   )
 }

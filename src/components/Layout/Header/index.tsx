@@ -16,14 +16,20 @@ import { NavLinks } from "../NavLinks/Navlinks"
 interface IHeaderProps {
   isShopLogin: boolean | undefined
   location: any
+  isShop?: boolean
 }
 
-const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin, location }) => {
+const HeaderComponent: React.FC<IHeaderProps> = ({
+  isShopLogin,
+  location,
+  isShop,
+}) => {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const { t } = useTranslation()
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
+  console.log({ isShop })
   return (
     <AppBar position="fixed" color="default">
       <Toolbar
@@ -34,13 +40,20 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin, location }) => {
         <Logo />
         <Hidden mdDown>
           <NavLinks routes={routes} />
+
           <WrapLoginSt>
-            {isShopLogin && !location?.pathname?.includes("/login") ? (
-              <DashBoardButtonSt to="/dashboard">
-                {t("menu.DashBoard", "DashBoard")}
-              </DashBoardButtonSt>
-            ) : (
-              <CTAButtons to="/login">{t("account.login", "Login")}</CTAButtons>
+            {!isShop && (
+              <>
+                {isShopLogin && !location?.pathname?.includes("/login") ? (
+                  <DashBoardButtonSt to="/dashboard">
+                    {t("menu.DashBoard", "DashBoard")}
+                  </DashBoardButtonSt>
+                ) : (
+                  <CTAButtons to="/login">
+                    {t("account.login", "Login")}
+                  </CTAButtons>
+                )}
+              </>
             )}
 
             <LangSelect />
@@ -50,13 +63,18 @@ const HeaderComponent: React.FC<IHeaderProps> = ({ isShopLogin, location }) => {
           handleDrawerToggle={handleDrawerToggle}
           mobileOpen={mobileOpen}
           routes={routes}
+          isShop={isShop}
         />
         <Hidden mdUp>
           <div>
-            {isShopLogin && !location?.pathname?.includes("/login") && (
-              <DashBoardButtonSt to="/dashboard">
-                {t("menu.DashBoard", "DashBoard")}{" "}
-              </DashBoardButtonSt>
+            {!isShop && (
+              <>
+                {isShopLogin && !location?.pathname?.includes("/login") && (
+                  <DashBoardButtonSt to="/dashboard">
+                    {t("menu.DashBoard", "DashBoard")}
+                  </DashBoardButtonSt>
+                )}
+              </>
             )}
             <IconButton color="inherit" edge="end" onClick={handleDrawerToggle}>
               <Menu />
