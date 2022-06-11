@@ -52,6 +52,15 @@
     "item6": "Start for free Start now risk-free with Bookable24 Free, Bookable24 Easy or Bookable24 Profi"
   },
   "booking": {
+    "steps": {
+      "number": "Party Size and Date",
+      "time": "Time",
+      "info": "Contact details"
+    },
+    "datepicker": {
+      "person": "Number",
+      "date": "Date"
+    },
     "slot": {
       "lunch": "Lunch",
       "dinner": "Dinner",

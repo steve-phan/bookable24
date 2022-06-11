@@ -27,6 +27,9 @@ export const checkDisableDate = (
   closedDay: TWeek,
   closedSpecificDay: Date[]
 ) => {
+  if (closedDay) {
+    return closedDay !== "none" && dayjs(day).day() === week[closedDay]
+  }
   if (!closedSpecificDay) {
     return false
   }
@@ -38,7 +41,6 @@ export const checkDisableDate = (
   })
   return (
     dayjs(day).startOf("day").diff(dayjs().startOf("day")) < 0 ||
-    (closedDay !== "none" && dayjs(day).day() === week[closedDay]) ||
     foundDayClosed >= 0
   )
 }

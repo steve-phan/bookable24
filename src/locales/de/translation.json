@@ -51,6 +51,15 @@
     "item6": "Kostenlos starten Starten Sie jetzt risikolos mit BookAble24 Free, BookAble24 Easy oder BookAble24 Profi"
   },
   "booking": {
+    "steps": {
+      "number": "Personen und Datum",
+      "time": "Wähle unten eine Zeit aus",
+      "info": "Name und Kontaktdaten"
+    },
+    "datepicker": {
+      "person": "Personen",
+      "date": "Datum"
+    },
     "slot": {
       "lunch": "Mittagessen",
       "dinner": "Abendessen",

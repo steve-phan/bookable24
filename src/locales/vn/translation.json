@@ -51,6 +51,15 @@
     "item6": "Bắt đầu miễn phí Bắt đầu ngay bây giờ không rủi ro với Bookable24 Miễn phí, Bookable24 Dễ dàng hoặc Bookable24 Profi"
   },
   "booking": {
+    "steps": {
+      "number": "Số người và ngày",
+      "time": "Chọn thời gian",
+      "info": "Thông tin liên hệ"
+    },
+    "datepicker": {
+      "person": "Số người",
+      "date": "Ngày"
+    },
     "slot": {
       "lunch": "Lunch",
       "dinner": "Dinner",

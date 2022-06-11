@@ -34,14 +34,6 @@ interface IShopPageProps {
   location?: any
 }
 
-function getSteps() {
-  return [
-    "Personen und Datum",
-    "Wähle unten eine Zeit aus",
-    "Name und Kontaktdaten",
-  ]
-}
-
 const ShopPage: React.FC<IShopPageProps> = ({
   pageContext,
   data,
@@ -68,6 +60,13 @@ const ShopPage: React.FC<IShopPageProps> = ({
   const { slotTime } = shopInfo?.settings || {}
   const slotDisable = allSlots.findIndex(time => time === slotTime)
   const { shopName, shopEmail, shopId } = pageContext
+  const getSteps = () => {
+    return [
+      t("booking.steps.number"),
+      t("booking.steps.time"),
+      t("booking.steps.info"),
+    ]
+  }
 
   const steps = getSteps()
 
