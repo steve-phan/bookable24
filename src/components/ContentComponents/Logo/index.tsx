@@ -1,7 +1,7 @@
 import React from "react"
 
 import { WrapLogoSt } from "./logo.css"
-import bookable24 from "./bookable24.png"
+import bookable24 from "./newlogo.png"
 
 const Logo = () => {
   return (
@@ -12,7 +12,7 @@ const Logo = () => {
         src={bookable24}
         alt="BookAble24 Online Booking System"
       />
-      <span>ookable24</span>
+      <span>Bookable24</span>
     </WrapLogoSt>
   )
 }

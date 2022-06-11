@@ -76,7 +76,7 @@ module.exports = {
         background_color: `#f05123`,
         theme_color: `#f05123`,
         display: `minimal-ui`,
-        icon: `src/images/bookable24.png`, // This path is relative to the root of the site.
+        icon: `src/images/new_bookable24.jpg`, // This path is relative to the root of the site.
       },
     },
     {

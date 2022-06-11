@@ -27,6 +27,9 @@ export const checkDisableDate = (
   closedDay: TWeek,
   closedSpecificDay: Date[]
 ) => {
+  if (!closedSpecificDay) {
+    return false
+  }
   const foundDayClosed = closedSpecificDay.findIndex(specificDay => {
     return (
       specificDay &&
