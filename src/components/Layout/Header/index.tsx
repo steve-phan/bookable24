@@ -29,7 +29,6 @@ const HeaderComponent: React.FC<IHeaderProps> = ({
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
-  console.log({ isShop })
   return (
     <AppBar position="fixed" color="default">
       <Toolbar

@@ -11,7 +11,10 @@ export const checkClosedDay = (
   day: string | Date,
   closedSpecificDay: Date[] = []
 ) => {
-  const foundDayClosed = closedSpecificDay.findIndex(closedDay => {
+  if (!closedSpecificDay) {
+    return false
+  }
+  const foundDayClosed = closedSpecificDay?.findIndex(closedDay => {
     return dayjsModified(day).isSame(dayjsModified(closedDay), "day")
   })
   return (
