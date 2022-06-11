@@ -68,7 +68,6 @@ const SettingsDashBoard = () => {
       alert("Setting successfully")
     }
   }
-  console.log({ today: disableDay })
   return (
     <div>
       {isLoading && <Loading />}
