@@ -88,6 +88,7 @@ module.exports = {
         // host: `preview.contentful.com`,
       },
     },
+    "gatsby-plugin-use-query-params",
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
