@@ -63,9 +63,11 @@ const SettingsDashBoard = () => {
         maxTerminPerSlot,
       })
     )
+    setIsLoading(false)
     if (res.data === "EMAIL_SENT") {
-      setIsLoading(false)
       alert("Setting successfully")
+    } else {
+      alert("Something gone wrong.. try again")
     }
   }
   return (
@@ -86,7 +88,7 @@ const SettingsDashBoard = () => {
                 shrink: true,
               }}
               variant="standard"
-              value={maxTerminPerSlot}
+              value={maxTerminPerSlot || 8}
               onChange={event => {
                 dispatch(setSetingsMaxTerminPerSlot(event.target.value))
               }}
@@ -121,7 +123,6 @@ const SettingsDashBoard = () => {
             <HourSelect slotTime={slotTime} />
           </WrapHourSt>
         </Grid>
-        <Grid item xs={12}></Grid>
         <Grid item xs={12}>
           <WrapDaySt>
             <Grid
