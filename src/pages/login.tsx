@@ -14,7 +14,9 @@ const Login: React.FC<PageProps> = ({ location, data }) => {
     <Layout location={location}>
       <SEO title="Login BookAble24" />
 
-      <SignIn location={location} />
+      <SignIn
+      // location={location}
+      />
     </Layout>
   )
 }

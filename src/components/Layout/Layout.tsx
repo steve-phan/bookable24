@@ -17,7 +17,7 @@ export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
 interface ILayoutProps {
   location?: Record<string, any>
-  children: JSX.Element
+  children: JSX.Element | JSX.Element[]
   isShop?: boolean
 }
 

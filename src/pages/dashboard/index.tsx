@@ -4,10 +4,12 @@ import { graphql } from "gatsby"
 import DashBoardLayout from "src/components/Layout/DasBoadLayout"
 import HomeDashBoard from "src/components/DashBoard/Home/Home"
 import WithAuth from "src/components/ContentComponents/WithAuth/WithAuth"
+import SEO from "src/components/seo"
 
-const DashBoardHome = (props: any) => {
+const DashBoardHome = () => {
   return (
     <DashBoardLayout>
+      <SEO title="Dashboard Management Bookable24 System" />
       <WithAuth />
       <HomeDashBoard />
     </DashBoardLayout>

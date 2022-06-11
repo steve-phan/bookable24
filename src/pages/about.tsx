@@ -10,9 +10,11 @@ const About: React.FC<PageProps> = ({ location, data }) => {
 
   return (
     <Layout location={location}>
-      <SEO title="Our blog" />
+      <>
+        <SEO title="Our blog" />
 
-      <h1>Google Adsend place :) </h1>
+        <h1>Google Adsend place :) </h1>
+      </>
     </Layout>
   )
 }
