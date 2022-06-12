@@ -26,7 +26,10 @@ const ResetPassword = () => {
   }, [])
 
   if (mode[0] !== "resetPassword") {
-    alert("The link is not valid 1")
+    if (typeof window !== "undefined") {
+      //TODO: need a notice
+      alert("The link is not valid")
+    }
     navigate("/")
   }
 
@@ -38,7 +41,9 @@ const ResetPassword = () => {
       console.log({ email })
     } catch (error) {
       setLoading(false)
-      alert("The link is not valid 2")
+      if (typeof window !== "undefined") {
+        alert("The link is not valid")
+      }
       navigate("/")
     }
   }
