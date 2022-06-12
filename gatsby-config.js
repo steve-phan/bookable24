@@ -31,6 +31,7 @@ module.exports = {
         name: "pages",
       },
     },
+    "gatsby-plugin-use-query-params",
     {
       resolve: `gatsby-plugin-react-i18next`,
       options: {
@@ -88,7 +89,7 @@ module.exports = {
         // host: `preview.contentful.com`,
       },
     },
-    "gatsby-plugin-use-query-params",
+
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {

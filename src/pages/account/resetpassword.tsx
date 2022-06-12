@@ -4,13 +4,43 @@ import { useQueryParam } from "use-query-params"
 import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth"
 import TextField from "@mui/material/TextField"
 import { useI18next } from "gatsby-plugin-react-i18next"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
+import { alpha, styled } from "@mui/material/styles"
 
 import { auth } from "src/firebase"
 import Loading from "src/components/ContentComponents/Loading/Loading"
 import Layout from "src/components/Layout/Layout"
 
-import { ColumnCenterBoxSt, ButtonSt, InfoBoxSt } from "./resetpassword.styles"
-import { Typography } from "@mui/material"
+export const ColumnCenterBoxSt = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 60vh;
+`
+
+export const InfoBoxSt = styled(Box)`
+  max-width: 350px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 24px;
+`
+
+export const ButtonSt = styled(Button)(({ theme }) => ({
+  background: theme.color.primary,
+  fontWeight: "bold",
+  width: 222,
+  marginTop: 24,
+  marginBottom: 16,
+
+  "&:hover": {
+    background: alpha(theme.color.primary, 0.6),
+  },
+}))
 
 const ariaLabel = { "aria-label": "description" }
 type ToobCode = string
@@ -45,8 +75,8 @@ const ResetPassword = () => {
       setLoading(false)
       if (typeof window !== "undefined") {
         alert("The link is not valid")
+        navigate("/")
       }
-      navigate("/")
     }
   }
 
