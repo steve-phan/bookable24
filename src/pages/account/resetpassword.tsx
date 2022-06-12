@@ -1,8 +1,9 @@
-import { graphql, Link, navigate } from "gatsby"
+import { graphql, Link } from "gatsby"
 import React, { useEffect, useState } from "react"
 import { useQueryParam } from "use-query-params"
 import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth"
 import TextField from "@mui/material/TextField"
+import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { auth } from "src/firebase"
 import Loading from "src/components/ContentComponents/Loading/Loading"
@@ -15,6 +16,7 @@ const ariaLabel = { "aria-label": "description" }
 type ToobCode = string
 
 const ResetPassword = () => {
+  const { navigate } = useI18next()
   const mode = useQueryParam("mode")
   const oobCode = useQueryParam("oobCode") as unknown as ToobCode
   const [loading, setLoading] = useState(true)
