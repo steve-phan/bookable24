@@ -31,8 +31,8 @@ const ResetPassword = () => {
     if (typeof window !== "undefined") {
       //TODO: need a notice
       alert("The link is not valid")
+      navigate("/")
     }
-    navigate("/")
   }
 
   const handleResetPassword = async () => {
