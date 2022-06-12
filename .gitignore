@@ -100,3 +100,7 @@ yarn-error.log
 
 src/templates/ShopPage/data.ts
 src/themes/**
+
+# Vscode
+
+.vscode

@@ -1,68 +1,69 @@
-import { graphql, navigate } from "gatsby"
+import { graphql, Link, navigate } from "gatsby"
 import React, { useEffect, useState } from "react"
-import { useQueryParam, NumberParam, StringParam } from "use-query-params"
+import { useQueryParam } from "use-query-params"
 import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth"
-import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
-import Button from "@mui/material/Button"
 
 import { auth } from "src/firebase"
 import Loading from "src/components/ContentComponents/Loading/Loading"
-import { async } from "@firebase/util"
+import Layout from "src/components/Layout/Layout"
+
+import { ColumnCenterBoxSt, ButtonSt, InfoBoxSt } from "./resetpassword.styles"
+import { Typography } from "@mui/material"
 
 const ariaLabel = { "aria-label": "description" }
-type Tmode = "resetPassword" | "recoverEmail" | "verifyEmail"
 type ToobCode = string
 
 const ResetPassword = () => {
   const mode = useQueryParam("mode")
   const oobCode = useQueryParam("oobCode") as unknown as ToobCode
   const [loading, setLoading] = useState(true)
+  const [success, setSccess] = useState(false)
   const [newPassowrd, setNewpassword] = useState("")
+
   useEffect(() => {
     mode[0] === "resetPassword" && handleResetPassword()
   }, [])
 
   if (mode[0] !== "resetPassword") {
-    setLoading(false)
-    return <h1>Link not exits</h1>
+    alert("The link is not valid 1")
+    navigate("/")
   }
 
   const handleResetPassword = async () => {
     try {
-      const email = await verifyPasswordResetCode(auth, oobCode)
+      console.log({ oobCode })
+      const email = await verifyPasswordResetCode(auth, oobCode[0])
       setLoading(false)
       console.log({ email })
     } catch (error) {
       setLoading(false)
-      alert("Code is not valid")
+      alert("The link is not valid 2")
       navigate("/")
     }
   }
 
   const handleSetNewPasssword = async () => {
     try {
-      await confirmPasswordReset(auth, oobCode, newPassowrd)
+      await confirmPasswordReset(auth, oobCode[0], newPassowrd)
+      setSccess(true)
     } catch (error) {
       console.log({ error })
     }
   }
   return (
-    <>
+    <Layout>
       {loading ? (
         <Loading />
-      ) : (
-        <Box
-          sx={{
-            "& > :not(style)": { m: 1 },
-            width: "100%",
-            height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+      ) : !success ? (
+        <ColumnCenterBoxSt>
+          <InfoBoxSt>
+            <Typography variant="h5">Passwort ändern</Typography>
+            <Typography variant="body2">
+              Bitte geben Sie zweimal Ihr neues Passwort ein und klicken Sie
+              dann auf Passwort ändern.
+            </Typography>
+          </InfoBoxSt>
           <TextField
             size="small"
             placeholder="Your new Password"
@@ -70,10 +71,25 @@ const ResetPassword = () => {
             value={newPassowrd}
             onChange={e => setNewpassword(e.target.value)}
           />
-          <Button onClick={() => handleSetNewPasssword()}>Submit</Button>
-        </Box>
+          <ButtonSt variant="contained" onClick={() => handleSetNewPasssword()}>
+            Submit
+          </ButtonSt>
+        </ColumnCenterBoxSt>
+      ) : (
+        <ColumnCenterBoxSt>
+          <InfoBoxSt>
+            <Typography variant="body1">
+              Herzlichen Glückwunsch, Ihr Passwort wurde erfolgreich geändert.
+              Klicken Sie
+              <strong>
+                <Link to="/login">hier</Link>
+              </strong>
+              , um sich einzuloggen
+            </Typography>
+          </InfoBoxSt>
+        </ColumnCenterBoxSt>
       )}
-    </>
+    </Layout>
   )
 }
 
