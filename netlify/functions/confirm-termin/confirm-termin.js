@@ -44,7 +44,7 @@ const handler = async function (event) {
       phone: searchPhoneRegex,
     })
     const customerFounddByEmail = await Customer.find({
-      phone: searchEmailRegex,
+      email: searchEmailRegex,
     })
 
     const isCustomer =

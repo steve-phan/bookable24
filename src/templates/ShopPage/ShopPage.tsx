@@ -131,6 +131,8 @@ const ShopPage: React.FC<IShopPageProps> = ({
       })
       .catch(err => {
         setIsLoading(false)
+        alert("Something wrong, please try again")
+        console.error(err)
       })
   }
 
