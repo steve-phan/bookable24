@@ -17,6 +17,7 @@ const AllBookingsDashBoard = () => {
     (state: RootState) => state.shop
   )
   const [value, setValue] = React.useState<Date | null>(new Date())
+  const [showAllTermins, setShowAllTermins] = React.useState(true)
   const { t } = useTranslation()
   return (
     <>
@@ -26,6 +27,7 @@ const AllBookingsDashBoard = () => {
             label={t("dashboard.helper.pickdate", "Pick a Date")}
             value={value}
             onChange={newValue => {
+              if (showAllTermins) setShowAllTermins(false)
               setValue(newValue)
             }}
             renderInput={params => <TextField {...params} />}
@@ -34,9 +36,7 @@ const AllBookingsDashBoard = () => {
       </FlexRowSt>
       <ShowInfo
         todayTermins={
-          shopInfo.email !== "bookable24.de"
-            ? getDateBookings(allTermins, value)
-            : allTermins
+          showAllTermins ? allTermins : getDateBookings(allTermins, value)
         }
       />
     </>

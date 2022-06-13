@@ -17,13 +17,14 @@ export const handler: Handler = async event => {
 
     await Appointment.find({}).then(x => {
       x.forEach(item => {
-        console.log({ item })
+        console.log("just query")
         Appointment.findOneAndUpdate(
           { _id: item._id },
           //@ts-ignore
-          { selectedDate: new Date(item.selectedDate) },
+          { selectedDate: new Date(item.selectedDate).toISOString() },
           e => {
-            console.log("hahaha", e)
+            // console.log("hahaha", new Date(item.selectedDate).toISOString())
+            // console.log("hahaha", "item.selectedDate.toISOString()")
           }
         )
       })

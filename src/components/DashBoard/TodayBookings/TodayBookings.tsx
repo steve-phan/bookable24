@@ -5,16 +5,8 @@ import ShowInfo from "../SharedComponent/ShowInfo"
 import { getTodayBookings } from "src/utils"
 
 const TodayBookings = () => {
-  const { shopInfo, allTermins } = useAppSelector(state => state.shop)
-  return (
-    <ShowInfo
-      todayTermins={
-        shopInfo.email !== "bookable24.de@gmail.com"
-          ? getTodayBookings(allTermins)
-          : allTermins
-      }
-    />
-  )
+  const { allTermins } = useAppSelector(state => state.shop)
+  return <ShowInfo todayTermins={getTodayBookings(allTermins)} />
 }
 
 export default TodayBookings
