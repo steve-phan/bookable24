@@ -1,5 +1,4 @@
 require("dotenv").config()
-const dayjs = require("dayjs")
 
 const { connect } = require("../utils/mongooseConnect")
 const { appointmentSchema } = require("../utils/models/bookingModel")
@@ -26,10 +25,6 @@ const handler = async function (event) {
   const shopName = Boolean(shopInfo.shopName)
     ? shopInfo.shopName
     : shopInfo.shopname
-  const formatDate = dayjs(
-    selectedDate,
-    selectedDate.length === 10 ? "DD-MM-YYYY" : "YYYY MM DD"
-  ).format("MMM DD YYYY")
   try {
     const shopnamesDb = await connect()
 
@@ -41,7 +36,7 @@ const handler = async function (event) {
       first_name: firstName,
       last_name: lastName,
       selectedSlot,
-      selectedDate: formatDate,
+      selectedDate,
       email,
       phone,
       person,
@@ -59,7 +54,7 @@ const handler = async function (event) {
       lastName,
       firstName,
       selectedSlot,
-      selectedDate: formatDate,
+      selectedDate,
       require,
       shopInfo,
       terminId: newappointment._id,

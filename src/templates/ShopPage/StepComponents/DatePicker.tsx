@@ -19,7 +19,6 @@ const SelectDatePicker = () => {
   const { closedRegularDay, closedSpecificDay } = useAppSelector(
     state => state.shop.shopInfo?.settings
   )
-
   return (
     <WrapRowSt>
       <PersonPicker />
@@ -32,7 +31,7 @@ const SelectDatePicker = () => {
           inputFormat="MMM-dd-yyyy"
           value={selectedDate}
           onChange={newValue => {
-            dispatch(setSelectedDate(newValue as Date))
+            newValue && dispatch(setSelectedDate(new Date(newValue)))
           }}
           renderInput={params => <TextField variant="standard" {...params} />}
         />
