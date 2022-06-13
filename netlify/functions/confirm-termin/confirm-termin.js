@@ -3,6 +3,7 @@ const dayjs = require("dayjs")
 
 const { connect } = require("../utils/mongooseConnect")
 const { appointmentSchema } = require("../utils/models/bookingModel")
+const { customerSchema } = require("../utils/models/customerModel")
 const configTransporter = require("./transporter")
 const { getValidToken } = require("../utils/googleToken")
 
@@ -36,6 +37,28 @@ const handler = async function (event) {
     const bookingConn = shopnamesDb.connection.useDb(shopName)
 
     const Appointment = bookingConn.model("Appointment", appointmentSchema)
+    const Customer = bookingConn.model("Customer", customerSchema)
+    const searchEmailRegex = new RegExp(email, "i")
+    const searchPhoneRegex = new RegExp(String(phone), "i")
+    const customerFounddByPhone = await Customer.find({
+      phone: searchPhoneRegex,
+    })
+    const customerFounddByEmail = await Customer.find({
+      phone: searchEmailRegex,
+    })
+
+    const isCustomer =
+      customerFounddByPhone.length !== 0 || customerFounddByEmail.length !== 0
+    if (!isCustomer) {
+      console.log("creating new customer")
+      const newCustomer = new Customer({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        phone,
+      })
+      await newCustomer.save()
+    }
 
     const newappointment = new Appointment({
       first_name: firstName,
@@ -71,6 +94,7 @@ const handler = async function (event) {
       body: "EMAIL_SENT",
     }
   } catch (error) {
+    console.log({ error })
     return {
       statusCode: 500,
       body: JSON.stringify(error),
