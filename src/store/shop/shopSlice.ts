@@ -1,3 +1,4 @@
+import { async } from "@firebase/util"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios, { ResponseType, AxiosResponse } from "axios"
 import { onAuthStateChanged } from "firebase/auth"
@@ -7,11 +8,12 @@ import { getShopName } from "src/utils"
 
 import { AppThunk } from "../store"
 import {
-  IshopState,
+  IShopState,
   IshopQuery,
-  IshopInfo,
+  IShopInfo,
   IbookingState,
   IShop,
+  ITermin,
 } from "./shop.types"
 
 export const checkUserAuth =
@@ -31,33 +33,27 @@ export const checkUserAuth =
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
           // const uid = user.uid
-          // ...
         } else {
-          // User is signed out
-          // ...
           dispatch(setShopLogout())
         }
       })
-      // console.log("check Auth localStorage")
-      // const user = auth.currentUser
-      // if (user?.email) {
-      //   console.log("check Auth localStorage, user Logged")
-      //   const shopname = getShopName(user.email, shopList)
-      //   dispatch(
-      //     getShopinfo({
-      //       shopemail: user?.email || "",
-      //       shopname,
-      //       isShopLogin: true,
-      //     })
-      //   )
-      // } else {
-      //   // No user is signed in.
-      //   dispatch(setShopLogout())
-      // }
     }
   }
 
-const intinitialShopState: IshopState = {
+const initialCancelTermin = {
+  selectedDate: "",
+  selectedSlot: "",
+  last_name: "",
+  first_name: "",
+  require: "",
+  person: "",
+  email: "",
+  phone: "",
+  status: false,
+  canceled: false,
+}
+
+const intinitialShopState: IShopState = {
   shopInfo: {
     city: "",
     cityCode: "",
@@ -77,37 +73,13 @@ const intinitialShopState: IshopState = {
       weekdays: [],
       terminBefore: 2,
       maxTerminPerSlot: 2,
-      // disableDays: [],
     },
   },
   isShopLogin: false,
   status: "loading",
   allTermins: [],
-  // settings: {
-  //   time: "12:30",
-  //   // closedDay: "none",
-  //   closedRegularDay: "none",
-  //   slotTime: "22:00",
-  //   weekdays: [],
-  //   terminBefore: 2,
-  //   maxTerminPerSlot: 2,
-  // },
-}
-
-export interface ITermin {
-  created_at: string
-  email: string
-  first_name: string
-  last_name: string
-  person: string
-  phone: string
-  require: null | string
-  selectedDate: string
-  selectedSlot: string
-  slots: string
-  status: boolean
-  __v: number
-  _id: string
+  isFetching: false,
+  cancelTermin: { ...initialCancelTermin },
 }
 
 export const getShopinfo = createAsyncThunk(
@@ -124,9 +96,47 @@ export const getShopinfo = createAsyncThunk(
     )
     const { allTermins, shopInfo } = response.data as {
       allTermins: ITermin[]
-      shopInfo: IshopInfo
+      shopInfo: IShopInfo
     }
     return { allTermins, shopInfo, isShopLogin }
+  }
+)
+
+interface ITerminCancelProps {
+  bookingId: string
+  shopId: string
+}
+
+export const getCancelTermin = createAsyncThunk(
+  "shop/getCancelTermin",
+  async ({ bookingId, shopId }: ITerminCancelProps) => {
+    const response: AxiosResponse = await axios.post(
+      "/.netlify/functions/cancel-termin",
+      JSON.stringify({ bookingId, shopId })
+    )
+
+    const { appointmentFound, shopInfo } = response.data as {
+      appointmentFound: ITermin
+      shopInfo: IShopInfo
+    }
+    return { appointmentFound, shopInfo }
+  }
+)
+
+export const confirmCancelTermin = createAsyncThunk(
+  "shop/confirmCancelTermin",
+  async ({ bookingId, shopId }: ITerminCancelProps) => {
+    const response: AxiosResponse = await axios.get(
+      "/.netlify/functions/cancel-termin",
+      {
+        headers: {
+          shopId,
+          bookingId,
+        },
+      }
+    )
+
+    return response.data
   }
 )
 
@@ -176,7 +186,7 @@ export const shopSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(getShopinfo.pending, (state: IshopState) => {
+      .addCase(getShopinfo.pending, (state: IShopState) => {
         state.status = "loading"
       })
       .addCase(getShopinfo.fulfilled, (state, action) => {
@@ -238,6 +248,34 @@ export const shopSlice = createSlice({
       })
       .addCase(getShopinfo.rejected, state => {
         state.status = "logout"
+      })
+      /**
+       * @function getCancelTermin
+       */
+      .addCase(getCancelTermin.pending, (state: IShopState) => {
+        state.isFetching = true
+      })
+      .addCase(getCancelTermin.fulfilled, (state: IShopState, action) => {
+        const { appointmentFound, shopInfo } = action.payload
+        state.isFetching = false
+        state.cancelTermin = appointmentFound
+        state.shopInfo = shopInfo
+      })
+      .addCase(getCancelTermin.rejected, (state: IShopState) => {
+        state.isFetching = false
+      })
+      /**
+       * @function confirmCancelTermin
+       */
+      .addCase(confirmCancelTermin.pending, (state: IShopState) => {
+        state.isFetching = true
+      })
+      .addCase(confirmCancelTermin.fulfilled, (state: IShopState) => {
+        state.isFetching = false
+        state.cancelTermin.canceled = true
+      })
+      .addCase(confirmCancelTermin.rejected, (state: IShopState) => {
+        state.isFetching = false
       })
   },
 })

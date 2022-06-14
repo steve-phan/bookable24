@@ -2,6 +2,7 @@ import { graphql } from "gatsby"
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import dayjs from "dayjs"
+import Step from "@mui/material/Step"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { getShopinfo } from "src/store/shop/shopSlice"
@@ -10,10 +11,16 @@ import Layout from "src/components/Layout/Layout"
 import SEO from "src/components/seo"
 import { useSteps } from "src/hooks/useSteps"
 
-import { WrapTerminSt, WrapTerminContentSt, StepperSt } from "./ShopPage.css"
-import { getStepContent, allSlots, getDefaultSlot, Stepper } from "./utils"
+import {
+  WrapTerminSt,
+  WrapTerminContentSt,
+  StepperSt,
+  StepLabelSt,
+} from "./ShopPage.css"
+import { getStepContent, allSlots, getDefaultSlot } from "./utils"
 import ShopLogo from "./ShopLogo/ShopLogo"
 import { ButtonsCTA } from "./ButtonsCTA"
+import ColorlibStepIcon from "./ColorlibStepIcon"
 
 interface IShopPageProps {
   pageContext: {
@@ -126,14 +133,18 @@ const ShopPage: React.FC<IShopPageProps> = ({
       <>
         <SEO title={`${shopName} || Online Booking System`} />
         <WrapTerminSt>
-          <ShopLogo shopInfo={data.contentfulShopInfo} />
+          <ShopLogo shopInfoContenful={data.contentfulShopInfo} />
           <WrapTerminContentSt>
             {isLoading && <Loading />}
             <>
               {activeStep !== 4 && (
                 <StepperSt activeStep={activeStep}>
                   {steps.map((label, index) => (
-                    <Stepper key={label + index} label={label} />
+                    <Step style={{ padding: 0, width: "33.3333%" }}>
+                      <StepLabelSt StepIconComponent={ColorlibStepIcon}>
+                        {label}
+                      </StepLabelSt>
+                    </Step>
                   ))}
                 </StepperSt>
               )}

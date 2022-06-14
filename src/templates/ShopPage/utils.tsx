@@ -104,11 +104,3 @@ export const getDefaultSlot = () => {
 
 export const isSameDay = (day: Date) => dayjs().isSame(dayjs(day), "hour")
 export const currentHour = dayjs().hour()
-
-export const Stepper = ({ label }: { label: string }) => {
-  return (
-    <Step style={{ padding: 0, width: "33.3333%" }}>
-      <StepLabelSt StepIconComponent={ColorlibStepIcon}>{label}</StepLabelSt>
-    </Step>
-  )
-}

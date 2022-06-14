@@ -9,8 +9,8 @@ const handler = async event => {
     try {
       const { bookingId, shopId } = JSON.parse(event.body)
       const shopNamesDB = await connect()
-      const ShopInfo = shopNamesDB.model("ShopInfo", shopinfoSchema)
-      const shopInfo = await ShopInfo.find({ shopName: shopId })
+      const ShopInfoModel = shopNamesDB.model("ShopInfo", shopinfoSchema)
+      const shopInfo = await ShopInfoModel.find({ shopName: shopId })
 
       const bookingConn = shopNamesDB.connection.useDb(shopId)
       const Appointment = bookingConn.model("Appointment", appointmentSchema)
@@ -28,11 +28,10 @@ const handler = async event => {
       }
     }
   } else if (event.httpMethod === "GET") {
-    const { bookingId, shopId } = event.headers
-
+    const { bookingid: bookingId, shopid: shopId } = event.headers
     const shopNamesDB = await connect()
-    const ShopInfo = bookingConn.model("ShopInfo", shopinfoSchema)
-    const shopInfo = await ShopInfo.find({ shopName: shopId })
+    const ShopInfoModel = shopNamesDB.model("ShopInfo", shopinfoSchema)
+    const shopInfo = await ShopInfoModel.find({ shopName: shopId })
 
     const bookingConn = shopNamesDB.connection.useDb(shopId)
     const Appointment = bookingConn.model("Appointment", appointmentSchema)
@@ -51,13 +50,13 @@ const handler = async event => {
       require,
     } = appointmentFound
     const validToken = await getValidToken()
-    c
+
     const { transporter, mailOptions } = configTransporter({
       token: validToken,
       email,
       lastName: last_name,
       firstName: first_name,
-      shopInfo,
+      shopInfo: shopInfo[0],
       selectedSlot,
       selectedDate,
       phone,

@@ -5,7 +5,6 @@ import { AvTimer, ContactMail, EventAvailable } from "@mui/icons-material"
 import clsx from "clsx"
 
 const useColorlibStepIconStyles = makeStyles(theme => {
-  // console.log(theme);
   return {
     root: {
       backgroundColor: "#ccc",

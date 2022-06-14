@@ -1,5 +1,5 @@
 import { graphql } from "gatsby"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { useQueryParam } from "use-query-params"
 import { useI18next } from "gatsby-plugin-react-i18next"
 

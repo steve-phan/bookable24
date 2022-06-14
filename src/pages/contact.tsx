@@ -3,7 +3,7 @@ import React from "react"
 import Layout from "../components/Layout/Layout"
 import SEO from "../components/seo"
 
-const Contact = ({ location }: any) => {
+const Contact = ({ location }: { location: Location }) => {
   return (
     <Layout location={location}>
       <SEO title="Contact" />

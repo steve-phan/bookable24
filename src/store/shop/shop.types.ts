@@ -1,4 +1,4 @@
-export interface IshopInfo {
+export interface IShopInfo {
   city: string
   cityCode: string
   company: string
@@ -28,11 +28,35 @@ export interface IshopInfo {
   }
 }
 
-export interface IshopState {
-  shopInfo: IshopInfo
+export interface ITermin {
+  created_at?: string
+  email: string
+  first_name: string
+  last_name: string
+  person: string
+  phone: string
+  require: null | string
+  selectedDate: string
+  selectedSlot: string
+  slots?: string
+  status: boolean
+  __v?: number
+  _id?: string
+  canceled?: boolean
+}
+
+export interface IShop {
+  email: string
+  shopId: string
+}
+
+export interface IShopState {
+  shopInfo: IShopInfo
   status: "login" | "loading" | "logout"
   isShopLogin: boolean
   allTermins: any[]
+  isFetching: boolean
+  cancelTermin: ITermin
 }
 
 export interface IshopQuery {
@@ -60,7 +84,14 @@ export interface IbookingState {
   isValidInfo: boolean
 }
 
-export interface IShop {
-  email: string
-  shopId: string
-}
+// export interface IAppointment {
+//   email: string
+//   first_name: string
+//   last_name: string
+//   person: string
+//   phone: string
+//   require: string
+//   selectedDate: Date
+//   selectedSlot: string
+//   status: boolean
+// }

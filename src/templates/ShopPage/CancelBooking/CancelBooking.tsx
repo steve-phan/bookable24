@@ -1,12 +1,12 @@
 import Typography from "@mui/material/Typography"
 import dayjs from "dayjs"
-import React, { useEffect, useState } from "react"
-import { useI18next } from "gatsby-plugin-react-i18next"
-import axios from "axios"
+import React, { useEffect } from "react"
 
-import { IshopInfo } from "src/store/shop/shop.types"
+import { ITermin } from "src/store/shop/shop.types"
 import Loading from "src/components/ContentComponents/Loading/Loading"
 import SEO from "src/components/seo"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { getCancelTermin, confirmCancelTermin } from "src/store/shop/shopSlice"
 
 import { WrapColSt } from "../ShopPage.css"
 import { afternoonSlots, morningSlots } from "../utils"
@@ -23,15 +23,15 @@ const CancelBooking = ({
   shopId: string
   location: Location
 }) => {
-  const [booking, setBooking] = useState<any>({})
-  const [shopInfo, setShopInfo] = useState<any>({})
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const { navigate } = useI18next()
-
+  const dispatch = useAppDispatch()
+  const {
+    shopInfo,
+    cancelTermin: booking,
+    isFetching: isLoading = true,
+  } = useAppSelector(state => state.shop)
   const {
     selectedDate,
     selectedSlot,
-    guestInfo,
     last_name,
     first_name,
     require,
@@ -39,47 +39,21 @@ const CancelBooking = ({
     email,
     phone,
     status,
-  } = booking
+    canceled,
+  } = booking as ITermin
 
   useEffect(() => {
-    axios
-      .post(
-        "/.netlify/functions/cancel-termin",
-        JSON.stringify({ bookingId, shopId })
-      )
-      .then(res => {
-        setIsLoading(false)
-        // @ts-ignore
-        const { appointmentFound, shopInfo } = res.data
-        console.log(res.data)
-        setBooking(appointmentFound)
-        setShopInfo(shopInfo)
-      })
-      .catch(err => console.log("err", err))
+    dispatch(getCancelTermin({ bookingId, shopId }))
   }, [])
 
   const handleCancelBooking = () => {
-    setIsLoading(true)
-    const bookingId = location.search.replace("?", "").split("=")[1]
-    axios
-      .get("/.netlify/functions/cancel-termin", {
-        headers: {
-          shopId,
-          bookingId,
-        },
-      })
-      .then(res => {
-        alert("Cancel success. Thanks")
-        setIsLoading(false)
-        navigate("/")
-      })
-      .catch(err => {
-        console.log("err", err)
-        setIsLoading(false)
-      })
+    dispatch(confirmCancelTermin({ bookingId, shopId }))
   }
   if (status) {
-    return <p>This reservation is not exist</p>
+    return <WrapColSt>This reservation is not exist </WrapColSt>
+  }
+  if (canceled) {
+    return <WrapColSt>Your booking was canceled. Thank you :) </WrapColSt>
   }
 
   return (
@@ -87,7 +61,7 @@ const CancelBooking = ({
       {isLoading && <Loading />}
       <SEO title={`${shopInfo?.company} || Online Booking System`} />
 
-      <ShopLogo shopInfo={shopInfo} />
+      <ShopLogo shopInfoMongoDB={shopInfo} />
 
       <CardSt>
         <Typography variant="h6" component="h5">
@@ -95,7 +69,7 @@ const CancelBooking = ({
         </Typography>
         <Typography>
           Time:{" "}
-          {[...morningSlots, ...afternoonSlots][selectedSlot] +
+          {[...morningSlots, ...afternoonSlots][Number(selectedSlot)] +
             " " +
             dayjs(selectedDate).format("dddd, DD. MMMM")}
         </Typography>

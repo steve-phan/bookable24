@@ -2,8 +2,10 @@ import React from "react"
 import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image"
 
 import { WrapLogoSt, WrapAddressSt, TitleSt, SpanSt } from "./ShopLogo.css"
+import { IShopInfo } from "src/store/shop/shop.types"
+import { extend } from "dayjs"
 
-interface IshopInfo {
+interface IShopInfoContenful {
   email: string
   address: string
   phone: string
@@ -15,21 +17,28 @@ interface IshopInfo {
   city?: string
 }
 interface IshopLogoProps {
-  shopInfo: IshopInfo
+  shopInfoContenful?: IShopInfoContenful
+  shopInfoMongoDB?: IShopInfo
 }
 
-const ShopLogo: React.FC<IshopLogoProps> = ({ shopInfo }) => {
+const ShopLogo: React.FC<IshopLogoProps> = ({
+  shopInfoContenful,
+  shopInfoMongoDB,
+}) => {
   // const image = getImage(shopinfo.logo) as IGatsbyImageData
-  const { shopName, address, email, phone, street, cityCode, city } = shopInfo
+  const { shopName, address, email, phone, street, cityCode, city } = {
+    ...shopInfoContenful,
+    ...shopInfoMongoDB,
+  }
   return (
     <WrapLogoSt>
       <WrapAddressSt>
         <TitleSt> {shopName} </TitleSt>
         <SpanSt>{address}</SpanSt>
       </WrapAddressSt>
-      {shopInfo?.logo ? (
+      {shopInfoContenful?.logo ? (
         <GatsbyImage
-          image={getImage(shopInfo.logo) as IGatsbyImageData}
+          image={getImage(shopInfoContenful.logo) as IGatsbyImageData}
           alt="Image"
         />
       ) : (
