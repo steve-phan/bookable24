@@ -6,11 +6,13 @@ import axios from "axios"
 
 import { IshopInfo } from "src/store/shop/shop.types"
 import Loading from "src/components/ContentComponents/Loading/Loading"
+import SEO from "src/components/seo"
 
 import { WrapColSt } from "../ShopPage.css"
 import { afternoonSlots, morningSlots } from "../utils"
 import { CardSt } from "../StepComponents/StepComponents.css"
 import { CanCelButtonSt } from "../ShopPage.css"
+import ShopLogo from "../ShopLogo/ShopLogo"
 
 const CancelBooking = ({
   bookingId,
@@ -22,7 +24,8 @@ const CancelBooking = ({
   location: Location
 }) => {
   const [booking, setBooking] = useState<any>({})
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [shopInfo, setShopInfo] = useState<any>({})
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const { navigate } = useI18next()
 
   const {
@@ -46,7 +49,11 @@ const CancelBooking = ({
       )
       .then(res => {
         setIsLoading(false)
-        setBooking(res.data)
+        // @ts-ignore
+        const { appointmentFound, shopInfo } = res.data
+        console.log(res.data)
+        setBooking(appointmentFound)
+        setShopInfo(shopInfo)
       })
       .catch(err => console.log("err", err))
   }, [])
@@ -78,6 +85,10 @@ const CancelBooking = ({
   return (
     <WrapColSt>
       {isLoading && <Loading />}
+      <SEO title={`${shopInfo?.company} || Online Booking System`} />
+
+      <ShopLogo shopInfo={shopInfo} />
+
       <CardSt>
         <Typography variant="h6" component="h5">
           Details Info

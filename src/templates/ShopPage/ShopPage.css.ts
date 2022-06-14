@@ -47,6 +47,12 @@ export const WrapRowSt = styled("div")`
 `
 export const WrapColSt = styled("div")`
   padding: 16px 8px;
+  margin: 0 auto;
+
+  max-width: 580px;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
 `
 
 export const ButtonSt = styled(Button)`

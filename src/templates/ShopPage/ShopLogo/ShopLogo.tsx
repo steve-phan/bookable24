@@ -10,23 +10,33 @@ interface IshopInfo {
   logo: IGatsbyImageData
   shopId: string
   shopName: string
+  street?: string
+  cityCode?: string
+  city?: string
 }
 interface IshopLogoProps {
-  shopinfo: IshopInfo
+  shopInfo: IshopInfo
 }
 
-const ShopLogo: React.FC<IshopLogoProps> = ({ shopinfo }) => {
-  const image = getImage(shopinfo.logo) as IGatsbyImageData
-  const { shopName, address, email, phone } = shopinfo
+const ShopLogo: React.FC<IshopLogoProps> = ({ shopInfo }) => {
+  // const image = getImage(shopinfo.logo) as IGatsbyImageData
+  const { shopName, address, email, phone, street, cityCode, city } = shopInfo
   return (
     <WrapLogoSt>
       <WrapAddressSt>
         <TitleSt> {shopName} </TitleSt>
         <SpanSt>{address}</SpanSt>
-        {/* <SpanSt>Phone: {phone} </SpanSt>
-        <SpanSt>{email}</SpanSt> */}
       </WrapAddressSt>
-      <GatsbyImage image={image} alt="Image" />
+      {shopInfo?.logo ? (
+        <GatsbyImage
+          image={getImage(shopInfo.logo) as IGatsbyImageData}
+          alt="Image"
+        />
+      ) : (
+        <>
+          <SpanSt>{`${street} ${cityCode} ${city}`}</SpanSt>
+        </>
+      )}
     </WrapLogoSt>
   )
 }

@@ -126,7 +126,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       <>
         <SEO title={`${shopName} || Online Booking System`} />
         <WrapTerminSt>
-          <ShopLogo shopinfo={data.contentfulShopInfo} />
+          <ShopLogo shopInfo={data.contentfulShopInfo} />
           <WrapTerminContentSt>
             {isLoading && <Loading />}
             <>

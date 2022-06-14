@@ -8,17 +8,20 @@ const handler = async event => {
   if (event.httpMethod === "POST") {
     try {
       const { bookingId, shopId } = JSON.parse(event.body)
-
       const shopNamesDB = await connect()
+      const ShopInfo = shopNamesDB.model("ShopInfo", shopinfoSchema)
+      const shopInfo = await ShopInfo.find({ shopName: shopId })
+
       const bookingConn = shopNamesDB.connection.useDb(shopId)
       const Appointment = bookingConn.model("Appointment", appointmentSchema)
 
       const appointmentFound = await Appointment.findById(bookingId)
       return {
         statusCode: 200,
-        body: JSON.stringify(appointmentFound),
+        body: JSON.stringify({ appointmentFound, shopInfo: shopInfo[0] }),
       }
     } catch (error) {
+      console.log({ error })
       return {
         statusCode: 500,
         body: JSON.stringify(error),

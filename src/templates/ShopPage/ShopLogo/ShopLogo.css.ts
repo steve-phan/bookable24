@@ -6,6 +6,7 @@ export const WrapLogoSt = styled("div")(({ theme }) => ({
   padding: "16px 8px",
   justifyContent: "space-between",
   borderRadius: 4,
+  alignItems: "center",
 
   "& img": {
     objectFit: "contain !important",
