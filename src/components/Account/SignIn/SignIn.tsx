@@ -114,7 +114,7 @@ const SignIn = () => {
       <TypographySt>
         Loggen Sie sich jetzt ein, um alle Vorteile des Kundenkontos
         wahrzunehmen. Neuer Kunde?
-        <Link to="/request-account"> Anfrage-Demo</Link>
+        <Link to="/account/request-account"> Anfrage-Demo</Link>
       </TypographySt>
       <TextFieldSt
         fullWidth
@@ -153,7 +153,7 @@ const SignIn = () => {
         />
       </FormControlSt>
       <Typography>
-        <Link to="/recover" className="siteLink">
+        <Link to="/account/recover" className="siteLink">
           Passwort vergessen?
         </Link>
       </Typography>

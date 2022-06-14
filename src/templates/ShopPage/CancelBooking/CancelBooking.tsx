@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography"
 import dayjs from "dayjs"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import axios from "axios"
 
@@ -13,18 +13,18 @@ import { CardSt } from "../StepComponents/StepComponents.css"
 import { CanCelButtonSt } from "../ShopPage.css"
 
 const CancelBooking = ({
-  booking,
+  bookingId,
   shopId,
-  shopInfo,
   location,
 }: {
-  booking: any
+  bookingId: string
   shopId: string
-  shopInfo: IshopInfo
-  location: any
+  location: Location
 }) => {
+  const [booking, setBooking] = useState<any>({})
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { navigate } = useI18next()
+
   const {
     selectedDate,
     selectedSlot,
@@ -38,15 +38,27 @@ const CancelBooking = ({
     status,
   } = booking
 
+  useEffect(() => {
+    axios
+      .post(
+        "/.netlify/functions/cancel-termin",
+        JSON.stringify({ bookingId, shopId })
+      )
+      .then(res => {
+        setIsLoading(false)
+        setBooking(res.data)
+      })
+      .catch(err => console.log("err", err))
+  }, [])
+
   const handleCancelBooking = () => {
     setIsLoading(true)
     const bookingId = location.search.replace("?", "").split("=")[1]
     axios
       .get("/.netlify/functions/cancel-termin", {
         headers: {
-          shopId: shopId,
+          shopId,
           bookingId,
-          shopInfo: JSON.stringify(shopInfo),
         },
       })
       .then(res => {

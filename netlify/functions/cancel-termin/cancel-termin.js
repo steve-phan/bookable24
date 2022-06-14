@@ -1,12 +1,13 @@
 const { connect } = require("../utils/mongooseConnect")
 const { appointmentSchema } = require("../utils/models/bookingModel")
+const { shopinfoSchema } = require("../utils/models/shopInfoModel")
 const configTransporter = require("./transporter")
 const { getValidToken } = require("../utils/googleToken")
 
-const handler = async (event, context) => {
+const handler = async event => {
   if (event.httpMethod === "POST") {
     try {
-      const { bookingId, shopId, shopInfo } = JSON.parse(event.body)
+      const { bookingId, shopId } = JSON.parse(event.body)
 
       const shopNamesDB = await connect()
       const bookingConn = shopNamesDB.connection.useDb(shopId)
@@ -24,10 +25,13 @@ const handler = async (event, context) => {
       }
     }
   } else if (event.httpMethod === "GET") {
-    const { bookingid: bookingId, shopid, shopinfo } = event.headers
-    const shopInfo = JSON.parse(shopinfo)
+    const { bookingId, shopId } = event.headers
+
     const shopNamesDB = await connect()
-    const bookingConn = shopNamesDB.connection.useDb(shopid)
+    const ShopInfo = bookingConn.model("ShopInfo", shopinfoSchema)
+    const shopInfo = await ShopInfo.find({ shopName: shopId })
+
+    const bookingConn = shopNamesDB.connection.useDb(shopId)
     const Appointment = bookingConn.model("Appointment", appointmentSchema)
     const appointmentFound = await Appointment.findOneAndUpdate(
       { _id: bookingId },
@@ -44,6 +48,7 @@ const handler = async (event, context) => {
       require,
     } = appointmentFound
     const validToken = await getValidToken()
+    c
     const { transporter, mailOptions } = configTransporter({
       token: validToken,
       email,

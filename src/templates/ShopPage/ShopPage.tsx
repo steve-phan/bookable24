@@ -13,7 +13,6 @@ import { useSteps } from "src/hooks/useSteps"
 import { WrapTerminSt, WrapTerminContentSt, StepperSt } from "./ShopPage.css"
 import { getStepContent, allSlots, getDefaultSlot, Stepper } from "./utils"
 import ShopLogo from "./ShopLogo/ShopLogo"
-import CancelBooking from "./CancelBooking/CancelBooking"
 import { ButtonsCTA } from "./ButtonsCTA"
 
 interface IShopPageProps {
@@ -32,8 +31,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
   location,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [showCancelBooking, setShowCancelBooking] = useState<boolean>(true)
-  const [booking, setBooking] = useState<any>()
 
   const [activeStep, setActiveStep] = useState(0)
   const dispatch = useAppDispatch()
@@ -54,7 +51,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   const { shopName, shopEmail, shopId } = pageContext
 
   useEffect(() => {
-    if (status !== "loading" && !showCancelBooking) {
+    if (status !== "loading") {
       setIsLoading(false)
     }
   }, [status])
@@ -68,30 +65,14 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }
 
   useEffect(() => {
-    if (location.search.includes("?bookingId=")) {
-      const bookingId = location.search.replace("?", "").split("=")[1]
-      setShowCancelBooking(true)
-      axios
-        .post(
-          "/.netlify/functions/cancel-termin",
-          JSON.stringify({ bookingId, shopId, shopInfo })
-        )
-        .then(res => {
-          setIsLoading(false)
-          setBooking(res.data)
-        })
-        .catch(err => console.log("err", err))
-    } else {
-      dispatch(
-        getShopinfo({
-          shopId: shopId,
-          shopemail: shopEmail,
-          isShopLogin: false,
-        })
-      )
-      setIsLoading(false)
-      setShowCancelBooking(false)
-    }
+    dispatch(
+      getShopinfo({
+        shopId: shopId,
+        shopemail: shopEmail,
+        isShopLogin: false,
+      })
+    )
+    setIsLoading(false)
   }, [])
 
   const handleConfirmSubmit = () => {
@@ -148,39 +129,28 @@ const ShopPage: React.FC<IShopPageProps> = ({
           <ShopLogo shopinfo={data.contentfulShopInfo} />
           <WrapTerminContentSt>
             {isLoading && <Loading />}
-            {showCancelBooking ? (
-              booking?.email && (
-                <CancelBooking
-                  booking={booking}
-                  shopId={shopId}
-                  location={location}
-                  shopInfo={data.contentfulShopInfo}
-                />
-              )
-            ) : (
+            <>
+              {activeStep !== 4 && (
+                <StepperSt activeStep={activeStep}>
+                  {steps.map((label, index) => (
+                    <Stepper key={label + index} label={label} />
+                  ))}
+                </StepperSt>
+              )}
               <>
+                {getStepContent(activeStep)}
                 {activeStep !== 4 && (
-                  <StepperSt activeStep={activeStep}>
-                    {steps.map((label, index) => (
-                      <Stepper key={label + index} label={label} />
-                    ))}
-                  </StepperSt>
+                  <ButtonsCTA
+                    activeStep={activeStep}
+                    isValidInfo={isValidInfo}
+                    handleBack={handleBack}
+                    handleNext={handleNext}
+                    isNextButtonDisable={isNextButtonDisable}
+                    handleConfirmSubmit={handleConfirmSubmit}
+                  />
                 )}
-                <>
-                  {getStepContent(activeStep)}
-                  {activeStep !== 4 && (
-                    <ButtonsCTA
-                      activeStep={activeStep}
-                      isValidInfo={isValidInfo}
-                      handleBack={handleBack}
-                      handleNext={handleNext}
-                      isNextButtonDisable={isNextButtonDisable}
-                      handleConfirmSubmit={handleConfirmSubmit}
-                    />
-                  )}
-                </>
               </>
-            )}
+            </>
           </WrapTerminContentSt>
         </WrapTerminSt>
       </>
