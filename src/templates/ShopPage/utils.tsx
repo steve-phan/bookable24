@@ -1,11 +1,14 @@
+import { Step } from "@mui/material"
+import dayjs from "dayjs"
 import React, { ReactElement } from "react"
+import { dayjsModified } from "src/utils"
+import ColorlibStepIcon from "./ColorlibStepIcon"
+import { StepLabelSt } from "./ShopPage.css"
 import DatePicker from "./StepComponents/DatePicker"
-import SlotPicker from "./StepComponents/SlotPicker"
 import InfoUser from "./StepComponents/InfoUser"
 import PrewView from "./StepComponents/PrewView"
+import SlotPicker from "./StepComponents/SlotPicker"
 import ThankYou from "./StepComponents/ThankYou"
-import dayjs from "dayjs"
-import { dayjsModified } from "src/utils"
 
 const week = {
   Sun: 0,
@@ -101,3 +104,11 @@ export const getDefaultSlot = () => {
 
 export const isSameDay = (day: Date) => dayjs().isSame(dayjs(day), "hour")
 export const currentHour = dayjs().hour()
+
+export const Stepper = ({ label }: { label: string }) => {
+  return (
+    <Step style={{ padding: 0, width: "33.3333%" }}>
+      <StepLabelSt StepIconComponent={ColorlibStepIcon}>{label}</StepLabelSt>
+    </Step>
+  )
+}
