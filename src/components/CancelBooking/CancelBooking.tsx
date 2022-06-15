@@ -45,9 +45,11 @@ const CancelBooking = ({
     canceled,
   } = booking as ITermin
 
-  if (!shopId || !bookingId) {
-    navigate("/")
-  }
+  useEffect(() => {
+    if (!shopId || !bookingId) {
+      navigate("/")
+    }
+  }, [])
 
   useEffect(() => {
     dispatch(getCancelTermin({ bookingId, shopId }))
