@@ -1,11 +1,11 @@
-import { graphql } from "gatsby"
+import { graphql, PageProps } from "gatsby"
 import React from "react"
 import { useQueryParam } from "use-query-params"
 
 import CancelBooking from "src/components/CancelBooking/CancelBooking"
 import Layout from "src/components/Layout/Layout"
 
-const CancelBookingPage = () => {
+const CancelBookingPage: React.FC<PageProps> = ({ location }) => {
   const shopId = useQueryParam("shopId")[0] as string
   const bookingId = useQueryParam("bookingId")[0] as string
 
