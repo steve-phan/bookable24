@@ -5,10 +5,17 @@ import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
 import { IShop } from "./store/shop/shop.types"
 
 import utc from "dayjs/plugin/utc"
-import timezone from "dayjs/plugin/timezone" // dependent on utc plug
+import timezone from "dayjs/plugin/timezone"
+import isToday from "dayjs/plugin/isToday"
+import isTomorrow from "dayjs/plugin/isTomorrow"
+import isYesterday from "dayjs/plugin/isYesterday"
+// dependent on utc plug
 /**
  * @TODO : Working with timezone
  */
+dayjs.extend(isToday)
+dayjs.extend(isTomorrow)
+dayjs.extend(isYesterday)
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.tz.setDefault("Europe/Berlin")
@@ -101,18 +108,11 @@ export const filterBookings = (allTermins: ITermin[], today: string) =>
         Number(a.selectedSlot) - Number(b.selectedSlot)
     )
 
-export const getTodayBookings = (allTermins: ITermin[]) => {
-  const today = dayjs(new Date()).format("MMM DD")
-  return filterBookings(allTermins, today)
-}
+export const getTodayBookings = (allTermins: ITermin[]) =>
+  allTermins.filter(termin => dayjs(termin?.selectedDate).isToday())
 
-export const getTomorrowBookings = (allTermins: ITermin[]) => {
-  let nextDay = new Date()
-  nextDay.setDate(nextDay.getDate() + 1)
-  const tomorrow = dayjs(nextDay).format("MMM DD")
-  return filterBookings(allTermins, tomorrow)
-}
-
+export const getTomorrowBookings = (allTermins: ITermin[]) =>
+  allTermins.filter(termin => dayjs(termin?.selectedDate).isTomorrow())
 /**
  *
  * @param allTermins : allTermins pass in
@@ -121,6 +121,7 @@ export const getTomorrowBookings = (allTermins: ITermin[]) => {
  */
 
 export const getDateBookings = (allTermins: ITermin[], date: Date | null) => {
+  console.log({ date })
   let pickedDay = date && new Date(date)
   const day = dayjs(pickedDay).format("MMM DD")
   return filterBookings(allTermins, day)
