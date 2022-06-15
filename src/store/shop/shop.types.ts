@@ -31,8 +31,8 @@ export interface IShopInfo {
 export interface ITermin {
   created_at?: string
   email: string
-  first_name: string
-  last_name: string
+  firstName: string
+  lastName: string
   person: string
   phone: string
   require: null | string

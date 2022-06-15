@@ -43,8 +43,8 @@ const handler = async event => {
     )
     const {
       email,
-      last_name,
-      first_name,
+      lastName,
+      firstName,
       selectedSlot,
       selectedDate,
       phone,
@@ -56,8 +56,8 @@ const handler = async event => {
     const { transporter, mailOptions } = configTransporter({
       token: validToken,
       email,
-      lastName: last_name,
-      firstName: first_name,
+      lastName,
+      firstName,
       shopInfo: shopInfo[0],
       selectedSlot,
       selectedDate: dayjs(selectedDate).format("MMM-DD-YYYY"),

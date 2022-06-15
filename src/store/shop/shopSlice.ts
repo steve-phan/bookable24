@@ -43,8 +43,8 @@ export const checkUserAuth =
 const initialCancelTermin = {
   selectedDate: "",
   selectedSlot: "",
-  last_name: "",
-  first_name: "",
+  lastName: "",
+  firstName: "",
   require: "",
   person: "",
   email: "",

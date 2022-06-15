@@ -35,8 +35,8 @@ const CancelBooking = ({
   const {
     selectedDate,
     selectedSlot,
-    last_name,
-    first_name,
+    lastName,
+    firstName,
     require,
     person,
     email,
@@ -94,7 +94,7 @@ const CancelBooking = ({
         <Typography variant="h6" component="h5">
           Contact Info
         </Typography>
-        <Typography>Name: {last_name + " " + first_name}</Typography>
+        <Typography>Name: {lastName + " " + firstName}</Typography>
         <Typography>Email: {email}</Typography>
         <Typography>Phone: {phone}</Typography>
       </CardSt>

@@ -58,9 +58,9 @@ const HomeDashBoard = () => {
           <MenuItemSt key={termin._id}>
             <SnackbarContent
               message={
-                termin.first_name +
+                termin.firstName +
                 " " +
-                termin.last_name +
+                termin.lastName +
                 " " +
                 t("dashboard.dashboard.hasbooked")
               }
@@ -88,8 +88,8 @@ export const SnackbarContent = (props: any) => {
     timeAgo,
     termin: {
       email,
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       person,
       phone,
       require,
@@ -140,7 +140,7 @@ export const SnackbarContent = (props: any) => {
           <DetailsInfoSt>
             <PersonOutlineIcon /> {t("dashboard.dashboard.details.name")} :
             <span>
-              {first_name} {last_name}
+              {firstName} {lastName}
             </span>
           </DetailsInfoSt>
           <DetailsInfoSt>

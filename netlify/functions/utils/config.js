@@ -9,8 +9,8 @@ const slotSchema = new Schema({
   created_at: Date,
 })
 const appointmentSchema = new Schema({
-  first_name: String,
-  last_name: String,
+  firstName: String,
+  lastName: String,
   email: String,
   phone: String,
   selectedSlot: String,
