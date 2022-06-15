@@ -1,3 +1,5 @@
+const dayjs = require("dayjs")
+
 const { connect } = require("../utils/mongooseConnect")
 const { appointmentSchema } = require("../utils/models/bookingModel")
 const { shopinfoSchema } = require("../utils/models/shopInfoModel")
@@ -58,7 +60,7 @@ const handler = async event => {
       firstName: first_name,
       shopInfo: shopInfo[0],
       selectedSlot,
-      selectedDate,
+      selectedDate: dayjs(selectedDate).format("MMM-DD-YYYY"),
       phone,
       person,
       require,

@@ -1,9 +1,13 @@
 import axios from "axios"
+import dayjs from "dayjs"
 import { graphql } from "gatsby"
 import React, { useState } from "react"
 
 const Admin = () => {
   const [state, setState] = useState("")
+  console.log({
+    dayjs: dayjs("13-09-2021").format("DD/MM/YYYY"),
+  })
   return (
     <div>
       <form>
@@ -19,7 +23,7 @@ const Admin = () => {
             e.preventDefault()
             axios
               .post(
-                "/.netlify/functions/refactor-add-restaurant-customer",
+                "/.netlify/functions/refactor-selectedDate",
                 JSON.stringify({ shopId: state })
               )
               .then(res => {

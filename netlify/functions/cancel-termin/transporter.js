@@ -38,9 +38,9 @@ const configTransporter = ({
       extName: ".hbs",
     })
   )
-  const { shopName, address, company } = shopInfo
+  const { address, company } = shopInfo
   const mailOptions = {
-    from: `${shopName}  <${shopInfo.email}>`,
+    from: `${company}  <${shopInfo.email}>`,
     to: [email, shopInfo.email, "lebenistcode@gmail.com"],
     subject: `Cancel Booking at ${company}`,
     template: "cancel",

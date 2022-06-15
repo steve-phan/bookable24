@@ -1,3 +1,5 @@
+const dayjs = require("dayjs")
+
 require("dotenv").config()
 
 const { connect } = require("../utils/mongooseConnect")
@@ -45,7 +47,6 @@ const handler = async function (event) {
     const isCustomer =
       customerFounddByPhone.length !== 0 || customerFounddByEmail.length !== 0
     if (!isCustomer) {
-      console.log("creating new customer")
       const newCustomer = new Customer({
         first_name: firstName,
         last_name: lastName,
@@ -77,7 +78,7 @@ const handler = async function (event) {
       lastName,
       firstName,
       selectedSlot,
-      selectedDate,
+      selectedDate: dayjs(selectedDate).format("MMM-DD-YYYY"),
       require,
       shopInfo,
       bookingId: newappointment._id,
