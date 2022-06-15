@@ -32,10 +32,9 @@ const handler = async function (event) {
     const isCustomer =
       customerFounddByPhone.length !== 0 || customerFounddByEmail.length !== 0
     if (!isCustomer) {
-      console.log("creating new customer")
       const newCustomer = new Customer({
-        first_name: firstName,
-        last_name: lastName,
+        firstName,
+        lastName,
         email,
         phone,
       })

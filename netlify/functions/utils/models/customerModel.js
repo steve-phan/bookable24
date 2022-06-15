@@ -4,8 +4,8 @@ require("dotenv").config()
 const Schema = mongoose.Schema
 
 const customerSchema = new Schema({
-  first_name: String,
-  last_name: String,
+  firstName: String,
+  lastName: String,
   fullname: String,
   email: String,
   phone: String,

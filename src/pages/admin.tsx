@@ -19,7 +19,7 @@ const Admin = () => {
             e.preventDefault()
             axios
               .post(
-                "/.netlify/functions/refactor-selectedDate",
+                "/.netlify/functions/refactor-add-restaurant-customer",
                 JSON.stringify({ shopId: state })
               )
               .then(res => {

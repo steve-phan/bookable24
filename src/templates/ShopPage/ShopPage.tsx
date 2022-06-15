@@ -140,7 +140,10 @@ const ShopPage: React.FC<IShopPageProps> = ({
               {activeStep !== 4 && (
                 <StepperSt activeStep={activeStep}>
                   {steps.map((label, index) => (
-                    <Step style={{ padding: 0, width: "33.3333%" }}>
+                    <Step
+                      key={`${label}${index}`}
+                      style={{ padding: 0, width: "33.3333%" }}
+                    >
                       <StepLabelSt StepIconComponent={ColorlibStepIcon}>
                         {label}
                       </StepLabelSt>
