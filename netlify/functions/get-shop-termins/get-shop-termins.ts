@@ -25,11 +25,14 @@ export const handler: Handler = async event => {
     // Define a Model here base on the Schema
     const Appointment = shopTerminsDb.model("Appointment", appointmentSchema)
     // Access to Model method
-    // const today = dayjs(new Date()).format("YYYY-MM-DD") as Date
+    let today = new Date()
+    today.setDate(today.getDate() - 1)
+    const yesterday = dayjs(today).format("YYYY-MM-DD") as unknown as Date
+    console.log({ yesterday })
+
     const allTermins = await Appointment.find({
-      selectedDate: { $gte: "2022-06-01" },
+      selectedDate: { $gte: yesterday },
     })
-    // {createdAt:{$gte:ISODate("2021-01-01"),$lt:ISODate("2020-05-01"}}
     return {
       statusCode: 200,
       body: JSON.stringify({ allTermins, shopInfo }),

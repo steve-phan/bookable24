@@ -97,6 +97,9 @@ const ShopPage: React.FC<IShopPageProps> = ({
       .then(res => {
         if (res.data === "EMAIL_SENT") {
           const { firstName, lastName, email, phone } = guestInfo
+
+          setIsLoading(false)
+          handleNext()
           axios.post(
             "/.netlify/functions/add-restaurant-customer",
             JSON.stringify({
@@ -107,8 +110,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
               shopId,
             })
           )
-          setIsLoading(false)
-          handleNext()
         }
       })
       .catch(err => {
