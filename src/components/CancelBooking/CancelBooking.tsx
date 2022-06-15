@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography"
 import dayjs from "dayjs"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { ITermin } from "src/store/shop/shop.types"
@@ -24,14 +24,16 @@ const CancelBooking = ({
   shopId: string
   location: Location
 }) => {
+  const [isLoading, setIsLoading] = useState(true)
   const { navigate } = useI18next()
 
   const dispatch = useAppDispatch()
   const {
     shopInfo,
     cancelTermin: booking,
-    isFetching: isLoading = true,
+    isFetching,
   } = useAppSelector(state => state.shop)
+
   const {
     selectedDate,
     selectedSlot,
@@ -50,6 +52,10 @@ const CancelBooking = ({
       navigate("/")
     }
   }, [])
+
+  useEffect(() => {
+    setIsLoading(isFetching)
+  }, [isFetching])
 
   useEffect(() => {
     dispatch(getCancelTermin({ bookingId, shopId }))
