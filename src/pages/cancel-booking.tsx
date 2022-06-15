@@ -1,19 +1,13 @@
 import { graphql } from "gatsby"
 import React from "react"
 import { useQueryParam } from "use-query-params"
-import { useI18next } from "gatsby-plugin-react-i18next"
 
+import CancelBooking from "src/components/CancelBooking/CancelBooking"
 import Layout from "src/components/Layout/Layout"
-import CancelBooking from "src/templates/ShopPage/CancelBooking/CancelBooking"
 
 const CancelBookingPage = () => {
   const shopId = useQueryParam("shopId")[0] as string
   const bookingId = useQueryParam("bookingId")[0] as string
-  const { navigate } = useI18next()
-
-  if (!shopId || !bookingId) {
-    navigate("/")
-  }
 
   return (
     <Layout>

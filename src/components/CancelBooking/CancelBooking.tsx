@@ -1,6 +1,7 @@
 import Typography from "@mui/material/Typography"
 import dayjs from "dayjs"
 import React, { useEffect } from "react"
+import { useI18next } from "gatsby-plugin-react-i18next"
 
 import { ITermin } from "src/store/shop/shop.types"
 import Loading from "src/components/ContentComponents/Loading/Loading"
@@ -8,11 +9,11 @@ import SEO from "src/components/seo"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { getCancelTermin, confirmCancelTermin } from "src/store/shop/shopSlice"
 
-import { WrapColSt } from "../ShopPage.css"
-import { afternoonSlots, morningSlots } from "../utils"
-import { CardSt } from "../StepComponents/StepComponents.css"
-import { CanCelButtonSt } from "../ShopPage.css"
-import ShopLogo from "../ShopLogo/ShopLogo"
+import { WrapColSt } from "../../templates/ShopPage/ShopPage.css"
+import { afternoonSlots, morningSlots } from "../../templates/ShopPage/utils"
+import { CardSt } from "../../templates/ShopPage/StepComponents/StepComponents.css"
+import { CanCelButtonSt } from "../../templates/ShopPage/ShopPage.css"
+import ShopLogo from "../../templates/ShopPage/ShopLogo/ShopLogo"
 
 const CancelBooking = ({
   bookingId,
@@ -23,6 +24,8 @@ const CancelBooking = ({
   shopId: string
   location: Location
 }) => {
+  const { navigate } = useI18next()
+
   const dispatch = useAppDispatch()
   const {
     shopInfo,
@@ -41,6 +44,10 @@ const CancelBooking = ({
     status,
     canceled,
   } = booking as ITermin
+
+  if (!shopId || !bookingId) {
+    navigate("/")
+  }
 
   useEffect(() => {
     dispatch(getCancelTermin({ bookingId, shopId }))
