@@ -65,9 +65,12 @@ const CancelBooking = ({
     return <WrapColSt>Your booking was canceled. Thank you :) </WrapColSt>
   }
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <WrapColSt>
-      {isLoading && <Loading />}
       <SEO title={`${shopInfo?.company} || Online Booking System`} />
 
       <ShopLogo shopInfoMongoDB={shopInfo} />

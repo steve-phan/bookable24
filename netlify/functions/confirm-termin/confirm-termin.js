@@ -80,7 +80,7 @@ const handler = async function (event) {
       selectedDate,
       require,
       shopInfo,
-      terminId: newappointment._id,
+      bookingId: newappointment._id,
     })
 
     await transporter.sendMail(mailOptions)

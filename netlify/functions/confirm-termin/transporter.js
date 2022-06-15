@@ -16,7 +16,7 @@ const configTransporter = ({
   firstName,
   selectedSlot,
   selectedDate,
-  terminId,
+  bookingId,
   require,
   shopInfo,
 }) => {
@@ -59,7 +59,7 @@ const configTransporter = ({
       city,
       cityCode,
       time: timeSlots[Number(selectedSlot)],
-      link_cancel: `${baseUrl}/${shopName}?bookingId=${terminId}`,
+      link_cancel: `${baseUrl}/cancel-booking/?shopId=${shopName}&bookingId=${bookingId}`,
     },
   }
   return {
