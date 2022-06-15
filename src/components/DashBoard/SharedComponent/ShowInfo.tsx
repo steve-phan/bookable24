@@ -38,7 +38,7 @@ const createData = ({
   return {
     selectedSlot,
     person,
-    firstNam,
+    firstName,
     lastName,
     phone,
     email,
@@ -84,7 +84,7 @@ function Row(props: { row: ReturnType<typeof createData>; index: number }) {
           {allSlots[Number(row.selectedSlot)]}
         </TableCell>
         <TableCell align="left">{row.person}</TableCell>
-        <TableCell align="left">{row.firstNam + " " + row.lastName}</TableCell>
+        <TableCell align="left">{row.firstName + " " + row.lastName}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ padding: 0 }} colSpan={6}>
