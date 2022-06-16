@@ -33,6 +33,11 @@ const routes = [
     name: "Settings",
     icon: SettingsOutlinedIcon,
   },
+  {
+    path: "/dashboard/search",
+    name: "Search",
+    icon: SettingsOutlinedIcon,
+  },
 ]
 
 export { routes }
