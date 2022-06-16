@@ -4,18 +4,24 @@ import { graphql } from "gatsby"
 import React, { useState } from "react"
 
 const Admin = () => {
-  const [state, setState] = useState("")
-  console.log({
-    dayjs: dayjs("13-09-2021").format("DD/MM/YYYY"),
-  })
+  const [shopId, setShopId] = useState("")
+  const [searchTerm, setSearchTerm] = useState("")
+
   return (
     <div>
       <form>
         <input
-          value={state}
+          value={shopId}
           type="text"
           onChange={e => {
-            setState(e.target.value)
+            setShopId(e.target.value)
+          }}
+        />
+        <input
+          value={searchTerm}
+          type="text"
+          onChange={e => {
+            setSearchTerm(e.target.value)
           }}
         />
         <button
@@ -23,8 +29,8 @@ const Admin = () => {
             e.preventDefault()
             axios
               .post(
-                "/.netlify/functions/refactor-selectedDate",
-                JSON.stringify({ shopId: state })
+                "/.netlify/functions/search-customer",
+                JSON.stringify({ shopId, searchTerm })
               )
               .then(res => {
                 console.log({ Status: res })

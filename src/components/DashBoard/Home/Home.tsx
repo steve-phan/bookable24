@@ -14,8 +14,8 @@ import { timeAgo, ItimeAgoMess } from "src/utils"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
 
-import TotalCustomer from "./Chart/TotalCustomer"
-import TotalOders from "./Chart/TotalOder"
+import TotalCustomer from "../SharedComponent/Chart/TotalCustomer"
+import TotalOders from "../SharedComponent/Chart/TotalOder"
 import {
   GridItem,
   MenuItemSt,

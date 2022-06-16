@@ -19,6 +19,7 @@ const AllBookingsDashBoard = () => {
   const [value, setValue] = React.useState<Date | null>(new Date())
   const [showAllTermins, setShowAllTermins] = React.useState(true)
   const { t } = useTranslation()
+  console.log({ allTermins })
   return (
     <>
       <FlexRowSt>

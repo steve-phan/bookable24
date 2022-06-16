@@ -7,7 +7,10 @@ import { ShopInfo } from "../utils/models/shopInfoModel"
 import { connect } from "../utils/mongooseConnect"
 
 export const handler: Handler = async event => {
-  const { shopid, shopemail } = event.headers
+  const { shopid, shopemail } = event.headers as {
+    shopid: string
+    shopemail: string
+  }
 
   try {
     /**
@@ -28,7 +31,6 @@ export const handler: Handler = async event => {
     let today = new Date()
     today.setDate(today.getDate() - 1)
     const yesterday = dayjs(today).format("YYYY-MM-DD") as unknown as Date
-    console.log({ yesterday })
 
     const allTermins = await Appointment.find({
       selectedDate: { $gte: yesterday },

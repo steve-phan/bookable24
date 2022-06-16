@@ -5,8 +5,7 @@ import { useTheme } from "@mui/material/styles"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
 import { WrapChartSt, CircleSt, NumberSt, TypoTitleSt } from "./Chart.css"
-import { IbookingState } from "src/store/shop/shop.types"
-import { ITermin } from "src/store/shop/shopSlice"
+import { IbookingState, ITermin } from "src/store/shop/shop.types"
 
 const showData = (num: number, color: string) => ({
   datasets: [
