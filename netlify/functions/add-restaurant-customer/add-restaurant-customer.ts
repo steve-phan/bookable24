@@ -21,7 +21,7 @@ const handler = async function (event) {
 
     const Customer = bookingConn.model("Customer", customerSchema)
     const searchEmailRegex = new RegExp(email, "i")
-    const searchPhoneRegex = new RegExp(String(phone), "i")
+    const searchPhoneRegex = new RegExp(String(phone.replace("+", "")), "i")
     const customerFounddByPhone = await Customer.find({
       phone: searchPhoneRegex,
     })
