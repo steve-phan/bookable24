@@ -28,13 +28,16 @@ export interface IShopInfo {
   }
 }
 
-export interface ITermin {
-  created_at?: string
+export interface ICustomer {
   email: string
   firstName: string
   lastName: string
-  person: string
   phone: string
+}
+
+export interface ITermin extends ICustomer {
+  created_at?: string
+  person: string
   require: null | string
   selectedDate: string
   selectedSlot: string

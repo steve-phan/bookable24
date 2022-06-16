@@ -5,7 +5,7 @@ import { connect } from "../utils/mongooseConnect"
 import { shopinfoSchema } from "../utils/models/shopInfoModel"
 
 export const handler: Handler = async function (event) {
-  const data = JSON.parse(event.body)
+  const data = JSON.parse(event.body as string)
 
   const {
     shopName,

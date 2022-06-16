@@ -4,6 +4,10 @@ import { useAppSelector } from "src/store/hooks"
 import { TextField } from "@mui/material"
 import { WrapColSt, WrapRowSt, WrapSearchIcon } from "./SearchCustomer.styles"
 import { makeStyles } from "@mui/styles"
+import { async } from "@firebase/util"
+import axios from "axios"
+import { ICustomer } from "src/store/shop/shop.types"
+import ShowCustomers from "./ShowCustomers"
 
 const useStyles = makeStyles(theme => ({
   searchBarStyle: {
@@ -12,6 +16,7 @@ const useStyles = makeStyles(theme => ({
     margin: "0 0 0 0",
     float: "right",
     marginRight: "12px",
+    flex: 1,
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderRadius: "20px",
@@ -29,17 +34,49 @@ const SearchCustomer = () => {
 
   console.log({ shopInfo: shopId })
   const classes = useStyles()
+  const [searchTerm, setSearchTerm] = React.useState("")
+  const [foundCustomers, setFoundCustomers] = React.useState<ICustomer[]>([])
+  const submitSearch = async () => {
+    if (!searchTerm.trim()) {
+      return
+    }
+    try {
+      const response = await axios.post(
+        "/.netlify/functions/search-customer",
+        JSON.stringify({
+          searchTerm,
+          shopId,
+        })
+      )
+      const { customers } = response?.data as { customers: ICustomer[] }
+      setFoundCustomers(customers)
+      console.log({ response })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <WrapColSt>
       <WrapRowSt>
         <TextField
+          value={searchTerm}
           className={classes.searchBarStyle}
           size="small"
           placeholder="Enter customer phone or email or name"
+          onChange={e => {
+            setSearchTerm(e.target.value)
+          }}
         />
-        <WrapSearchIcon fontSize="large" />
+        <WrapSearchIcon
+          fontSize="large"
+          onClick={e => {
+            console.log("clicking ...")
+            submitSearch()
+          }}
+        />
       </WrapRowSt>
-      <h1>Hello</h1>
+      <ShowCustomers customers={foundCustomers} />
     </WrapColSt>
   )
 }
