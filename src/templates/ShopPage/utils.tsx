@@ -30,6 +30,11 @@ export const checkDisableDate = (
   closedDay: TWeek,
   closedSpecificDay: Date[]
 ) => {
+  const isPreviousDay =
+    dayjs(day).startOf("day").diff(dayjs().startOf("day")) < 0
+  if (isPreviousDay) {
+    return true
+  }
   if (closedDay) {
     return closedDay !== "none" && dayjs(day).day() === week[closedDay]
   }
@@ -42,10 +47,7 @@ export const checkDisableDate = (
       dayjsModified(day).isSame(dayjsModified(specificDay), "day")
     )
   })
-  return (
-    dayjs(day).startOf("day").diff(dayjs().startOf("day")) < 0 ||
-    foundDayClosed >= 0
-  )
+  return foundDayClosed >= 0
 }
 
 export const getStepContent = (step: number): ReactElement => {

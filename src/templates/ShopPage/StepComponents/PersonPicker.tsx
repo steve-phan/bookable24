@@ -7,12 +7,12 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
-import { setNumberOfGuest } from "src/store/shop/bookingSlice"
+import { setNumberOfCustomer } from "src/store/shop/bookingSlice"
 
 const PersonPicker = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { numberOfGuest } = useAppSelector(state => state.booking)
+  const { person } = useAppSelector(state => state.booking)
 
   const menuItems = () =>
     [...Array(10)].map((_, i) => (
@@ -29,10 +29,10 @@ const PersonPicker = () => {
         <Select
           style={{ paddingLeft: 16 }}
           labelId="select-guest-number-label"
-          value={`${numberOfGuest}`}
+          value={`${person}`}
           label={t("booking.datepicker.person")}
           onChange={(event: SelectChangeEvent) => {
-            dispatch(setNumberOfGuest(Number(event.target.value as string)))
+            dispatch(setNumberOfCustomer(Number(event.target.value as string)))
           }}
         >
           {menuItems()}

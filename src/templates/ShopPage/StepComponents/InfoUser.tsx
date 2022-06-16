@@ -2,10 +2,10 @@ import React, { useRef, useEffect } from "react"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import {
-  setGuestInfo,
-  setGuestValidInfo,
-  TGuestInfo,
+  setCustomerInfo,
+  setCustomerValidInfo,
 } from "src/store/shop/bookingSlice"
+import { TCustomerInfo } from "src/store/shop/shop.types"
 import { validateEmail, validatePhone } from "src/utils"
 
 import { TextFieldSt, TypographySt } from "./StepComponents.css"
@@ -14,23 +14,23 @@ import { WrapColSt } from "../ShopPage.css"
 const InfoUser = () => {
   const nRef = useRef<ReturnType<typeof setTimeout>>()
   const dispatch = useAppDispatch()
-  const {
-    guestInfo: { firstName, lastName, email, phone, require },
-  } = useAppSelector(state => state.booking)
+  const { firstName, lastName, email, phone, require } = useAppSelector(
+    state => state.booking
+  )
 
   useEffect(() => {
     if (firstName && lastName && validateEmail(email) && validatePhone(phone)) {
-      dispatch(setGuestValidInfo(true))
+      dispatch(setCustomerValidInfo(true))
     }
   }, [email, phone, firstName, lastName])
 
   const handleChangeInput =
-    (key: TGuestInfo) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    (key: TCustomerInfo) => (event: React.ChangeEvent<HTMLInputElement>) => {
       if (nRef.current) {
         clearTimeout(nRef.current)
       }
       nRef.current = setTimeout(() => {
-        dispatch(setGuestInfo([key, event.target.value]))
+        dispatch(setCustomerInfo([key, event.target.value]))
         nRef.current = undefined
       }, 300)
     }

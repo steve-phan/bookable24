@@ -17,20 +17,22 @@ const handler = async event => {
 
   const appointment = JSON.parse(event.body)
   const {
-    userinfo: { firstName, lastName, email, phone },
+    firstName,
+    lastName,
+    email,
+    phone,
     selectedDate,
     selectedSlot,
     person,
     require,
+    shopId,
     shopInfo,
   } = appointment
-  const shopName = Boolean(shopInfo.shopName)
-    ? shopInfo.shopName
-    : shopInfo.shopname
+
   try {
     const shopnamesDb = await connect()
 
-    const bookingConn = shopnamesDb.connection.useDb(shopName)
+    const bookingConn = shopnamesDb.connection.useDb(shopId)
 
     const Appointment = bookingConn.model("Appointment", appointmentSchema)
 
@@ -48,7 +50,6 @@ const handler = async event => {
     await newappointment.save()
     const validToken = await getValidToken()
     const { transporter, mailOptions } = configTransporter({
-      shopName,
       token: validToken,
       email,
       person,
@@ -58,6 +59,7 @@ const handler = async event => {
       selectedSlot,
       selectedDate: dayjs(selectedDate).format("MMM-DD-YYYY"),
       require,
+      shopId,
       shopInfo,
       bookingId: newappointment._id,
     })

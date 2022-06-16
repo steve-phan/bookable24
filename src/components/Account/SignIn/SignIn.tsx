@@ -97,7 +97,7 @@ const SignIn = () => {
       //   .catch(err => console.log(err))
       await dispatch(
         getShopinfo({
-          shopemail: values.email,
+          shopEmail: values.email,
           shopId: getShopName(values.email, shopList) as string,
           isShopLogin: true,
         })
