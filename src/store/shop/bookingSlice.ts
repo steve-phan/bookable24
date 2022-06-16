@@ -1,57 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { IbookingState } from "./shop.types"
+import { IBookingState, IBooking, TCustomerInfo } from "./shop.types"
 
-const initialBookingState: IbookingState = {
-  numberOfGuest: 1,
+const intialBooking: IBooking = {
+  person: 1,
   selectedDate: new Date(),
   selectedSlot: 0,
-  guestInfo: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    require: "",
-  },
-  isValidInfo: false,
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  require: "",
 }
 
-// export const setNumberOfGuest = createAction<number>("booking/number-of-guest")
-// const bookingReducers = createReducer(initialBookingState, builder => {
-//   builder.addCase(setNumberOfGuest, (state: IbookingState, action) => {
-//     console.log("dispatch", action.payload)
-//     state.numberOfGuest = action.payload
-//   })
-// })
-
-export type TGuestInfo =
-  | "firstName"
-  | "lastName"
-  | "email"
-  | "phone"
-  | "require"
+const initialBookingState: IBookingState = {
+  ...intialBooking,
+  isValidInfo: false,
+}
 
 const bookingSlice = createSlice({
   name: "booking",
   initialState: initialBookingState,
   reducers: {
-    setNumberOfGuest: (state: IbookingState, action: PayloadAction<number>) => {
-      state.numberOfGuest = action.payload
+    setNumberOfCustomer: (
+      state: IBookingState,
+      action: PayloadAction<number>
+    ) => {
+      state.person = action.payload
     },
-    setSelectedSlot: (state: IbookingState, action: PayloadAction<number>) => {
+    setSelectedSlot: (state: IBookingState, action: PayloadAction<number>) => {
       state.selectedSlot = action.payload
     },
-    setSelectedDate: (state: IbookingState, action: PayloadAction<Date>) => {
+    setSelectedDate: (state: IBookingState, action: PayloadAction<Date>) => {
       state.selectedDate = action.payload
     },
-    setGuestInfo: (
-      state: IbookingState,
-      action: PayloadAction<[TGuestInfo, string]>
+    setCustomerInfo: (
+      state: IBookingState,
+      action: PayloadAction<[TCustomerInfo, string]>
     ) => {
-      state.guestInfo[action.payload[0]] = action.payload[1]
+      const [key, value] = action.payload
+      state[key] = value
     },
-    setGuestValidInfo: (
-      state: IbookingState,
+    setCustomerValidInfo: (
+      state: IBookingState,
       action: PayloadAction<boolean>
     ) => {
       state.isValidInfo = action.payload
@@ -59,11 +50,11 @@ const bookingSlice = createSlice({
   },
 })
 export const {
-  setNumberOfGuest,
+  setNumberOfCustomer,
   setSelectedDate,
   setSelectedSlot,
-  setGuestInfo,
-  setGuestValidInfo,
+  setCustomerInfo,
+  setCustomerValidInfo,
 } = bookingSlice.actions
 
 export default bookingSlice.reducer

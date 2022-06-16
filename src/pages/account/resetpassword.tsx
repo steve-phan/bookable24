@@ -67,10 +67,8 @@ const ResetPassword = () => {
 
   const handleResetPassword = async () => {
     try {
-      console.log({ oobCode })
       const email = await verifyPasswordResetCode(auth, oobCode[0])
       setLoading(false)
-      console.log({ email })
     } catch (error) {
       setLoading(false)
       if (typeof window !== "undefined") {

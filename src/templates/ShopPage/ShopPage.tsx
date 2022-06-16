@@ -29,7 +29,7 @@ interface IShopPageProps {
     shopId: string
   }
   data: any // Do it later
-  location?: any
+  location?: Location
 }
 
 const ShopPage: React.FC<IShopPageProps> = ({
@@ -45,8 +45,12 @@ const ShopPage: React.FC<IShopPageProps> = ({
     booking: {
       selectedDate,
       selectedSlot = getDefaultSlot(),
-      guestInfo,
-      numberOfGuest,
+      firstName,
+      lastName,
+      email,
+      phone,
+      require,
+      person,
       isValidInfo,
     },
     shop: { shopInfo, status },
@@ -74,8 +78,8 @@ const ShopPage: React.FC<IShopPageProps> = ({
   useEffect(() => {
     dispatch(
       getShopinfo({
-        shopId: shopId,
-        shopemail: shopEmail,
+        shopId,
+        shopEmail,
         isShopLogin: false,
       })
     )
@@ -86,9 +90,13 @@ const ShopPage: React.FC<IShopPageProps> = ({
     const dataBooking = {
       selectedDate,
       selectedSlot,
-      userinfo: { ...guestInfo },
-      person: numberOfGuest,
-      require: guestInfo.require,
+      firstName,
+      lastName,
+      email,
+      phone,
+      person,
+      require,
+      shopId,
       shopInfo,
     }
     setIsLoading(true)
@@ -96,7 +104,8 @@ const ShopPage: React.FC<IShopPageProps> = ({
       .post("/.netlify/functions/confirm-termin", JSON.stringify(dataBooking))
       .then(res => {
         if (res.data === "EMAIL_SENT") {
-          const { firstName, lastName, email, phone } = guestInfo
+          setIsLoading(false)
+          handleNext()
           axios.post(
             "/.netlify/functions/add-restaurant-customer",
             JSON.stringify({
@@ -107,8 +116,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
               shopId,
             })
           )
-          setIsLoading(false)
-          handleNext()
         }
       })
       .catch(err => {

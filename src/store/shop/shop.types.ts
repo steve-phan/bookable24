@@ -59,8 +59,8 @@ export interface IShopState {
   cancelTermin: ITermin
 }
 
-export interface IshopQuery {
-  shopemail: string
+export interface IShopQuery {
+  shopEmail: string
   shopId: string
   isShopLogin: boolean
 }
@@ -69,18 +69,25 @@ export interface Iaccount {
   email: string
   password: string
 }
+export type TCustomerInfo =
+  | "firstName"
+  | "lastName"
+  | "email"
+  | "phone"
+  | "require"
 
-export interface IbookingState {
-  numberOfGuest: number
+export interface IBooking {
+  person: number
   selectedDate: Date
   selectedSlot: number
-  guestInfo: {
-    firstName: string
-    lastName: string
-    email: string
-    phone: string
-    require: string
-  }
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  require: string
+}
+
+export interface IBookingState extends IBooking {
   isValidInfo: boolean
 }
 

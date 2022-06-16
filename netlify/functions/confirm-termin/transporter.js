@@ -7,7 +7,6 @@ const user = process.env.MAIL_USER
 const baseUrl = process.env.BASE_URL || "https://bookable24.de"
 
 const configTransporter = ({
-  shopName,
   token,
   email,
   phone,
@@ -18,6 +17,7 @@ const configTransporter = ({
   selectedDate,
   bookingId,
   require,
+  shopId,
   shopInfo,
 }) => {
   const transporter = nodemailer.createTransport({
@@ -59,7 +59,7 @@ const configTransporter = ({
       city,
       cityCode,
       time: timeSlots[Number(selectedSlot)],
-      link_cancel: `${baseUrl}/cancel-booking/?shopId=${shopName}&bookingId=${bookingId}`,
+      link_cancel: `${baseUrl}/cancel-booking/?shopId=${shopId}&bookingId=${bookingId}`,
     },
   }
   return {

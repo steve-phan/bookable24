@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography"
 import dayjs from "dayjs"
 import React from "react"
 
-import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { useAppSelector } from "src/store/hooks"
 import { WrapColSt } from "../ShopPage.css"
 import { afternoonSlots, getDefaultSlot, morningSlots } from "../utils"
 import { CardSt } from "./StepComponents.css"
@@ -11,31 +11,29 @@ const PrewView = () => {
   const {
     selectedDate,
     selectedSlot = getDefaultSlot(),
-    guestInfo,
-    numberOfGuest,
+    firstName,
+    lastName,
+    email,
+    phone,
+    person,
+    require,
   } = useAppSelector(state => state.booking)
 
   return (
     <WrapColSt>
-      <CardSt style={{ border: "none", boxShadow: "none" }}>
-        <Typography>{/* {shopinfo.company} */}</Typography>
-        <Typography>
-          {/* {shopinfo.street + " " + shopinfo.city + " " + shopinfo.cityCode} */}
-        </Typography>
-      </CardSt>
       <CardSt>
         <Typography variant="h6" component="h5">
           Details Info
         </Typography>
         <Typography>
-          Time:{" "}
+          Time:
           {[...morningSlots, ...afternoonSlots][selectedSlot] +
             " " +
             dayjs(selectedDate).format("dddd, DD. MMMM")}
         </Typography>
 
-        <Typography>Persons: {numberOfGuest}</Typography>
-        <Typography>Require: {guestInfo.require}</Typography>
+        <Typography>Persons: {person}</Typography>
+        <Typography>Require: {require}</Typography>
       </CardSt>
 
       <CardSt>
@@ -43,11 +41,9 @@ const PrewView = () => {
           Contact Info
         </Typography>
 
-        <Typography>
-          Name: {guestInfo.lastName + " " + guestInfo.firstName}
-        </Typography>
-        <Typography>Email: {guestInfo.email}</Typography>
-        <Typography>Phone: {guestInfo.phone}</Typography>
+        <Typography>Name: {lastName + " " + firstName}</Typography>
+        <Typography>Email: {email}</Typography>
+        <Typography>Phone: {phone}</Typography>
       </CardSt>
     </WrapColSt>
   )
