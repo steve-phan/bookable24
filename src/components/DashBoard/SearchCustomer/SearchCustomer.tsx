@@ -2,7 +2,11 @@ import * as React from "react"
 import { useAppSelector } from "src/store/hooks"
 
 import { TextField } from "@mui/material"
-import { WrapColSt, WrapRowSt, WrapSearchIcon } from "./SearchCustomer.styles"
+import {
+  WrapColSt,
+  WrapSearchSt,
+  WrapSearchIcon,
+} from "./SearchCustomer.styles"
 import { makeStyles } from "@mui/styles"
 import { async } from "@firebase/util"
 import axios from "axios"
@@ -58,7 +62,7 @@ const SearchCustomer = () => {
 
   return (
     <WrapColSt>
-      <WrapRowSt>
+      <WrapSearchSt>
         <TextField
           value={searchTerm}
           className={classes.searchBarStyle}
@@ -66,6 +70,11 @@ const SearchCustomer = () => {
           placeholder="Enter customer phone or email or name"
           onChange={e => {
             setSearchTerm(e.target.value)
+          }}
+          onKeyPress={e => {
+            if (e.key == "Enter") {
+              submitSearch()
+            }
           }}
         />
         <WrapSearchIcon
@@ -75,7 +84,7 @@ const SearchCustomer = () => {
             submitSearch()
           }}
         />
-      </WrapRowSt>
+      </WrapSearchSt>
       <ShowCustomers customers={foundCustomers} />
     </WrapColSt>
   )

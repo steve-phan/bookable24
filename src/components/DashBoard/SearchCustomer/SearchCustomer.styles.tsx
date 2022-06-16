@@ -5,7 +5,7 @@ import { Grid } from "@mui/material"
 export const WrapColSt = styled("div")`
   padding: 16px 8px;
   margin: 0 auto;
-  /* max-width: 580px; */
+  max-width: 700px;
   border-radius: 4px;
   overflow: hidden;
   width: 100%;
@@ -15,9 +15,10 @@ export const WrapColSt = styled("div")`
   justify-content: center;
 `
 
-export const WrapRowSt = styled("div")`
+export const WrapSearchSt = styled("div")`
   display: flex;
   align-items: center;
+  margin-bottom: 16px;
 `
 
 export const SearchIconWrapper = styled("div")(({ theme }) => ({
