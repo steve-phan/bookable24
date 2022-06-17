@@ -32,7 +32,7 @@ export const ButtonsCTA = ({
         {t("button.back")}
       </ButtonSt>
       <ButtonSt
-        disabled={(activeStep === 2 && !isValidInfo) || isNextButtonDisable()}
+        // disabled={(activeStep === 2 && !isValidInfo) || isNextButtonDisable()}
         variant="contained"
         color="primary"
         onClick={() => {

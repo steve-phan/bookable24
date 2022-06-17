@@ -50,14 +50,17 @@ export const checkDisableDate = (
   return foundDayClosed >= 0
 }
 
-export const getStepContent = (step: number): ReactElement => {
+export const getStepContent = (
+  step: number,
+  handleNext: () => void
+): ReactElement => {
   switch (step) {
     case 0:
       return <DatePicker />
     case 1:
       return <SlotPicker />
     case 2:
-      return <InfoUser />
+      return <InfoUser handleNext={handleNext} />
     case 3:
       return <PrewView />
     case 4:

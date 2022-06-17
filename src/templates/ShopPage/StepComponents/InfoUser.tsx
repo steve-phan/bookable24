@@ -21,7 +21,7 @@ import { Input, TextField } from "@mui/material"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import { getSchema } from "./utils"
 
-const InfoUser = () => {
+const InfoUser = ({ handleNext }: { handleNext: () => void }) => {
   const { t } = useI18next()
   const dispatch = useAppDispatch()
 
@@ -44,17 +44,19 @@ const InfoUser = () => {
   })
   const { firstName, lastName, phone, email } = dirtyFields
   useEffect(() => {
-    if (firstName && lastName && phone && email) {
+    if (firstName && lastName && phone && email && isValid) {
       dispatch(setCustomerValidInfo(true))
     }
+    return () => {
+      dispatch(setCustomerValidInfo(false))
+    }
   }, [firstName, lastName, phone, email])
-  console.log(dirtyFields)
 
   const onSubmit = (data: IInfoUserProps) => {
     console.log(data)
     dispatch(setCustomerInfo(data))
   }
-
+  console.log({ isValid })
   return (
     <WrapColSt>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -103,17 +105,29 @@ const InfoUser = () => {
         <Controller
           name="phone"
           control={control}
-          render={({ field }) => (
-            <TextFieldSt
-              {...field}
-              error={!!errors.phone}
-              helperText={errors?.phone?.message}
-              type="tel"
-              variant="filled"
-              placeholder="+491723567890"
-              label="Telefonnummer*"
-            />
-          )}
+          render={({ field }) => {
+            const { onChange: onChangeCustom } = field
+            return (
+              <TextFieldSt
+                {...field}
+                onChange={e => {
+                  if (e.target.value === "") {
+                    onChangeCustom("")
+                  }
+                  const num = Number.isNaN(parseFloat(e.target.value))
+                    ? null
+                    : parseFloat(e.target.value)
+                  if (num) onChangeCustom(num)
+                }}
+                error={!!errors.phone}
+                helperText={errors?.phone?.message}
+                type="tel"
+                variant="filled"
+                placeholder="+491723567890"
+                label="Telefonnummer*"
+              />
+            )
+          }}
         />
         <Controller
           name="require"

@@ -68,6 +68,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }, [status])
 
   const handleNext = () => {
+    if (activeStep == 2 && !isValidInfo) return
     setActiveStep(prevActiveStep => prevActiveStep + 1)
   }
 
@@ -140,6 +141,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       false
     )
   }
+  console.log({ activeStep, isValidInfo })
   if (!shopEmail) return null
   return (
     <Layout isShop={true} location={location}>
@@ -165,7 +167,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
                 </StepperSt>
               )}
               <>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, handleNext)}
                 {activeStep !== 4 && (
                   <ButtonsCTA
                     activeStep={activeStep}

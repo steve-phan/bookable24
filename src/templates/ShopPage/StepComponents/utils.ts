@@ -11,6 +11,11 @@ export const getSchema = (t: TFunction<string | string[], undefined>) => {
       .string()
       .email(t("booking.validation.error.email"))
       .required(t("booking.validation.error.email")),
-    phone: yup.string().required(t("booking.validation.error.phone")),
+    phone: yup
+      .string()
+      .test("valid-phone", t("booking.validation.error.phone"), tel => {
+        return validatePhone(tel as string)
+      })
+      .required(t("booking.validation.error.phone")),
   })
 }
