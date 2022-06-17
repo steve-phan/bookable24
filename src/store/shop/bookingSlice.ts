@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { IBookingState, IBooking, TCustomerInfo } from "./shop.types"
+import {
+  IBookingState,
+  IBooking,
+  TCustomerInfo,
+  IInfoUserProps,
+} from "./shop.types"
 
 const intialBooking: IBooking = {
   person: 1,
@@ -36,10 +41,14 @@ const bookingSlice = createSlice({
     },
     setCustomerInfo: (
       state: IBookingState,
-      action: PayloadAction<[TCustomerInfo, string]>
+      action: PayloadAction<IInfoUserProps>
     ) => {
-      const [key, value] = action.payload
-      state[key] = value
+      const { firstName, lastName, email, phone, require } = action.payload
+      state.firstName = firstName
+      state.lastName = lastName
+      state.email = email
+      state.phone = phone
+      state.require = require
     },
     setCustomerValidInfo: (
       state: IBookingState,

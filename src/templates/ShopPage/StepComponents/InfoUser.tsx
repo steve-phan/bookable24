@@ -1,100 +1,140 @@
 import React, { useRef, useEffect } from "react"
+import { Controller, useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import {
   setCustomerInfo,
   setCustomerValidInfo,
 } from "src/store/shop/bookingSlice"
-import { TCustomerInfo } from "src/store/shop/shop.types"
+import {
+  ICustomer,
+  IInfoUserProps,
+  TCustomerInfo,
+} from "src/store/shop/shop.types"
 import { validateEmail, validatePhone } from "src/utils"
 
 import { TextFieldSt, TypographySt } from "./StepComponents.css"
 import { WrapColSt } from "../ShopPage.css"
+import { Input, TextField } from "@mui/material"
+import { useI18next } from "gatsby-plugin-react-i18next"
+import { getSchema } from "./utils"
 
 const InfoUser = () => {
-  const nRef = useRef<ReturnType<typeof setTimeout>>()
+  const { t } = useI18next()
   const dispatch = useAppDispatch()
-  const { firstName, lastName, email, phone, require } = useAppSelector(
-    state => state.booking
-  )
 
+  const schema = getSchema(t)
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isDirty, dirtyFields },
+  } = useForm<IInfoUserProps>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      lastName: "",
+      firstName: "",
+      email: "",
+      phone: "",
+      require: "",
+    },
+  })
+  const { firstName, lastName, phone, email } = dirtyFields
   useEffect(() => {
-    if (firstName && lastName && validateEmail(email) && validatePhone(phone)) {
+    if (firstName && lastName && phone && email) {
       dispatch(setCustomerValidInfo(true))
     }
-  }, [email, phone, firstName, lastName])
+  }, [firstName, lastName, phone, email])
+  console.log(dirtyFields)
 
-  const handleChangeInput =
-    (key: TCustomerInfo) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (nRef.current) {
-        clearTimeout(nRef.current)
-      }
-      nRef.current = setTimeout(() => {
-        dispatch(setCustomerInfo([key, event.target.value]))
-        nRef.current = undefined
-      }, 300)
-    }
+  const onSubmit = (data: IInfoUserProps) => {
+    console.log(data)
+    dispatch(setCustomerInfo(data))
+  }
+
   return (
     <WrapColSt>
-      <TextFieldSt
-        defaultValue={firstName}
-        variant="filled"
-        name="firstName"
-        placeholder="Vorname"
-        label="Vorname*"
-        onChange={handleChangeInput("firstName")}
-      />
-      <TextFieldSt
-        defaultValue={lastName}
-        variant="filled"
-        name="lastName"
-        placeholder="Nachname"
-        label="Nachname*"
-        onChange={handleChangeInput("lastName")}
-      />
-      <TextFieldSt
-        defaultValue={email}
-        variant="filled"
-        name="email"
-        placeholder="johndoe@mail.com"
-        label="E-Mail*"
-        error={!!email && !validateEmail(email)}
-        helperText={
-          email &&
-          !validateEmail(email) &&
-          "Bitte geben Sie eine gültige E-Mail-Adresse ein."
-        }
-        onChange={handleChangeInput("email")}
-      />
-      <TextFieldSt
-        defaultValue={phone}
-        variant="filled"
-        name="phone"
-        placeholder="+491723567890"
-        label="Telefonnummer*"
-        error={!!phone && !validatePhone(phone)}
-        helperText={
-          phone &&
-          !validatePhone(phone) &&
-          "Bitte geben Sie eine gültige Telefonnummer ein."
-        }
-        onChange={handleChangeInput("phone")}
-      />
-      <TextFieldSt
-        defaultValue={require}
-        id="outlined-multiline-static"
-        label="Besondere Wünsche hinzufügen"
-        multiline
-        rows={4}
-        name="require"
-        placeholder="Sonderwünsche eingeben (ohne Gewähr)"
-        variant="filled"
-        onChange={handleChangeInput("require")}
-      />
-      <TypographySt>
-        Alle Felder, die mit einem Sternchen (*) gekennzeichnet sind, müssen bei
-        der Anmeldung ausgefüllt werden.
-      </TypographySt>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="firstName"
+          control={control}
+          render={({ field }) => (
+            <TextFieldSt
+              {...field}
+              error={!!errors.firstName}
+              helperText={errors?.firstName?.message}
+              variant="filled"
+              placeholder="Vorname"
+              label="Vorname*"
+            />
+          )}
+        />
+        <Controller
+          name="lastName"
+          control={control}
+          render={({ field }) => (
+            <TextFieldSt
+              {...field}
+              error={!!errors.lastName}
+              helperText={errors?.lastName?.message}
+              variant="filled"
+              placeholder="Nachname"
+              label="Nachname*"
+            />
+          )}
+        />
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextFieldSt
+              {...field}
+              error={!!errors.email}
+              helperText={errors?.email?.message}
+              variant="filled"
+              placeholder="johndoe@mail.com"
+              label="E-Mail*"
+            />
+          )}
+        />
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <TextFieldSt
+              {...field}
+              error={!!errors.phone}
+              helperText={errors?.phone?.message}
+              type="tel"
+              variant="filled"
+              placeholder="+491723567890"
+              label="Telefonnummer*"
+            />
+          )}
+        />
+        <Controller
+          name="require"
+          control={control}
+          render={({ field }) => (
+            <TextFieldSt
+              {...field}
+              label="Besondere Wünsche hinzufügen"
+              multiline
+              rows={4}
+              placeholder="Sonderwünsche eingeben (ohne Gewähr)"
+              variant="filled"
+            />
+          )}
+        />
+        <input type="submit" style={{ display: "none" }} />
+        <TypographySt>
+          Alle Felder, die mit einem Sternchen (*) gekennzeichnet sind, müssen
+          bei der Anmeldung ausgefüllt werden.
+        </TypographySt>
+      </form>
     </WrapColSt>
   )
 }

@@ -65,6 +65,14 @@
       "lunch": "Lunch",
       "dinner": "Dinner",
       "warning": "These slots might be delayed in a short time."
+    },
+    "validation": {
+      "error": {
+        "fistName": "Bitte Vornamen eingeben",
+        "lastName": "Bitte Nachnamen eingeben",
+        "phone": "Bitte geben Sie eine gültige Phone Nummer ein.",
+        "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+      }
     }
   },
   "thankyou": {

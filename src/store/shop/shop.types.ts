@@ -34,6 +34,9 @@ export interface ICustomer {
   lastName: string
   phone: string
 }
+export interface IInfoUserProps extends ICustomer {
+  require: string
+}
 
 export interface ITermin extends ICustomer {
   created_at?: string

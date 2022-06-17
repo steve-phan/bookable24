@@ -64,6 +64,14 @@
       "lunch": "Lunch",
       "dinner": "Dinner",
       "warning": "Các vị trí này có thể bị trì hoãn trong một thời gian ngắn."
+    },
+    "validation": {
+      "error": {
+        "fistName": "Bitte Vornamen eingeben",
+        "lastName": "Bitte Nachnamen eingeben",
+        "phone": "Bitte geben Sie eine gültige Phone Nummer ein.",
+        "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+      }
     }
   },
   "thankyou": {

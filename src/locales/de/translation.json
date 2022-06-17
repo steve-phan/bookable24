@@ -64,6 +64,14 @@
       "lunch": "Mittagessen",
       "dinner": "Abendessen",
       "warning": "Diese Slots können sich in kurzer Zeit verzögern."
+    },
+    "validation": {
+      "error": {
+        "fistName": "Bitte Vornamen eingeben",
+        "lastName": "Bitte Nachnamen eingeben",
+        "phone": "Bitte geben Sie eine gültige Phone Nummer ein.",
+        "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+      }
     }
   },
   "thankyou": {
