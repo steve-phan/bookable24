@@ -10,7 +10,6 @@ import { connect } from "../utils/mongooseConnect"
 
 export const handler: Handler = async event => {
   const { shopId } = JSON.parse(event.body)
-  console.log({ shopId })
   try {
     const shopNamesDb = await connect()
 

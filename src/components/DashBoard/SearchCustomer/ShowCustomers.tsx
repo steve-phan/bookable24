@@ -19,11 +19,25 @@ import {
   BoldMediumTableCellSt,
 } from "./ShowCustomers.styles"
 
-const Row = ({ customer, index }: { customer: ICustomer; index: number }) => {
+interface IShowCustomerProps {
+  customers: ICustomer[]
+  handleBooking: (obj: ICustomer) => void
+}
+
+interface IRowProps {
+  customer: ICustomer
+  index: number
+  handleBooking: (obj: ICustomer) => void
+}
+
+const Row = ({ customer, index, handleBooking }: IRowProps) => {
   const { email, phone, lastName, firstName } = customer
   return (
     <React.Fragment>
       <TableRow
+        onClick={() => {
+          handleBooking(customer)
+        }}
         sx={{
           "& > *": {
             borderBottom: "unset",
@@ -40,7 +54,7 @@ const Row = ({ customer, index }: { customer: ICustomer; index: number }) => {
   )
 }
 
-const ShowCustomers = ({ customers }: { customers: ICustomer[] }) => {
+const ShowCustomers = ({ customers, handleBooking }: IShowCustomerProps) => {
   const { t } = useTranslation()
 
   return (
@@ -57,6 +71,7 @@ const ShowCustomers = ({ customers }: { customers: ICustomer[] }) => {
         <TableBody>
           {customers.map((customer, index) => (
             <Row
+              handleBooking={handleBooking}
               key={customer.phone + index}
               customer={customer}
               index={index}

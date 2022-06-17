@@ -12,6 +12,7 @@ import { async } from "@firebase/util"
 import axios from "axios"
 import { ICustomer } from "src/store/shop/shop.types"
 import ShowCustomers from "./ShowCustomers"
+import { useI18next } from "gatsby-plugin-react-i18next"
 
 const useStyles = makeStyles(theme => ({
   searchBarStyle: {
@@ -36,6 +37,7 @@ const useStyles = makeStyles(theme => ({
 const SearchCustomer = () => {
   const { shopName: shopId } = useAppSelector(state => state.shop.shopInfo)
 
+  const { navigate } = useI18next()
   console.log({ shopInfo: shopId })
   const classes = useStyles()
   const [searchTerm, setSearchTerm] = React.useState("")
@@ -54,10 +56,13 @@ const SearchCustomer = () => {
       )
       const { customers } = response?.data as { customers: ICustomer[] }
       setFoundCustomers(customers)
-      console.log({ response })
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const mangeCustomerBookings = (obj: ICustomer) => {
+    navigate("/dashboard/managebooking", { state: obj })
   }
 
   return (
@@ -85,7 +90,10 @@ const SearchCustomer = () => {
           }}
         />
       </WrapSearchSt>
-      <ShowCustomers customers={foundCustomers} />
+      <ShowCustomers
+        handleBooking={mangeCustomerBookings}
+        customers={foundCustomers}
+      />
     </WrapColSt>
   )
 }
