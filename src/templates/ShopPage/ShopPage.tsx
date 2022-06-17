@@ -85,7 +85,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
     )
     setIsLoading(false)
   }, [])
-
   const handleConfirmSubmit = () => {
     const dataBooking = {
       selectedDate,
@@ -95,13 +94,20 @@ const ShopPage: React.FC<IShopPageProps> = ({
       email,
       phone,
       person,
-      require,
       shopId,
-      shopInfo,
+    }
+    if (
+      Object.values(dataBooking).length !== 8 ||
+      Object.values(shopInfo).length !== 11
+    ) {
+      alert("Something wrong, please try again")
     }
     setIsLoading(true)
     axios
-      .post("/.netlify/functions/confirm-termin", JSON.stringify(dataBooking))
+      .post(
+        "/.netlify/functions/confirm-termin",
+        JSON.stringify({ ...dataBooking, require, shopInfo })
+      )
       .then(res => {
         if (res.data === "EMAIL_SENT") {
           setIsLoading(false)

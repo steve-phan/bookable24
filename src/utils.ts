@@ -121,7 +121,6 @@ export const getTomorrowBookings = (allTermins: ITermin[]) =>
  */
 
 export const getDateBookings = (allTermins: ITermin[], date: Date | null) => {
-  console.log({ date })
   let pickedDay = date && new Date(date)
   const day = dayjs(pickedDay).format("MMM DD")
   return filterBookings(allTermins, day)
