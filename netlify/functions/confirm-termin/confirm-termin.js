@@ -46,9 +46,9 @@ const handler = async event => {
       person,
       require,
     })
-
-    await newappointment.save()
-    const validToken = await getValidToken()
+    //TODO: investigation about remove await here
+    newappointment.save()
+    const validToken = await getValidToken(shopnamesDb)
     const { transporter, mailOptions } = configTransporter({
       token: validToken,
       email,
@@ -63,8 +63,8 @@ const handler = async event => {
       shopInfo,
       bookingId: newappointment._id,
     })
-
-    await transporter.sendMail(mailOptions)
+    //TODO: investigation about remove await here
+    transporter.sendMail(mailOptions)
     return {
       statusCode: 200,
       body: "EMAIL_SENT",

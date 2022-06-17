@@ -41,7 +41,7 @@ const handler = async event => {
       uid,
       shopName,
     })
-    const validToken = await getValidToken()
+    const validToken = await getValidToken(shopNamesDb)
     const { transporter, mailOptions } = configTransporter({
       shopName,
       company,
@@ -55,9 +55,9 @@ const handler = async event => {
       uid,
       token: validToken,
     })
-
-    await newShop.save()
-    await transporter.sendMail(mailOptions)
+    //TODO: investigation about remove await here
+    newShop.save()
+    transporter.sendMail(mailOptions)
 
     return {
       statusCode: 200,

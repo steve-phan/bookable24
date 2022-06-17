@@ -51,7 +51,7 @@ const handler = async event => {
       person,
       require,
     } = appointmentFound
-    const validToken = await getValidToken()
+    const validToken = await getValidToken(shopNamesDB)
 
     const { transporter, mailOptions } = configTransporter({
       token: validToken,
@@ -65,7 +65,9 @@ const handler = async event => {
       person,
       require,
     })
-    await transporter.sendMail(mailOptions)
+
+    //TODO: investigation about remove await here
+    transporter.sendMail(mailOptions)
 
     return {
       statusCode: 200,

@@ -1,9 +1,8 @@
 const { google } = require("googleapis")
 
-const { connect } = require("./mongooseConnect")
 const { tokenSchema } = require("./models/tokenModel")
 
-const getValidToken = async () => {
+const getValidToken = async shopNamesDb => {
   let validToken = null
   const oAuth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -14,16 +13,14 @@ const getValidToken = async () => {
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   })
 
-  // const tokenDB = await connect("token")
-  const shopNamesDb = await connect()
-
   /**
-   * @param {TTokenData } tokenData
+   * @param {TTokenData }  tokenData
    */
-
+  // ***LEARN* https://mongoosejs.com/docs/middleware.html
   tokenSchema.pre("findOneAndUpdate", async function () {
     const tokenData = await this.model.find({})
-    if (Number(tokenData[0].expiry) - Date.now() < 3 * 60 * 1000) {
+    //Add 5000(5s) for the token expired in the sametime of the booking process
+    if (Number(tokenData[0].expiry) - Date.now() + 5000 < 3 * 60 * 1000) {
       const {
         token,
         res: {
@@ -39,7 +36,9 @@ const getValidToken = async () => {
       validToken = tokenData[0].token
     }
   })
+
   const tokenDB = shopNamesDb.connection.useDb("token")
+  // ***IMPORTANT*** keep await here to execute getToken
   await tokenDB.model("token", tokenSchema).findOneAndUpdate({})
 
   return validToken
