@@ -18,9 +18,11 @@ import { getSchema } from "./utils"
 const InfoUser = ({
   handleNext,
   submitCustomerInfo,
+  setSubmitCustomerInfo,
 }: {
   handleNext: () => void
   submitCustomerInfo: boolean
+  setSubmitCustomerInfo: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const { t } = useI18next()
   const dispatch = useAppDispatch()
@@ -53,19 +55,26 @@ const InfoUser = ({
     }
     return () => {
       dispatch(setCustomerValidInfo(false))
+      setSubmitCustomerInfo(false)
     }
   }, [isValid])
 
   useEffect(() => {
-    if (firstName && lastName && phone && email) {
+    if (
+      firstName &&
+      lastName &&
+      phone &&
+      email &&
+      !isValid &&
+      !submitCustomerInfo
+    ) {
       handleSubmit(onSubmit)()
     }
-  }, [firstName, lastName, phone, email])
+  }, [firstName, lastName, phone, email, isValid])
 
   const onSubmit = (data: IInfoUserProps) => {
     dispatch(setCustomerInfo(data))
   }
-
   if (submitCustomerInfo) {
     handleSubmit(onSubmit)()
   }

@@ -57,6 +57,9 @@ const bookingSlice = createSlice({
       action: PayloadAction<boolean>
     ) => {
       state.isValidInfo = action.payload
+      if (!action.payload) {
+        state.isSubmitted = false
+      }
     },
   },
 })

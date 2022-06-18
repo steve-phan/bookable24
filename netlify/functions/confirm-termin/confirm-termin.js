@@ -63,9 +63,8 @@ const handler = async event => {
       shopInfo,
       bookingId: newappointment._id,
     })
-    //TODO: investigation about remove await here
+
     await transporter.sendMail(mailOptions)
-    console.log("EMail sendddddt")
     return {
       statusCode: 200,
       body: "EMAIL_SENT",

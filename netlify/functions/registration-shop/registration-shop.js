@@ -55,9 +55,8 @@ const handler = async event => {
       uid,
       token: validToken,
     })
-    //TODO: investigation about remove await here
     newShop.save()
-    transporter.sendMail(mailOptions)
+    await transporter.sendMail(mailOptions)
 
     return {
       statusCode: 200,

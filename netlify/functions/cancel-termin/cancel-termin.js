@@ -66,8 +66,7 @@ const handler = async event => {
       require,
     })
 
-    //TODO: investigation about remove await here
-    transporter.sendMail(mailOptions)
+    await transporter.sendMail(mailOptions)
 
     return {
       statusCode: 200,

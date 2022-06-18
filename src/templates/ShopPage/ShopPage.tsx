@@ -176,7 +176,12 @@ const ShopPage: React.FC<IShopPageProps> = ({
                 </StepperSt>
               )}
               <>
-                {getStepContent(activeStep, handleNext, submitCustomerInfo)}
+                {getStepContent(
+                  activeStep,
+                  handleNext,
+                  submitCustomerInfo,
+                  setSubmitCustomerInfo
+                )}
                 {activeStep !== 4 && (
                   <ButtonsCTA
                     activeStep={activeStep}
