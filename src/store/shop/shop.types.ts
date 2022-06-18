@@ -35,9 +35,8 @@ export interface ICustomer {
   phone: string
 }
 export interface IInfoUserProps extends ICustomer {
-  require: string
+  require?: string
 }
-
 export interface ITermin extends ICustomer {
   created_at?: string
   person: string
@@ -90,11 +89,12 @@ export interface IBooking {
   lastName: string
   email: string
   phone: string
-  require: string
+  require?: string
 }
 
 export interface IBookingState extends IBooking {
   isValidInfo: boolean
+  isFormDirty: boolean
 }
 
 // export interface IAppointment {

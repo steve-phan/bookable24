@@ -85,7 +85,6 @@ const SearchCustomer = () => {
         <WrapSearchIcon
           fontSize="large"
           onClick={e => {
-            console.log("clicking ...")
             submitSearch()
           }}
         />

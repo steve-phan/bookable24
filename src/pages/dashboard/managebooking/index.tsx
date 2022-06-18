@@ -3,7 +3,7 @@ import { graphql, PageProps } from "gatsby"
 
 import DashBoardLayout from "src/components/Layout/DasBoadLayout"
 
-const TodayBooking: React.FC<PageProps> = props => {
+const ManageBookingPage: React.FC<PageProps> = props => {
   console.log({ state: props?.location.state })
   return (
     <DashBoardLayout>
@@ -12,7 +12,7 @@ const TodayBooking: React.FC<PageProps> = props => {
   )
 }
 
-export default TodayBooking
+export default ManageBookingPage
 
 export const query = graphql`
   query ($language: String!) {

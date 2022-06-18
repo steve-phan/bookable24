@@ -21,6 +21,7 @@ const intialBooking: IBooking = {
 const initialBookingState: IBookingState = {
   ...intialBooking,
   isValidInfo: false,
+  isFormDirty: false,
 }
 
 const bookingSlice = createSlice({
@@ -49,12 +50,16 @@ const bookingSlice = createSlice({
       state.email = email
       state.phone = phone
       state.require = require
+      state.isValidInfo = true
     },
     setCustomerValidInfo: (
       state: IBookingState,
       action: PayloadAction<boolean>
     ) => {
       state.isValidInfo = action.payload
+    },
+    setFormDirty: (state: IBookingState, action: PayloadAction<boolean>) => {
+      state.isFormDirty = action.payload
     },
   },
 })
@@ -64,6 +69,7 @@ export const {
   setSelectedSlot,
   setCustomerInfo,
   setCustomerValidInfo,
+  setFormDirty,
 } = bookingSlice.actions
 
 export default bookingSlice.reducer

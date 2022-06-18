@@ -21,6 +21,7 @@ import { getStepContent, allSlots, getDefaultSlot } from "./utils"
 import ShopLogo from "./ShopLogo/ShopLogo"
 import { ButtonsCTA } from "./ButtonsCTA"
 import ColorlibStepIcon from "./ColorlibStepIcon"
+import { setFormDirty } from "src/store/shop/bookingSlice"
 
 interface IShopPageProps {
   pageContext: {
@@ -52,6 +53,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       require,
       person,
       isValidInfo,
+      isFormDirty,
     },
     shop: { shopInfo, status },
   } = useAppSelector(state => state)
@@ -68,7 +70,10 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }, [status])
 
   const handleNext = () => {
-    if (activeStep == 2 && !isValidInfo) return
+    if (activeStep == 2 && !isValidInfo) {
+      dispatch(setFormDirty(true))
+      return
+    }
     setActiveStep(prevActiveStep => prevActiveStep + 1)
   }
 
@@ -167,7 +172,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
                 </StepperSt>
               )}
               <>
-                {getStepContent(activeStep, handleNext)}
+                {getStepContent(activeStep, isFormDirty, handleNext)}
                 {activeStep !== 4 && (
                   <ButtonsCTA
                     activeStep={activeStep}

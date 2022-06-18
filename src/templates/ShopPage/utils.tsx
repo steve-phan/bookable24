@@ -52,6 +52,7 @@ export const checkDisableDate = (
 
 export const getStepContent = (
   step: number,
+  isFormDirty: boolean,
   handleNext: () => void
 ): ReactElement => {
   switch (step) {
@@ -60,7 +61,7 @@ export const getStepContent = (
     case 1:
       return <SlotPicker />
     case 2:
-      return <InfoUser handleNext={handleNext} />
+      return <InfoUser handleNext={handleNext} isFormDirty={isFormDirty} />
     case 3:
       return <PrewView />
     case 4:
