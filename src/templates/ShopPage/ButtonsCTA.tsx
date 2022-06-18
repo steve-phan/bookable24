@@ -8,7 +8,7 @@ interface IButtonsCTAprops {
   isValidInfo: boolean
   handleBack: () => void
   handleNext: () => void
-  isNextButtonDisable: () => boolean
+  // isNextButtonDisable: () => boolean
   handleConfirmSubmit: () => void
 }
 
@@ -17,7 +17,7 @@ export const ButtonsCTA = ({
   isValidInfo,
   handleBack,
   handleNext,
-  isNextButtonDisable,
+  // isNextButtonDisable,
   handleConfirmSubmit,
 }: IButtonsCTAprops) => {
   const { t } = useTranslation()

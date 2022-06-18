@@ -137,16 +137,15 @@ const ShopPage: React.FC<IShopPageProps> = ({
       })
   }
 
-  const isNextButtonDisable = () => {
-    return (
-      (dayjs().hour() + 2 >= Number(allSlots[selectedSlot].split(":")[0]) &&
-        dayjs().date() === dayjs(selectedDate).date() &&
-        activeStep !== 0) ||
-      (slotDisable >= 0 && activeStep !== 0 && selectedSlot >= slotDisable) ||
-      false
-    )
-  }
-  console.log({ activeStep, isValidInfo })
+  // const isNextButtonDisable = () => {
+  //   return (
+  //     (dayjs().hour() + 2 >= Number(allSlots[selectedSlot].split(":")[0]) &&
+  //       dayjs().date() === dayjs(selectedDate).date() &&
+  //       activeStep !== 0) ||
+  //     (slotDisable >= 0 && activeStep !== 0 && selectedSlot >= slotDisable) ||
+  //     false
+  //   )
+  // }
   if (!shopEmail) return null
   return (
     <Layout isShop={true} location={location}>
@@ -179,7 +178,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
                     isValidInfo={isValidInfo}
                     handleBack={handleBack}
                     handleNext={handleNext}
-                    isNextButtonDisable={isNextButtonDisable}
+                    // isNextButtonDisable={isNextButtonDisable}
                     handleConfirmSubmit={handleConfirmSubmit}
                   />
                 )}

@@ -58,11 +58,11 @@ export const WrapColSt = styled("div")`
 export const ButtonSt = styled(Button)`
   width: 48%;
   height: 40px;
-  font-weight: bold;
+  /* font-weight: bold; */
   background: ${({ theme }) => theme.color.primary};
 
   :hover {
-    background: ${({ theme }) => alpha(theme.color.primary, 0.6)};
+    background: ${({ theme }) => alpha(theme.color.primary, 0.8)};
   }
 `
 

@@ -4,7 +4,6 @@ import { graphql, PageProps } from "gatsby"
 import DashBoardLayout from "src/components/Layout/DasBoadLayout"
 
 const ManageBookingPage: React.FC<PageProps> = props => {
-  console.log({ state: props?.location.state })
   return (
     <DashBoardLayout>
       <h1>Hello</h1>

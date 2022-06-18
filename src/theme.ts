@@ -3,6 +3,7 @@ import { createTheme } from "@mui/material/styles"
 export const theme = createTheme({
   color: {
     primary: "#f05123",
+    // primary: "#764abc",
     secondary: "#1473e6",
     warning: "#d1cec3",
     white: "#ffffff",

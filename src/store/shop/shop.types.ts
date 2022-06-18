@@ -96,15 +96,3 @@ export interface IBookingState extends IBooking {
   isValidInfo: boolean
   isFormDirty: boolean
 }
-
-// export interface IAppointment {
-//   email: string
-//   first_name: string
-//   last_name: string
-//   person: string
-//   phone: string
-//   require: string
-//   selectedDate: Date
-//   selectedSlot: string
-//   status: boolean
-// }

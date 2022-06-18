@@ -9,7 +9,6 @@ export const handler: Handler = async event => {
     searchTerm: string
     shopId: string
   }
-  console.log({ searchTerm, shopId })
   try {
     /**
      * @useCase : to access to multiple databases

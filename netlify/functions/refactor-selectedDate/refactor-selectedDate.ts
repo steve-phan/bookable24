@@ -13,7 +13,6 @@ export const handler: Handler = async event => {
     const shopNamesDb = await connect()
 
     const shopTerminsDb = shopNamesDb.connection.useDb(shopId)
-    console.log({ shopId })
     const Appointment = shopTerminsDb.model("Appointment", appointmentSchema)
     /**
      * @method : $rename first_name =>  firstName, last_name => lastName

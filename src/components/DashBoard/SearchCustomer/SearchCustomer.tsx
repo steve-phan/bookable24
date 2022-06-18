@@ -38,7 +38,6 @@ const SearchCustomer = () => {
   const { shopName: shopId } = useAppSelector(state => state.shop.shopInfo)
 
   const { navigate } = useI18next()
-  console.log({ shopInfo: shopId })
   const classes = useStyles()
   const [searchTerm, setSearchTerm] = React.useState("")
   const [foundCustomers, setFoundCustomers] = React.useState<ICustomer[]>([])
