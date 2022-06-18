@@ -94,5 +94,4 @@ export interface IBooking {
 
 export interface IBookingState extends IBooking {
   isValidInfo: boolean
-  isFormDirty: boolean
 }

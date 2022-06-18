@@ -7,27 +7,15 @@ import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import {
   setCustomerInfo,
   setCustomerValidInfo,
-  setFormDirty,
 } from "src/store/shop/bookingSlice"
-import {
-  ICustomer,
-  IInfoUserProps,
-  TCustomerInfo,
-} from "src/store/shop/shop.types"
+import { IInfoUserProps } from "src/store/shop/shop.types"
 
 import { TextFieldSt, TypographySt } from "./StepComponents.css"
 import { WrapColSt } from "../ShopPage.css"
-import { Input, TextField } from "@mui/material"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import { getSchema } from "./utils"
 
-const InfoUser = ({
-  handleNext,
-  isFormDirty,
-}: {
-  handleNext: () => void
-  isFormDirty: boolean
-}) => {
+const InfoUser = ({ handleNext }: { handleNext: () => void }) => {
   const { t } = useI18next()
   const dispatch = useAppDispatch()
 
@@ -39,7 +27,7 @@ const InfoUser = ({
     getValues,
     handleSubmit,
 
-    formState: { errors, isValid, isDirty, dirtyFields },
+    formState: { errors, isValid, dirtyFields },
   } = useForm<IInfoUserProps>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -52,24 +40,27 @@ const InfoUser = ({
   })
   const { firstName, lastName, phone, email } = dirtyFields
   useEffect(() => {
-    if (firstName && lastName && phone && email && isValid) {
+    if (isValid) {
       dispatch(setCustomerInfo(getValues()))
+    }
+    if (firstName && lastName && phone && email) {
+      handleSubmit(onSubmit)()
     }
     return () => {
       dispatch(setCustomerValidInfo(false))
-      dispatch(setFormDirty(false))
     }
   }, [firstName, lastName, phone, email, isValid])
+  console.log({ isValid })
 
-  const onSubmit = () => {
+  const onSubmit = (data: IInfoUserProps) => {
+    dispatch(setCustomerInfo(data))
     handleNext()
   }
   useEffect(() => {
-    if (isFormDirty) {
-      handleSubmit(onSubmit)()
+    if (isValid) {
+      dispatch(setCustomerValidInfo(true))
     }
-  }, [isFormDirty])
-
+  }, [isValid])
   return (
     <WrapColSt>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -137,6 +128,7 @@ const InfoUser = ({
           placeholder="Sonderwünsche eingeben (ohne Gewähr)"
           variant="filled"
         />
+
         <input
           type="submit"
           style={{
