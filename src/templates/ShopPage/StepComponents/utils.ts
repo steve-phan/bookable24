@@ -17,5 +17,7 @@ export const getSchema = (t: TFunction<string | string[], undefined>) => {
         return validatePhone(tel as string)
       })
       .required(t("booking.validation.error.phone")),
+
+    require: yup.string().notRequired(),
   })
 }
