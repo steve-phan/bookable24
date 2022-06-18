@@ -18,6 +18,6 @@ export const getSchema = (t: TFunction<string | string[], undefined>) => {
       })
       .required(t("booking.validation.error.phone")),
 
-    require: yup.string().notRequired(),
+    require: yup.string().nullable(),
   })
 }

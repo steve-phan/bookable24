@@ -15,7 +15,13 @@ import { WrapColSt } from "../ShopPage.css"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import { getSchema } from "./utils"
 
-const InfoUser = ({ handleNext }: { handleNext: () => void }) => {
+const InfoUser = ({
+  handleNext,
+  submitCustomerInfo,
+}: {
+  handleNext: () => void
+  submitCustomerInfo: boolean
+}) => {
   const { t } = useI18next()
   const dispatch = useAppDispatch()
 
@@ -38,29 +44,31 @@ const InfoUser = ({ handleNext }: { handleNext: () => void }) => {
       require: "",
     },
   })
-  const { firstName, lastName, phone, email } = dirtyFields
-  useEffect(() => {
-    if (isValid) {
-      dispatch(setCustomerInfo(getValues()))
-    }
-    if (firstName && lastName && phone && email) {
-      handleSubmit(onSubmit)()
-    }
-    return () => {
-      dispatch(setCustomerValidInfo(false))
-    }
-  }, [firstName, lastName, phone, email, isValid])
-  console.log({ isValid })
 
-  const onSubmit = (data: IInfoUserProps) => {
-    dispatch(setCustomerInfo(data))
-    handleNext()
-  }
+  const { firstName, lastName, phone, email, require } = dirtyFields
+
   useEffect(() => {
     if (isValid) {
       dispatch(setCustomerValidInfo(true))
     }
+    return () => {
+      dispatch(setCustomerValidInfo(false))
+    }
   }, [isValid])
+
+  useEffect(() => {
+    if (firstName && lastName && phone && email) {
+      handleSubmit(onSubmit)()
+    }
+  }, [firstName, lastName, phone, email])
+
+  const onSubmit = (data: IInfoUserProps) => {
+    dispatch(setCustomerInfo(data))
+  }
+
+  if (submitCustomerInfo) {
+    handleSubmit(onSubmit)()
+  }
   return (
     <WrapColSt>
       <form onSubmit={handleSubmit(onSubmit)}>

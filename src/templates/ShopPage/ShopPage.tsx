@@ -38,7 +38,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   location,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
-
+  const [submitCustomerInfo, setSubmitCustomerInfo] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
   const dispatch = useAppDispatch()
   const {
@@ -52,6 +52,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
       require,
       person,
       isValidInfo,
+      isSubmitted,
     },
     shop: { shopInfo, status },
   } = useAppSelector(state => state)
@@ -68,8 +69,8 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }, [status])
 
   const handleNext = () => {
-    if (activeStep == 2 && !isValidInfo) {
-      return
+    if (activeStep == 2 && isValidInfo) {
+      return setSubmitCustomerInfo(true)
     }
     setActiveStep(prevActiveStep => prevActiveStep + 1)
   }
@@ -77,6 +78,12 @@ const ShopPage: React.FC<IShopPageProps> = ({
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1)
   }
+
+  useEffect(() => {
+    if (isSubmitted && activeStep === 2) {
+      setActiveStep(prevActiveStep => prevActiveStep + 1)
+    }
+  }, [isSubmitted])
 
   useEffect(() => {
     dispatch(
@@ -144,7 +151,6 @@ const ShopPage: React.FC<IShopPageProps> = ({
   //     false
   //   )
   // }
-  console.log({ isValidInfo })
   if (!shopEmail) return null
   return (
     <Layout isShop={true} location={location}>
@@ -170,7 +176,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
                 </StepperSt>
               )}
               <>
-                {getStepContent(activeStep, handleNext)}
+                {getStepContent(activeStep, handleNext, submitCustomerInfo)}
                 {activeStep !== 4 && (
                   <ButtonsCTA
                     activeStep={activeStep}

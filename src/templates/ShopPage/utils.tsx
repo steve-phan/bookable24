@@ -52,8 +52,8 @@ export const checkDisableDate = (
 
 export const getStepContent = (
   step: number,
-
-  handleNext: () => void
+  handleNext: () => void,
+  submitCustomerInfo: boolean
 ): ReactElement => {
   switch (step) {
     case 0:
@@ -61,7 +61,12 @@ export const getStepContent = (
     case 1:
       return <SlotPicker />
     case 2:
-      return <InfoUser handleNext={handleNext} />
+      return (
+        <InfoUser
+          handleNext={handleNext}
+          submitCustomerInfo={submitCustomerInfo}
+        />
+      )
     case 3:
       return <PrewView />
     case 4:

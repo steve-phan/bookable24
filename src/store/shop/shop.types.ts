@@ -36,6 +36,7 @@ export interface ICustomer {
 }
 export interface IInfoUserProps extends ICustomer {
   require?: string
+  isSubmitted?: boolean
 }
 export interface ITermin extends ICustomer {
   created_at?: string
@@ -94,4 +95,5 @@ export interface IBooking {
 
 export interface IBookingState extends IBooking {
   isValidInfo: boolean
+  isSubmitted: boolean
 }
