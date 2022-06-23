@@ -62,7 +62,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   const slotDisable = allSlots.findIndex(time => time === slotTime)
   const { shopName, shopEmail, shopId } = pageContext
 
-  if (!shopId) {
+  if (!shopId || !shopEmail || !shopName) {
     alert(
       "Etwas ist schief gelaufen, bitte versuchen Sie es später noch einmal"
     )
