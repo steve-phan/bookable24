@@ -69,8 +69,12 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }, [status])
 
   const handleNext = () => {
-    if (activeStep == 2 && isValidInfo) {
-      return setSubmitCustomerInfo(true)
+    if (activeStep == 2) {
+      if (isValidInfo) {
+        return setSubmitCustomerInfo(true)
+      } else {
+        return
+      }
     }
     setActiveStep(prevActiveStep => prevActiveStep + 1)
   }
