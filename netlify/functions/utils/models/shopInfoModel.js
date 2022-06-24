@@ -15,6 +15,7 @@ const shopinfoSchema = new Schema({
   lastName: String,
   uid: String,
   shopName: String,
+  shopId: String,
   settings: {},
 })
 

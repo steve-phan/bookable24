@@ -29,8 +29,8 @@ const Admin = () => {
             e.preventDefault()
             axios
               .post(
-                "/.netlify/functions/search-customer",
-                JSON.stringify({ shopId, searchTerm })
+                "/.netlify/functions/refactor-selectedDate",
+                JSON.stringify({ shopId, shopEmail: searchTerm })
               )
               .then(res => {
                 console.log({ Status: res })

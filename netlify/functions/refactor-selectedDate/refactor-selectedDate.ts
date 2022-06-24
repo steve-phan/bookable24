@@ -6,23 +6,79 @@ import dayjs from "dayjs"
 import { appointmentSchema } from "../utils/models/bookingModel"
 import { ShopInfo } from "../utils/models/shopInfoModel"
 import { connect } from "../utils/mongooseConnect"
+import { shopinfoSchema } from "../utils/models/shopInfoModel"
 
 export const handler: Handler = async event => {
-  const { shopId } = JSON.parse(event.body)
+  const { shopId, shopEmail } = JSON.parse(event.body)
   try {
     const shopNamesDb = await connect()
 
+    const shopNameConnection = shopNamesDb.connection.useDb("shopnames")
+
+    const ShopInfo = shopNameConnection.model("ShopInfo", shopinfoSchema)
+    const shopEmail2 = shopEmail.toLowerCase()
+    console.log({ shopEmail2 })
+    const shopInfoFound = await ShopInfo.findOne({
+      email: shopEmail2,
+    })
+    console.log({ shopInfoFound })
+
     const shopTerminsDb = shopNamesDb.connection.useDb(shopId)
-    const Appointment = shopTerminsDb.model("Appointment", appointmentSchema)
+
+    const ShopInfo2 = shopTerminsDb.model("ShopInfo", shopinfoSchema)
+    const {
+      compnay,
+      email,
+      phoneNumber,
+      city,
+      cityCode,
+      street,
+      firstName,
+      lastName,
+      uid,
+      shopName,
+      // settings: {
+      //   // weekdays = [],
+      //   time = "",
+      //   closedRegularDay = "",
+      //   slotTime = "",
+      //   terminBefore = null,
+      //   maxTerminPerSlot = "",
+      //   closedSpecificDay = [],
+      // },
+    } = shopInfoFound
+    const newShopInfo = new ShopInfo2({
+      compnay,
+      email,
+      phoneNumber,
+      city,
+      cityCode,
+      street,
+      firstName,
+      lastName,
+      uid,
+      shopId: shopName,
+      // settings: {
+      //   // weekdays,
+      //   time,
+      //   closedRegularDay,
+      //   slotTime,
+      //   terminBefore,
+      //   maxTerminPerSlot,
+      //   closedSpecificDay,
+      // },
+    })
+    await newShopInfo.save()
+    // const Appointment = shopTerminsDb.model("Appointment", appointmentSchema)
     /**
      * @method : $rename first_name =>  firstName, last_name => lastName
      */
-    await Appointment.updateMany(
-      {},
-      {
-        $rename: { first_name: "firstName", last_name: "lastName" },
-      }
-    )
+    // await Appointment.updateMany(
+    //   {},
+    //   {
+    //     $rename: { first_name: "firstName", last_name: "lastName" },
+    //   }
+    // )
     /**
      * @method : modifed value of a specific key
      */
