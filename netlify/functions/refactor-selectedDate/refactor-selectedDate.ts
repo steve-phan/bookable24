@@ -27,7 +27,7 @@ export const handler: Handler = async event => {
 
     const ShopInfo2 = shopTerminsDb.model("ShopInfo", shopinfoSchema)
     const {
-      compnay,
+      company,
       email,
       phoneNumber,
       city,
@@ -37,18 +37,18 @@ export const handler: Handler = async event => {
       lastName,
       uid,
       shopName,
-      // settings: {
-      //   // weekdays = [],
-      //   time = "",
-      //   closedRegularDay = "",
-      //   slotTime = "",
-      //   terminBefore = null,
-      //   maxTerminPerSlot = "",
-      //   closedSpecificDay = [],
-      // },
+      settings: {
+        weekdays = [],
+        time = "",
+        closedRegularDay = "",
+        slotTime = "",
+        terminBefore = null,
+        maxTerminPerSlot = "",
+        closedSpecificDay = [],
+      },
     } = shopInfoFound
     const newShopInfo = new ShopInfo2({
-      compnay,
+      company,
       email,
       phoneNumber,
       city,
@@ -58,15 +58,15 @@ export const handler: Handler = async event => {
       lastName,
       uid,
       shopId: shopName,
-      // settings: {
-      //   // weekdays,
-      //   time,
-      //   closedRegularDay,
-      //   slotTime,
-      //   terminBefore,
-      //   maxTerminPerSlot,
-      //   closedSpecificDay,
-      // },
+      settings: {
+        weekdays,
+        time,
+        closedRegularDay,
+        slotTime,
+        terminBefore,
+        maxTerminPerSlot,
+        closedSpecificDay,
+      },
     })
     await newShopInfo.save()
     // const Appointment = shopTerminsDb.model("Appointment", appointmentSchema)

@@ -41,13 +41,15 @@ export const handler: Handler = async event => {
       selectedDate: { $gte: yesterday },
     })
     const mappedTermins = allTermins.map(termin => {
-      const { selectedDate, selectedSlot } = termin as unknown as {
+      const { selectedDate, selectedSlot, status } = termin as unknown as {
         selectedDate: string
         selectedSlot: string
+        status: boolean
       }
       return {
         selectedDate,
         selectedSlot,
+        status,
       }
     })
     return {

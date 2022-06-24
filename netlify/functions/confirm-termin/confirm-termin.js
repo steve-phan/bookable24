@@ -14,8 +14,8 @@ const handler = async event => {
       body: JSON.stringify({ error: " NOT allowed" }),
     }
   }
-
   const appointment = JSON.parse(event.body)
+
   const {
     firstName,
     lastName,
@@ -28,7 +28,6 @@ const handler = async event => {
     shopId,
     shopInfo,
   } = appointment
-
   try {
     const shopnamesDb = await connect()
 
