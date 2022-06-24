@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 require("dotenv").config()
 
 import { appointmentSchema } from "../utils/models/bookingModel"
-import { ShopInfo } from "../utils/models/shopInfoModel"
+import { shopinfoSchema } from "../utils/models/shopInfoModel"
 import { connect } from "../utils/mongooseConnect"
 
 export const handler: Handler = async event => {
@@ -11,15 +11,26 @@ export const handler: Handler = async event => {
     shopid: string
     shopemail: string
   }
-
   try {
     /**
      * @useCase : to access to multiple databases
      *
      */
     const shopNamesDb = await connect()
+    /**
+     * @ShopInfo : This step is needed to make sure we're using the righ
+     * connection  to get infomation of the shop.
+     *
+     * @Appointment : Onemore time switch to collections of shopId to get
+     * all appointments.
+     *
+     * @useDB : TO use useDb method we need call model directly here.
+     *
+     * @TODO : Move shopnames to shopId collection?
+     */
 
-    // This is the global connection, so we can use Model directly
+    const shopInfoDb = shopNamesDb.connection.useDb("shopnames")
+    const ShopInfo = shopInfoDb.model("ShopInfo", shopinfoSchema)
     const shopInfo = await ShopInfo.findOne({
       email: shopemail.toLowerCase(),
     })
