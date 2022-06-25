@@ -76,9 +76,10 @@ const InfoUser = ({
     console.log("submiting...")
     dispatch(setCustomerInfo(data))
   }
-  // if (submitCustomerInfo) {
-  //   handleSubmit(onSubmit)()
-  // }
+
+  if (submitCustomerInfo) {
+    handleSubmit(onSubmit)()
+  }
   return (
     <WrapColSt>
       <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
