@@ -28,12 +28,21 @@ const handler = async event => {
     shopId,
     shopInfo,
   } = appointment
+
+  // Temporary ***FIX****
+  if (!shopInfo?.email || !shopInfo?.company || !email) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify(error),
+    }
+  }
+
   try {
     const shopnamesDb = await connect()
 
-    const bookingConn = shopnamesDb.connection.useDb(shopId)
+    const shopConn = shopnamesDb.connection.useDb(shopId)
 
-    const Appointment = bookingConn.model("Appointment", appointmentSchema)
+    const Appointment = shopConn.model("Appointment", appointmentSchema)
 
     const newappointment = new Appointment({
       firstName,

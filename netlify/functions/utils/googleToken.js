@@ -2,6 +2,10 @@ const { google } = require("googleapis")
 
 const { tokenSchema } = require("./models/tokenModel")
 
+/**
+ * @param { typeof import("mongoose") } shopNamesDb
+ */
+
 const getValidToken = async shopNamesDb => {
   let validToken = null
   const oAuth2Client = new google.auth.OAuth2(
@@ -13,11 +17,12 @@ const getValidToken = async shopNamesDb => {
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   })
 
-  /**
-   * @param {TTokenData }  tokenData
-   */
   // ***LEARN* https://mongoosejs.com/docs/middleware.html
   tokenSchema.pre("findOneAndUpdate", async function () {
+    /**
+     * @param { TTokenData }  tokenData
+     */
+
     const tokenData = await this.model.find({})
     //Add 5000(5s) for the token expired in the sametime of the booking process
     if (Number(tokenData[0].expiry) - Date.now() + 5000 < 3 * 60 * 1000) {
