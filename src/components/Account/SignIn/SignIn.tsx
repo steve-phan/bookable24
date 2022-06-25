@@ -100,6 +100,7 @@ const SignIn = () => {
           shopEmail: values.email,
           shopId: getShopName(values.email, shopList) as string,
           isShopLogin: true,
+          url: "/.netlify/functions/get-shop-termins",
         })
       )
       await navigate("/dashboard")

@@ -39,7 +39,7 @@ const ShopLogo: React.FC<IshopLogoProps> = ({
       {shopInfoContenful?.logo ? (
         <GatsbyImage
           image={getImage(shopInfoContenful.logo) as IGatsbyImageData}
-          alt="Image"
+          alt="bookable24.de Online Booking System"
         />
       ) : (
         <>

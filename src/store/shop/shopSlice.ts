@@ -21,6 +21,7 @@ export const checkUserAuth =
               shopEmail: user?.email || "",
               shopId: shopId as string,
               isShopLogin: true,
+              url: "/.netlify/functions/get-shop-termins",
             })
           )
           // User is signed in, see docs for a list of available properties
@@ -77,9 +78,10 @@ const intinitialShopState: IShopState = {
 
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
-  async ({ shopEmail, shopId, isShopLogin }: IShopQuery) => {
+  async ({ shopEmail, shopId, isShopLogin, url }: IShopQuery) => {
+    console.log({ isShopLogin })
     const response: AxiosResponse = await axios.post(
-      "/.netlify/functions/get-shopinfo",
+      url,
       JSON.stringify({
         shopEmail,
         shopId,

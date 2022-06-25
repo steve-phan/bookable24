@@ -73,14 +73,15 @@ const InfoUser = ({
   }, [firstName, lastName, phone, email, isValid])
 
   const onSubmit = (data: IInfoUserProps) => {
+    console.log("submiting...")
     dispatch(setCustomerInfo(data))
   }
-  if (submitCustomerInfo) {
-    handleSubmit(onSubmit)()
-  }
+  // if (submitCustomerInfo) {
+  //   handleSubmit(onSubmit)()
+  // }
   return (
     <WrapColSt>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <TextFieldSt
           {...register("firstName")}
           error={!!errors.firstName}
@@ -114,6 +115,7 @@ const InfoUser = ({
             const { onChange: onChangeCustom } = field
             return (
               <TextFieldSt
+                autoComplete="off"
                 {...field}
                 onChange={e => {
                   const value = e.target.value
@@ -147,7 +149,8 @@ const InfoUser = ({
         />
 
         <input
-          type="submit"
+          autoComplete="off"
+          type="hidden"
           style={{
             display: "none",
           }}

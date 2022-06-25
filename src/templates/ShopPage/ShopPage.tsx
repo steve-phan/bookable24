@@ -93,13 +93,14 @@ const ShopPage: React.FC<IShopPageProps> = ({
       setActiveStep(prevActiveStep => prevActiveStep + 1)
     }
   }, [isSubmitted])
-
+  console.log({ isSubmitted })
   useEffect(() => {
     dispatch(
       getShopinfo({
         shopId,
         shopEmail,
         isShopLogin: false,
+        url: "/.netlify/functions/get-shopinfo",
       })
     )
     setIsLoading(false)

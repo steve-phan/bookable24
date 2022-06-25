@@ -69,6 +69,7 @@ export interface IShopQuery {
   shopEmail: string
   shopId: string
   isShopLogin: boolean
+  url: string
 }
 
 export interface Iaccount {

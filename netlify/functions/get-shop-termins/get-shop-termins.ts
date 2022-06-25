@@ -7,9 +7,9 @@ import { shopinfoSchema } from "../utils/models/shopInfoModel"
 import { connect } from "../utils/mongooseConnect"
 
 export const handler: Handler = async event => {
-  const { shopid, shopemail } = event.headers as {
-    shopid: string
-    shopemail: string
+  const { shopId, shopEmail } = JSON.parse(event.body as string) as {
+    shopId: string
+    shopEmail: string
   }
   try {
     /**
@@ -32,10 +32,10 @@ export const handler: Handler = async event => {
     const shopInfoDb = shopNamesDb.connection.useDb("shopnames")
     const ShopInfo = shopInfoDb.model("ShopInfo", shopinfoSchema)
     const shopInfo = await ShopInfo.findOne({
-      email: shopemail.toLowerCase(),
+      email: shopEmail.toLowerCase(),
     })
     // Next we use useDb method to connect to another database
-    const shopTerminsDb = shopNamesDb.connection.useDb(shopid)
+    const shopTerminsDb = shopNamesDb.connection.useDb(shopId)
     // Define a Model here base on the Schema
     const Appointment = shopTerminsDb.model("Appointment", appointmentSchema)
     // Access to Model method
@@ -51,6 +51,7 @@ export const handler: Handler = async event => {
       body: JSON.stringify({ allTermins, shopInfo }),
     }
   } catch (error) {
+    console.log({ error })
     return { statusCode: 500, body: error.toString() }
   }
 }
