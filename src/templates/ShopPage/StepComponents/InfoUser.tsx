@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import {
   setCustomerInfo,
   setCustomerValidInfo,
+  setCustomerSubmit,
 } from "src/store/shop/bookingSlice"
 import { IInfoUserProps } from "src/store/shop/shop.types"
 
@@ -15,17 +16,18 @@ import { WrapColSt } from "../ShopPage.css"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import { getSchema } from "./utils"
 
-const InfoUser = ({
-  handleNext,
-  submitCustomerInfo,
-  setSubmitCustomerInfo,
-}: {
-  handleNext: () => void
-  submitCustomerInfo: boolean
-  setSubmitCustomerInfo: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
+const InfoUser = ({ handleNext }: { handleNext: () => void }) => {
   const { t } = useI18next()
   const dispatch = useAppDispatch()
+  const {
+    isValidInfo,
+    isSubmitted,
+    firstName,
+    lastName,
+    phone,
+    email,
+    require,
+  } = useAppSelector(state => state.booking)
 
   const schema = getSchema(t)
 
@@ -34,51 +36,47 @@ const InfoUser = ({
     register,
     getValues,
     handleSubmit,
-
+    watch,
     formState: { errors, isValid, dirtyFields },
   } = useForm<IInfoUserProps>({
     resolver: yupResolver(schema),
     defaultValues: {
-      lastName: "",
-      firstName: "",
-      email: "",
-      phone: "",
-      require: "",
+      lastName,
+      firstName,
+      email,
+      phone,
+      require,
     },
   })
 
-  const { firstName, lastName, phone, email, require } = dirtyFields
-
   useEffect(() => {
-    if (isValid) {
-      dispatch(setCustomerValidInfo(true))
-    }
-    return () => {
-      dispatch(setCustomerValidInfo(false))
-      setSubmitCustomerInfo(false)
-    }
-  }, [isValid])
-
-  useEffect(() => {
-    if (
-      firstName &&
-      lastName &&
-      phone &&
-      email &&
-      !isValid &&
-      !submitCustomerInfo
-    ) {
+    if (isSubmitted === "pending" || isValidInfo) {
       handleSubmit(onSubmit)()
     }
-  }, [firstName, lastName, phone, email, isValid])
+    return () => {
+      dispatch(setCustomerSubmit("fail"))
+    }
+  }, [isSubmitted, isValidInfo])
+
+  const dirtyLength = Object.keys(dirtyFields).map(field => !!field).length
+
+  useEffect(() => {
+    if (isValid || dirtyLength >= 4) {
+      handleSubmit(onSubmit)()
+      dispatch(setCustomerValidInfo(true))
+    }
+    // const errorsLength = Object.keys(errors).map(field => !!field).length
+  }, [
+    watch("email"),
+    watch("firstName"),
+    watch("lastName"),
+    watch("phone"),
+    watch("require"),
+    isValid,
+  ])
 
   const onSubmit = (data: IInfoUserProps) => {
-    console.log("submiting...")
     dispatch(setCustomerInfo(data))
-  }
-
-  if (submitCustomerInfo) {
-    handleSubmit(onSubmit)()
   }
   return (
     <WrapColSt>

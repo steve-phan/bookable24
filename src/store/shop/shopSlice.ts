@@ -79,7 +79,6 @@ const intinitialShopState: IShopState = {
 export const getShopinfo = createAsyncThunk(
   "shop/getShopInfo",
   async ({ shopEmail, shopId, isShopLogin, url }: IShopQuery) => {
-    console.log({ isShopLogin })
     const response: AxiosResponse = await axios.post(
       url,
       JSON.stringify({

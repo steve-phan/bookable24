@@ -21,7 +21,7 @@ const intialBooking: IBooking = {
 const initialBookingState: IBookingState = {
   ...intialBooking,
   isValidInfo: false,
-  isSubmitted: false,
+  isSubmitted: "fail",
 }
 
 const bookingSlice = createSlice({
@@ -50,16 +50,27 @@ const bookingSlice = createSlice({
       state.email = email
       state.phone = phone
       state.require = require
-      state.isSubmitted = true
+    },
+    setCustomerSubmit: (
+      state: IBookingState,
+      action: PayloadAction<"pending" | "success" | "fail">
+    ) => {
+      state.isSubmitted = action.payload
     },
     setCustomerValidInfo: (
       state: IBookingState,
       action: PayloadAction<boolean>
     ) => {
       state.isValidInfo = action.payload
-      if (!action.payload) {
-        state.isSubmitted = false
-      }
+    },
+    setDefaultStateBooking: (state: IBookingState) => {
+      state.isSubmitted = "fail"
+      state.isValidInfo = false
+      state.firstName = ""
+      state.lastName = ""
+      state.email = ""
+      state.phone = ""
+      state.require = ""
     },
   },
 })
@@ -69,6 +80,8 @@ export const {
   setSelectedSlot,
   setCustomerInfo,
   setCustomerValidInfo,
+  setCustomerSubmit,
+  setDefaultStateBooking,
 } = bookingSlice.actions
 
 export default bookingSlice.reducer

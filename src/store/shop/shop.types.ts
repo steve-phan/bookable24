@@ -96,5 +96,5 @@ export interface IBooking {
 
 export interface IBookingState extends IBooking {
   isValidInfo: boolean
-  isSubmitted: boolean
+  isSubmitted: "pending" | "success" | "fail"
 }

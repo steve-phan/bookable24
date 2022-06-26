@@ -1,8 +1,9 @@
 import Typography from "@mui/material/Typography"
 import dayjs from "dayjs"
-import React from "react"
+import React, { useEffect } from "react"
 
-import { useAppSelector } from "src/store/hooks"
+import { useAppDispatch, useAppSelector } from "src/store/hooks"
+import { setCustomerValidInfo } from "src/store/shop/bookingSlice"
 import { WrapColSt } from "../ShopPage.css"
 import { afternoonSlots, getDefaultSlot, morningSlots } from "../utils"
 import { CardSt } from "./StepComponents.css"
@@ -17,7 +18,15 @@ const PrewView = () => {
     phone,
     person,
     require,
+    isValidInfo,
   } = useAppSelector(state => state.booking)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    return () => {
+      dispatch(setCustomerValidInfo(false))
+    }
+  }, [])
 
   return (
     <WrapColSt>

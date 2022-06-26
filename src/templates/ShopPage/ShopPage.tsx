@@ -10,6 +10,10 @@ import Loading from "src/components/ContentComponents/Loading/Loading"
 import Layout from "src/components/Layout/Layout"
 import SEO from "src/components/seo"
 import { useSteps } from "src/hooks/useSteps"
+import {
+  setCustomerSubmit,
+  setDefaultStateBooking,
+} from "src/store/shop/bookingSlice"
 
 import {
   WrapTerminSt,
@@ -38,7 +42,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   location,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [submitCustomerInfo, setSubmitCustomerInfo] = useState(false)
+  // const [submitCustomerInfo, setSubmitCustomerInfo] = useState(false)
   const [activeStep, setActiveStep] = useState(0)
   const dispatch = useAppDispatch()
   const {
@@ -59,7 +63,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
   const steps = useSteps()
 
   const { slotTime } = shopInfo?.settings || {}
-  const slotDisable = allSlots.findIndex(time => time === slotTime)
+  // const slotDisable = allSlots.findIndex(time => time === slotTime)
   const { shopName, shopEmail, shopId } = pageContext
 
   if (!shopId || !shopEmail || !shopName) {
@@ -74,14 +78,13 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }, [status])
 
   const handleNext = () => {
-    if (activeStep == 2) {
-      if (isValidInfo) {
-        return setSubmitCustomerInfo(true)
-      } else {
-        return
+    setActiveStep(prevActiveStep => {
+      if (prevActiveStep === 2 && !isValidInfo) {
+        dispatch(setCustomerSubmit("pending"))
+        return prevActiveStep
       }
-    }
-    setActiveStep(prevActiveStep => prevActiveStep + 1)
+      return prevActiveStep + 1
+    })
   }
 
   const handleBack = () => {
@@ -89,11 +92,11 @@ const ShopPage: React.FC<IShopPageProps> = ({
   }
 
   useEffect(() => {
-    if (isSubmitted && activeStep === 2) {
+    if (isValidInfo && activeStep === 2) {
       setActiveStep(prevActiveStep => prevActiveStep + 1)
     }
   }, [isSubmitted])
-  console.log({ isSubmitted })
+
   useEffect(() => {
     dispatch(
       getShopinfo({
@@ -186,12 +189,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
                 </StepperSt>
               )}
               <>
-                {getStepContent(
-                  activeStep,
-                  handleNext,
-                  submitCustomerInfo,
-                  setSubmitCustomerInfo
-                )}
+                {getStepContent(activeStep, handleNext)}
                 {activeStep !== 4 && (
                   <ButtonsCTA
                     activeStep={activeStep}
