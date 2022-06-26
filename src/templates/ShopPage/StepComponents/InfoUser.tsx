@@ -88,6 +88,7 @@ const InfoUser = ({ handleNext }: { handleNext: () => void }) => {
           variant="filled"
           placeholder="Vorname"
           label="Vorname*"
+          autoComplete="off"
         />
 
         <TextFieldSt
@@ -97,6 +98,8 @@ const InfoUser = ({ handleNext }: { handleNext: () => void }) => {
           variant="filled"
           placeholder="Nachname"
           label="Nachname*"
+          // inputProps={{}}
+          autoComplete="off"
         />
 
         <TextFieldSt
@@ -106,6 +109,7 @@ const InfoUser = ({ handleNext }: { handleNext: () => void }) => {
           variant="filled"
           placeholder="johndoe@mail.com"
           label="E-Mail*"
+          autoComplete="off"
         />
         <Controller
           name="phone"
