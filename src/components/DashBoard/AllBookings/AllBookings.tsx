@@ -37,7 +37,9 @@ const AllBookingsDashBoard = () => {
       </FlexRowSt>
       <ShowInfo
         todayTermins={
-          showAllTermins ? allTermins : getDateBookings(allTermins, value)
+          showAllTermins
+            ? [...allTermins]
+            : [...getDateBookings(allTermins, value)]
         }
       />
     </>

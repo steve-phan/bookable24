@@ -17,13 +17,13 @@ import InfoIcon from "@mui/icons-material/Info"
 
 import { allSlots } from "src/utils"
 
-import { ITermin } from "./DashBoard.types"
 import {
   GridIconSt,
   GridItemPhonelSt,
   GridItemEmailSt,
   SpanRequireSt,
 } from "./ShareInfo.css"
+import { ITermin } from "src/store/shop/shop.types"
 
 const createData = ({
   selectedSlot,
@@ -128,18 +128,11 @@ function Row(props: { row: ReturnType<typeof createData>; index: number }) {
 
 const ShowInfo = ({ todayTermins }: { todayTermins: ITermin[] }) => {
   const { t } = useTranslation()
-  const rows = todayTermins.map(
-    ({
-      _id,
-      selectedSlot,
-      person,
-      firstName,
-      lastName,
-      phone,
-      email,
-      require,
-    }: ITermin) => {
-      return createData({
+  const rows = todayTermins
+    ?.sort((a, b) => Number(a.selectedSlot) - Number(b.selectedSlot))
+    .map(
+      ({
+        _id,
         selectedSlot,
         person,
         firstName,
@@ -147,10 +140,23 @@ const ShowInfo = ({ todayTermins }: { todayTermins: ITermin[] }) => {
         phone,
         email,
         require,
-        _id,
-      })
-    }
-  )
+        selectedDate,
+        status,
+      }: ITermin) => {
+        return createData({
+          selectedSlot,
+          person,
+          firstName,
+          lastName,
+          phone,
+          email,
+          require,
+          _id,
+          selectedDate,
+          status,
+        })
+      }
+    )
 
   return (
     <TableContainer component={Paper}>

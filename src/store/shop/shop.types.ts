@@ -41,7 +41,7 @@ export interface IInfoUserProps extends ICustomer {
 export interface ITermin extends ICustomer {
   created_at?: string
   person: string
-  require: null | string
+  require?: string
   selectedDate: string
   selectedSlot: string
   slots?: string
@@ -60,7 +60,7 @@ export interface IShopState {
   shopInfo: IShopInfo
   status: "login" | "loading" | "logout"
   isShopLogin: boolean
-  allTermins: any[]
+  allTermins: ITermin[]
   isFetching: boolean
   cancelTermin: ITermin
 }
