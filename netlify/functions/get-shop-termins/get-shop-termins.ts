@@ -46,6 +46,11 @@ export const handler: Handler = async event => {
     const allTermins = await Appointment.find({
       selectedDate: { $gte: yesterday },
     })
+
+    if (!shopInfo) {
+      return { statusCode: 500, body: "Account is not valid" }
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify({ allTermins, shopInfo }),
