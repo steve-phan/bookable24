@@ -45,7 +45,7 @@ const configTransporter = ({
   let mailOptions = {
     from: `${company.toUpperCase()}  <${shopInfo.email}>`,
     to: [email, shopInfo.email, "lebenistcode@gmail.com"],
-    subject: `Table Reservation at ${company}`,
+    subject: `Your Reservation at ${company}`,
     template: "termin",
     context: {
       name: firstName + " " + lastName,

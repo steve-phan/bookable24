@@ -42,7 +42,7 @@ const configTransporter = ({
   const mailOptions = {
     from: `${company}  <${shopInfo.email}>`,
     to: [email, shopInfo.email, "lebenistcode@gmail.com"],
-    subject: `Cancel Booking at ${company}`,
+    subject: `Cancel Reservation at ${company}`,
     template: "cancel",
     context: {
       name: firstName + " " + lastName,
