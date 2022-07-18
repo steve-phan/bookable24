@@ -14,6 +14,8 @@
   <a href="#screen-shots">Key Features</a> •
 </p>
 
+[![CI](https://github.com/steve-phan/bookable24/actions/workflows/main.yml/badge.svg)](https://github.com/steve-phan/bookable24/actions/workflows/main.yml)
+
 ### Environment variables (REQUIRED)
 
 - BASE_URL
