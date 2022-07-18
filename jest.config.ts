@@ -19,7 +19,7 @@ module.exports = {
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
   testPathIgnorePatterns: [`node_modules`, `.cache`],
-  transformIgnorePatterns: [`node_modules/(?!(gatsby|@hookform)/)`],
+  transformIgnorePatterns: [`node_modules/(?!(gatsby|@hookform|firebase)/)`],
   globals: {
     __PATH_PREFIX__: ``,
   },

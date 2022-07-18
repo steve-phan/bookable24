@@ -57,21 +57,20 @@ export interface ItimeAgoMess {
   month: string
 }
 
-export const timeAgo = (dateParam: Date, t: ItimeAgoMess) => {
-  if (!dateParam) {
-    return null
-  }
-
+export const timeAgo = (
+  dateParam: Date | string,
+  t: ItimeAgoMess,
+  currenDay = new Date()
+) => {
   const date =
     typeof dateParam === "object"
       ? dateParam.getTime()
       : new Date(dateParam).getTime()
 
-  const DAY_IN_MS = 86400000
-  const today: number = new Date().getTime()
+  const today: number = currenDay.getTime()
   const seconds = Math.round((today - date) / 1000)
   const minutes = Math.round(seconds / 60)
-
+  console.log({ minutes })
   switch (true) {
     case seconds < 60:
       return `${seconds}  ${t.second}`
@@ -84,7 +83,7 @@ export const timeAgo = (dateParam: Date, t: ItimeAgoMess) => {
     case minutes / 60 < 24:
       return `${Math.round(minutes / 60)} ${t.hours}`
     case minutes / 60 / 24 < 7:
-      return ` ${Math.round(minutes / 60 / 24)} ${t.day}`
+      return `${Math.round(minutes / 60 / 24)} ${t.day}`
     case minutes / 60 / 24 / 7 < 1:
       return `${Math.round(minutes / 60 / 24 / 7)} ${t.week}`
     default:

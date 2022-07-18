@@ -64,7 +64,7 @@ const HomeDashBoard = () => {
                 " " +
                 t("dashboard.dashboard.hasbooked")
               }
-              timeAgo={timeAgo(termin.created_at, showMess)}
+              timeAgo={timeAgo(termin.created_at as string, showMess)}
               icon={CheckCircleOutlineOutlined}
               termin={termin}
             />
@@ -98,8 +98,7 @@ export const SnackbarContent = (props: any) => {
     },
   } = props
   const timeSlots = [...morningSlots, ...afternoonSlots]
-  var action: any[] = []
-  // const [modalStyle] = React.useState(getModalStyle);
+  var action: JSX.Element[] | null = []
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => {
     setOpen(true)
@@ -144,24 +143,21 @@ export const SnackbarContent = (props: any) => {
             </span>
           </DetailsInfoSt>
           <DetailsInfoSt>
-            <PhoneIphoneIcon /> {t("dashboard.dashboard.details.phone")} :{" "}
+            <PhoneIphoneIcon /> {t("dashboard.dashboard.details.phone")} :
             <span>{phone} </span>
           </DetailsInfoSt>
           <DetailsInfoSt>
-            {" "}
-            <ScheduleIcon /> {t("dashboard.dashboard.details.time")} :{" "}
+            <ScheduleIcon /> {t("dashboard.dashboard.details.time")} :
             <span>
               {timeSlots[selectedSlot]} {selectedDate}
             </span>
           </DetailsInfoSt>
           <DetailsInfoSt>
-            {" "}
-            <GroupIcon /> {t("dashboard.dashboard.details.number")} :{" "}
+            <GroupIcon /> {t("dashboard.dashboard.details.number")} :
             <span>{person}</span>
           </DetailsInfoSt>
           <DetailsInfoSt>
-            {" "}
-            <InfoIcon /> {t("dashboard.dashboard.details.require")} :{" "}
+            <InfoIcon /> {t("dashboard.dashboard.details.require")} :
             <span>{require}</span>
           </DetailsInfoSt>
         </WrapMessageSt>

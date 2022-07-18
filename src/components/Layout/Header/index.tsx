@@ -22,7 +22,7 @@ interface IHeaderProps {
 const HeaderComponent: React.FC<IHeaderProps> = ({
   isShopLogin,
   location,
-  isShop,
+  isShop = false,
 }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const { t } = useTranslation()
@@ -49,7 +49,7 @@ const HeaderComponent: React.FC<IHeaderProps> = ({
                   </DashBoardButtonSt>
                 ) : (
                   <CTAButtons to="/login">
-                    {t("account.login", "Login")}
+                    {t("accountTT.login", "Login")}
                   </CTAButtons>
                 )}
               </>
