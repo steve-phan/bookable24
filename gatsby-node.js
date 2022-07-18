@@ -9,7 +9,7 @@
 const { slugify } = require("./utils")
 const path = require("path")
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions }) => {
   const blogPost = path.resolve("./src/templates/blog-post.tsx")
   const shopPage = path.resolve("./src/templates/ShopPage/ShopPage.tsx")
 
@@ -27,7 +27,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const shopList = shopData.data.allContentfulShopInfo.nodes
 
-  shopList.forEach((shop, i) => {
+  shopList.forEach(shop => {
     actions.createPage({
       path: `/${shop.shopId}/`,
       component: shopPage,
@@ -81,7 +81,7 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       externals: getConfig().externals.concat(function (
-        { context, request },
+        { _context, request },
         callback
       ) {
         const regex = /^@?firebase(\/(.+))?/

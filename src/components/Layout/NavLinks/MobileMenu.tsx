@@ -36,6 +36,18 @@ const MobileMenu = ({
   const dispatch = useAppDispatch()
   const { isShopLogin } = useAppSelector(state => state.shop)
 
+  const handleAuthAction = async () => {
+    try {
+      if (isShopLogin) {
+        await signOut(auth)
+        dispatch(setShopLogout())
+      }
+      navigate("/login")
+    } catch (error) {
+      alert("Try Again")
+    }
+  }
+
   return (
     <>
       <Hidden mdUp implementation="css">
@@ -51,19 +63,7 @@ const MobileMenu = ({
           <BackgroundImgSt src={background} alt="Bookable24" />
           <WrapLoginMobileSt>
             {!isShop && (
-              <CTAButtonAccountSt
-                onClick={async () => {
-                  try {
-                    if (isShopLogin) {
-                      await signOut(auth)
-                      dispatch(setShopLogout())
-                    }
-                    navigate("/login")
-                  } catch (error) {
-                    alert("Try Again")
-                  }
-                }}
-              >
+              <CTAButtonAccountSt onClick={handleAuthAction}>
                 {isShopLogin
                   ? t("account.logout", "Logout")
                   : t("account.login", "Login")}
@@ -81,21 +81,8 @@ const MobileMenu = ({
         <>
           <BackgroundImgSt src={background} alt="Bookable24" />
 
-          {/* <BackgroundSt /> */}
           <WrapLoginMobileSt>
-            <CTAButtonAccountSt
-              onClick={async () => {
-                try {
-                  if (isShopLogin) {
-                    await signOut(auth)
-                    dispatch(setShopLogout())
-                  }
-                  navigate("/login")
-                } catch (error) {
-                  alert("Try Again")
-                }
-              }}
-            >
+            <CTAButtonAccountSt onClick={handleAuthAction}>
               {isShopLogin
                 ? t("account.logout", "Logout")
                 : t("account.login", "Login")}
