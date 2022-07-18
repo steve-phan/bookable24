@@ -1,4 +1,4 @@
-import { validatePhone, validateEmail } from "./utils"
+import { validateEmail } from "./utils"
 
 describe("validateEmail", () => {
   it("should return true with a valid Email", () => {
