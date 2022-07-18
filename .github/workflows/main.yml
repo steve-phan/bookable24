@@ -36,4 +36,6 @@ jobs:
           echo test, and deploy your project.
       - name: Netlify Deploy
         uses: jsmrcaga/action-netlify-deploy@v1.8.0
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_DEPLOY_TO_PROD: true
     
