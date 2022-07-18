@@ -1,14 +1,12 @@
 import dayjs from "dayjs"
-
-import { ITermin } from "src/components/DashBoard/SharedComponent/DashBoard.types"
-import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
-import { IShop } from "./store/shop/shop.types"
-
 import utc from "dayjs/plugin/utc"
 import timezone from "dayjs/plugin/timezone"
 import isToday from "dayjs/plugin/isToday"
 import isTomorrow from "dayjs/plugin/isTomorrow"
 import isYesterday from "dayjs/plugin/isYesterday"
+
+import { morningSlots, afternoonSlots } from "src/templates/ShopPage/utils"
+import { IShop, ITermin } from "./store/shop/shop.types"
 // dependent on utc plug
 /**
  * @TODO : Working with timezone
@@ -71,12 +69,8 @@ export const timeAgo = (dateParam: Date, t: ItimeAgoMess) => {
 
   const DAY_IN_MS = 86400000
   const today: number = new Date().getTime()
-  const yesterday = new Date(today - DAY_IN_MS)
   const seconds = Math.round((today - date) / 1000)
   const minutes = Math.round(seconds / 60)
-  // const isToday = today.toDateString() === date.toDateString()
-  // const isYesterday = yesterday.toDateString() === date.toDateString()
-  // const isThisYear = today.getFullYear() === date.getFullYear()
 
   switch (true) {
     case seconds < 60:

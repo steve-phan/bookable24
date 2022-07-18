@@ -1,9 +1,5 @@
 import React from "react"
-// import { render } from "@testing-library/react"
-// import "jest-styled-components"
-import { recomposeColor } from "@mui/system"
-
-import { render } from "../../../../tests/customRender"
+import { render } from "src/tests/customRender"
 
 import Footer from "./Footer"
 

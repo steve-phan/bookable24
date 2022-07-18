@@ -1,13 +1,10 @@
 import * as React from "react"
-import { ThemeProvider as ThemeProviderSt } from "styled-components"
-import { Container } from "@mui/material"
-import { ThemeProvider } from "@mui/material/styles"
+import { Theme, ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { render as TLRrender } from "@testing-library/react"
-import "jest-styled-components"
 
-import { theme, globalStyles } from "../src/theme"
+import { theme as customTheme, globalStyles } from "../theme"
 
 export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
@@ -20,19 +17,16 @@ const WrapperTest =
   () =>
   ({ children }: ILayoutProps) => {
     return (
-      <ThemeProvider theme={theme}>
-        {/* <ThemeProviderSt theme={theme}> */}
+      <ThemeProvider theme={customTheme}>
         <CssBaseline />
         {inputGlobalStyles}
-
         {children}
-        {/* </ThemeProviderSt> */}
       </ThemeProvider>
     )
   }
 
 export const render = (component: JSX.Element) => {
   return TLRrender(component, {
-    wrapper: WrapperTest(),
+    wrapper: WrapperTest() as React.FunctionComponent,
   })
 }
