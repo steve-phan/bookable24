@@ -5,7 +5,7 @@ import { documentToHtmlString } from "@contentful/rich-text-html-renderer"
 import { Link } from "gatsby-plugin-react-i18next"
 
 import Layout from "../components/Layout/Layout"
-import { CtaPagesSt, GatsbyImageSt } from "./blog-post.css"
+import { CtaPagesSt, GatsbyImageSt } from "./blog-post.styles"
 import SEO from "../components/seo"
 
 const BlogPost: React.FC = ({ data, pageContext }: any) => {

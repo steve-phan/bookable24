@@ -6,11 +6,7 @@ import FilledInput from "@mui/material/FilledInput"
 import IconButton from "@mui/material/IconButton"
 import InputAdornment from "@mui/material/InputAdornment"
 import InputLabel from "@mui/material/InputLabel"
-import {
-  signInWithEmailAndPassword,
-  setPersistence,
-  browserLocalPersistence,
-} from "firebase/auth"
+import { signInWithEmailAndPassword } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
@@ -27,7 +23,7 @@ import {
   TextFieldSt,
   TypographySt,
   WrapColSt,
-} from "../Account.css"
+} from "../Account.styles"
 import { useShopname } from "../accountHook"
 
 interface IloginStates {

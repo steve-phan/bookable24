@@ -8,7 +8,7 @@ import React from "react"
 
 import { routes } from "../routes"
 import Logo from "../../ContentComponents/Logo"
-import { CTAButtons, WrapLoginSt, DashBoardButtonSt } from "./Header.css"
+import { CTAButtons, WrapLoginSt, DashBoardButtonSt } from "./Header.styles"
 import LangSelect from "../LangSelect"
 import MobileMenu from "../NavLinks/MobileMenu"
 import { NavLinks } from "../NavLinks/Navlinks"

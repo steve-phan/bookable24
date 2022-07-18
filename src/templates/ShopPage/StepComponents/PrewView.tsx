@@ -4,9 +4,9 @@ import React, { useEffect } from "react"
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setCustomerValidInfo } from "src/store/shop/bookingSlice"
-import { WrapColSt } from "../ShopPage.css"
+import { WrapColSt } from "../ShopPage.styles"
 import { afternoonSlots, getDefaultSlot, morningSlots } from "../utils"
-import { CardSt } from "./StepComponents.css"
+import { CardSt } from "./StepComponents.styles"
 
 const PrewView = () => {
   const {

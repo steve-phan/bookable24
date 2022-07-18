@@ -11,7 +11,7 @@ import {
 } from "@mui/icons-material"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
-import { GridSt, BoxCenter, BoxContent } from "./WhyUs.css"
+import { GridSt, BoxCenter, BoxContent } from "./WhyUs.styles"
 
 const getIcon = (
   num: number,

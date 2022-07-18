@@ -10,7 +10,7 @@ import { getDateBookings } from "src/utils"
 import { RootState } from "src/store/store"
 
 import ShowInfo from "../SharedComponent/ShowInfo"
-import { FlexRowSt } from "./AllBookings.css"
+import { FlexRowSt } from "./AllBookings.styles"
 
 const AllBookingsDashBoard = () => {
   const { shopInfo, allTermins } = useAppSelector(

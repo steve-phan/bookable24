@@ -1,7 +1,7 @@
 import React from "react"
 import Box from "@mui/material/Box"
 
-import { TypographySt, WrapModalSt } from "../Account.css"
+import { TypographySt, WrapModalSt } from "../Account.styles"
 
 const style = {
   position: "absolute" as "absolute",

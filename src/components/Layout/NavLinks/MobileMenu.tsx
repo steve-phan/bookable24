@@ -14,7 +14,7 @@ import {
   DrawerSt,
   CTAButtonAccountSt,
   BackgroundImgSt,
-} from "./NavLinks.css"
+} from "./NavLinks.styles"
 import { MobileNavLinks } from "./MobileNavLink"
 import background from "./background.jpg"
 

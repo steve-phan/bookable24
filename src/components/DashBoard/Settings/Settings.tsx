@@ -19,7 +19,7 @@ import {
   WrapDaySt,
   WrapHourSt,
   WrapHourSelectedSt,
-} from "./Settings.css"
+} from "./Settings.styles"
 import { updateList } from "./utils"
 import HourSelect from "./HourSelect"
 import DateSelect from "./DateSelect"

@@ -1,9 +1,8 @@
 import React from "react"
 import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image"
 
-import { WrapLogoSt, WrapAddressSt, TitleSt, SpanSt } from "./ShopLogo.css"
+import { WrapLogoSt, WrapAddressSt, TitleSt, SpanSt } from "./ShopLogo.styles"
 import { IShopInfo } from "src/store/shop/shop.types"
-import { extend } from "dayjs"
 
 interface IShopInfoContenful {
   email: string

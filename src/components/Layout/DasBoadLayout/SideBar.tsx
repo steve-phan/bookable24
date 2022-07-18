@@ -3,7 +3,7 @@ import Drawer from "@mui/material/Drawer"
 import Hidden from "@mui/material/Hidden"
 
 import { routes } from "./routes"
-import { WrapSideBarSt } from "./dashboard.css"
+import { WrapSideBarSt } from "./dashboard.styles"
 import { IMobileToggle } from "./"
 import MobileMenu from "../NavLinks/MobileMenu"
 

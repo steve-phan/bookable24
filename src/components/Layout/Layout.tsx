@@ -10,7 +10,7 @@ import { theme, globalStyles } from "src/theme"
 
 import Footer from "./Footer/Footer"
 import Header from "./Header"
-import { BodySt } from "./Layout.css"
+import { BodySt } from "./Layout.styles"
 import { RootState } from "src/store/store"
 
 export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />

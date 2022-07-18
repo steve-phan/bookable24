@@ -1,7 +1,7 @@
 import React from "react"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
-import { ButtonSt, WrapRowSt } from "./ShopPage.css"
+import { ButtonSt, WrapRowSt } from "./ShopPage.styles"
 
 interface IButtonsCTAprops {
   activeStep: number

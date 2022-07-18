@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles"
 import { ThemeOptions } from "@mui/material"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
-import { LinkItemSt } from "./NavLinks.css"
+import { LinkItemSt } from "./NavLinks.styles"
 
 export const MobileNavLinks = ({ routes, handleDrawerToggle }: any) => {
   const theme = useTheme<ThemeOptions>()

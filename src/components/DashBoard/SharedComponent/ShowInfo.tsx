@@ -22,7 +22,7 @@ import {
   GridItemPhonelSt,
   GridItemEmailSt,
   SpanRequireSt,
-} from "./ShareInfo.css"
+} from "./ShareInfo.styles"
 import { ITermin } from "src/store/shop/shop.types"
 
 const createData = ({

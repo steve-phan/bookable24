@@ -22,7 +22,7 @@ import {
   TextFieldSt,
   TypographySt,
   WrapColSt,
-} from "../Account.css"
+} from "../Account.styles"
 import AccountModal from "../AccountModal/AccountModal"
 
 interface IshopInfo {

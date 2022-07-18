@@ -20,7 +20,7 @@ import {
   WrapTerminContentSt,
   StepperSt,
   StepLabelSt,
-} from "./ShopPage.css"
+} from "./ShopPage.styles"
 import { getStepContent, allSlots, getDefaultSlot } from "./utils"
 import ShopLogo from "./ShopLogo/ShopLogo"
 import { ButtonsCTA } from "./ButtonsCTA"

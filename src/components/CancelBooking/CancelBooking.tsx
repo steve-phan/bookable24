@@ -9,10 +9,10 @@ import SEO from "src/components/seo"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { getCancelTermin, confirmCancelTermin } from "src/store/shop/shopSlice"
 
-import { WrapColSt } from "../../templates/ShopPage/ShopPage.css"
+import { WrapColSt } from "../../templates/ShopPage/ShopPage.styles"
 import { afternoonSlots, morningSlots } from "../../templates/ShopPage/utils"
-import { CardSt } from "../../templates/ShopPage/StepComponents/StepComponents.css"
-import { CanCelButtonSt } from "../../templates/ShopPage/ShopPage.css"
+import { CardSt } from "../../templates/ShopPage/StepComponents/StepComponents.styles"
+import { CanCelButtonSt } from "../../templates/ShopPage/ShopPage.styles"
 import ShopLogo from "../../templates/ShopPage/ShopLogo/ShopLogo"
 
 const CancelBooking = ({

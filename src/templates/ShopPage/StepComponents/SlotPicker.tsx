@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setSelectedSlot } from "src/store/shop/bookingSlice"
 import { getDateBookings } from "src/utils"
-import { ITermin } from "src/components/DashBoard/SharedComponent/DashBoard.types"
 
 import {
   afternoonSlots,
@@ -19,8 +18,9 @@ import {
   ButtonGroupSt,
   ButtonSlotSt,
   TitleBannerSt,
-} from "./StepComponents.css"
-import { WrapColSt } from "../ShopPage.css"
+} from "./StepComponents.styles"
+import { WrapColSt } from "../ShopPage.styles"
+import { ITermin } from "src/store/shop/shop.types"
 
 const isWeekend = (date: Date | null) =>
   dayjs(date).day() === 6 || dayjs(date).day() === 0

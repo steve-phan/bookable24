@@ -11,8 +11,8 @@ import {
 } from "src/store/shop/bookingSlice"
 import { IInfoUserProps } from "src/store/shop/shop.types"
 
-import { TextFieldSt, TypographySt } from "./StepComponents.css"
-import { WrapColSt } from "../ShopPage.css"
+import { TextFieldSt, TypographySt } from "./StepComponents.styles"
+import { WrapColSt } from "../ShopPage.styles"
 import { useI18next } from "gatsby-plugin-react-i18next"
 import { getSchema } from "./utils"
 

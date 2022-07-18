@@ -24,7 +24,7 @@ import {
   WrapMessageSt,
   InfoSt,
   DetailsInfoSt,
-} from "./Home.css"
+} from "./Home.styles"
 
 const HomeDashBoard = () => {
   const { t } = useTranslation()

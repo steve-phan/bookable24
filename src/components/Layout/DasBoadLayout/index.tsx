@@ -16,7 +16,7 @@ import {
   WrapDashBoardSt,
   DashBoardContentSt,
   WrapContentSt,
-} from "./dashboard.css"
+} from "./dashboard.styles"
 import Footer from "../Footer/Footer"
 
 export interface IMobileToggle {

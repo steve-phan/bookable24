@@ -4,7 +4,7 @@ import { Pie } from "react-chartjs-2/"
 import { useTheme } from "@mui/material/styles"
 import { useTranslation } from "gatsby-plugin-react-i18next"
 
-import { WrapChartSt, CircleSt, NumberSt, TypoTitleSt } from "./Chart.css"
+import { WrapChartSt, CircleSt, NumberSt, TypoTitleSt } from "./Chart.styles"
 import { IbookingState, ITermin } from "src/store/shop/shop.types"
 
 const showData = (num: number, color: string) => ({

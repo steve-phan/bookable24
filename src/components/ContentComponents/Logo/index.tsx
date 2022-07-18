@@ -1,6 +1,6 @@
 import React from "react"
 
-import { WrapLogoSt } from "./logo.css"
+import { WrapLogoSt } from "./logo.styles"
 import bookable24 from "./newlogo.png"
 
 const Logo = () => {

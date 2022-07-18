@@ -8,7 +8,7 @@ import { useTranslation } from "gatsby-plugin-react-i18next"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
 import { setSelectedDate } from "src/store/shop/bookingSlice"
 
-import { WrapRowSt } from "../ShopPage.css"
+import { WrapRowSt } from "../ShopPage.styles"
 import { checkDisableDate } from "../utils"
 import PersonPicker from "./PersonPicker"
 

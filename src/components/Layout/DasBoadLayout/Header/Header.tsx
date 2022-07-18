@@ -7,7 +7,7 @@ import Menu from "@mui/icons-material/Menu"
 
 import Logo from "src/components/ContentComponents/Logo"
 
-import { AppBarSt } from "./Header.css"
+import { AppBarSt } from "./Header.styles"
 import LangSelect from "../../LangSelect"
 import { IMobileToggle } from "../"
 

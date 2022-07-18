@@ -4,8 +4,12 @@ import { sendPasswordResetEmail } from "firebase/auth"
 import { Link } from "gatsby-plugin-react-i18next"
 
 import { auth } from "../../../firebase"
-import { ButtonSt, TextFieldSt, TypographySt, WrapColSt } from "../Account.css"
-import { useShopname } from "../accountHook"
+import {
+  ButtonSt,
+  TextFieldSt,
+  TypographySt,
+  WrapColSt,
+} from "../Account.styles"
 import AccountModal from "../AccountModal/AccountModal"
 import { validateEmail } from "../../../utils"
 
