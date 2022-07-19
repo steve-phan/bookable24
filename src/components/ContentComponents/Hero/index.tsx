@@ -144,6 +144,16 @@ const Hero = () => {
         >
           <h2>Demo Booking Page</h2>
         </Link>
+        <a
+          style={{
+            textAlign: "center",
+            textDecoration: "underline",
+          }}
+          href="https://restaurant.bookable24.de/"
+          target="_blank"
+        >
+          <h2>Demo Oder-Online page</h2>
+        </a>
       </Grid>
       <Grid item md={6} xs={12}>
         <Link
