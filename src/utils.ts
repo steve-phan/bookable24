@@ -70,7 +70,7 @@ export const timeAgo = (
   const today: number = currenDay.getTime()
   const seconds = Math.round((today - date) / 1000)
   const minutes = Math.round(seconds / 60)
-  console.log({ minutes })
+
   switch (true) {
     case seconds < 60:
       return `${seconds}  ${t.second}`

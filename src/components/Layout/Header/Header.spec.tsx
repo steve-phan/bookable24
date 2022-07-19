@@ -1,5 +1,5 @@
 import React from "react"
-import { useTranslation } from "gatsby-plugin-react-i18next"
+import { useTranslation, useI18next } from "gatsby-plugin-react-i18next"
 
 import { appStore } from "src/store/store"
 import { render } from "src/tests/customRender"
@@ -8,6 +8,7 @@ import HeaderComponent from "./index"
 
 jest.mock("gatsby-plugin-react-i18next", () => ({
   ...jest.requireActual("gatsby-plugin-react-i18next"),
+  useI18next: () => ({ language: "de", languages: ["de", "en", "vn"] }),
   useTranslation: () => ({
     t: (key: string) => key,
   }),
