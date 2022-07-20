@@ -3,9 +3,8 @@ import { useTranslation } from "gatsby-plugin-react-i18next"
 
 import { ButtonSt, WrapRowSt } from "./ShopPage.styles"
 
-interface IButtonsCTAprops {
+export interface IButtonsCTAprops {
   activeStep: number
-  isValidInfo: boolean
   handleBack: () => void
   handleNext: () => void
   // isNextButtonDisable: () => boolean
@@ -14,7 +13,6 @@ interface IButtonsCTAprops {
 
 export const ButtonsCTA = ({
   activeStep,
-  isValidInfo,
   handleBack,
   handleNext,
   // isNextButtonDisable,

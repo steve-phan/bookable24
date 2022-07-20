@@ -193,7 +193,7 @@ const ShopPage: React.FC<IShopPageProps> = ({
                 {activeStep !== 4 && (
                   <ButtonsCTA
                     activeStep={activeStep}
-                    isValidInfo={isValidInfo}
+                    // isValidInfo={isValidInfo}
                     handleBack={handleBack}
                     handleNext={handleNext}
                     // isNextButtonDisable={isNextButtonDisable}
