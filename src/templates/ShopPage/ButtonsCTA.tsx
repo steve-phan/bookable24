@@ -1,5 +1,5 @@
 import React from "react"
-import { useTranslation } from "gatsby-plugin-react-i18next"
+import { useTranslation, I18nextProvider } from "gatsby-plugin-react-i18next"
 
 import { ButtonSt, WrapRowSt } from "./ShopPage.styles"
 

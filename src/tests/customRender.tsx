@@ -1,12 +1,14 @@
 import * as React from "react"
-import { Theme, ThemeProvider } from "@mui/material/styles"
+import { ThemeProvider } from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 import GlobalStyles from "@mui/material/GlobalStyles"
 import { render as TLRrender, RenderOptions } from "@testing-library/react"
-
-import { theme as customTheme, globalStyles } from "../theme"
+import { I18nextProvider } from "gatsby-plugin-react-i18next"
 import { Store } from "@reduxjs/toolkit"
 import { Provider } from "react-redux"
+
+import { theme as customTheme, globalStyles } from "../theme"
+import i18n from "./customI18n"
 
 export const inputGlobalStyles = <GlobalStyles styles={globalStyles} />
 
@@ -39,9 +41,11 @@ const WrapperTest =
     return (
       <CustomReduxProvider store={store}>
         <ThemeProvider theme={customTheme}>
-          <CssBaseline />
-          {inputGlobalStyles}
-          {children}
+          <I18nextProvider i18n={i18n}>
+            <CssBaseline />
+            {inputGlobalStyles}
+            {children}
+          </I18nextProvider>
         </ThemeProvider>
       </CustomReduxProvider>
     )

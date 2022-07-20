@@ -17,11 +17,9 @@ export const handler: Handler = async event => {
 
     const ShopInfo = shopNameConnection.model("ShopInfo", shopinfoSchema)
     const shopEmail2 = shopEmail.toLowerCase()
-    console.log({ shopEmail2 })
     const shopInfoFound = await ShopInfo.findOne({
       email: shopEmail2,
     })
-    console.log({ shopInfoFound })
 
     const shopTerminsDb = shopNamesDb.connection.useDb(shopId)
 
