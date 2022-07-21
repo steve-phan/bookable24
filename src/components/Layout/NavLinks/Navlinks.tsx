@@ -19,6 +19,7 @@ export const NavLinks = ({ routes }: any) => {
               borderBottom: `2px solid ${theme.color.primary}`,
             }}
             to={route.path}
+            data-test-id={`test-${route.name}`}
           >
             {t(`menu.${route.name}`)}
           </PageLinkSt>
