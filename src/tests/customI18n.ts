@@ -10,7 +10,7 @@ i18n.use(initReactI18next).init({
   // ns: ["translation"],
   // defaultNS: "translation",
 
-  debug: true,
+  debug: false,
 
   interpolation: {
     escapeValue: false, // not needed for react!!
