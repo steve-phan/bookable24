@@ -32,7 +32,7 @@ const PersonPicker = () => {
           value={`${person}`}
           label={t("booking.datepicker.person")}
           onChange={(event: SelectChangeEvent) => {
-            dispatch(setNumberOfCustomer(Number(event.target.value as string)))
+            dispatch(setNumberOfCustomer(Number(event.target.value)))
           }}
         >
           {menuItems()}

@@ -3,7 +3,6 @@ import dayjs from "dayjs"
 import React, { useEffect, useState } from "react"
 import { useI18next } from "gatsby-plugin-react-i18next"
 
-import { ITermin } from "src/store/shop/shop.types"
 import Loading from "src/components/ContentComponents/Loading/Loading"
 import SEO from "src/components/seo"
 import { useAppDispatch, useAppSelector } from "src/store/hooks"
@@ -45,7 +44,7 @@ const CancelBooking = ({
     phone,
     status,
     canceled,
-  } = booking as ITermin
+  } = booking
 
   useEffect(() => {
     if (!shopId || !bookingId) {

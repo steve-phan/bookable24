@@ -36,7 +36,7 @@ const DateSelect = ({
         label="Personen"
         placeholder="hallo"
         onChange={(event: SelectChangeEvent) => {
-          dispatch(setSetingsClosedRegularDay(event.target.value as string))
+          dispatch(setSetingsClosedRegularDay(event.target.value))
         }}
       >
         {menuItems()}

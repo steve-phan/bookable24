@@ -33,9 +33,9 @@ const HourSelect = ({ time, slotTime }: HourSelectProps) => {
         label="Personen"
         onChange={(event: SelectChangeEvent) => {
           if (time) {
-            dispatch(setSettingDisableTime(event.target.value as string))
+            dispatch(setSettingDisableTime(event.target.value))
           } else if (slotTime) {
-            dispatch(setSettingsDisableSlot(event.target.value as string))
+            dispatch(setSettingsDisableSlot(event.target.value))
           } else {
             return null
           }
